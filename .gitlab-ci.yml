@@ -27,11 +27,9 @@ test_unit:
   script: npm run test
 
 test_component:
-  image: cypress/included:13.8.1
   stage: test
   script: npm run component:headless
 
 test_e2e:
-  image: cypress/included:13.8.1
   stage: test
   script: npm run e2e:headless
