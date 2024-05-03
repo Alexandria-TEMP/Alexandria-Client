@@ -30,5 +30,8 @@ cache:
 # TODO e2e
 test_component:
   stage: test
-  image: cypress/included:cypress-13.8.1-node-20.12.2-chrome-124.0.6367.60-1-ff-125.0.2-edge-124.0.2478.51-1
-  script: 'npm run component:headless'
+  image: cypress/included:13.8.1
+  script: 
+    - echo $DISPLAY
+    - unset DISPLAY
+    - 'npm run component:headless'
