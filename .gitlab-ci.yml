@@ -35,6 +35,6 @@ test_component:
     name: cypress/base:20.12.2
     entrypoint: [""]
   script: 
-    - echo 'hello world'
-    #- unset DISPLAY
-    #- 'npm run component:headless'
+    # - echo 'hello world'
+    # - unset DISPLAY
+    - 'npm run component:headless'
