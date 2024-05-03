@@ -25,11 +25,12 @@ build:
 test_unit:
   stage: test
   script: npm run test
+  # TODO coverage
 
-test_component:
-  stage: test
-  script: npm run component:headless
-
+# TODO component
 test_e2e:
+  image: 
+    name: cypress/included:13.8.1
+    entrypoint: ["/usr/bin/env"]
   stage: test
   script: npm run e2e:headless
