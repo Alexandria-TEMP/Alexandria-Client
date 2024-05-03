@@ -1,0 +1,30 @@
+services:
+  dev:
+    build:
+      context: .
+      target: dev
+      dockerfile: Dockerfile
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
+    ports:
+      - 3000:3000
+
+  test:
+    build:
+      context: .
+      target: test
+      dockerfile: Dockerfile
+    
+  e2e:
+    image: cypress/included:13.8.1 
+    entrypoint: npm
+    command: run e2e:headless
+    working_dir: /e2e
+    volumes:
+      - ./:/e2e
+    ports:
+      - 3000:3000
