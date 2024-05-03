@@ -13,6 +13,7 @@ cache:
   paths:
     - node_modules/
     - .next/cache/
+    - ~/.cache/Cypress
 
 # lint:
 #   stage: lint
@@ -30,9 +31,9 @@ cache:
 # TODO e2e
 test_component:
   stage: test
-  image: cypress/included:13.8.1
+  image: cypress/base:20.12.2
+  entrypoint: ["/usr/bin/env"]
   script: 
     - echo 'hello world'
-    - echo $DISPLAY
     #- unset DISPLAY
     #- 'npm run component:headless'
