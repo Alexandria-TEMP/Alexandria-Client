@@ -13,7 +13,7 @@ cache:
   paths:
     - node_modules/
     - .next/cache/
-    - /root/.cache/Cypress
+    - ~/.cache/Cypress
 
 # lint:
 #   stage: lint
