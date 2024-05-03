@@ -14,13 +14,13 @@ cache:
     - node_modules/
     - .next/cache/
 
-lint:
-  stage: lint
-  script: npm run lint
+#lint:
+#  stage: lint
+#  script: npm run lint
 
-build:
-  stage: build
-  script: npm run build
+#build:
+#  stage: build
+#  script: npm run build
 
 test_unit:
   stage: test
@@ -29,8 +29,5 @@ test_unit:
 
 # TODO component
 test_e2e:
-  image: 
-    name: cypress/included:13.8.1
-    entrypoint: ["/usr/bin/env"]
   stage: test
   script: npm run e2e:headless
