@@ -31,4 +31,4 @@ cache:
 test_component:
   stage: test
   image: cypress/included:13.8.1
-  script: npm run component:headless
+  script: 'npm run component:headless'
