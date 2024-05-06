@@ -7,7 +7,7 @@
   - You can check it's installed by running `node -v` on a terminal
 - Install [npm LTS](https://github.com/npm/cli/releases) *tip: Node.js might install this automatically*
   - You can check it's installed by running `npm -v` on a terminal
-- Open the project's root folder on a terminal (if you run `ls` should see a file called `package.json`) 
+- Open the project's root folder on a terminal (if you run `ls` you should see a file called `package.json`) 
 - Run `npm install` to install the project's dependencies
   - There should now be a folder called `node_modules` in the project' root folder
 
