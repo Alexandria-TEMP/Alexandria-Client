@@ -29,7 +29,7 @@ build:
 test_unit:
   stage: test
   script: 'npm run test:ci'
-  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
+  coverage: '/Branches\s*:\s*(\d+.?\d*)%/'
   artifacts:
     when: always
     reports:
