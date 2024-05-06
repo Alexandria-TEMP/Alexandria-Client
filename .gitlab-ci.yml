@@ -28,8 +28,14 @@ build:
 
 test_unit:
   stage: test
-  script: npm run test
+  script: 'npm run test:ci'
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - junit.xml
+      cobertura: coverage/cobertura-coverage.xml
 
 # The following jobs are currently broken
 
