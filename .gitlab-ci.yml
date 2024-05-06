@@ -35,7 +35,10 @@ test_unit:
     reports:
       junit:
         - junit.xml
-      cobertura: coverage/cobertura-coverage.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+
 
 # The following jobs are currently broken
 
