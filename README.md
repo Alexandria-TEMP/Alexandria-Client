@@ -129,6 +129,11 @@ docker-compose up e2e
 
 ### Learn more
 
+#### React
+- [Next.js' 'React foundations'](https://nextjs.org/learn/react-foundations) - "This beginner-friendly, example-led course will guide you through the prerequisite knowledge for Next.js" (i.e. React itself)
+- [React docs' quick start](https://react.dev/learn) - "This page will give you an introduction to the 80% of React concepts that you will use on a daily basis."
+- [React doc's 'Thinking in React'](https://react.dev/learn/thinking-in-react) - Good resource on how to think about React code and it's structure
+
 #### Next.js
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
