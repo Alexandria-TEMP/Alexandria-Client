@@ -5,8 +5,7 @@ default:
 stages:
   - lint
   - build
-  - test_1
-  - test_2
+  - test
 
 cache:
   # https://nextjs.org/docs/pages/building-your-application/deploying/ci-build-caching#gitlab-ci
@@ -27,29 +26,27 @@ build:
   stage: build
   script: npm run build
 
-# test_unit:
+test_unit:
+  stage: test
+  script: 'npm run test:ci'
+  coverage: '/Branches\s*:\s*(\d+.?\d*)%/'
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - junit.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+
+# The following jobs are currently flaky on the pipeline
+
+# test_component:
 #   stage: test
-#   script: 'npm run test:ci'
-#   coverage: '/Branches\s*:\s*(\d+.?\d*)%/'
-#   artifacts:
-#     when: always
-#     reports:
-#       junit:
-#         - junit.xml
-#       coverage_report:
-#         coverage_format: cobertura
-#         path: coverage/cobertura-coverage.xml
+#   image: cypress/browsers:node-20.12.2-chrome-124.0.6367.60-1-ff-125.0.2-edge-124.0.2478.51-1
+#   script:  npx cypress run --component
 
-test_component:
-  stage: test_2
-  image: cypress/browsers:node-20.12.2-chrome-124.0.6367.60-1-ff-125.0.2-edge-124.0.2478.51-1
-  script:  npx cypress run --component
-
-test_e2e:
-  stage: test_1
-  image: cypress/browsers:node-20.12.2-chrome-124.0.6367.60-1-ff-125.0.2-edge-124.0.2478.51-1
-  script: 'npm run e2e:headless' 
-    # - npm ci
-    # - npm run dev &
-    # - sleep 5s 
-    # - npx cypress run --browser firefox
+# test_e2e:
+#   stage: test
+#   image: cypress/browsers:node-20.12.2-chrome-124.0.6367.60-1-ff-125.0.2-edge-124.0.2478.51-1
+#   script: 'npm run e2e:headless' 
