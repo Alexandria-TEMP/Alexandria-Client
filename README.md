@@ -46,8 +46,7 @@ After correct set up, building, running, and running tests for the first time, t
   - `cypress/e2e` - Cypress end to end tests
 - `node_modules` - Node packages (i.e. project dependencies). See also [package.json](https://www.geeksforgeeks.org/node-js-package-json/)
 - `public` - [static assets](https://nextjs.org/docs/pages/building-your-application/optimizing/static-assets)
-- **`src` - source code to build the website with Next.js**
-  - `src/app` - each folder in here is a route (e.g. `src/app/about` -> `https://domain.com/about`) see [Next.js routing](https://nextjs.org/docs/app/building-your-application/routing) for more information
+- **`app` - source code to build the website with Next.js**. Each folder subfolder in here becomes a route (e.g. `app/about` -> `https://domain.com/about`) if there's a file called `page.tsx` in it (see [Next.js routing](https://nextjs.org/docs/app/building-your-application/routing) for more information). We follow the [Project organization strategy of Split project files by feature](https://nextjs.org/docs/app/building-your-application/routing/colocation#split-project-files-by-feature-or-route).
 
 ### Run the website
 
