@@ -39,10 +39,10 @@ cache:
 #         coverage_format: cobertura
 #         path: coverage/cobertura-coverage.xml
 
-# test_component:
-#   stage: test
-#   image: cypress/browsers:node-20.12.2-chrome-124.0.6367.60-1-ff-125.0.2-edge-124.0.2478.51-1
-#   script:  npx cypress run --component
+test_component:
+  stage: test
+  image: cypress/browsers:node-20.12.2-chrome-124.0.6367.60-1-ff-125.0.2-edge-124.0.2478.51-1
+  script:  npx cypress run --component
 
 test_e2e:
   stage: test
