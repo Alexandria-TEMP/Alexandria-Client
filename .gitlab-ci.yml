@@ -14,30 +14,30 @@ cache:
     - node_modules/
     - .next/cache/
 
-# lint:
-#   stage: lint
-#   script: npm run lint
+lint:
+  stage: lint
+  script: npm run lint
 
-# check_style:
-#   stage: lint
-#   script: 'npm run format:check'
+check_style:
+  stage: lint
+  script: 'npm run format:check'
 
-# build:
-#   stage: build
-#   script: npm run build
+build:
+  stage: build
+  script: npm run build
 
-test_unit:
-  stage: test
-  script: 'npm run test:ci'
-  coverage: '/Branches\s*:\s*(\d+.?\d*)%/'
-  # artifacts:
-  #   when: always
-  #   reports:
-  #     junit:
-  #       - junit.xml
-  #     coverage_report:
-  #       coverage_format: cobertura
-  #       path: coverage/cobertura-coverage.xml
+# test_unit:
+#   stage: test
+#   script: 'npm run test:ci'
+#   coverage: '/Branches\s*:\s*(\d+.?\d*)%/'
+#   artifacts:
+#     when: always
+#     reports:
+#       junit:
+#         - junit.xml
+#       coverage_report:
+#         coverage_format: cobertura
+#         path: coverage/cobertura-coverage.xml
 
 test_component:
   stage: test
