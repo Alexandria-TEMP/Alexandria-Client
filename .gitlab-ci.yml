@@ -50,4 +50,5 @@ test_e2e:
   script: 
     - npm ci
     - npm run dev &
+    - sleep 5000
     - npx cypress run --browser firefox
