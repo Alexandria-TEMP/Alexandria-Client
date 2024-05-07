@@ -47,8 +47,8 @@ cache:
 test_e2e:
   stage: test
   image: cypress/browsers:node-20.12.2-chrome-124.0.6367.60-1-ff-125.0.2-edge-124.0.2478.51-1
-  script: 
-    - npm ci
-    - npm run dev &
-    - sleep 5000
-    - npx cypress run --browser firefox
+  script: 'npm run e2e:headless' 
+    # - npm ci
+    # - npm run dev &
+    # - sleep 5s 
+    # - npx cypress run --browser firefox
