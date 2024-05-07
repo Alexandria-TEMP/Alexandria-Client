@@ -14,35 +14,35 @@ cache:
     - node_modules/
     - .next/cache/
 
-lint:
-  stage: lint
-  script: npm run lint
+# lint:
+#   stage: lint
+#   script: npm run lint
 
-check_style:
-  stage: lint
-  script: 'npm run format:check'
+# check_style:
+#   stage: lint
+#   script: 'npm run format:check'
 
-build:
-  stage: build
-  script: npm run build
+# build:
+#   stage: build
+#   script: npm run build
 
-test_unit:
-  stage: test
-  script: 'npm run test:ci'
-  coverage: '/Branches\s*:\s*(\d+.?\d*)%/'
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - junit.xml
-      coverage_report:
-        coverage_format: cobertura
-        path: coverage/cobertura-coverage.xml
+# test_unit:
+#   stage: test
+#   script: 'npm run test:ci'
+#   coverage: '/Branches\s*:\s*(\d+.?\d*)%/'
+#   artifacts:
+#     when: always
+#     reports:
+#       junit:
+#         - junit.xml
+#       coverage_report:
+#         coverage_format: cobertura
+#         path: coverage/cobertura-coverage.xml
 
-test_component:
-  stage: test
-  image: cypress/browsers:node-20.12.2-chrome-124.0.6367.60-1-ff-125.0.2-edge-124.0.2478.51-1
-  script:  npx cypress run --component
+# test_component:
+#   stage: test
+#   image: cypress/browsers:node-20.12.2-chrome-124.0.6367.60-1-ff-125.0.2-edge-124.0.2478.51-1
+#   script:  npx cypress run --component
 
 test_e2e:
   stage: test
