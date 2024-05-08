@@ -136,7 +136,11 @@ docker-compose up e2e
 #### Next.js
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-  
+
+#### CSS
+- Framework used in the project: [Tailwind CSS](https://tailwindcss.com/) - a utility-first CSS framework packed with classes like `flex`, `pt-4`, `text-center` and `rotate-90` that can be composed to build any design, directly in your markup.
+- Bare CSS: [Learn CSS](https://web.dev/learn/css/)
+
 #### Tests
 
 - Unit tests: [Jest](https://jestjs.io/docs/getting-started)
