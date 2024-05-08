@@ -9,7 +9,7 @@ export default function Post() {
     <div>
       {/* Main 'post' render */}
       <ContentBox>
-        <h1>Post title</h1>
+        <h1 className="font-semibold">Post title</h1>
         <p>{someText}</p>
       </ContentBox>
       {/* Discussions */}

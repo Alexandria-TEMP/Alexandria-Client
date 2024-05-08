@@ -3,5 +3,9 @@ export default function ContentBox({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div>{children}</div>;
+  return (
+    <div className="p-6 m-8 flex-col max-w-full rounded-lg bg-white text-slate-900">
+      {children}
+    </div>
+  );
 }
