@@ -1,93 +1,144 @@
 # Alexandria Frontend
 
+## Setting Up
 
+### Locally
+- Install [Node.js v20.12.2](https://nodejs.org/en/download)
+  - You can check it's installed by running `node -v` on a terminal
+- Install [npm LTS](https://github.com/npm/cli/releases) *tip: Node.js might install this automatically*
+  - You can check it's installed by running `npm -v` on a terminal
+- Open the project's root folder on a terminal (if you run `ls` you should see a file called `package.json`) 
+- Run `npm install` to install the project's dependencies
+  - There should now be a folder called `node_modules` in the project' root folder
 
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
+### Using Docker
+- Install [Docker](https://www.docker.com/products/docker-desktop/)
+- Optional: To enable hot-reloading, add the following lines to the [nextConfig](/next-env.d.ts) *tip: they should already be there, commented out*
+```javascript
+webpack: config => {
+        config.watchOptions = {
+            poll: 1000,
+            aggregateTimeout: 300,
+        }
+        return config
+    }
 ```
-cd existing_repo
-git remote add origin https://gitlab.ewi.tudelft.nl/cse2000-software-project/2023-2024/cluster-v/17b/alexandria-frontend.git
-git branch -M main
-git push -uf origin main
+Note that it can take up to a second after changes are saved for a reload to happen when using Docker.
+
+### VSCode
+Optional: Enable auto-formatting in the followed code style.
+- Install the VSCode extension [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- In VSCode settings, 
+  - set **Editor: Default Formatter** to **Prettier - Code formatter**
+  - set **Editor: Format on Save** to **true**
+
+## Developing
+
+### Project structure
+Most files in project root are configuration files, and should (mostly) be left untouched.
+
+After correct set up, building, running, and running tests for the first time, the following folders will be present:
+- `__tests__` - [Jest](https://jestjs.io/) unit tests
+- `.next` - project build
+- `coverage` - Jest coverage reports
+- `cypress` - [Cypress](https://www.cypress.io/) configuration files
+  - `cypress/component` - Cypress component tests
+  - `cypress/e2e` - Cypress end to end tests
+- `node_modules` - Node packages (i.e. project dependencies). See also [package.json](https://www.geeksforgeeks.org/node-js-package-json/)
+- `public` - [static assets](https://nextjs.org/docs/pages/building-your-application/optimizing/static-assets)
+- **`app` - source code to build the website with Next.js**. Each folder subfolder in here becomes a route (e.g. `app/about` -> `https://domain.com/about`) if there's a file called `page.tsx` in it (see [Next.js routing](https://nextjs.org/docs/app/building-your-application/routing) for more information). We follow the [Project organization strategy of Split project files by feature](https://nextjs.org/docs/app/building-your-application/routing/colocation#split-project-files-by-feature-or-route).
+
+### Run the website
+
+With Node.js (locally), run
+```bash
+npm run dev
 ```
 
-## Integrate with your tools
+With Docker, run
+```bash
+docker-compose up dev
+```
 
-- [ ] [Set up project integrations](https://gitlab.ewi.tudelft.nl/cse2000-software-project/2023-2024/cluster-v/17b/alexandria-frontend/-/settings/integrations)
+Then open [http://localhost:3000](http://localhost:3000) with your browser to see the website. The website should auto-update as you change the source files (see [Docker setup](#using-docker) if you're using Docker).
 
-## Collaborate with your team
+### Testing
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+#### Unit tests
 
-## Test and Deploy
+Unit tests are written using Jest.
 
-Use the built-in continuous integration in GitLab.
+Place them in the folder `/__tests__`, with the file naming convention `name.test.tsx`.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+You can run them with `npm run test`, or [using Docker](#docker).
 
-***
+After running, coverage reports will be written to `/coverage`.
 
-# Editing this README
+See [Jest docs](https://jestjs.io/docs/getting-started) for more details.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+#### Component and end to end tests
 
-## Suggestions for a good README
+Component and end to end tests are written using Cypress.
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+Place component tests in the folder `/cypress/component`, place end to end tests in the folder `/cypress/e2e`. The naming convention for both is `name.cy.tsx`.
 
-## Name
-Choose a self-explaining name for your project.
+You can use `npm run` followed by one of the following to run them: 
+- `cypress:open` - Opens a GUI to run Cypress tests *tip: a development server must be running for you to run e2e tests*
+- `component` - Opens a GUI to run component tests
+- `component:headless` - Runs all component tests and shows report in CLI
+- `e2e` - Initializes a development server and opens a GUI to run e2e tests
+- `e2e:headless` - Initializes a development server and runs all e2e tests and shows report in CLI
+or [using Docker](#docker).
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+After running, you may find screenshots of what went wrong in the folder `/cypress/screenshots`.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+See [Cypress docs](https://docs.cypress.io/guides/overview/why-cypress) for more details.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+### Static analysis
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+Linting is enforced with ESLint and code style with prettier. You can use the following commands to run static analysis on your code:
+- `npm run lint` - Lints and generates a report
+- `npm run format` - Checks code style and automatically fixes issues
+- `npm run format:check` - Checks code style and generates a report
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+See also [VSCode setup](#vscode) to enable auto code formatting on VSCode.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### Scripts
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+#### NPM
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+The following words can replace `<KEYWORD>` in the command `npm run <KEYWORD>`:
+- `dev` - Starts development server
+- `build` - Builds an optimized version of website
+- `start` - Starts server on built project
+- `lint`, `format`, `format:check` - See [Static analysis](#static-analysis)
+- `test`, `test:watch` - See [Unit tests](#unit-tests)
+- `cypress:open`, `e2e`, `e2e:headless`, `component`, `component:headless` - See [Component and end to end tests](#component-and-end-to-end-tests)
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+#### Docker
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+You can run any of the NPM scripts on your Docker container by opening up the container's terminal.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+Additionally, you can run the following commands to open containers for testing without running the development server:
+```bash
+docker-compose up test
+docker-compose up e2e
+```
+`test` runs Jest unit tests and the linter, while `e2e` runs cypress end to end tests.
 
-## License
-For open source projects, say how it is licensed.
+### Learn more
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+#### React
+- [Next.js' 'React foundations'](https://nextjs.org/learn/react-foundations) - "This beginner-friendly, example-led course will guide you through the prerequisite knowledge for Next.js" (i.e. React itself)
+- [React docs' quick start](https://react.dev/learn) - "This page will give you an introduction to the 80% of React concepts that you will use on a daily basis."
+- [React doc's 'Thinking in React'](https://react.dev/learn/thinking-in-react) - Good resource on how to think about React code and it's structure
+
+#### Next.js
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  
+#### Tests
+
+- Unit tests: [Jest](https://jestjs.io/docs/getting-started)
+- Component and end-to-end tests: [Cypress](https://docs.cypress.io/guides/overview/why-cypress)
+  
