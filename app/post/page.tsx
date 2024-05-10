@@ -1,5 +1,7 @@
 import ContentBox from "@/components/content-box";
 import Link from "next/link";
+import AuthorCard from "./components/author-card";
+import PostCardMini from "./components/post-card-mini";
 
 export default function Post() {
   const someText: string =
@@ -22,12 +24,15 @@ export default function Post() {
             </div>
             <div className="flex-col">
               <h3>Post type</h3>
+              {/* TODO tag */}
               <p>Research Project</p>
             </div>
             <div className="flex-col">
               <h3>Status</h3>
+              {/* TODO tag */}
               <p>Open for review</p>
             </div>
+            {/* TODO buttons */}
             {/* ? There's probably a more user-friendly name for this... */}
             <Link href={"/post/merge-requests"}>Merge Requests</Link>
             {/* ! Either contribute or review, depending on status */}
@@ -59,11 +64,23 @@ export default function Post() {
       <div className="min-w-72">
         <h1>About</h1>
         <h2>Scientific fields</h2>
+        <div className="flex flex-row">
+          {/* TODO tags */}
+          <p>Computer Science</p>
+          <p>Theory of computation</p>
+          <p>Mathematical optimization</p>
+        </div>
         <h2>Forked from</h2>
+        <PostCardMini title="Other post's title" status="Peer reviewed" />
         <h2>Authors</h2>
+        <AuthorCard name="Jane Doe" contribution="Investigation" />
+        <AuthorCard name="John Doe" contribution="Methodology" />
         <h2>Collaborators</h2>
+        <AuthorCard name="Jane Doe" contribution="Investigation" />
+        <AuthorCard name="John Doe" contribution="Methodology" />
+        <AuthorCard name="Jane Doe" contribution="Investigation" />
+        <AuthorCard name="John Doe" contribution="Methodology" />
       </div>
     </div>
   );
 }
-// merge requests
