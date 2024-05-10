@@ -1,25 +1,25 @@
 import Image from "next/image";
-import placeholderProfilePic from "~/public/placeholder-researchers.jpg";
 
 export default function AuthorCard({
   name,
-  subtitle,
+  contribution,
 }: Readonly<{
   name: string;
-  subtitle: string;
+  contribution: string;
 }>) {
   return (
-    <div className="flex flex-row content-center gap-x-2">
-      <Image
-        className={`rounded-full`}
-        src={placeholderProfilePic}
-        height={40}
-        width={40}
-        alt={`${name}'s profile picture`}
-      />
+    <div className="flex flex-row items-center gap-x-2">
+      <div className="size-[60px] relative">
+        <Image
+          className="rounded-full"
+          src="/placeholders/Marie_Curie.jpg"
+          alt={`${name}'s profile picture`}
+          fill
+        />
+      </div>
       <div className="flex flex-col">
         <p className="font-semibold">{name}</p>
-        <p>{subtitle}</p>
+        <p>{contribution}</p>
       </div>
     </div>
   );
