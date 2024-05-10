@@ -4,11 +4,10 @@ import PostCardMini from "./components/post-card-mini";
 import ThemeSwitcher from "@/components/theme-switcher";
 import Tag from "@/components/tag";
 import PostContents from "./components/post-contents";
+import Discussion from "./components/discussion";
 
 // TODO get post id from url
 export default function Post() {
-  const someText: string =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus ea, consequatur quibusdam earum reiciendis voluptatem commodi, possimus nemo facere consequuntur ipsum placeat minus excepturi nulla, doloremque quia! Molestiae, natus quasi.";
   const numberOfDiscussions: number = 2;
 
   return (
@@ -20,16 +19,8 @@ export default function Post() {
         <PostContents />
         {/* Discussions */}
         <h2>{numberOfDiscussions} Replies</h2>
-        <ContentBox>
-          <p>{someText}</p>
-          <div>Reactions</div>
-          <button>Reply</button>
-        </ContentBox>
-        <ContentBox>
-          <p>{someText}</p>
-          <div>Reactions</div>
-          <button>Reply</button>
-        </ContentBox>
+        <Discussion />
+        <Discussion />
         <h2>Your reply</h2>
         <ContentBox>
           <p>User input text...</p>
