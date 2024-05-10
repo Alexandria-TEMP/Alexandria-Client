@@ -23,15 +23,15 @@ export default function Post() {
           {/* (part of) Metadata */}
           <div className="flex flex-row space-x-12">
             <div className="flex-col">
-              <h3>Created on 8 May 2024</h3>
-              <h3>Last update on 10 May 2024</h3>
+              <h6>Created on 8 May 2024</h6>
+              <h6>Last update on 10 May 2024</h6>
             </div>
             <div className="flex-col">
-              <h3>Post type</h3>
+              <h6>Post type</h6>
               <Tag>Research Project</Tag>
             </div>
             <div className="flex-col">
-              <h3>Status</h3>
+              <h6>Status</h6>
               <Tag>Open for review</Tag>
             </div>
             {/* TODO buttons */}
@@ -64,19 +64,19 @@ export default function Post() {
       </div>
       {/* Sidebar */}
       <div className="min-w-72">
-        <h1>About</h1>
-        <h2>Scientific fields</h2>
+        <h2>About</h2>
+        <h3>Scientific fields</h3>
         <div className="flex flex-row flex-wrap gap-x-3 gap-y-2">
           <Tag>Computer Science</Tag>
           <Tag>Theory of computation</Tag>
           <Tag>Mathematical optimization</Tag>
         </div>
-        <h2>Forked from</h2>
+        <h3>Forked from</h3>
         <PostCardMini title="Other post's title" status="Peer reviewed" />
-        <h2>Authors</h2>
+        <h3>Authors</h3>
         <AuthorCard name="Jane Doe" contribution="Investigation" />
         <AuthorCard name="John Doe" contribution="Methodology" />
-        <h2>Collaborators</h2>
+        <h3>Collaborators</h3>
         <AuthorCard name="Jane Doe" contribution="Investigation" />
         <AuthorCard name="John Doe" contribution="Methodology" />
         <AuthorCard name="Jane Doe" contribution="Investigation" />

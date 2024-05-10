@@ -15,11 +15,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const rootClasses = "px-8 text-black dark:text-white bg-white dark:bg-black";
+  const rootCSSClasses =
+    "px-8 " +
+    "text-black dark:text-white " +
+    "bg-neutral-200 dark:bg-neutral-800";
 
   return (
     <html lang="en">
-      <body className={inter.className + " " + rootClasses}>
+      <body className={inter.className + " " + rootCSSClasses}>
         <ThemeProvider attribute="class">{children}</ThemeProvider>
       </body>
     </html>
