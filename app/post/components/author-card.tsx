@@ -3,23 +3,23 @@ import placeholderProfilePic from "~/public/placeholder-researchers.jpg";
 
 export default function AuthorCard({
   name,
-  contribution,
+  subtitle,
 }: Readonly<{
   name: string;
-  contribution: string;
+  subtitle: string;
 }>) {
   return (
     <div className="flex flex-row content-center">
       <Image
-        className="rounded-full size-[48px]"
+        className={`rounded-full`}
         src={placeholderProfilePic}
-        width={128}
-        height={128}
+        height={40}
+        width={40}
         alt={`${name}'s profile picture`}
       />
       <div className="flex flex-col">
         <p className="font-semibold">{name}</p>
-        <p>{contribution}</p>
+        <p>{subtitle}</p>
       </div>
     </div>
   );

@@ -16,13 +16,13 @@ export default function PostSidebar() {
       <h3>Forked from</h3>
       <PostCardMini title="Other post's title" status="Peer reviewed" />
       <h3>Authors</h3>
-      <AuthorCard name="Jane Doe" contribution="Investigation" />
-      <AuthorCard name="John Doe" contribution="Methodology" />
+      <AuthorCard name="Jane Doe" subtitle="Investigation" />
+      <AuthorCard name="John Doe" subtitle="Methodology" />
       <h3>Collaborators</h3>
-      <AuthorCard name="Jane Doe" contribution="Investigation" />
-      <AuthorCard name="John Doe" contribution="Methodology" />
-      <AuthorCard name="Jane Doe" contribution="Investigation" />
-      <AuthorCard name="John Doe" contribution="Methodology" />
+      <AuthorCard name="Jane Doe" subtitle="Investigation" />
+      <AuthorCard name="John Doe" subtitle="Methodology" />
+      <AuthorCard name="Jane Doe" subtitle="Investigation" />
+      <AuthorCard name="John Doe" subtitle="Methodology" />
     </div>
   );
 }
