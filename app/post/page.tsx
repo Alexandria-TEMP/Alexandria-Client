@@ -3,6 +3,7 @@ import Link from "next/link";
 import AuthorCard from "./components/author-card";
 import PostCardMini from "./components/post-card-mini";
 import ThemeSwitcher from "@/components/theme-switcher";
+import Tag from "@/components/tag";
 
 export default function Post() {
   const someText: string =
@@ -27,13 +28,11 @@ export default function Post() {
             </div>
             <div className="flex-col">
               <h3>Post type</h3>
-              {/* TODO tag */}
-              <p>Research Project</p>
+              <Tag>Research Project</Tag>
             </div>
             <div className="flex-col">
               <h3>Status</h3>
-              {/* TODO tag */}
-              <p>Open for review</p>
+              <Tag>Open for review</Tag>
             </div>
             {/* TODO buttons */}
             {/* ? There's probably a more user-friendly name for this... */}
@@ -67,11 +66,10 @@ export default function Post() {
       <div className="min-w-72">
         <h1>About</h1>
         <h2>Scientific fields</h2>
-        <div className="flex flex-row">
-          {/* TODO tags */}
-          <p>Computer Science</p>
-          <p>Theory of computation</p>
-          <p>Mathematical optimization</p>
+        <div className="flex flex-row flex-wrap gap-x-3 gap-y-2">
+          <Tag>Computer Science</Tag>
+          <Tag>Theory of computation</Tag>
+          <Tag>Mathematical optimization</Tag>
         </div>
         <h2>Forked from</h2>
         <PostCardMini title="Other post's title" status="Peer reviewed" />
