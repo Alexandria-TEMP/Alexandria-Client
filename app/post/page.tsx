@@ -4,6 +4,7 @@ import AuthorCard from "./components/author-card";
 import PostCardMini from "./components/post-card-mini";
 import ThemeSwitcher from "@/components/theme-switcher";
 import Tag from "@/components/tag";
+import HeaderSubtle from "@/components/header-subtle";
 
 export default function Post() {
   const someText: string =
@@ -23,15 +24,15 @@ export default function Post() {
           {/* (part of) Metadata */}
           <div className="flex flex-row space-x-12">
             <div className="flex-col">
-              <h6>Created on 8 May 2024</h6>
-              <h6>Last update on 10 May 2024</h6>
+              <HeaderSubtle>Created on 8 May 2024</HeaderSubtle>
+              <HeaderSubtle>Last update on 10 May 2024</HeaderSubtle>
             </div>
             <div className="flex-col">
-              <h6>Post type</h6>
+              <HeaderSubtle>Post type</HeaderSubtle>
               <Tag>Research Project</Tag>
             </div>
             <div className="flex-col">
-              <h6>Status</h6>
+              <HeaderSubtle>Status</HeaderSubtle>
               <Tag>Open for review</Tag>
             </div>
             {/* TODO buttons */}
