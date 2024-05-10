@@ -1,10 +1,8 @@
 import ContentBox from "@/components/content-box";
-import AuthorCard from "./components/author-card";
-import PostCardMini from "./components/post-card-mini";
 import ThemeSwitcher from "@/components/theme-switcher";
-import Tag from "@/components/tag";
 import PostContents from "./components/post-contents";
 import Discussion from "./components/discussion";
+import PostSidebar from "./components/post-sidebar";
 
 // TODO get post id from url
 export default function Post() {
@@ -27,26 +25,7 @@ export default function Post() {
         </ContentBox>
         <button>Post your answer</button>
       </div>
-      {/* Sidebar */}
-      <div className="min-w-72">
-        <h2>About</h2>
-        <h3>Scientific fields</h3>
-        <div className="flex flex-row flex-wrap gap-x-3 gap-y-2">
-          <Tag>Computer Science</Tag>
-          <Tag>Theory of computation</Tag>
-          <Tag>Mathematical optimization</Tag>
-        </div>
-        <h3>Forked from</h3>
-        <PostCardMini title="Other post's title" status="Peer reviewed" />
-        <h3>Authors</h3>
-        <AuthorCard name="Jane Doe" contribution="Investigation" />
-        <AuthorCard name="John Doe" contribution="Methodology" />
-        <h3>Collaborators</h3>
-        <AuthorCard name="Jane Doe" contribution="Investigation" />
-        <AuthorCard name="John Doe" contribution="Methodology" />
-        <AuthorCard name="Jane Doe" contribution="Investigation" />
-        <AuthorCard name="John Doe" contribution="Methodology" />
-      </div>
+      <PostSidebar />
     </div>
   );
 }
