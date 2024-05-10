@@ -9,7 +9,7 @@ export default function AuthorCard({
   subtitle: string;
 }>) {
   return (
-    <div className="flex flex-row content-center">
+    <div className="flex flex-row content-center gap-x-2">
       <Image
         className={`rounded-full`}
         src={placeholderProfilePic}

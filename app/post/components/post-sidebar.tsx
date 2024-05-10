@@ -22,16 +22,20 @@ export default function PostSidebar() {
       <div className="h-4" />
 
       <h3>Authors</h3>
-      <AuthorCard name="Jane Doe" subtitle="Investigation" />
-      <AuthorCard name="John Doe" subtitle="Methodology" />
+      <div className="flex flex-col gap-y-2">
+        <AuthorCard name="Jane Doe" subtitle="Investigation" />
+        <AuthorCard name="John Doe" subtitle="Methodology" />
+      </div>
 
       <div className="h-4" />
 
       <h3>Collaborators</h3>
-      <AuthorCard name="Jane Doe" subtitle="Investigation" />
-      <AuthorCard name="John Doe" subtitle="Methodology" />
-      <AuthorCard name="Jane Doe" subtitle="Investigation" />
-      <AuthorCard name="John Doe" subtitle="Methodology" />
+      <div className="flex flex-col gap-y-2">
+        <AuthorCard name="Jane Doe" subtitle="Investigation" />
+        <AuthorCard name="John Doe" subtitle="Methodology" />
+        <AuthorCard name="Jane Doe" subtitle="Investigation" />
+        <AuthorCard name="John Doe" subtitle="Methodology" />
+      </div>
     </div>
   );
 }
