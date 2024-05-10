@@ -2,6 +2,7 @@ import ContentBox from "@/components/content-box";
 import Link from "next/link";
 import AuthorCard from "./components/author-card";
 import PostCardMini from "./components/post-card-mini";
+import ThemeSwitcher from "@/components/theme-switcher";
 
 export default function Post() {
   const someText: string =
@@ -10,6 +11,8 @@ export default function Post() {
 
   return (
     <div className="flex flex-row space-x-6">
+      {/* TODO put this in a header instead of here */}
+      <ThemeSwitcher />
       {/* Main body */}
       <div className="flex flex-col space-y-4">
         {/* Main 'post' render */}
