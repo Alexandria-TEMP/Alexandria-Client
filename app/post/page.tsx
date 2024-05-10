@@ -1,11 +1,11 @@
 import ContentBox from "@/components/content-box";
-import Link from "next/link";
 import AuthorCard from "./components/author-card";
 import PostCardMini from "./components/post-card-mini";
 import ThemeSwitcher from "@/components/theme-switcher";
 import Tag from "@/components/tag";
-import HeaderSubtle from "@/components/header-subtle";
+import PostContents from "./components/post-contents";
 
+// TODO get post id from url
 export default function Post() {
   const someText: string =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus ea, consequatur quibusdam earum reiciendis voluptatem commodi, possimus nemo facere consequuntur ipsum placeat minus excepturi nulla, doloremque quia! Molestiae, natus quasi.";
@@ -17,34 +17,7 @@ export default function Post() {
       <ThemeSwitcher />
       {/* Main body */}
       <div className="flex flex-col space-y-4">
-        {/* Main 'post' render */}
-        <ContentBox>
-          {/* Title */}
-          <h1 className="font-semibold">Post title</h1>
-          {/* (part of) Metadata */}
-          <div className="flex flex-row space-x-12">
-            <div className="flex-col">
-              <HeaderSubtle>Created on 8 May 2024</HeaderSubtle>
-              <HeaderSubtle>Last update on 10 May 2024</HeaderSubtle>
-            </div>
-            <div className="flex-col">
-              <HeaderSubtle>Post type</HeaderSubtle>
-              <Tag>Research Project</Tag>
-            </div>
-            <div className="flex-col">
-              <HeaderSubtle>Status</HeaderSubtle>
-              <Tag>Open for review</Tag>
-            </div>
-            {/* TODO buttons */}
-            {/* ? There's probably a more user-friendly name for this... */}
-            <Link href={"/post/merge-requests"}>Merge Requests</Link>
-            {/* ! Either contribute or review, depending on status */}
-            <button>Contribute/Review</button>
-            <button>Fork</button>
-          </div>
-          {/* Contents */}
-          <p>{someText}</p>
-        </ContentBox>
+        <PostContents />
         {/* Discussions */}
         <h2>{numberOfDiscussions} Replies</h2>
         <ContentBox>
