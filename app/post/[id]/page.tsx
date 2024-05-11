@@ -4,8 +4,7 @@ import PostContents from "./components/post-contents";
 import Discussion from "./components/discussion";
 import PostSidebar from "./components/post-sidebar";
 
-// TODO get post id from url
-export default function Post() {
+export default function Post({ params }: { params: { id: string } }) {
   const numberOfDiscussions: number = 2;
 
   return (
