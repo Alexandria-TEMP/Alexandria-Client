@@ -3,9 +3,11 @@ import ThemeSwitcher from "@/components/theme-switcher";
 import PostContents from "./components/post-contents";
 import Discussion from "./components/discussion";
 import PostSidebar from "./components/post-sidebar";
+import getPostData from "./lib/post-data";
 
-export default function Post({ params }: { params: { id: string } }) {
-  const numberOfDiscussions: number = 2;
+export default async function Post({ params }: { params: { id: string } }) {
+  const data = await getPostData(params.id);
+  const numberOfDiscussions: number = data.currentVersion.discussions.length;
 
   return (
     <div className="flex flex-row space-x-6">
@@ -13,7 +15,7 @@ export default function Post({ params }: { params: { id: string } }) {
       <ThemeSwitcher />
       {/* Main body */}
       <div className="flex flex-col space-y-4">
-        <PostContents />
+        <PostContents postId={params.id} />
         {/* Discussions */}
         <h2>{numberOfDiscussions} Replies</h2>
         <Discussion />
