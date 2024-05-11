@@ -5,7 +5,7 @@ export default function AuthorCard({
   contribution,
 }: Readonly<{
   name: string;
-  contribution: string;
+  contribution: string; // TODO make enum for CRediT roles
 }>) {
   return (
     <div className="flex flex-row items-center gap-x-2">
