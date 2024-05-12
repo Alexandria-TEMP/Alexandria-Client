@@ -143,6 +143,10 @@ docker-compose up e2e
 
 #### Tests
 
-- Unit tests: [Jest](https://jestjs.io/docs/getting-started)
-- Component and end-to-end tests: [Cypress](https://docs.cypress.io/guides/overview/why-cypress)
+Unit tests
+- [Jest](https://jestjs.io/docs/getting-started)
+- [React testing library](https://testing-library.com/docs/react-testing-library/api)
+
+Component and end-to-end tests
+- [Cypress](https://docs.cypress.io/guides/overview/why-cypress)
   
