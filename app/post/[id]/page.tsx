@@ -8,7 +8,7 @@ import InputDiscussion from "./components/input-discussion";
 
 export default async function Post({ params }: { params: { id: string } }) {
   const data = await getPostData(params.id);
-  const numberOfDiscussions: number = data.currentVersion.discussions.length;
+  const discussions = data.currentVersion.discussions;
 
   return (
     <div className="flex flex-row space-x-6 pt-8">
@@ -18,9 +18,10 @@ export default async function Post({ params }: { params: { id: string } }) {
       <div className="flex flex-col space-y-4">
         <PostContents postId={params.id} />
         {/* Discussions */}
-        <h2>{numberOfDiscussions} Replies</h2>
-        <Discussion />
-        <Discussion />
+        <h2>{discussions.length} Replies</h2>
+        {discussions.map((id) => (
+          <Discussion id={id} key={id} />
+        ))}
         <InputDiscussion versionId={data.currentVersion.id} />
       </div>
       <PostSidebar />
