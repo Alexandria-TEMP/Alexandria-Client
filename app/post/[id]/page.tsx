@@ -24,7 +24,7 @@ export default async function Post({ params }: { params: { id: string } }) {
         ))}
         <InputDiscussion versionId={data.currentVersion.id} />
       </div>
-      <PostSidebar />
+      <PostSidebar postId={params.id} />
     </div>
   );
 }

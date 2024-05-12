@@ -1,16 +1,19 @@
 import ContentBox from "@/components/content-box";
 import Tag from "@/components/tag";
+import getPostData from "../lib/post-api";
+import Link from "next/link";
 
-// TODO props should be just link to post
-export default function PostCardMini({
-  title,
-  status,
-}: Readonly<{ title: string; status: string }>) {
+export default async function PostCardMini({
+  postId,
+}: Readonly<{ postId: string }>) {
+  const data = await getPostData(postId);
   return (
     <ContentBox>
-      <h2>{title}</h2>
+      <Link href={`/post/${data.id}`}>
+        <h2>{data.title}</h2>
+      </Link>
       <div className="w-fit">
-        <Tag>{status}</Tag>
+        <Tag>{data.status}</Tag>
       </div>
     </ContentBox>
   );

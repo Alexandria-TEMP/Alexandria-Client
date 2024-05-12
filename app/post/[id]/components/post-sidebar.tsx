@@ -1,40 +1,44 @@
 import Tag from "@/components/tag";
 import AuthorCard from "./author-card";
 import PostCardMini from "./post-card-mini";
+import getPostData from "../lib/post-api";
 
-// TODO contents from props
-export default function PostSidebar() {
+export default async function PostSidebar({
+  postId,
+}: Readonly<{ postId: string }>) {
+  const data = await getPostData(postId);
+
   return (
-    <div className="min-w-64">
+    <div className="w-1/4">
       <h2>About</h2>
       <h3>Scientific fields</h3>
       <div className="flex flex-row flex-wrap gap-x-3 gap-y-2">
-        <Tag>Computer Science</Tag>
-        <Tag>Theory of computation</Tag>
-        <Tag>Mathematical optimization</Tag>
+        {data.scientificFieldTags.map((field, index) => (
+          <Tag key={index}>{field}</Tag>
+        ))}
       </div>
 
       <div className="h-4" />
 
       <h3>Forked from</h3>
-      <PostCardMini title="Other post's title" status="Peer reviewed" />
+      <PostCardMini postId="2" />
 
       <div className="h-4" />
 
       <h3>Authors</h3>
       <div className="flex flex-col gap-y-2">
-        <AuthorCard name="Jane Doe" contribution="Investigation" />
-        <AuthorCard name="John Doe" contribution="Methodology" />
+        {data.collaborators.map((id) => (
+          <AuthorCard memberId={id} key={id} />
+        ))}
       </div>
 
       <div className="h-4" />
 
       <h3>Collaborators</h3>
       <div className="flex flex-col gap-y-2">
-        <AuthorCard name="Jane Doe" contribution="Investigation" />
-        <AuthorCard name="John Doe" contribution="Methodology" />
-        <AuthorCard name="Jane Doe" contribution="Investigation" />
-        <AuthorCard name="John Doe" contribution="Methodology" />
+        {data.collaborators.map((id) => (
+          <AuthorCard memberId={id} key={id} />
+        ))}
       </div>
     </div>
   );

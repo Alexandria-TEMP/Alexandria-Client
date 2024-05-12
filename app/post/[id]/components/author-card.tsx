@@ -1,25 +1,23 @@
-import Image from "next/image";
+import getMemberData from "../lib/member-api";
+import { Avatar } from "@nextui-org/react";
 
-export default function AuthorCard({
-  name,
-  contribution,
+//  TODO link to profile
+export default async function AuthorCard({
+  memberId,
 }: Readonly<{
-  name: string;
-  contribution: string; // TODO make enum for CRediT roles
+  memberId: string;
 }>) {
+  const data = await getMemberData(memberId);
+  const fullName = `${data.firstName} ${data.lastName}`;
+
   return (
-    <div className="flex flex-row items-center gap-x-2">
+    <div className="flex flex-row gap-x-2">
       <div className="size-[60px] relative">
-        <Image
-          className="rounded-full"
-          src="/placeholders/Marie_Curie.jpg"
-          alt={`${name}'s profile picture`}
-          fill
-        />
+        <Avatar src={data.picture} size="lg" />
       </div>
       <div className="flex flex-col">
-        <p className="font-semibold">{name}</p>
-        <p>{contribution}</p>
+        <p className="font-semibold">{fullName}</p>
+        <p>{data.institution}</p>
       </div>
     </div>
   );

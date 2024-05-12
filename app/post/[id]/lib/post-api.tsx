@@ -5,20 +5,7 @@ export default async function getPostData(id: string) {
   return {
     title: "Post title",
     status: "Open for review",
-    collaborators: [
-      {
-        email: "mariecurie@tudelft.nl",
-        firstName: "Marie",
-        institution: "TU Delft",
-        lastName: "Curie",
-      },
-      {
-        email: "mariecurie@tudelft.nl",
-        firstName: "Marie",
-        institution: "TU Delft",
-        lastName: "Curie",
-      },
-    ],
+    collaborators: ["1", "2"],
     createdAt: "10 May 2024",
     currentVersion: {
       id: "1",
@@ -28,8 +15,8 @@ export default async function getPostData(id: string) {
     postType: "Reflection",
     scientificFieldTags: [
       "Computer Science",
+      "Mathematics",
       "Theory of computation",
-      "Mathematical optimization",
     ],
     updatedAt: "11 May 2024",
   };
