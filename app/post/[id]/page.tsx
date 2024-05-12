@@ -3,14 +3,15 @@ import ThemeSwitcher from "@/components/theme-switcher";
 import PostContents from "./components/post-contents";
 import Discussion from "./components/discussion";
 import PostSidebar from "./components/post-sidebar";
-import getPostData from "./lib/post-data";
+import getPostData from "./lib/post-api";
+import InputDiscussion from "./components/input-discussion";
 
 export default async function Post({ params }: { params: { id: string } }) {
   const data = await getPostData(params.id);
   const numberOfDiscussions: number = data.currentVersion.discussions.length;
 
   return (
-    <div className="flex flex-row space-x-6">
+    <div className="flex flex-row space-x-6 pt-8">
       {/* TODO put this in a header instead of here */}
       <ThemeSwitcher />
       {/* Main body */}
@@ -20,11 +21,7 @@ export default async function Post({ params }: { params: { id: string } }) {
         <h2>{numberOfDiscussions} Replies</h2>
         <Discussion />
         <Discussion />
-        <h2>Your reply</h2>
-        <ContentBox>
-          <p>User input text...</p>
-        </ContentBox>
-        <button>Post your answer</button>
+        <InputDiscussion versionId={data.currentVersion.id} />
       </div>
       <PostSidebar />
     </div>

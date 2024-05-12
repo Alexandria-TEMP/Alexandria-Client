@@ -4,7 +4,7 @@ export default function ContentBox({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="p-6 -mx-2 max-w-full rounded-lg bg-white dark:bg-black">
+    <div className="p-4 max-w-full rounded-lg bg-white dark:bg-black">
       {children}
     </div>
   );

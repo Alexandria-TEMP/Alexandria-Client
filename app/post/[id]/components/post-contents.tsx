@@ -2,7 +2,7 @@ import ContentBox from "@/components/content-box";
 import HeaderSubtle from "@/components/header-subtle";
 import Tag from "@/components/tag";
 import Link from "next/link";
-import getPostData from "../lib/post-data";
+import getPostData from "../lib/post-api";
 
 export default async function PostContents({ postId }: { postId: string }) {
   const placeholderContents: string =
