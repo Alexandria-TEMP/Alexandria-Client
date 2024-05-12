@@ -3,7 +3,6 @@
 import ButtonInline from "@/components/button-inline";
 import ContentBox from "@/components/content-box";
 import HeaderSubtle from "@/components/header-subtle";
-import AuthorCard from "./author-card";
 
 // TODO contents as props
 export default function Discussion() {

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { ChildrenProp } from "./lib/children-prop-type";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -10,11 +11,7 @@ export const metadata: Metadata = {
   description: "Collaborative and open access scientific publishing.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: ChildrenProp) {
   const rootCSSClasses =
     "px-8 " +
     "text-black dark:text-white " +
