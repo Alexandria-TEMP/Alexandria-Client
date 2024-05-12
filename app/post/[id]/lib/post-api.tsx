@@ -9,7 +9,7 @@ export default async function getPostData(id: string) {
     createdAt: "10 May 2024",
     currentVersion: {
       id: "1",
-      discussions: ["1"],
+      discussions: ["1", "1", "1", "1"],
     },
     id: id,
     postType: "Reflection",
