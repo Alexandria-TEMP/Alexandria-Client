@@ -9,9 +9,7 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
 import { Chip } from "@nextui-org/chip";
-import {Card, CardHeader, CardBody, Image} from "@nextui-org/react";
-import {Select, SelectItem} from "@nextui-org/select";
-import { Sumana } from "next/font/google";
+import {Card, CardHeader, CardBody} from "@nextui-org/react";
 
 const USERS = [
   { id: 1, name: "Andy" },
@@ -35,16 +33,15 @@ const FIELDS = [
     { id: 7, title: "Medicine" },
   ];
 
-// TODO these need to be changed to 0
-let authorId: number = 10;
-let contributorId: number = 10;
-let fieldsId: number = 10;
+let authorId: number = 0;
+let contributorId: number = 0;
+let fieldsId: number = 0;
 
 export default function NewPost() {
-    const [authors, setAuthors] = useState<{ id: number; name: string }[]>(USERS);
+    const [authors, setAuthors] = useState<{ id: number; name: string }[]>([]);
     const [contributors, setContributors] =
-    useState<{ id: number; name: string }[]>(USERS);
-    const [fields, setFields] = useState<{ id: number; title: string }[]>(FIELDS);
+        useState<{ id: number; name: string }[]>([]);
+    const [fields, setFields] = useState<{ id: number; title: string }[]>([]);
     const [title, setTitle] = useState("");
     const [newAuthor, setNewAuthor] = useState("");
     const [newContributor, setNewContributor] = useState("");
@@ -63,9 +60,9 @@ export default function NewPost() {
     const submit = () => {
         alert(
             "Title: " + title + "\n"
-            + "Authors: " + authors + "\n" 
-            + "Contributors: " + contributors + "\n"
-            + "Fields: " + fields + "\n"
+            + "Authors: " + authors.map(a => "[" + a.id + ", " + a.name + "], ") + "\n" 
+            + "Contributors: " + contributors.map(a => "[" + a.id + ", " + a.name + "], ") + "\n"
+            + "Fields: " + fields.map(a => "[" + a.id + ", " + a.title + "], ") + "\n"
             + "Completion: " + completion + "\n"
             + "Type: " + type + "\n"
             + "Feedback: " + feedback
@@ -77,11 +74,11 @@ export default function NewPost() {
             <div>
                 <h1>Title</h1>
                 <Input
-                    style={{ color: "black" }}
                     value={title}
                     className="max-w-xs"
                     placeholder="Enter a title for your project..."
                     defaultValue="Default Title"
+                    isRequired={true}
                     onChange={(e) => setTitle(e.currentTarget.value)}
                 />
             </div>
@@ -135,6 +132,7 @@ export default function NewPost() {
                         placeholder="Search a user"
                         className="max-w-xs"
                         style={{ display: "inline-block" }}
+                        isRequired={true}
                         onInputChange={(a) => setNewAuthor(a)}
                     >
                         {(a) => <AutocompleteItem key={a.id}>{a.name}</AutocompleteItem>}
@@ -145,7 +143,7 @@ export default function NewPost() {
                         onClick={(e) =>
                             setAuthors([
                                 ...authors,
-                                { id: (authorId += 2), name: newAuthor },
+                                { id: (authorId++), name: newAuthor },
                             ])
                         }   
                     >
@@ -186,7 +184,7 @@ export default function NewPost() {
                         onClick={(e) =>
                             setContributors([
                             ...contributors,
-                            { id: (contributorId += 2), name: newContributor },
+                            { id: (contributorId++), name: newContributor },
                         ])}
                     >
                         Add
@@ -226,7 +224,7 @@ export default function NewPost() {
                         onClick={(e) =>
                         setFields([
                             ...fields,
-                            { id: (authorId += 2), title: newField },
+                            { id: (fieldsId++), title: newField },
                         ])
                         }
                     >
@@ -239,46 +237,53 @@ export default function NewPost() {
 
             <div>
                 <h1> What type will your post be? </h1>
-                <Select
+                <Autocomplete
                     placeholder="Select a type for your post..."
                     description="The type of post???"
+                    defaultSelectedKey={0}
                     className="max-w-xs"
+                    isRequired={true}
+                    onInputChange={(a) => setType(a)}
                 >
-                    <SelectItem key={0}>Project</SelectItem>
-                    <SelectItem key={1}>Question</SelectItem>
-                    <SelectItem key={2}>Reflection</SelectItem>
-                </Select>
+                    <AutocompleteItem key={0}>Project</AutocompleteItem>
+                    <AutocompleteItem key={1}>Question</AutocompleteItem>
+                    <AutocompleteItem key={2}>Reflection</AutocompleteItem>
+                </Autocomplete>
             </div>
             
             <Divider />
 
             <div>
                 <h1> What are your feedback preferences? </h1>
-                <Select
+                <Autocomplete
                     description="The type of replies you want to encourage under your post"
                     placeholder="Select the type of feedback preferences you want..."
-                    defaultSelectedKeys={[0]}
+                    defaultSelectedKey={0}
                     className="max-w-xs"
+                    isRequired={true}
+                    onInputChange={(a) => setFeedback(a)}
                 >
-                    <SelectItem key={0}>Community Discussion</SelectItem>
-                    <SelectItem key={1}>Formal Feedback</SelectItem>
-                </Select>
+                    <AutocompleteItem key={0}>Community Discussion</AutocompleteItem>
+                    <AutocompleteItem key={1}>Formal Feedback</AutocompleteItem>
+                </Autocomplete>
             </div>
 
             <Divider />
 
             <div>
                 <h1> What is the completion of your project </h1>
-                <Select
+                <Autocomplete
                     description="This helps other users understand your work and give advice"
                     placeholder="Select the completion status for your post..."
                     className="max-w-xs"
-                    // onSelectionChange={keys => setCompletion(keys)}
+                    defaultSelectedKey={0}
+                    isRequired={true}
+                    onInputChange={(a) => setCompletion(a)}
                 >
-                    <SelectItem key={0}>Ideation (to begin)</SelectItem>
-                    <SelectItem key={1}>Ongoing</SelectItem>
-                    <SelectItem key={2}>Completed</SelectItem>
-                </Select>
+                    <AutocompleteItem key={0}>Ideation (to begin)</AutocompleteItem>
+                    <AutocompleteItem key={1}>Ongoing</AutocompleteItem>
+                    <AutocompleteItem key={2}>Completed</AutocompleteItem>
+                </Autocomplete>
             </div>
 
             <Divider />
