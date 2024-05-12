@@ -24,6 +24,7 @@ export default function ThemeSwitcher() {
   if (currentTheme === "dark") {
     return (
       <SunIcon
+        data-testid="theme-switcher-sun"
         role="button"
         className={iconClasses + " text-neutral-300"}
         onClick={() => setTheme("light")}
@@ -33,6 +34,7 @@ export default function ThemeSwitcher() {
 
   return (
     <MoonIcon
+      data-testid="theme-switcher-moon"
       role="button"
       className={iconClasses + " text-neutral-700"}
       onClick={() => setTheme("dark")}
