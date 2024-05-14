@@ -12,10 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: ChildrenProp) {
-  const rootCSSClasses =
-    "px-8 " +
-    "text-black dark:text-white " +
-    "bg-neutral-200 dark:bg-neutral-800";
+  const rootCSSClasses = "px-8";
 
   return (
     <html lang="en">
