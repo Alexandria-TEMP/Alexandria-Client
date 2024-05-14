@@ -1,8 +1,13 @@
-import ContentBox from "@/components/content-box";
 import HeaderSubtle from "@/components/header-subtle";
-import Tag from "@/components/tag";
 import Link from "next/link";
 import getPostData from "../lib/post-api";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Chip,
+} from "@nextui-org/react";
 
 export default async function PostContents({ postId }: { postId: string }) {
   const placeholderContents: string =
@@ -11,22 +16,25 @@ export default async function PostContents({ postId }: { postId: string }) {
   const data = await getPostData(postId);
 
   return (
-    <ContentBox>
+    <Card>
       {/* Title */}
-      <h1 className="font-semibold">{data.title}</h1>
+      <CardHeader>
+        <h1 className="font-semibold">{data.title}</h1>
+      </CardHeader>
+
       {/* (part of) Metadata */}
-      <div className="flex flex-row space-x-12">
+      <CardHeader className="-mt-4 flex gap-12">
         <div className="flex-col">
           <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
           <HeaderSubtle>Last update on {data.updatedAt}</HeaderSubtle>
         </div>
         <div className="flex-col">
           <HeaderSubtle>Post type</HeaderSubtle>
-          <Tag>{data.postType}</Tag>
+          <Chip>{data.postType}</Chip>
         </div>
         <div className="flex-col">
           <HeaderSubtle>Status</HeaderSubtle>
-          <Tag>{data.status}</Tag>
+          <Chip>{data.status}</Chip>
         </div>
         {/* TODO buttons */}
         {/* ? There's probably a more user-friendly name for this... */}
@@ -34,9 +42,12 @@ export default async function PostContents({ postId }: { postId: string }) {
         {/* ! Either contribute or review, depending on status */}
         <button>Contribute/Review</button>
         <button>Fork</button>
-      </div>
+      </CardHeader>
+
       {/* Contents */}
-      <p>{placeholderContents}</p>
-    </ContentBox>
+      <CardBody>
+        <p>{placeholderContents}</p>
+      </CardBody>
+    </Card>
   );
 }

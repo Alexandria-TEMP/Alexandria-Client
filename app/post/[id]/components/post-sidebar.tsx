@@ -1,7 +1,7 @@
-import Tag from "@/components/tag";
 import AuthorCard from "./author-card";
 import PostCardMini from "./post-card-mini";
 import getPostData from "../lib/post-api";
+import { Chip } from "@nextui-org/react";
 
 export default async function PostSidebar({
   postId,
@@ -14,7 +14,7 @@ export default async function PostSidebar({
       <h3>Scientific fields</h3>
       <div className="flex flex-row flex-wrap gap-x-3 gap-y-2">
         {data.scientificFieldTags.map((field, index) => (
-          <Tag key={index}>{field}</Tag>
+          <Chip key={index}>{field}</Chip>
         ))}
       </div>
 
