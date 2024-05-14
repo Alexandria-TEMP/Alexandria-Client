@@ -1,3 +1,6 @@
+// methods in this file will be heavily changed once integration with back end it done
+// just retrieve some dummy data for now
+
 export function getMemberData(id: string) {
   // TODO
   if (id == "1") {

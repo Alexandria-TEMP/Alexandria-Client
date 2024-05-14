@@ -3,6 +3,10 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 
 // TODO this will need some props for returning the files somehow
+/**
+ * Component which has the title and the available options for uploading content.
+ * @return a div containing the title and cards for each type of file upload option
+ */
 export default function UploadContentCard() {
   return (
     <div className="space-y-2">
@@ -15,9 +19,12 @@ export default function UploadContentCard() {
           </CardBody>
         </Card>
         <Card className="grow w-1/2">
-          <CardHeader>Import From GitHub</CardHeader>
+          <CardHeader>Import From GitHub (disabled) </CardHeader>
           <CardBody>
-            <Input placeholder="Input GitHub repository link..."></Input>
+            <Input
+              placeholder="Input GitHub repository link..."
+              disabled={true} // TODO make it more clear that it is disabled cause it does not look like it atm
+            />
           </CardBody>
         </Card>
       </div>

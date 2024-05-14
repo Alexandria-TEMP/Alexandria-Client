@@ -5,9 +5,20 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
 
+/**
+ * Searchable dropdown which mimics multi select by adding the selected items to a list of removable tags.
+ * @param param0 prop obj where:
+ * - title: the title of what the dropdown represents
+ * - description: the description of what the dropdown represents
+ * - selected: Set of the selected items (should not have duplicates), must come from useState hook from the parent
+ * - items: the list of items in the dropdown, needs to be a key-value pair, the key is what is used for selected items
+ * - setSelectedItems: setter for "selected", must come from useState hook
+ * - getItemLabel: method that returns the desired string representation of the object in the dropdown
+ * @returns a div containing the title, list of selected items, the dropdown and add button
+ */
 export function MultiSelectAutocomplete<Type>({
   title,
-  description,
+  description, // TODO if wanted, i could add placeholders and many other things but for no i think is overkill
   selected,
   items,
   setSelectedItems,
@@ -15,14 +26,14 @@ export function MultiSelectAutocomplete<Type>({
 }: {
   title: string;
   description: string;
-  selected: Set<React.Key>; // TODO explain why this is a map
+  selected: Set<string>;
   items: Map<string, Type>;
-  setSelectedItems: (item: Set<React.Key>) => void;
+  setSelectedItems: (item: Set<string>) => void;
   getItemLabel: (i: Type | undefined) => string;
 }) {
   const [newItem, setNewItem] = useState<React.Key>("");
 
-  const removeItem = (removed: React.Key) =>
+  const removeItem = (removed: string) =>
     setSelectedItems(
       new Set(Array.from(selected.keys()).filter((e) => e !== removed)),
     );
@@ -31,13 +42,23 @@ export function MultiSelectAutocomplete<Type>({
     <div className="space-y-2">
       <h2>{title}</h2>
       <div className="flex flex-row max-w-full flex-wrap gap-x-1.5 gap-y-2">
-        {Array.from(selected.keys()).map((item) => (
-          <Chip variant="bordered" key={item} onClose={(e) => removeItem(item)}>
-            {/* // TODO this is super inefficient but idk how to do this better
-                        // cause i cannot directly store the object from the autocomplete component, i can only get keys */}
-            {getItemLabel(items.get(item.toString()))}
-          </Chip>
-        ))}
+        {
+          selected.size > 0 ? (
+            Array.from(selected.keys()).map((item) => (
+              <Chip
+                variant="bordered"
+                key={item}
+                onClose={(e) => removeItem(item)}
+              >
+                {/* // TODO this is super inefficient but idk how to do this better
+                            // cause i cannot directly store the object from the autocomplete component, i can only get keys */}
+                {getItemLabel(items.get(item.toString()))}
+              </Chip>
+            ))
+          ) : (
+            <div> No items selected yet </div>
+          ) // TODO would make this prettier
+        }
       </div>
       <div className="flex flex-row justify-between gap-x-3">
         <Autocomplete
@@ -59,7 +80,9 @@ export function MultiSelectAutocomplete<Type>({
           variant="ghost"
           style={{ display: "inline-block" }}
           onClick={(e) =>
-            setSelectedItems(new Set([...Array.from(selected.keys()), newItem]))
+            setSelectedItems(
+              new Set([...Array.from(selected.keys()), newItem.toString()]),
+            )
           }
         >
           Add

@@ -17,15 +17,15 @@ export default function NewPost() {
   const FIELDS = getFields();
 
   const [title, setTitle] = useState("");
-
-  const [authors, setAuthors] = useState<Set<React.Key>>(new Set());
-  const [contributors, setContributors] = useState<Set<React.Key>>(new Set());
-  const [fields, setFields] = useState<Set<React.Key>>(new Set());
+  const [authors, setAuthors] = useState<Set<string>>(new Set());
+  const [contributors, setContributors] = useState<Set<string>>(new Set());
+  const [fields, setFields] = useState<Set<string>>(new Set());
 
   const [type, setType] = useState("");
   const [completion, setCompletion] = useState("");
   const [feedback, setFeedback] = useState("");
 
+  // TODO this will have to be moved somewhere else
   const submit = () => {
     alert(
       "Title: " +
