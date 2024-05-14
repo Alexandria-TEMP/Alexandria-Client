@@ -15,21 +15,23 @@ export function MultiSelectAutocomplete<Type>({
 }: {
   title: string;
   description: string;
-  selected: string[];
+  selected: Set<React.Key>; // TODO explain why this is a map
   items: Map<string, Type>;
-  setSelectedItems: (item: string[]) => void;
+  setSelectedItems: (item: Set<React.Key>) => void;
   getItemLabel: (i: Type | undefined) => string;
 }) {
   const [newItem, setNewItem] = useState<React.Key>("");
 
-  const removeItem = (removed: string) =>
-    setSelectedItems(selected.filter((a) => a !== removed));
+  const removeItem = (removed: React.Key) =>
+    setSelectedItems(
+      new Set(Array.from(selected.keys()).filter((e) => e !== removed)),
+    );
 
   return (
     <div className="space-y-2">
       <h2>{title}</h2>
       <div className="flex flex-row max-w-full flex-wrap gap-x-1.5 gap-y-2">
-        {selected.map((item) => (
+        {Array.from(selected.keys()).map((item) => (
           <Chip variant="bordered" key={item} onClose={(e) => removeItem(item)}>
             {/* // TODO this is super inefficient but idk how to do this better
                         // cause i cannot directly store the object from the autocomplete component, i can only get keys */}
@@ -57,14 +59,7 @@ export function MultiSelectAutocomplete<Type>({
           variant="ghost"
           style={{ display: "inline-block" }}
           onClick={(e) =>
-            // TODO currently you are allowed to add the same author mutliple times (which should not be the case)
-            // this causes "funny" issue when deleting the author, as in it removes all instances of the author
-            // with the same id
-            // if you are curious what i mean, just choose an author, press the add button multiple times,
-            // and them press delete on one of the authors
-            // ANOTHER BIGGER ISSUE if you add A, then say B, and then A again (you have A, B, A)
-            // and you try to remove the first A, then you have problems
-            setSelectedItems([...selected, newItem.toString()])
+            setSelectedItems(new Set([...Array.from(selected.keys()), newItem]))
           }
         >
           Add
