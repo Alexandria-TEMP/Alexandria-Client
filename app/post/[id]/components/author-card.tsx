@@ -11,13 +11,13 @@ export default async function AuthorCard({
   const fullName = `${data.firstName} ${data.lastName}`;
 
   return (
-    <div className="flex flex-row gap-x-2">
-      <div className="size-[60px] relative">
+    <div className="flex flex-row content-center gap-x-2">
+      <div>
         <Avatar src={data.picture} size="lg" />
       </div>
       <div className="flex flex-col">
         <p className="font-semibold">{fullName}</p>
-        <p>{data.institution}</p>
+        <p className="text-sm">{data.institution}</p>
       </div>
     </div>
   );
