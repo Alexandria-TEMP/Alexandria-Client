@@ -29,7 +29,9 @@ export default function PostCardMini({ postId }: Readonly<{ postId: string }>) {
         </Skeleton>
       </CardBody>
       <CardFooter>
-        <Chip>{data !== null ? data.status : "No status"}</Chip>
+        <Skeleton isLoaded={isLoaded}>
+          <Chip>{data !== null ? data.status : "No status"}</Chip>
+        </Skeleton>
       </CardFooter>
     </Card>
   );
