@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Textarea } from "@nextui-org/react";
+import { Button, Textarea } from "@nextui-org/react";
 import { uploadDiscussion } from "../lib/discussion-api";
 
 export default function InputDiscussion({
@@ -18,9 +18,12 @@ export default function InputDiscussion({
         value={input}
         onValueChange={setInput}
       />
-      <button onClick={() => uploadDiscussion(input, versionId)}>
+      <Button
+        className="mt-4"
+        onClick={() => uploadDiscussion(input, versionId)}
+      >
         Post your answer
-      </button>
+      </Button>
     </div>
   );
 }

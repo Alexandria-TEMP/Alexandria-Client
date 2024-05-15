@@ -1,13 +1,7 @@
 import HeaderSubtle from "@/components/header-subtle";
-import Link from "next/link";
 import getPostData from "../lib/post-api";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Chip,
-} from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Chip } from "@nextui-org/react";
+import PostContentsButtons from "./post-contents-buttons";
 
 export default async function PostContents({ postId }: { postId: string }) {
   const placeholderContents: string =
@@ -36,12 +30,7 @@ export default async function PostContents({ postId }: { postId: string }) {
           <HeaderSubtle>Status</HeaderSubtle>
           <Chip>{data.status}</Chip>
         </div>
-        {/* TODO buttons */}
-        {/* ? There's probably a more user-friendly name for this... */}
-        <Link href={`/post/${postId}/merge-requests`}>Merge Requests</Link>
-        {/* ! Either contribute or review, depending on status */}
-        <button>Contribute/Review</button>
-        <button>Fork</button>
+        <PostContentsButtons postId={postId} />
       </CardHeader>
 
       {/* Contents */}
