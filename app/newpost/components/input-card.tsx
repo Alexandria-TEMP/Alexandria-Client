@@ -15,7 +15,6 @@ export default function InputCard({
 }: {
   title: string;
   placeholder: string;
-  value: string;
   setValue: (item: string) => void;
 }) {
   return (

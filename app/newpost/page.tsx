@@ -67,7 +67,6 @@ export default function NewPost() {
             <InputCard
               title="Title"
               placeholder="Enter a title for your project..."
-              value={title}
               setValue={setTitle}
             />
 
