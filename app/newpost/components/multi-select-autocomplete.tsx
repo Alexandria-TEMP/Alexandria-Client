@@ -39,7 +39,7 @@ export function MultiSelectAutocomplete<Type>({
     );
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2" data-testid="mutliselect-test-id">
       <h2>{title}</h2>
       <div className="flex flex-row max-w-full flex-wrap gap-x-1.5 gap-y-2">
         {
@@ -49,6 +49,7 @@ export function MultiSelectAutocomplete<Type>({
                 variant="bordered"
                 key={item}
                 onClose={(e) => removeItem(item)}
+                data-testid="chip-test-id"
               >
                 {/* // TODO this is super inefficient but idk how to do this better
                             // cause i cannot directly store the object from the autocomplete component, i can only get keys */}
@@ -69,9 +70,10 @@ export function MultiSelectAutocomplete<Type>({
           style={{ display: "inline-block" }}
           isRequired={true}
           onSelectionChange={(k) => k !== null && setNewItem(k)}
+          data-testid="select-element-test-id"
         >
           {(item) => (
-            <AutocompleteItem key={item[0]}>
+            <AutocompleteItem key={item[0]} data-testid="select-item-test-id">
               {getItemLabel(item[1])}
             </AutocompleteItem>
           )}

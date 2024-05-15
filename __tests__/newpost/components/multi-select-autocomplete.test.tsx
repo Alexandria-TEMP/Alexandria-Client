@@ -1,10 +1,9 @@
 const { expect, describe, it } = require("@jest/globals");
 import "@testing-library/jest-dom";
-import { render, screen, fireEvent } from "@testing-library/react";
-import InputCard from "@/newpost/components/input-card";
+import { render, screen, waitFor, cleanup, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MultiSelectAutocomplete } from "@/newpost/components/multi-select-autocomplete";
 import { Member } from "@/lib/api-types";
-import exp from "constants";
 
 const dumTitle = "Dummy title";
 const dumDesc = "Dummy description";
@@ -27,7 +26,7 @@ const dumItems = new Map<string, Member>([
       lastName: "Copernicus",
     }]
 ]);
-const dumSetSelectedItems = jest.fn((item: Set<string>) => {});
+const dumSetSelectedItems = jest.fn((item: Set<string>) => dumSelected = dumSelected.add("1")); // TODO hardcoded cause i cant inject newItem
 const dumGetItemLabel = jest.fn((item: Member | undefined) => "Dummy name");
 let multiSelect;
 
@@ -44,6 +43,8 @@ beforeEach(() => {
         />
     )
 })
+
+afterEach(cleanup)
 
 describe("MultiSelectAutocomplete", () => {
     it("renders the title", () => {
@@ -67,15 +68,71 @@ describe("MultiSelectAutocomplete", () => {
     });
 
     it("renders the input prompt", () => {
-        const inputElem = screen.getByPlaceholderText("Search..."); // TODO this is dumb cause it relies on hardcoded name but i do not know how else to get it
+        const inputElem = screen.getByTestId("select-element-test-id");
         expect(inputElem).toBeInTheDocument();
     });
 
-    // it("renders the items", () => {
-        // fireEvent.click(screen.getByPlaceholderText("Search...")); // TODO idk why this doesnt work?
-        // fireEvent.click(screen.getByRole("button", {name: "Show suggestions"}));
-        // const inputList = screen.getAllByRole("listitem", {hidden: true});
-        // expect(inputList).toBeInTheDocument();
-        // expect(inputList.length).toBe(dumItems.size);
-    // });
+    it("renders author tags", () => {
+        dumSelected = new Set<string>("1");
+        multiSelect = render(           
+            <MultiSelectAutocomplete
+                title={dumTitle}
+                description={dumDesc}
+                selected={dumSelected}
+                items={dumItems}
+                setSelectedItems={dumSetSelectedItems}
+                getItemLabel={dumGetItemLabel}
+            />
+        )
+
+        const tagElem = screen.getByTestId("chip-test-id");
+        expect(tagElem).toBeInTheDocument();
+    })
+
+    it("removes author tags", async () => {
+        dumSelected = new Set<string>("1");
+        multiSelect = render(           
+            <MultiSelectAutocomplete
+                title={dumTitle}
+                description={dumDesc}
+                selected={dumSelected}
+                items={dumItems}
+                setSelectedItems={dumSetSelectedItems}
+                getItemLabel={dumGetItemLabel}
+            />
+        )
+
+        const tagElem = screen.getByTestId("chip-test-id");
+        const tagBtn = within(tagElem).getByRole("button");
+        await userEvent.click(tagBtn);
+        expect(dumSetSelectedItems).toHaveBeenCalledTimes(1);
+    })
+
+    it("renders the items", async () => {
+        const inputElem = screen.getByTestId("select-element-test-id");
+        await userEvent.type(inputElem, "Marie");// TODO idk why this doesnt work?
+    
+        // Wait for suggestions to appear
+        await waitFor(() => {
+            expect(screen.getAllByTestId("select-item-test-id")[0]).toBeInTheDocument();
+        });
+
+        const items = screen.getAllByTestId("select-item-test-id");
+        expect(items.length).toBe(dumItems.size);
+    });
+
+    it("modifies selected list", async () => {
+        const inputElem = screen.getByTestId("select-element-test-id");
+        await userEvent.type(inputElem, "Marie");// TODO idk why this doesnt work?
+    
+        // Wait for suggestions to appear
+        await waitFor(() => {
+            expect(screen.getAllByTestId("select-item-test-id")[0]).toBeInTheDocument();
+        });
+        const selected = screen.getAllByTestId("select-item-test-id")[0];
+
+        await userEvent.click(selected);
+        await userEvent.click(screen.getByText("Add"));
+        expect(dumSetSelectedItems).toHaveBeenCalledTimes(1);
+    });
 });

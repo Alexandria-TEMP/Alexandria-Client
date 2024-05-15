@@ -10,15 +10,15 @@ import { Button } from "@nextui-org/button";
 export default function UploadContentCard() {
   return (
     <div className="space-y-2">
-      <h2>Input Content</h2>
+      <h2>Upload Content</h2>
       <div className="flex flex-row gap-x-5">
-        <Card className="grow w-1/2">
+        <Card className="grow w-1/2" data-testid="upload-files-test-id">
           <CardHeader>Upload Files</CardHeader>
           <CardBody>
             <Button>Add Files</Button>
           </CardBody>
         </Card>
-        <Card className="grow w-1/2">
+        <Card className="grow w-1/2" data-testid="import-github-test-id">
           <CardHeader>Import From GitHub (disabled) </CardHeader>
           <CardBody>
             <Input

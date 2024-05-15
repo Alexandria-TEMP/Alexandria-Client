@@ -36,7 +36,7 @@ export function SingleSelectAutocomplete({
         description={description}
         placeholder={placeholder}
         className="max-w-full"
-        defaultSelectedKey={"0"} // TODO should i have a default selected item?
+        defaultSelectedKey={"0"} // TODO should i have a default selected item? also idk what happens if i pass empty list of items
         isRequired={true}
         // TODO this component is meant to be used for things with a small, predetermined number of options
         // is it cool if i just send the value of the slection as a string?
@@ -45,9 +45,13 @@ export function SingleSelectAutocomplete({
           values.has(k.toString()) &&
           setSelection(values.get(k.toString())!)
         }
+        data-testid="select-element-test-id"
       >
         {keys.map((key) => (
-          <AutocompleteItem key={key.toString()}>
+          <AutocompleteItem
+            key={key.toString()}
+            data-testid="select-item-test-id"
+          >
             {values.get(key.toString())}
           </AutocompleteItem>
         ))}
