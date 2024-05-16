@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: ChildrenProp) {
-  const bodyCSSClasses = "px-8";
+  const bodyCSSClasses = "px-24";
 
   return (
     <html lang="en">
