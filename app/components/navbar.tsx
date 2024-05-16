@@ -11,26 +11,28 @@ import Link from "next/link";
 import ThemeSwitcher from "./theme-switcher";
 import { usePathname } from "next/navigation";
 
+/**
+ * Each item in this array becomes an available path in the navbar
+ * href: path or URL to navigate to
+ * label: text rendered in the link
+ */
+export const navigationItems = [
+  {
+    href: "/",
+    label: "Home",
+  },
+  {
+    href: "/newpost",
+    label: "Publish",
+  },
+  {
+    href: "/about",
+    label: "About",
+  },
+];
+
 export default function AlexandriaNavbar() {
   const pathname = usePathname();
-
-  // Each item in this array becomes an available path in the navbar
-  // href: path or URL to navigate to
-  // label: text rendered in the link
-  const navigationItems = [
-    {
-      href: "/",
-      label: "Home",
-    },
-    {
-      href: "/newpost",
-      label: "Publish",
-    },
-    {
-      href: "/about",
-      label: "About",
-    },
-  ];
 
   return (
     <Navbar isBordered>
