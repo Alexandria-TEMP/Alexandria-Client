@@ -7,14 +7,16 @@ import { Chip } from "@nextui-org/react";
  * Sidebar that is shown in a Post's page. Includes most of post's metadata.
  *
  * @param postId Post ID
+ * @param className CSS classes that get applied to the parent div
  */
 export default async function PostSidebar({
   postId,
-}: Readonly<{ postId: string }>) {
+  className,
+}: Readonly<{ postId: string; className?: string }>) {
   const data = await getPostData(postId);
 
   return (
-    <div className="w-1/4">
+    <div className={className}>
       <h2>About</h2>
       <h3>Scientific fields</h3>
       <div className="flex flex-row flex-wrap gap-x-3 gap-y-2">

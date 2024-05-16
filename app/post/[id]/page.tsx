@@ -18,7 +18,7 @@ export default async function Post({ params }: { params: { id: string } }) {
   return (
     <div className="flex flex-row space-x-6 pt-8">
       {/* Main body */}
-      <div className="flex flex-col space-y-4 w-11/12">
+      <div className="flex flex-col space-y-4 w-10/12">
         {/* TODO put this in a header instead of here */}
         <ThemeSwitcher />
         {/* Title, contents, main metadata and action buttons */}
@@ -32,7 +32,7 @@ export default async function Post({ params }: { params: { id: string } }) {
         <InputDiscussion versionId={data.currentVersion.id} />
       </div>
       {/* Sidebar with additional metadata */}
-      <PostSidebar postId={params.id} />
+      <PostSidebar postId={params.id} className="w-2/12" />
     </div>
   );
 }
