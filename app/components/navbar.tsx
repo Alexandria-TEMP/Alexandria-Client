@@ -2,6 +2,8 @@
 
 import { AcademicCapIcon } from "@heroicons/react/24/outline";
 import {
+  Avatar,
+  Button,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -33,6 +35,8 @@ export const navigationItems = [
 
 export default function AlexandriaNavbar() {
   const pathname = usePathname();
+  // TODO get this from somewhere, get user data and test the conditional render
+  const isLoggedIn = false;
 
   return (
     <Navbar isBordered>
@@ -58,6 +62,32 @@ export default function AlexandriaNavbar() {
       </NavbarContent>
       {/* End contents */}
       <NavbarContent justify="end">
+        {/* Conditionally render based on log in status */}
+        {isLoggedIn ? (
+          // Either a user avatar
+          <NavbarItem>
+            <Avatar
+              size="sm"
+              as="link"
+              href="/profile"
+              src="/placeholders/Nikolaus_Kopernikus.jpg"
+            />
+          </NavbarItem>
+        ) : (
+          // Or 'log in' and 'sign up' buttons
+          <>
+            <NavbarItem>
+              <Link href="/log-in">
+                <Button variant="ghost">Log in</Button>
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link href="/sign-up">
+                <Button variant="ghost">Sign up</Button>
+              </Link>
+            </NavbarItem>
+          </>
+        )}
         <NavbarItem>
           <ThemeSwitcher />
         </NavbarItem>

@@ -14,6 +14,14 @@ describe("Navbar", () => {
     ).toBeInTheDocument();
   });
 
+  // TODO tests based on conditional render if user is logged in or not
+  it("includes log in and sign up buttons", () => {
+    render(<AlexandriaNavbar />);
+
+    expect(screen.getByRole("button", { name: "Log in" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Sign up" })).toBeInTheDocument();
+  });
+
   // Returns an anonymous function which tests navigation
   const generateNavigationTest = (href: string, label: string) => async () => {
     // We mock a router for Link to work
