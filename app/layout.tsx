@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { ChildrenProp } from "./lib/children-prop-type";
 import AlexandriaNavbar from "./components/navbar";
+import Footer from "./components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: ChildrenProp) {
         <Providers>
           <AlexandriaNavbar />
           <div className={bodyCSSClasses}>{children}</div>
+          <Footer />
         </Providers>
       </body>
     </html>
