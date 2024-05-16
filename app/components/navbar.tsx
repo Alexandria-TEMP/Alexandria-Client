@@ -1,6 +1,5 @@
 "use client";
 
-import { AcademicCapIcon } from "@heroicons/react/24/outline";
 import {
   Avatar,
   Button,
@@ -12,6 +11,7 @@ import {
 import Link from "next/link";
 import ThemeSwitcher from "./theme-switcher";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 /**
  * Each item in this array becomes an available path in the navbar
@@ -44,8 +44,14 @@ export default function AlexandriaNavbar() {
       <NavbarContent justify="start">
         {/* Branding */}
         <NavbarBrand as={Link} href="/">
-          <AcademicCapIcon className="w-10 h-10 mr-4" />
-          <h1>Alexandria</h1>
+          <Image
+            alt="Alexandria"
+            src="/logo/logo32.svg"
+            width={48}
+            height={48}
+            className="my-4"
+          />
+          <p className="text-4xl">Alexandria</p>
         </NavbarBrand>
       </NavbarContent>
       {/* Center contents */}
