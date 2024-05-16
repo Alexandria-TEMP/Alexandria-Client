@@ -3,6 +3,12 @@
 import { Button, ButtonGroup, Divider } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
+/**
+ * Button group that links to different Post views.
+ *
+ * @param postId ID of Post the links refer to
+ * @param currentView Which Post view is currently active
+ */
 export default function PostLinks({
   postId,
   currentView,

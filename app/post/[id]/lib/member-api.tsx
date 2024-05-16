@@ -1,3 +1,9 @@
+/**
+ * Gets data for a Member given their ID.
+ *
+ * @async
+ * @param id Member ID
+ */
 export default async function getMemberData(id: string) {
   // TODO
   if (id == "1") {

@@ -4,6 +4,12 @@ import { useState } from "react";
 import { Button, Textarea } from "@nextui-org/react";
 import { uploadDiscussion } from "../lib/discussion-api";
 
+/**
+ * TextArea to create a new discussion for some Version.
+ * Includes: header, and submit button.
+ *
+ * @param versionId ID of version the discussion refers to
+ */
 export default function InputDiscussion({
   versionId,
 }: Readonly<{ versionId: string }>) {

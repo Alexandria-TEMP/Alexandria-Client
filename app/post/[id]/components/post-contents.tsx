@@ -4,6 +4,11 @@ import { Card, CardBody, CardHeader, Chip } from "@nextui-org/react";
 import PostLinks from "./post-links";
 import ContributeDropdown from "./contribute-dropdown";
 
+/**
+ * Main body of a Post. Includes: title, main metadata, and action buttons.
+ *
+ * @param postId Post ID
+ */
 export default async function PostContents({ postId }: { postId: string }) {
   const placeholderContents: string =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin congue quis ipsum et vestibulum. Quisque lorem turpis, facilisis quis turpis et, tempor iaculis purus. Mauris mollis nulla non turpis suscipit viverra. Morbi nec cursus sapien, non elementum mi. Ut sed cursus leo, ac lacinia ligula. Nunc ullamcorper, leo nec lobortis tempor, eros nulla euismod ligula, et varius metus ex eu nibh. Fusce eget scelerisque eros, a eleifend diam. Mauris porta feugiat ligula, ut efficitur nisi iaculis sit amet. Integer congue diam ac blandit pellentesque. Mauris posuere, enim sed viverra ultrices, urna lacus egestas odio, quis laoreet lorem nunc et ipsum. In augue massa, vestibulum vitae nulla sit amet, tempor dignissim lectus." +

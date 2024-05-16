@@ -11,6 +11,10 @@ import {
 } from "@nextui-org/react";
 import { useState } from "react";
 
+/**
+ * Dropdown style button group for post contribution options.
+ *
+ */
 export default function ContributeDropdown() {
   const [selectedOption, setSelectedOption] = useState(new Set(["contribute"]));
 

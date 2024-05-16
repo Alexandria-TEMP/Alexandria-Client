@@ -3,6 +3,11 @@ import PostCardMini from "./post-card-mini";
 import getPostData from "../lib/post-api";
 import { Chip } from "@nextui-org/react";
 
+/**
+ * Sidebar that is shown in a Post's page. Includes most of post's metadata.
+ *
+ * @param postId Post ID
+ */
 export default async function PostSidebar({
   postId,
 }: Readonly<{ postId: string }>) {

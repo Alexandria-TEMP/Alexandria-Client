@@ -5,6 +5,12 @@ import PostSidebar from "./components/post-sidebar";
 import getPostData from "./lib/post-api";
 import InputDiscussion from "./components/input-discussion";
 
+/**
+ * Page that shows contents of a Post.
+ *
+ * @param params.id Post ID, taken from route's dynamic segment /[id].
+ * Read more: https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
+ */
 export default async function Post({ params }: { params: { id: string } }) {
   const data = await getPostData(params.id);
   const discussions = data.currentVersion.discussions;

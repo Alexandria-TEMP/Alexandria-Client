@@ -2,6 +2,12 @@ import getMemberData from "../lib/member-api";
 import { Avatar } from "@nextui-org/react";
 
 //  TODO link to profile
+
+/**
+ * Small card that represents a member.
+ *
+ * @param memberId Member ID
+ */
 export default async function AuthorCard({
   memberId,
 }: Readonly<{

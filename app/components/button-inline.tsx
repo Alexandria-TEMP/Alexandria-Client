@@ -1,4 +1,6 @@
-// TODO better styling for this
+// TODO remove this
+/**
+ */
 export default function ButtonInline({
   label,
   onClick,
