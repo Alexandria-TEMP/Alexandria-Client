@@ -45,7 +45,7 @@ export default function AlexandriaNavbar() {
         {/* Branding */}
         <NavbarBrand as={Link} href="/">
           <Image
-            alt="Alexandria"
+            alt="Alexandria logo"
             src="/logo/logo32.svg"
             width={48}
             height={48}
