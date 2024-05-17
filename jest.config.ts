@@ -30,7 +30,7 @@ const config: Config = {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  // collectCoverageFrom: undefined,
+  collectCoverageFrom: ["app/**/{!(*.d),}.ts", "app/**/{!(page|layout),}.tsx"],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
@@ -93,7 +93,9 @@ const config: Config = {
   // ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
+  moduleNameMapper: {
+    "@/(.*)": "<rootDir>/app/$1",
+  },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],

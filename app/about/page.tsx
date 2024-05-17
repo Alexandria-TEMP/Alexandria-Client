@@ -1,5 +1,8 @@
 import Link from "next/link";
 
+/**
+ * Placeholder 'About' page.
+ */
 export default function About() {
   return (
     <div>
