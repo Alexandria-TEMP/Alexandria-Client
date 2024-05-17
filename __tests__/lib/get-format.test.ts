@@ -16,7 +16,7 @@ const dumTag =  {
         tagType: "ScientificField",
 }
 
-describe("String formatting", () => {
+describe("API getters formatting helper", () => {
     it("gets full name", () => {
         expect(getMemberName(dumMember)).toBe("Marie Curie");
         expect(getMemberName(undefined)).toBe("Not found");

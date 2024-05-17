@@ -3,14 +3,14 @@
 import { useState } from "react";
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
-import { getMembers } from "./lib/member-api";
-import { getFields } from "./lib/fields-api";
+import { getMembers } from "../lib/api-calls/member-api";
+import { getFields } from "../lib/api-calls/fields-api";
 import { MultiSelectAutocomplete } from "./components/multi-select-autocomplete";
 import { SingleSelectAutocomplete } from "./components/single-select-autocomplete";
 import UploadContentCard from "./components/upload-content-card";
 import InputCard from "./components/input-card";
 import { getMemberName, getFieldName } from "@/lib/get-format";
-import { Card } from "@nextui-org/react";
+import { Card, Input } from "@nextui-org/react";
 
 export default function NewPost() {
   const USERS = getMembers();
@@ -64,10 +64,12 @@ export default function NewPost() {
         {/* The actual form */}
         <Card className="p-7">
           <div className="flex flex-col space-y-5">
-            <InputCard
-              title="Title"
+            <Input
+              label={<h2>Title</h2>}
+              labelPlacement="outside"
               placeholder="Enter a title for your project..."
-              setValue={setTitle}
+              className="space-y-2"
+              onChange={(e) => setTitle(e.currentTarget.value)}
             />
 
             <Divider />
