@@ -18,7 +18,11 @@ export default function UploadContentCard() {
             <Button>Add Files</Button>
           </CardBody>
         </Card>
-        <Card className="grow w-1/2" isDisabled={true} data-testid="import-github-test-id">
+        <Card
+          className="grow w-1/2"
+          isDisabled={true}
+          data-testid="import-github-test-id"
+        >
           <CardHeader>Import From GitHub (disabled) </CardHeader>
           <CardBody>
             <Input
