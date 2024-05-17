@@ -8,7 +8,6 @@ import { getFields } from "../lib/api-calls/fields-api";
 import { MultiSelectAutocomplete } from "./components/multi-select-autocomplete";
 import { SingleSelectAutocomplete } from "./components/single-select-autocomplete";
 import UploadContentCard from "./components/upload-content-card";
-import InputCard from "./components/input-card";
 import { getMemberName, getFieldName } from "@/lib/get-format";
 import { Card, Input } from "@nextui-org/react";
 
