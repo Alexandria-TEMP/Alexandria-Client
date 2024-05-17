@@ -1,3 +1,9 @@
+/**
+ * Gets data for a Post given their ID.
+ *
+ * @async
+ * @param id Post ID
+ */
 export default async function getPostData(id: string) {
   // TODO
   // const res = await fetch();

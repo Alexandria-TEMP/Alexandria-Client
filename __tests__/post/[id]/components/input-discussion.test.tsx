@@ -25,8 +25,6 @@ describe("InputDiscussion", () => {
     await user.type(screen.getByRole("textbox"), inputText);
     await user.click(screen.getByRole("button"));
 
-    expect(mockedApi.mock.calls.length).toBe(1);
-    expect(mockedApi.mock.calls[0][0]).toBe(inputText);
-    expect(mockedApi.mock.calls[0][1]).toBe(versionId);
+    expect(mockedApi).toHaveBeenCalledWith(inputText, versionId);
   });
 });

@@ -1,6 +1,9 @@
 import Link from "next/link";
 import ThemeSwitcher from "./components/theme-switcher";
 
+/**
+ * Alexandrias's homepage.
+ */
 export default function Home() {
   return (
     <div>

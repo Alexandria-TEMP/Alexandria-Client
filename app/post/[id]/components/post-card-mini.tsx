@@ -5,6 +5,11 @@ import { Card, CardBody, CardFooter, Chip, Skeleton } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+/**
+ * Mini card that represents a post. Clicking it redirects to the post page.
+ *
+ * @param postId ID of post in card
+ */
 export default function PostCardMini({ postId }: Readonly<{ postId: string }>) {
   const router = useRouter();
   const [data, setData] = useState<any>(null); // TODO don't use 'any'!
