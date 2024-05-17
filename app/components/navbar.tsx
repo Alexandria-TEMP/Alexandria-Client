@@ -36,10 +36,35 @@ export const navigationItems = [
 export default function AlexandriaNavbar() {
   const pathname = usePathname();
   // TODO get this from somewhere, get user data and test the conditional render
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   return (
-    <Navbar isBordered>
+    <Navbar
+      isBordered
+      maxWidth="full"
+      classNames={{
+        // These are applied to NavbarItems' className
+        item: [
+          // Adds a line under the active route
+          "flex",
+          "relative",
+          "h-full",
+          "items-center",
+          "data-[active=true]:after:content-['']",
+          "data-[active=true]:after:absolute",
+          "data-[active=true]:after:bottom-0",
+          "data-[active=true]:after:left-0",
+          "data-[active=true]:after:right-0",
+          "data-[active=true]:after:h-[2px]",
+          "data-[active=true]:after:rounded-[2px]",
+          "data-[active=true]:after:bg-primary",
+          // Changes text color of active route
+          "data-[active=true]:text-primary",
+          // Changes text color when hovering over a route
+          "hover:text-primary",
+        ],
+      }}
+    >
       {/* Start contents */}
       <NavbarContent justify="start">
         {/* Branding */}
@@ -49,7 +74,7 @@ export default function AlexandriaNavbar() {
             src="/logo/logo32.svg"
             width={48}
             height={48}
-            className="my-4"
+            className="my-4 mr-2"
           />
           <p className="text-4xl">Alexandria</p>
         </NavbarBrand>
