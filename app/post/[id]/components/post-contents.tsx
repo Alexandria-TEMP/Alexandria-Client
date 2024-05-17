@@ -3,6 +3,7 @@ import getPostData from "../lib/post-api";
 import { Card, CardBody, CardHeader, Chip } from "@nextui-org/react";
 import PostLinks from "./post-links";
 import ContributeDropdown from "./contribute-dropdown";
+import PostEmbed from "./post-embed";
 
 /**
  * Main body of a Post. Includes: title, main metadata, and action buttons.
@@ -47,7 +48,7 @@ export default async function PostContents({ postId }: { postId: string }) {
 
       {/* Contents */}
       <CardBody>
-        <p>{placeholderContents}</p>
+        <PostEmbed postId={postId} />
       </CardBody>
     </Card>
   );
