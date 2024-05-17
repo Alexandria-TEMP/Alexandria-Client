@@ -36,7 +36,7 @@ export const navigationItems = [
 export default function AlexandriaNavbar() {
   const pathname = usePathname();
   // TODO get this from somewhere, get user data and test the conditional render
-  const isLoggedIn = false;
+  const isLoggedIn = true;
 
   return (
     <Navbar isBordered>
@@ -72,12 +72,13 @@ export default function AlexandriaNavbar() {
         {isLoggedIn ? (
           // Either a user avatar
           <NavbarItem>
-            <Avatar
-              size="sm"
-              as="link"
-              href="/profile"
-              src="/placeholders/Nikolaus_Kopernikus.jpg"
-            />
+            <Link href="/profile">
+              <Avatar
+                isBordered
+                size="sm"
+                src="/placeholders/Nikolaus_Kopernikus.jpg"
+              />
+            </Link>
           </NavbarItem>
         ) : (
           // Or 'log in' and 'sign up' buttons
