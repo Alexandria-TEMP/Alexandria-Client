@@ -63,7 +63,7 @@ describe("MultiSelectAutocomplete", () => {
     });
 
     it("displays empty message when nothing selected", () => {
-        const msgElem = screen.getByText("No items selected yet");
+        const msgElem = screen.getByTestId("no-item");
         expect(msgElem).toBeInTheDocument();
     });
 

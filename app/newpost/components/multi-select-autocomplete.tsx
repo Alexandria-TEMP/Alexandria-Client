@@ -10,6 +10,7 @@ import { Chip } from "@nextui-org/chip";
  * @param param0 prop obj where:
  * - title: the title of what the dropdown represents
  * - description: the description of what the dropdown represents
+ * - isRequired: whether this list contain at least one element
  * - selected: Set of the selected items (should not have duplicates), must come from useState hook from the parent
  * - items: the list of items in the dropdown, needs to be a key-value pair, the key is what is used for selected items
  * - setSelectedItems: setter for "selected", must come from useState hook
@@ -18,7 +19,8 @@ import { Chip } from "@nextui-org/chip";
  */
 export function MultiSelectAutocomplete<Type>({
   title,
-  description, // TODO if wanted, i could add placeholders and many other things but for no i think is overkill
+  description,
+  isRequired = false,
   selected,
   items,
   setSelectedItems,
@@ -26,12 +28,17 @@ export function MultiSelectAutocomplete<Type>({
 }: {
   title: string;
   description: string;
+  isRequired?: boolean;
   selected: Set<string>;
   items: Map<string, Type>;
   setSelectedItems: (item: Set<string>) => void;
   getItemLabel: (i: Type | undefined) => string;
 }) {
   const [newItem, setNewItem] = useState<React.Key>("");
+  // TODO not sure how to better do this, basically i need this to do client side validation
+  // to check if the user has selected some authors
+  const [isFirst, setIsFirst] = useState(true);
+  const isInvalid = () => isRequired && !isFirst && selected.size <= 0;
 
   const removeItem = (removed: string) =>
     setSelectedItems(
@@ -40,7 +47,17 @@ export function MultiSelectAutocomplete<Type>({
 
   return (
     <div className="space-y-2" data-testid="mutliselect-test-id">
-      <h2>{title}</h2>
+      <span>
+        {/* TODO refactor this? */}
+        <h2
+          className={isInvalid() ? "inline-block text-danger" : "inline-block"}
+        >
+          {title}
+        </h2>
+        {isRequired && (
+          <h2 className="inline-block text-danger text-small">*</h2>
+        )}
+      </span>
       <div className="flex flex-row max-w-full flex-wrap gap-x-1.5 gap-y-2">
         {
           selected.size > 0 ? (
@@ -56,21 +73,26 @@ export function MultiSelectAutocomplete<Type>({
                 {getItemLabel(items.get(item.toString()))}
               </Chip>
             ))
+          ) : isFirst || !isRequired ? (
+            <div data-testid="no-item"> No items selected yet. </div>
           ) : (
-            <div> No items selected yet </div>
+            <div className="text-danger" data-testid="pls-select">
+              {" "}
+              Please select at least one item.
+            </div>
           ) // TODO would make this prettier
         }
       </div>
       <div className="flex flex-row justify-between gap-x-3">
         <Autocomplete
           defaultItems={items.entries()}
-          labelPlacement="outside"
           placeholder="Search..."
           description={description}
           style={{ display: "inline-block" }}
-          isRequired={true}
-          onSelectionChange={(k) => k !== null && setNewItem(k)}
+          onSelectionChange={(k) => k !== null && k != "" && setNewItem(k)}
           data-testid="select-element-test-id"
+          isInvalid={isInvalid()}
+          onInputChange={(s) => s == "" && setNewItem("")}
         >
           {(item) => (
             <AutocompleteItem key={item[0]} data-testid="select-item-test-id">
@@ -81,11 +103,14 @@ export function MultiSelectAutocomplete<Type>({
         <Button
           variant="ghost"
           style={{ display: "inline-block" }}
-          onClick={(e) =>
-            setSelectedItems(
-              new Set([...Array.from(selected.keys()), newItem.toString()]),
-            )
-          }
+          onClick={(e) => {
+            if (newItem !== "") {
+              setIsFirst(false);
+              setSelectedItems(
+                new Set([...Array.from(selected.keys()), newItem.toString()]),
+              );
+            }
+          }}
         >
           Add
         </Button>
