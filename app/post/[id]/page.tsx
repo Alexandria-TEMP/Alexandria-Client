@@ -5,6 +5,12 @@ import PostSidebar from "./components/post-sidebar";
 import getPostData from "./lib/post-api";
 import InputDiscussion from "./components/input-discussion";
 
+/**
+ * Page that shows contents of a Post.
+ *
+ * @param params.id Post ID, taken from route's dynamic segment /[id].
+ * Read more: https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
+ */
 export default async function Post({ params }: { params: { id: string } }) {
   const data = await getPostData(params.id);
   const discussions = data.currentVersion.discussions;
@@ -12,9 +18,7 @@ export default async function Post({ params }: { params: { id: string } }) {
   return (
     <div className="flex flex-row space-x-6 pt-8">
       {/* Main body */}
-      <div className="flex flex-col space-y-4">
-        {/* TODO put this in a header instead of here */}
-        <ThemeSwitcher />
+      <div className="flex flex-col space-y-4 w-10/12">
         {/* Title, contents, main metadata and action buttons */}
         <PostContents postId={params.id} />
         {/* Discussions */}
@@ -26,7 +30,7 @@ export default async function Post({ params }: { params: { id: string } }) {
         <InputDiscussion versionId={data.currentVersion.id} />
       </div>
       {/* Sidebar with additional metadata */}
-      <PostSidebar postId={params.id} />
+      <PostSidebar postId={params.id} className="w-2/12" />
     </div>
   );
 }

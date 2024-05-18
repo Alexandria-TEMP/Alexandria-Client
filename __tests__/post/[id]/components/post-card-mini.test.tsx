@@ -6,14 +6,8 @@ import PostCardMini from "@/post/[id]/components/post-card-mini";
 
 jest.mock("@/post/[id]/lib/post-api");
 
-// Mock useRouter
-jest.mock("next/navigation", () => ({
-  useRouter() {
-    return {
-      prefetch: () => null,
-    };
-  },
-}));
+// Mock useRouter so it exists when component is rendered
+jest.mock("next/navigation");
 
 describe("PostCardMini", () => {
   const dummyPost = {

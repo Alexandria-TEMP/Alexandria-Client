@@ -5,6 +5,11 @@ import { MoonIcon } from "@heroicons/react/24/outline";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
+/**
+ * Button that switches current theme between light and dark.
+ * Dark mode is represented by a moon icon, and light mode by a sun icon.
+ * Relies on [Providers](app\providers.tsx).
+ */
 export default function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
   const { systemTheme, theme, setTheme } = useTheme();

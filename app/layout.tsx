@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { ChildrenProp } from "./lib/children-prop-type";
+import AlexandriaNavbar from "./components/navbar";
+import Footer from "./components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,12 +14,16 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: ChildrenProp) {
-  const rootCSSClasses = "px-8";
+  const bodyCSSClasses = "px-24";
 
   return (
     <html lang="en">
-      <body className={inter.className + " " + rootCSSClasses}>
-        <Providers>{children}</Providers>
+      <body className={inter.className}>
+        <Providers>
+          <AlexandriaNavbar />
+          <div className={bodyCSSClasses}>{children}</div>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

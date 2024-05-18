@@ -1,3 +1,9 @@
+/**
+ * Gets data for a discussion given its ID.
+ *
+ * @async
+ * @param id Discussion ID
+ */
 export async function getDiscussionData(id: string) {
   // TODO
   // const res = await fetch();
@@ -20,7 +26,15 @@ export async function getDiscussionData(id: string) {
 }
 
 // TODO parameter type should include all data needed for a discussion
+/**
+ * Creates a new Discussion for a given Version.
+ *
+ * @async
+ * @param text Discussion contents
+ * @param id ID of the Version the Discussion references
+ */
 export async function uploadDiscussion(text: string, id: string) {
   // TODO
+  // should include author, possible different discussion to reply to (and anything else that I'm forgetting)
   return Promise.resolve();
 }

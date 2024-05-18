@@ -1,8 +1,11 @@
 "use client";
 
-import ButtonInline from "@/components/button-inline";
+import { Button } from "@nextui-org/react";
 
 // TODO
+/**
+ * Button which starts a reply to a discussion.
+ */
 export default function DiscussionReplyButton() {
-  return <ButtonInline label="Reply" onClick={() => {}} />;
+  return <Button variant="light">Reply</Button>;
 }
