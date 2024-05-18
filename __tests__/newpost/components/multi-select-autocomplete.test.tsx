@@ -133,10 +133,15 @@ describe("MultiSelectAutocomplete", () => {
         await userEvent.click(screen.getByText("Add"));
         expect(dumSetSelectedItems).toHaveBeenCalledTimes(1);
     });
+
+    it("doesnt show danger asterisk", () => {
+        const asterskElem = screen.queryByText("*");
+        expect(asterskElem).toBeNull();
+    })
 });
 
 describe("MultiSelectAutocomplete that is Required", () => {
-    beforeEach(() => {
+    it("shows danger asterisk", () => {
         dumSelected = new Set<string>();
         multiSelect = render(           
             <MultiSelectAutocomplete
@@ -149,11 +154,42 @@ describe("MultiSelectAutocomplete that is Required", () => {
                 getItemLabel={dumGetItemLabel}
             />
         )
-    })
 
-    it("shows danger asterisk", () => {
         const asterskElem = screen.getByText("*");
         expect(asterskElem).toBeInTheDocument();
     })
+    
+    // it("diplays error message when emptied list", async () => {
+    //     dumSelected = new Set<string>("1");
+    //     dumSetSelectedItems.mockImplementation((i: Set<string>) => dumSelected = new Set<string>())
+    //     multiSelect = render(           
+    //         <MultiSelectAutocomplete
+    //             title={dumTitle}
+    //             description={dumDesc}
+    //             isRequired={true}
+    //             selected={dumSelected}
+    //             items={dumItems}
+    //             setSelectedItems={dumSetSelectedItems}
+    //             getItemLabel={dumGetItemLabel}
+    //         />
+    //     )
+
+    //     const asterskElem = screen.getByText("*");
+    //     expect(asterskElem).toBeInTheDocument();
+
+    //     const tagElem = screen.getByTestId("chip-test-id");
+    //     const tagBtn = within(tagElem).getByRole("button");
+    //     await userEvent.click(tagBtn);
+    //     expect(dumSetSelectedItems).toHaveBeenCalledTimes(1);
+    //     await waitFor(() => {
+    //         expect(dumSelected.size).toBe(0)
+    //         expect(screen.queryByTestId("chip-test-id")).toBeNull();
+    //     })
+
+    //     // Wait for error message to appear
+    //     await waitFor(() => {
+    //         expect(screen.getByTestId("pls-select")).toBeInTheDocument();
+    //     });
+    // })
     
 })
