@@ -41,12 +41,12 @@ export function MultiSelectAutocomplete<Type>({
   const isInvalid = () => isRequired && !isFirst && selected.size <= 0;
 
   const removeItem = (removed: string) => {
-    setIsFirst(false)
+    setIsFirst(false);
     setSelectedItems(
       new Set(Array.from(selected.keys()).filter((e) => e !== removed)),
     );
-  }
-  
+  };
+
   return (
     <div className="space-y-2" data-testid="mutliselect-test-id">
       <span>
