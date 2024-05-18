@@ -1,6 +1,6 @@
 const { expect, describe, it } = require("@jest/globals");
 import "@testing-library/jest-dom";
-import { render, screen, waitFor, cleanup, within } from "@testing-library/react";
+import { render, screen, waitFor, cleanup, within, fireEvent, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MultiSelectAutocomplete } from "@/newpost/components/multi-select-autocomplete";
 import { Member } from "@/lib/api-types";
@@ -26,13 +26,14 @@ const dumItems = new Map<string, Member>([
       lastName: "Copernicus",
     }]
 ]);
-const dumSetSelectedItems = jest.fn((item: Set<string>) => dumSelected = dumSelected.add("1")); // TODO hardcoded cause i cant inject newItem
+const dumSetSelectedItems = jest.fn(); // TODO hardcoded cause i cant inject newItem
 const dumGetItemLabel = jest.fn((item: Member | undefined) => "Dummy name");
 let multiSelect;
 
 describe("MultiSelectAutocomplete", () => {
     beforeEach(() => {
         dumSelected = new Set<string>();
+        dumSetSelectedItems.mockImplementation((item: Set<string>) => dumSelected = dumSelected.add("1"));
         multiSelect = render(           
             <MultiSelectAutocomplete
                 title={dumTitle}
@@ -159,37 +160,45 @@ describe("MultiSelectAutocomplete that is Required", () => {
         expect(asterskElem).toBeInTheDocument();
     })
     
-    // it("diplays error message when emptied list", async () => {
-    //     dumSelected = new Set<string>("1");
-    //     dumSetSelectedItems.mockImplementation((i: Set<string>) => dumSelected = new Set<string>())
-    //     multiSelect = render(           
-    //         <MultiSelectAutocomplete
-    //             title={dumTitle}
-    //             description={dumDesc}
-    //             isRequired={true}
-    //             selected={dumSelected}
-    //             items={dumItems}
-    //             setSelectedItems={dumSetSelectedItems}
-    //             getItemLabel={dumGetItemLabel}
-    //         />
-    //     )
+    it("diplays error message when emptied list", async () => {
+        dumSelected = new Set<string>("1");
+        dumSetSelectedItems.mockImplementation((i: Set<string>) => dumSelected = i)
+        const { rerender } = render(           
+            <MultiSelectAutocomplete
+                title={dumTitle}
+                description={dumDesc}
+                isRequired={true}
+                selected={dumSelected}
+                items={dumItems}
+                setSelectedItems={dumSetSelectedItems}
+                getItemLabel={dumGetItemLabel}
+            />
+        )
 
-    //     const asterskElem = screen.getByText("*");
-    //     expect(asterskElem).toBeInTheDocument();
+        const tagElem = screen.getByTestId("chip-test-id");
+        const tagBtn = within(tagElem).getByRole("button");
+        fireEvent.click(tagBtn);
 
-    //     const tagElem = screen.getByTestId("chip-test-id");
-    //     const tagBtn = within(tagElem).getByRole("button");
-    //     await userEvent.click(tagBtn);
-    //     expect(dumSetSelectedItems).toHaveBeenCalledTimes(1);
-    //     await waitFor(() => {
-    //         expect(dumSelected.size).toBe(0)
-    //         expect(screen.queryByTestId("chip-test-id")).toBeNull();
-    //     })
+        dumSetSelectedItems.mockImplementation((items: Set<string>) => {
+            rerender(           
+                <MultiSelectAutocomplete
+                    title={dumTitle}
+                    description={dumDesc}
+                    isRequired={true}
+                    selected={dumSelected}
+                    items={dumItems}
+                    setSelectedItems={dumSetSelectedItems}
+                    getItemLabel={dumGetItemLabel}
+                />
+            )
+        });
 
-    //     // Wait for error message to appear
-    //     await waitFor(() => {
-    //         expect(screen.getByTestId("pls-select")).toBeInTheDocument();
-    //     });
-    // })
+        fireEvent.click(tagBtn);
+
+        // Wait for error message to appear
+        await waitFor(() => {
+            expect(screen.getByTestId("pls-select")).toBeInTheDocument();
+        });
+    })
     
 })

@@ -79,7 +79,6 @@ export function MultiSelectAutocomplete<Type>({
             <div data-testid="no-item"> No items selected yet. </div>
           ) : (
             <div className="text-danger" data-testid="pls-select">
-              {" "}
               Please select at least one item.
             </div>
           ) // TODO would make this prettier
