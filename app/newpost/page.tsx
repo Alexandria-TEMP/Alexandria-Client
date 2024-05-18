@@ -43,6 +43,20 @@ export default function NewPost() {
     [title, isFirstTitle],
   );
 
+  const isValid = useMemo(
+    () =>
+      validate({
+        title,
+        authors,
+        contributors,
+        fields,
+        type,
+        completion,
+        feedback,
+      }),
+    [title, authors, contributors, fields, type, completion, feedback],
+  );
+
   return (
     <form
       className="w-full relative"
@@ -62,7 +76,7 @@ export default function NewPost() {
         {/* Little top bar */}
         <div className="sticky flex justify-between py-5">
           <h1 className="max-w-fit">Create a new post</h1>
-          <Button variant="ghost" type="submit">
+          <Button variant="ghost" type="submit" isDisabled={!isValid}>
             Publish
           </Button>
         </div>

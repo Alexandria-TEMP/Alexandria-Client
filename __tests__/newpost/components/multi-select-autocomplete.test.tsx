@@ -30,23 +30,21 @@ const dumSetSelectedItems = jest.fn((item: Set<string>) => dumSelected = dumSele
 const dumGetItemLabel = jest.fn((item: Member | undefined) => "Dummy name");
 let multiSelect;
 
-beforeEach(() => {
-    dumSelected = new Set<string>();
-    multiSelect = render(           
-        <MultiSelectAutocomplete
-            title={dumTitle}
-            description={dumDesc}
-            selected={dumSelected}
-            items={dumItems}
-            setSelectedItems={dumSetSelectedItems}
-            getItemLabel={dumGetItemLabel}
-        />
-    )
-})
-
-afterEach(cleanup)
-
 describe("MultiSelectAutocomplete", () => {
+    beforeEach(() => {
+        dumSelected = new Set<string>();
+        multiSelect = render(           
+            <MultiSelectAutocomplete
+                title={dumTitle}
+                description={dumDesc}
+                selected={dumSelected}
+                items={dumItems}
+                setSelectedItems={dumSetSelectedItems}
+                getItemLabel={dumGetItemLabel}
+            />
+        )
+    })
+
     it("renders the title", () => {
         const titleElem = screen.getByText(dumTitle);
         expect(titleElem).toBeInTheDocument();
@@ -136,3 +134,26 @@ describe("MultiSelectAutocomplete", () => {
         expect(dumSetSelectedItems).toHaveBeenCalledTimes(1);
     });
 });
+
+describe("MultiSelectAutocomplete that is Required", () => {
+    beforeEach(() => {
+        dumSelected = new Set<string>();
+        multiSelect = render(           
+            <MultiSelectAutocomplete
+                title={dumTitle}
+                description={dumDesc}
+                isRequired={true}
+                selected={dumSelected}
+                items={dumItems}
+                setSelectedItems={dumSetSelectedItems}
+                getItemLabel={dumGetItemLabel}
+            />
+        )
+    })
+
+    it("shows danger asterisk", () => {
+        const asterskElem = screen.getByText("*");
+        expect(asterskElem).toBeInTheDocument();
+    })
+    
+})

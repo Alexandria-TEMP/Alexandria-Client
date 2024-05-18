@@ -2,7 +2,6 @@
 export function validateTitle(title: string) {
   // TODO decide on max title length
   // TODO do i do input sanitization front end for the title?
-
   const tlen = title.length;
   if (tlen <= 0) {
     return "Please enter a title for your post.";
