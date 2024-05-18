@@ -5,5 +5,5 @@ export type FormData = {
 
 export function onSubmit(data: FormData) {
   alert(data.email + ", " + data.password);
-  return false;
+  return true;
 }
