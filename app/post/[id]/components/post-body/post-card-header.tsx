@@ -28,10 +28,11 @@ export default async function PostCardHeader({
 
       {/* (part of) Metadata */}
       <CardHeader className="-mt-4 flex gap-12">
-        <div className="flex-col">
-          <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
-          <HeaderSubtle>Last update on {data.updatedAt}</HeaderSubtle>
-        </div>
+        <PostLinks postId={postId} />
+        {!hideContribute && <ContributeDropdown />}
+
+        <div className="grow" />
+
         <div className="flex-col">
           <HeaderSubtle>Post type</HeaderSubtle>
           <Chip>{data.postType}</Chip>
@@ -40,9 +41,10 @@ export default async function PostCardHeader({
           <HeaderSubtle>Status</HeaderSubtle>
           <Chip>{data.status}</Chip>
         </div>
-        <div className="grow" />
-        <PostLinks postId={postId} />
-        {!hideContribute && <ContributeDropdown />}
+        <div className="flex-col">
+          <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
+          <HeaderSubtle>Last update on {data.updatedAt}</HeaderSubtle>
+        </div>
       </CardHeader>
     </>
   );
