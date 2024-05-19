@@ -2,7 +2,7 @@ import ThemeSwitcher from "@/components/theme-switcher";
 import PostContents from "./components/post-contents";
 import Discussion from "./components/discussion";
 import PostSidebar from "./components/post-sidebar";
-import getPostData from "./lib/post-api";
+import getPostData from "../../lib/api-calls/post-api";
 import InputDiscussion from "./components/input-discussion";
 
 /**
