@@ -4,7 +4,7 @@
 
 import { IdProp } from "@/lib/id-prop";
 import { Tab, Tabs } from "@nextui-org/react";
-import VersionCard from "./version-card";
+import MergeRequestCard from "./merge-request-card";
 
 /**
  * Renders a tabbed list view of post versions.
@@ -12,20 +12,20 @@ import VersionCard from "./version-card";
  *
  * @param id ID of Post to get version from
  */
-export default function VersionTabs({ id }: IdProp) {
+export default function MergeRequestTabs({ id }: IdProp) {
   return (
     <Tabs>
       <Tab key="history" title="Version history">
-        <VersionCard id={"placeholder"} />
-        <VersionCard id={"placeholder"} />
-        <VersionCard id={"placeholder"} />
-        <VersionCard id={"placeholder"} />
+        <MergeRequestCard id={"placeholder"} />
+        <MergeRequestCard id={"placeholder"} />
+        <MergeRequestCard id={"placeholder"} />
+        <MergeRequestCard id={"placeholder"} />
       </Tab>
       <Tab key="open" title="Proposed changes">
-        <VersionCard id={"placeholder"} />
+        <MergeRequestCard id={"placeholder"} />
       </Tab>
       <Tab key="rejected" title="Rejected changes">
-        <VersionCard id={"placeholder"} />
+        <MergeRequestCard id={"placeholder"} />
       </Tab>
     </Tabs>
   );

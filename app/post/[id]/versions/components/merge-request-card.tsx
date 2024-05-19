@@ -2,11 +2,11 @@ import { IdProp } from "@/lib/id-prop";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 
 /**
- * Card that represents some version of a post.
+ * Card that represents some merge request for a post.
  *
- * @param id Version ID
+ * @param id Merge request ID
  */
-export default function VersionCard({ id }: IdProp) {
+export default function MergeRequestCard({ id }: IdProp) {
   return (
     <Card>
       <CardBody>
