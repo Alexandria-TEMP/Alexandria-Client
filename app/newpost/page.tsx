@@ -5,7 +5,7 @@ import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
 import { getMembers } from "../lib/api-calls/member-api";
 import { getFields } from "../lib/api-calls/fields-api";
-import { MultiSelectAutocomplete } from "./components/multi-select-autocomplete";
+import { MultiSelectAutocomplete } from "../components/multi-select-autocomplete";
 import { SingleSelectAutocomplete } from "./components/single-select-autocomplete";
 import UploadContentCard from "./components/upload-content-card";
 import { getMemberName, getFieldName } from "@/lib/get-format";

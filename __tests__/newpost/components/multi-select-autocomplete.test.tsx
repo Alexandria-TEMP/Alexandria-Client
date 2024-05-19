@@ -2,7 +2,7 @@ const { expect, describe, it } = require("@jest/globals");
 import "@testing-library/jest-dom";
 import { render, screen, waitFor, cleanup, within, fireEvent, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MultiSelectAutocomplete } from "@/newpost/components/multi-select-autocomplete";
+import { MultiSelectAutocomplete } from "@/components/multi-select-autocomplete";
 import { Member } from "@/lib/api-types";
 
 const dumTitle = "Dummy title";
