@@ -1,5 +1,5 @@
 import HeaderSubtle from "@/components/header-subtle";
-import getPostData from "../lib/post-api";
+import getPostData from "../../lib/post-api";
 import { Card, CardBody, CardHeader, Chip } from "@nextui-org/react";
 import PostLinks from "./post-links";
 import ContributeDropdown from "./contribute-dropdown";
