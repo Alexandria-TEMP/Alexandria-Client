@@ -1,5 +1,5 @@
 import { Card, CardBody } from "@nextui-org/react";
-import PostContentsHeader from "./post-contents-header";
+import PostCardHeader from "./post-card-header";
 
 /**
  * Main body of a Post. Includes: title, main metadata, and action buttons.
@@ -16,7 +16,7 @@ export default function PostContents({ postId }: { postId: string }) {
 
   return (
     <Card>
-      <PostContentsHeader postId={postId} />
+      <PostCardHeader postId={postId} />
       {/* Contents */}
       <CardBody>
         <p>{placeholderContents}</p>

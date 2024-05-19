@@ -10,10 +10,12 @@ import ContributeDropdown from "./contribute-dropdown";
  *
  * @param postId Post ID
  */
-export default async function PostContentsHeader({
+export default async function PostCardHeader({
   postId,
+  hideContribute,
 }: {
   postId: string;
+  hideContribute?: boolean;
 }) {
   const data = await getPostData(postId);
 
@@ -40,7 +42,7 @@ export default async function PostContentsHeader({
         </div>
         <div className="grow" />
         <PostLinks postId={postId} currentView="contents" />
-        <ContributeDropdown />
+        {!hideContribute && <ContributeDropdown />}
       </CardHeader>
     </>
   );
