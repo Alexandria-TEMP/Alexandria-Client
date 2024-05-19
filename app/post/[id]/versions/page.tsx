@@ -1,5 +1,6 @@
 import { Card } from "@nextui-org/react";
 import PostCardHeader from "../components/post-body/post-card-header";
+import VersionTabs from "./components/version-tabs";
 
 /**
  * Page that shows all versions of a Post.
@@ -13,10 +14,11 @@ export default async function PostVersions({
   params: { id: string };
 }) {
   return (
-    <div className="pt-8">
+    <div className="pt-8 flex flex-col gap-12">
       <Card>
-        <PostCardHeader postId={params.id} />
+        <PostCardHeader postId={params.id} hideContribute />
       </Card>
+      <VersionTabs id={params.id} />
     </div>
   );
 }
