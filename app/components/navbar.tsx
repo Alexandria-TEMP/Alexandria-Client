@@ -109,7 +109,7 @@ export default function AlexandriaNavbar() {
           // Or 'log in' and 'sign up' buttons
           <>
             <NavbarItem>
-              <Link href="/log-in">
+              <Link href="/login">
                 <Button variant="ghost">Log in</Button>
               </Link>
             </NavbarItem>

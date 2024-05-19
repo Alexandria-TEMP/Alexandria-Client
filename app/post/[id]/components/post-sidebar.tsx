@@ -2,6 +2,7 @@ import AuthorCard from "./author-card";
 import PostCardMini from "./post-card-mini";
 import getPostData from "../../../lib/api-calls/post-api";
 import { Chip } from "@nextui-org/react";
+import { ClassNameProp } from "@/lib/classname-prop";
 
 /**
  * Sidebar that is shown in a Post's page. Includes most of post's metadata.
@@ -12,7 +13,7 @@ import { Chip } from "@nextui-org/react";
 export default async function PostSidebar({
   postId,
   className,
-}: Readonly<{ postId: string; className?: string }>) {
+}: Readonly<{ postId: string }> & ClassNameProp) {
   const data = await getPostData(postId);
 
   return (

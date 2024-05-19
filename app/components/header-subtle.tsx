@@ -1,4 +1,4 @@
-import { ChildrenProp } from "@/lib/children-prop-type";
+import { ChildrenProp } from "@/lib/children-prop";
 
 /**
  * Heading meant to not call attention to itself. Faded color and small text size.
