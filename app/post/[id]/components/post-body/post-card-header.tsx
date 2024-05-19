@@ -41,7 +41,7 @@ export default async function PostCardHeader({
           <Chip>{data.status}</Chip>
         </div>
         <div className="grow" />
-        <PostLinks postId={postId} currentView="contents" />
+        <PostLinks postId={postId} />
         {!hideContribute && <ContributeDropdown />}
       </CardHeader>
     </>
