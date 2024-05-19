@@ -17,9 +17,9 @@ export default function LoginPage() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="relative flex w-full h-full min-h-fit place-content-center m-auto py-10"
+      className="relative flex w-full h-full min-h-fit place-content-center m-auto"
     >
-      <Card className="relative p-7 space-y-8 items-center w-1/3 min-h-fit h-4/5">
+      <Card className="relative p-7 space-y-8 items-center place-content-center min-w-96 w-1/3 min-h-fit h-2/3 m-auto">
         <h1>Login to Alexandria</h1>
         <Controller
           name="email"
