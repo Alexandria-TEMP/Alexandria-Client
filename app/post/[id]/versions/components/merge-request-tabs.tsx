@@ -7,10 +7,10 @@ import { Tab, Tabs } from "@nextui-org/react";
 import MergeRequestCard from "./merge-request-card";
 
 /**
- * Renders a tabbed list view of post versions.
+ * Renders a tabbed list view of post merge requests.
  * Includes the tabs "Version history", "Proposed changes" and "Rejected changes".
  *
- * @param id ID of Post to get version from
+ * @param id ID of Post to get merge requests from
  */
 export default function MergeRequestTabs({ id }: IdProp) {
   return (

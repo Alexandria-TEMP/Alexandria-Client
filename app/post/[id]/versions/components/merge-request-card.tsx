@@ -1,3 +1,4 @@
+import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
 import { IdProp } from "@/lib/id-prop";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 
@@ -6,9 +7,12 @@ import { Card, CardBody, CardHeader } from "@nextui-org/react";
  *
  * @param id Merge request ID
  */
-export default function MergeRequestCard({ id }: IdProp) {
+export default async function MergeRequestCard({ id }: IdProp) {
+  const data = await getMergeRequestData(id);
+
   return (
     <Card>
+      <CardHeader>{data.title}</CardHeader>
       <CardBody>
         <p>Placeholder</p>
       </CardBody>
