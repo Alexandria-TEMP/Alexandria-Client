@@ -12,6 +12,7 @@ import { getMemberName, getFieldName } from "@/lib/get-format";
 import { Card, Input } from "@nextui-org/react";
 import { submit, validate } from "./lib/submit";
 import { validateTitle } from "./lib/validators";
+import { useRouter } from "next/navigation";
 
 export default function NewPost() {
   const USERS = getMembers();
@@ -57,19 +58,22 @@ export default function NewPost() {
     [title, authors, contributors, fields, type, completion, feedback],
   );
 
+  const router = useRouter();
+
   return (
     <form
       className="w-full relative"
-      onSubmit={(e) =>
-        submit({
-          title,
-          authors,
-          contributors,
-          fields,
-          type,
-          completion,
-          feedback,
-        })
+      onSubmit={
+        (e) => router.push("/post/1")
+        // submit({
+        //   title,
+        //   authors,
+        //   contributors,
+        //   fields,
+        //   type,
+        //   completion,
+        //   feedback,
+        // })
       }
     >
       <div className="m-auto max-w-4xl w-10/12">
