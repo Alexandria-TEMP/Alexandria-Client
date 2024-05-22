@@ -1,5 +1,11 @@
 {
-  "extends": ["next/core-web-vitals", "prettier"],
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended-type-checked",
+    "prettier"
+  ],
   "overrides": [
     {
       "files": ["__tests__/**/*"],
@@ -8,11 +14,21 @@
       }
     }
   ],
-  "plugins": [
-    "check-file"
-  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": true,
+    "tsconfigRootDir": "."
+  },
+  "plugins": ["check-file", "@typescript-eslint"],
   "rules": {
-    "check-file/filename-naming-convention": ["error", { "app/**/*" : "KEBAB_CASE" }, {"ignoreMiddleExtensions": true}],
-    "check-file/folder-naming-convention": ["error", { "app/*/" : "NEXT_JS_APP_ROUTER_CASE" }]
+    "check-file/filename-naming-convention": [
+      "error",
+      { "app/**/*": "KEBAB_CASE" },
+      { "ignoreMiddleExtensions": true }
+    ],
+    "check-file/folder-naming-convention": [
+      "error",
+      { "app/*/": "NEXT_JS_APP_ROUTER_CASE" }
+    ]
   }
 }
