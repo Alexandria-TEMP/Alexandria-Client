@@ -1,4 +1,4 @@
-const { expect, describe, it } = require("@jest/globals");
+import { expect, describe, it } from "@jest/globals";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
