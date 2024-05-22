@@ -33,6 +33,10 @@ export default function PersonalDataCard({
         control={control}
         rules={{
           required: "Please enter your first name.",
+          maxLength: {
+            value: 100,
+            message: "There is a 100 charcter restriction on name input.",
+          },
         }}
         render={({ field }) => (
           <Input
@@ -53,6 +57,10 @@ export default function PersonalDataCard({
         control={control}
         rules={{
           required: "Please enter your last name.",
+          maxLength: {
+            value: 100,
+            message: "There is a 100 charcter restriction on name input.",
+          },
         }}
         render={({ field }) => (
           <Input
@@ -71,6 +79,12 @@ export default function PersonalDataCard({
       <Controller
         name="institution"
         control={control}
+        rules={{
+          maxLength: {
+            value: 150,
+            message: "There is a 150 charcter restriction on institution name.",
+          },
+        }}
         render={({ field }) => (
           <Input
             {...field}

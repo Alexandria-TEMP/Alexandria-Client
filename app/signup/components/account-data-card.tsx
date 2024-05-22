@@ -70,7 +70,18 @@ export default function AccountDataCard({
       <Controller
         name="password"
         control={control}
-        rules={{ required: "Please enter a password." }}
+        rules={{
+          required: "Please enter a password.",
+          minLength: {
+            value: 8,
+            message: "Password must contain at least 8 charcters.",
+          },
+          pattern: {
+            value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])/i,
+            message:
+              "Password must contain at least one upper case and one lower case letter, a number and a special character.",
+          },
+        }}
         render={({ field }) => (
           <Input
             {...field}
