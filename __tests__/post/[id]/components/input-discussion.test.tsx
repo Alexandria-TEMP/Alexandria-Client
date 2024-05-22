@@ -10,6 +10,7 @@ jest.mock("@/lib/api-calls/discussion-api");
 describe("InputDiscussion", () => {
   const versionId = "51235312";
   const mockedApi = uploadDiscussion as jest.Mock;
+  mockedApi.mockResolvedValue({});
 
   it("renders a textbox", () => {
     render(<InputDiscussion versionId={versionId} />);
