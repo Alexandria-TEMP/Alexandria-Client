@@ -94,7 +94,18 @@ export default function AlexandriaNavbar() {
       {/* End contents */}
       <NavbarContent justify="end">
         {/* Conditionally render based on log in status */}
-        {pathname === "/" || pathname === "/login" || pathname === "/signup" ? (
+        {isLoggedIn ? (
+          // Either a user avatar
+          <NavbarItem>
+            <Link href="/profile">
+              <Avatar
+                isBordered
+                size="sm"
+                src="/placeholders/Nikolaus_Kopernikus.jpg"
+              />
+            </Link>
+          </NavbarItem>
+        ) : (
           // Or 'log in' and 'sign up' buttons
           <>
             <NavbarItem>
@@ -108,17 +119,6 @@ export default function AlexandriaNavbar() {
               </Link>
             </NavbarItem>
           </>
-        ) : (
-          // Either a user avatar
-          <NavbarItem>
-            <Link href="/profile">
-              <Avatar
-                isBordered
-                size="sm"
-                src="/placeholders/Nikolaus_Kopernikus.jpg"
-              />
-            </Link>
-          </NavbarItem>
         )}
         <NavbarItem>
           <ThemeSwitcher />
