@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button, Textarea } from "@nextui-org/react";
-import { uploadDiscussion } from "../lib/discussion-api";
+import { uploadDiscussion } from "@/lib/api-calls/discussion-api";
 
 /**
  * TextArea to create a new discussion for some Version.

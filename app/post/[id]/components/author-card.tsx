@@ -1,4 +1,4 @@
-import getMemberData from "../lib/member-api";
+import getMemberData from "@/lib/api-calls/member-api";
 import { User } from "@nextui-org/react";
 
 //  TODO link to profile

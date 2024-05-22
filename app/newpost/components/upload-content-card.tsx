@@ -18,12 +18,16 @@ export default function UploadContentCard() {
             <Button>Add Files</Button>
           </CardBody>
         </Card>
-        <Card className="grow w-1/2" data-testid="import-github-test-id">
+        <Card
+          className="grow w-1/2"
+          isDisabled={true}
+          data-testid="import-github-test-id"
+        >
           <CardHeader>Import From GitHub (disabled) </CardHeader>
           <CardBody>
             <Input
               placeholder="Input GitHub repository link..."
-              disabled={true} // TODO make it more clear that it is disabled cause it does not look like it atm
+              isDisabled={true}
             />
           </CardBody>
         </Card>

@@ -1,10 +1,10 @@
 const { expect, describe, it } = require("@jest/globals");
 import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "@testing-library/react";
-import getPostData from "@/post/[id]/lib/post-api";
+import getPostData from "@/lib/api-calls/post-api";
 import PostCardMini from "@/post/[id]/components/post-card-mini";
 
-jest.mock("@/post/[id]/lib/post-api");
+jest.mock("@/lib/api-calls/post-api");
 
 // Mock useRouter so it exists when component is rendered
 jest.mock("next/navigation");

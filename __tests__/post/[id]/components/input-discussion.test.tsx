@@ -2,10 +2,10 @@ const { expect, describe, it } = require("@jest/globals");
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
-import { uploadDiscussion } from "@/post/[id]/lib/discussion-api";
+import { uploadDiscussion } from "@/lib/api-calls/discussion-api";
 import InputDiscussion from "@/post/[id]/components/input-discussion";
 
-jest.mock("@/post/[id]/lib/discussion-api");
+jest.mock("@/lib/api-calls/discussion-api");
 
 describe("InputDiscussion", () => {
   const versionId = "51235312";

@@ -1,6 +1,6 @@
 const { expect, describe, it } = require("@jest/globals");
 import "@testing-library/jest-dom";
-import { render, screen, waitFor, cleanup, within } from "@testing-library/react";
+import { render, screen, waitFor, cleanup, within, fireEvent, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MultiSelectAutocomplete } from "@/newpost/components/multi-select-autocomplete";
 import { Member } from "@/lib/api-types";
@@ -26,27 +26,26 @@ const dumItems = new Map<string, Member>([
       lastName: "Copernicus",
     }]
 ]);
-const dumSetSelectedItems = jest.fn((item: Set<string>) => dumSelected = dumSelected.add("1")); // TODO hardcoded cause i cant inject newItem
+const dumSetSelectedItems = jest.fn(); // TODO hardcoded cause i cant inject newItem
 const dumGetItemLabel = jest.fn((item: Member | undefined) => "Dummy name");
 let multiSelect;
 
-beforeEach(() => {
-    dumSelected = new Set<string>();
-    multiSelect = render(           
-        <MultiSelectAutocomplete
-            title={dumTitle}
-            description={dumDesc}
-            selected={dumSelected}
-            items={dumItems}
-            setSelectedItems={dumSetSelectedItems}
-            getItemLabel={dumGetItemLabel}
-        />
-    )
-})
-
-afterEach(cleanup)
-
 describe("MultiSelectAutocomplete", () => {
+    beforeEach(() => {
+        dumSelected = new Set<string>();
+        dumSetSelectedItems.mockImplementation((item: Set<string>) => dumSelected = dumSelected.add("1"));
+        multiSelect = render(           
+            <MultiSelectAutocomplete
+                title={dumTitle}
+                description={dumDesc}
+                selected={dumSelected}
+                items={dumItems}
+                setSelectedItems={dumSetSelectedItems}
+                getItemLabel={dumGetItemLabel}
+            />
+        )
+    })
+
     it("renders the title", () => {
         const titleElem = screen.getByText(dumTitle);
         expect(titleElem).toBeInTheDocument();
@@ -63,7 +62,7 @@ describe("MultiSelectAutocomplete", () => {
     });
 
     it("displays empty message when nothing selected", () => {
-        const msgElem = screen.getByText("No items selected yet");
+        const msgElem = screen.getByTestId("no-item");
         expect(msgElem).toBeInTheDocument();
     });
 
@@ -135,4 +134,71 @@ describe("MultiSelectAutocomplete", () => {
         await userEvent.click(screen.getByText("Add"));
         expect(dumSetSelectedItems).toHaveBeenCalledTimes(1);
     });
+
+    it("doesnt show danger asterisk", () => {
+        const asterskElem = screen.queryByText("*");
+        expect(asterskElem).toBeNull();
+    })
 });
+
+describe("MultiSelectAutocomplete that is Required", () => {
+    it("shows danger asterisk", () => {
+        dumSelected = new Set<string>();
+        multiSelect = render(           
+            <MultiSelectAutocomplete
+                title={dumTitle}
+                description={dumDesc}
+                isRequired={true}
+                selected={dumSelected}
+                items={dumItems}
+                setSelectedItems={dumSetSelectedItems}
+                getItemLabel={dumGetItemLabel}
+            />
+        )
+
+        const asterskElem = screen.getByText("*");
+        expect(asterskElem).toBeInTheDocument();
+    })
+    
+    it("diplays error message when emptied list", async () => {
+        dumSelected = new Set<string>("1");
+        dumSetSelectedItems.mockImplementation((i: Set<string>) => dumSelected = i)
+        const { rerender } = render(           
+            <MultiSelectAutocomplete
+                title={dumTitle}
+                description={dumDesc}
+                isRequired={true}
+                selected={dumSelected}
+                items={dumItems}
+                setSelectedItems={dumSetSelectedItems}
+                getItemLabel={dumGetItemLabel}
+            />
+        )
+
+        const tagElem = screen.getByTestId("chip-test-id");
+        const tagBtn = within(tagElem).getByRole("button");
+        fireEvent.click(tagBtn);
+
+        dumSetSelectedItems.mockImplementation((items: Set<string>) => {
+            rerender(           
+                <MultiSelectAutocomplete
+                    title={dumTitle}
+                    description={dumDesc}
+                    isRequired={true}
+                    selected={dumSelected}
+                    items={dumItems}
+                    setSelectedItems={dumSetSelectedItems}
+                    getItemLabel={dumGetItemLabel}
+                />
+            )
+        });
+
+        fireEvent.click(tagBtn);
+
+        // Wait for error message to appear
+        await waitFor(() => {
+            expect(screen.getByTestId("pls-select")).toBeInTheDocument();
+        });
+    })
+    
+})
