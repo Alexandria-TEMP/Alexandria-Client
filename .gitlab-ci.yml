@@ -1,6 +1,8 @@
 default:
   image: node:20.12
   before_script: npm ci
+  variables:
+    HUSKY: 0
 
 stages:
   - lint
