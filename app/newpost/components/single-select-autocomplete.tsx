@@ -27,7 +27,7 @@ export function SingleSelectAutocomplete({
   placeholder: string;
   defaultSelectedKey?: string;
   items: string[];
-  setSelection: (item: string | undefined) => void;
+  setSelection: (item: string) => void;
 }) {
   // TODO is it worth keeping this component just for the key methods?
   const keys = Array.from(Array(items.length).keys());
@@ -46,7 +46,7 @@ export function SingleSelectAutocomplete({
         onSelectionChange={(k) =>
           k !== null &&
           values.has(k.toString()) &&
-          setSelection(values.get(k.toString()))
+          setSelection(values.get(k.toString())!)
         }
         data-testid="select-element-test-id"
       >
