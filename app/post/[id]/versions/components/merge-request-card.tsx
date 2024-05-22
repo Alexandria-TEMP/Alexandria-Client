@@ -39,8 +39,12 @@ export default function MergeRequestCard({ id }: IdProp) {
   }
 
   return (
-    <Card className="w-full">
-      <CardBody onClick={() => router.push(`/post-version/${id}`)}>
+    <Card
+      className="w-full"
+      isPressable
+      onPress={() => router.push(`/post-version/${id}`)}
+    >
+      <CardBody>
         <h3 className="font-semibold">{data.title}</h3>
         <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
       </CardBody>
