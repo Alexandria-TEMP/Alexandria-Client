@@ -13,7 +13,7 @@ export async function getMergeRequestData(id: string) {
       id: id,
       title: "Remove contents section",
       version: "1",
-      reviews: ["1", "2", "3"],
+      reviews: ["accept", "reject", "accept"],
       anonymous: false,
       createdAt: "19 May 2024",
       collaborators: ["1", "2"],
@@ -31,7 +31,25 @@ export async function getMergeRequestData(id: string) {
       id: id,
       title: "Add new experiment",
       version: "1",
-      reviews: ["1", "2"],
+      reviews: ["accept", "accept"],
+      anonymous: false,
+      createdAt: "19 May 2024",
+      collaborators: ["1", "2"],
+      updatedCompletionStatus: "Ideation",
+      updatedScientificTags: ["Mathematics"],
+      mergeRequestStatus: "open",
+      versionWhenClosed: "2",
+      closedAt: "20 May 2024",
+    };
+  }
+
+  if (id == "3") {
+    // Open
+    return {
+      id: id,
+      title: "Grammar fixes",
+      version: "1",
+      reviews: ["accept"],
       anonymous: false,
       createdAt: "19 May 2024",
       collaborators: ["1", "2"],
@@ -48,7 +66,7 @@ export async function getMergeRequestData(id: string) {
     id: id,
     title: "Expand literature review",
     version: "1",
-    reviews: ["1", "2", "3"],
+    reviews: ["accept", "accept", "accept"],
     anonymous: false,
     createdAt: "19 May 2024",
     collaborators: ["1", "2"],
@@ -70,5 +88,28 @@ export async function getMergeRequestData(id: string) {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function getPostMergeRequests(id: string) {
   await new Promise((resolve) => setTimeout(resolve, 100));
-  return { rejected: ["1"], open: ["2"], accepted: ["4", "3"] };
+  return {
+    rejected: ["1", "1", "1", "1"],
+    open: ["2", "3", "3"],
+    accepted: [
+      "4",
+      "4",
+      "4",
+      "4",
+      "4",
+      "4",
+      "4",
+      "4",
+      "4",
+      "4",
+      "4",
+      "4",
+      "4",
+      "4",
+      "4",
+      "4",
+      "4",
+      "4",
+    ],
+  };
 }

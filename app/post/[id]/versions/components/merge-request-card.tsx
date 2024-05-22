@@ -1,6 +1,8 @@
+import HeaderSubtle from "@/components/header-subtle";
 import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
 import { IdProp } from "@/lib/id-prop";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardFooter } from "@nextui-org/react";
+import ReviewChip from "./review-chip";
 
 /**
  * Card that represents some merge request for a post.
@@ -9,15 +11,26 @@ import { Card, CardBody, CardHeader } from "@nextui-org/react";
  */
 export default async function MergeRequestCard({ id }: IdProp) {
   const data = await getMergeRequestData(id);
+  const capitalizedStatus =
+    data.mergeRequestStatus[0].toUpperCase() + data.mergeRequestStatus.slice(1);
 
   // TODO link to MR page
-  // TODO add metadata
   return (
-    <Card>
-      <CardHeader>{data.title}</CardHeader>
+    <Card className="w-full">
       <CardBody>
-        <p>Placeholder</p>
+        <h3 className="font-semibold">{data.title}</h3>
+        <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
       </CardBody>
+      <CardFooter>
+        <p className="text-sm">
+          {data.mergeRequestStatus != "open" &&
+            `${capitalizedStatus} on ${data.closedAt}`}
+        </p>
+        <div className="grow" />
+        <ReviewChip status={data.reviews[0]} />
+        <ReviewChip status={data.reviews[1]} />
+        <ReviewChip status={data.reviews[2]} />
+      </CardFooter>
     </Card>
   );
 }
