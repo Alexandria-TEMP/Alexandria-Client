@@ -1,10 +1,10 @@
-const { expect, describe, it } = require("@jest/globals");
+import { expect, describe, it } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import { getDiscussionData } from "@/post/[id]/lib/discussion-api";
+import { getDiscussionData } from "@/lib/api-calls/discussion-api";
 import Discussion from "@/post/[id]/components/discussion";
 
-jest.mock("@/post/[id]/lib/discussion-api");
+jest.mock("@/lib/api-calls/discussion-api");
 
 describe("Discussion", () => {
   const dummyDiscussion = {

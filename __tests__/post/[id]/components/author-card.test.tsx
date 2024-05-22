@@ -1,10 +1,10 @@
-const { expect, describe, it } = require("@jest/globals");
+import { expect, describe, it } from "@jest/globals";
 import AuthorCard from "@/post/[id]/components/author-card";
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import getMemberData from "@/post/[id]/lib/member-api";
+import getMemberData from "@/lib/api-calls/member-api";
 
-jest.mock("@/post/[id]/lib/member-api");
+jest.mock("@/lib/api-calls/member-api");
 
 describe("AuthorCard", () => {
   const dummyMember = {

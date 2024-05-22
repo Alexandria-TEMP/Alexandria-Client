@@ -6,6 +6,7 @@
  */
 export async function getMergeRequestData(id: string) {
   // TODO
+  await new Promise((resolve) => setTimeout(resolve, 100));
   if (id == "1") {
     // Rejected
     return {
@@ -65,6 +66,9 @@ export async function getMergeRequestData(id: string) {
  * @async
  * @param id Post ID
  */
+// TODO remove next line
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function getPostMergeRequests(id: string) {
+  await new Promise((resolve) => setTimeout(resolve, 100));
   return { rejected: ["1"], open: ["2"], accepted: ["4", "3"] };
 }

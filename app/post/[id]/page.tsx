@@ -1,7 +1,7 @@
 import PostContents from "./components/post-body/post-contents";
 import Discussion from "./components/discussions/discussion";
 import PostSidebar from "./components/post-sidebar";
-import getPostData from "./lib/post-api";
+import getPostData from "../../lib/api-calls/post-api";
 import InputDiscussion from "./components/discussions/input-discussion";
 
 /**

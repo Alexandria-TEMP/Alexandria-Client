@@ -1,8 +1,8 @@
-import getPostData from "../../lib/post-api";
 import { CardHeader, Chip } from "@nextui-org/react";
 import HeaderSubtle from "@/components/header-subtle";
 import PostLinks from "./post-links";
 import ContributeDropdown from "./contribute-dropdown";
+import getPostData from "@/lib/api-calls/post-api";
 
 /**
  * Header for post contents card. Uses <CardHeader>, so it must be child of a <Card></Card>.
