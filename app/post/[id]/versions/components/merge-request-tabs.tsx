@@ -2,30 +2,39 @@
 // see https://github.com/nextui-org/nextui/issues/1342
 "use client";
 
-import { IdProp } from "@/lib/id-prop";
 import { Tab, Tabs } from "@nextui-org/react";
-import MergeRequestCard from "./merge-request-card";
 
 /**
  * Renders a tabbed list view of post merge requests.
  * Includes the tabs "Version history", "Proposed changes" and "Rejected changes".
  *
- * @param id ID of Post to get merge requests from
+ * @param historyList Component that gets rendered on the "Version history" tab
+ * @param openList Component that gets rendered on the "Proposed changes" tab
+ * @param rejectedList Component that gets rendered on the "Rejected changes" tab
  */
-export default function MergeRequestTabs({ id }: IdProp) {
+export default function MergeRequestTabs({
+  // Since this has to be a client component, including `MergeRequestList`s  or
+  // `MergeRequestCard`s here as children of <Tab> would force those component to
+  // also be client components. As a workaround, we take in `MergeRequestList`s
+  // as props here.
+  historyList,
+  openList,
+  rejectedList,
+}: Readonly<{
+  historyList: React.ReactNode;
+  openList: React.ReactNode;
+  rejectedList: React.ReactNode;
+}>) {
   return (
     <Tabs>
       <Tab key="history" title="Version history">
-        <MergeRequestCard id={"placeholder"} />
-        <MergeRequestCard id={"placeholder"} />
-        <MergeRequestCard id={"placeholder"} />
-        <MergeRequestCard id={"placeholder"} />
+        {historyList}
       </Tab>
       <Tab key="open" title="Proposed changes">
-        <MergeRequestCard id={"placeholder"} />
+        {openList}
       </Tab>
       <Tab key="rejected" title="Rejected changes">
-        <MergeRequestCard id={"placeholder"} />
+        {rejectedList}
       </Tab>
     </Tabs>
   );

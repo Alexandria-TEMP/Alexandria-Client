@@ -9,6 +9,7 @@ export async function getMergeRequestData(id: string) {
   if (id == "1") {
     // Rejected
     return {
+      id: id,
       title: "Remove contents section",
       version: "1",
       reviews: ["1", "2", "3"],
@@ -26,6 +27,7 @@ export async function getMergeRequestData(id: string) {
   if (id == "2") {
     // Open
     return {
+      id: id,
       title: "Add new experiment",
       version: "1",
       reviews: ["1", "2"],
@@ -40,8 +42,9 @@ export async function getMergeRequestData(id: string) {
     };
   }
 
-  // Approved
+  // Accepted
   return {
+    id: id,
     title: "Expand literature review",
     version: "1",
     reviews: ["1", "2", "3"],
@@ -50,28 +53,18 @@ export async function getMergeRequestData(id: string) {
     collaborators: ["1", "2"],
     updatedCompletionStatus: "Ideation",
     updatedScientificTags: ["Mathematics"],
-    mergeRequestStatus: "approved",
+    mergeRequestStatus: "accepted",
     versionWhenClosed: "2",
     closedAt: "20 May 2024",
   };
 }
 
 /**
- * Gets open merge requests of a post given their ID.
+ * Gets merge requests of a post given their ID.
  *
  * @async
  * @param id Post ID
  */
-export async function getPostOpenMergeRequests(id: string) {
-  return ["1", "2", "3"];
-}
-
-/**
- * Gets closed merge requests of a post given their ID.
- *
- * @async
- * @param id Post ID
- */
-export async function getPostClosedMergeRequests(id: string) {
-  return ["1", "2", "3"];
+export async function getPostMergeRequests(id: string) {
+  return { rejected: ["1"], open: ["2"], accepted: ["4", "3"] };
 }

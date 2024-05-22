@@ -10,6 +10,8 @@ import { Card, CardBody, CardHeader } from "@nextui-org/react";
 export default async function MergeRequestCard({ id }: IdProp) {
   const data = await getMergeRequestData(id);
 
+  // TODO link to MR page
+  // TODO add metadata
   return (
     <Card>
       <CardHeader>{data.title}</CardHeader>
