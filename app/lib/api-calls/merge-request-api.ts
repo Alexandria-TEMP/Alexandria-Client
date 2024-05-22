@@ -6,7 +6,7 @@
  */
 export async function getMergeRequestData(id: string) {
   // TODO
-  await new Promise((resolve) => setTimeout(resolve, 100));
+  await new Promise((resolve) => setTimeout(resolve, 800));
   if (id == "1") {
     // Rejected
     return {
