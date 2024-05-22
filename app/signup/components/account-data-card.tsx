@@ -1,44 +1,21 @@
-import { Button, Card, Input } from "@nextui-org/react";
-import {
-  useForm,
-  Controller,
-  FormState,
-  Control,
-  UseFormWatch,
-} from "react-hook-form";
+import { Button, Input } from "@nextui-org/react";
+import { Controller, FormState, Control, UseFormWatch } from "react-hook-form";
+import { FormType } from "../page";
 
+/**
+ * Component that groups together form fields about account data when creating a new account.
+ * This component is not intended to be reusable, it is only here for grouping purposes
+ * @param param0 - prop object containing state elements passed down from the parent form
+ * @returns a div containing email, password, confirm password fields and the submit button
+ */
 export default function AccountDataCard({
   control,
   formState,
   watch,
 }: {
-  control: Control<
-    {
-      email: string;
-      firstName: string;
-      lastName: string;
-      institution: string;
-      password: string;
-      confpass: string;
-    },
-    any
-  >;
-  formState: FormState<{
-    email: string;
-    firstName: string;
-    lastName: string;
-    institution: string;
-    password: string;
-    confpass: string;
-  }>;
-  watch: UseFormWatch<{
-    email: string;
-    firstName: string;
-    lastName: string;
-    institution: string;
-    password: string;
-    confpass: string;
-  }>;
+  control: Control<FormType, any>;
+  formState: FormState<FormType>;
+  watch: UseFormWatch<FormType>;
 }) {
   return (
     <div className="space-y-12 items-center min-w-96 w-1/3 min-h-fit mx-auto flex-col flex">
@@ -63,6 +40,7 @@ export default function AccountDataCard({
             isRequired
             errorMessage={formState.errors.email?.message?.toString()}
             isInvalid={!!formState.errors.email?.message}
+            data-testid="email"
           />
         )}
       />
@@ -93,6 +71,7 @@ export default function AccountDataCard({
             isRequired
             errorMessage={formState.errors.password?.message?.toString()}
             isInvalid={!!formState.errors.password?.message}
+            data-testid="password"
           />
         )}
       />
@@ -119,6 +98,7 @@ export default function AccountDataCard({
             isRequired
             errorMessage={formState.errors.confpass?.message?.toString()}
             isInvalid={!!formState.errors.confpass?.message}
+            data-testid="confirm-pwd"
           />
         )}
       />

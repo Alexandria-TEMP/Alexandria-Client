@@ -1,29 +1,19 @@
 import { Button, Card, Input } from "@nextui-org/react";
 import { useForm, Controller, FormState, Control } from "react-hook-form";
+import { FormType } from "../page";
 
+/**
+ * Component that groups together form fields about personal data when creating a new account.
+ * This component is not intended to be reusable, it is only here for grouping purposes
+ * @param param0 - prop object containing state elements passed down from the parent form
+ * @returns a div containing first name, last name and institution fields
+ */
 export default function PersonalDataCard({
   control,
   formState,
 }: {
-  control: Control<
-    {
-      email: string;
-      firstName: string;
-      lastName: string;
-      institution: string;
-      password: string;
-      confpass: string;
-    },
-    any
-  >;
-  formState: FormState<{
-    email: string;
-    firstName: string;
-    lastName: string;
-    institution: string;
-    password: string;
-    confpass: string;
-  }>;
+  control: Control<FormType, any>;
+  formState: FormState<FormType>;
 }) {
   return (
     <div className="space-y-12 items-center min-w-96 w-1/3 min-h-fit mx-auto place-content-center flex-col flex">
@@ -48,6 +38,7 @@ export default function PersonalDataCard({
             isRequired
             errorMessage={formState.errors.firstName?.message?.toString()}
             isInvalid={!!formState.errors.firstName?.message}
+            data-testid="first-name"
           />
         )}
       />
@@ -72,6 +63,7 @@ export default function PersonalDataCard({
             isRequired
             errorMessage={formState.errors.lastName?.message?.toString()}
             isInvalid={!!formState.errors.lastName?.message}
+            data-testid="last-name"
           />
         )}
       />
@@ -95,6 +87,7 @@ export default function PersonalDataCard({
             placeholder="Enter your institution"
             errorMessage={formState.errors.institution?.message?.toString()}
             isInvalid={!!formState.errors.institution?.message}
+            data-testid="institution"
           />
         )}
       />

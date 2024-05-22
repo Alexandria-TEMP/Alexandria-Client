@@ -23,4 +23,5 @@ export function onSubmit(data: FormData) {
       "Password: " +
       data.password,
   );
+  return true;
 }
