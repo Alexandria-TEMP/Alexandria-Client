@@ -24,13 +24,19 @@ export function submit(formData: createPostForm) {
         formData.title +
         "\n" +
         "Authors: " +
-        Array.from(formData.authors.keys()).map((a) => a.toString()) +
+        Array.from(formData.authors.keys())
+          .map((a) => a.toString())
+          .toString() +
         "\n" +
         "Contributors: " +
-        Array.from(formData.contributors.keys()).map((a) => a.toString()) +
+        Array.from(formData.contributors.keys())
+          .map((a) => a.toString())
+          .toString() +
         "\n" +
         "Fields: " +
-        Array.from(formData.fields.keys()).map((a) => a.toString()) +
+        Array.from(formData.fields.keys())
+          .map((a) => a.toString())
+          .toString() +
         "\n" +
         "Completion: " +
         formData.completion +

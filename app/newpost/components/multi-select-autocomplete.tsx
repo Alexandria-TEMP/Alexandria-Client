@@ -67,7 +67,7 @@ export function MultiSelectAutocomplete<Type>({
               <Chip
                 variant="bordered"
                 key={item}
-                onClose={(e) => removeItem(item)}
+                onClose={() => removeItem(item)}
                 data-testid="chip-test-id"
               >
                 {/* // TODO this is super inefficient but idk how to do this better
@@ -104,7 +104,7 @@ export function MultiSelectAutocomplete<Type>({
         <Button
           variant="ghost"
           style={{ display: "inline-block" }}
-          onClick={(e) => {
+          onClick={() => {
             if (newItem !== "") {
               setIsFirst(false);
               setSelectedItems(
