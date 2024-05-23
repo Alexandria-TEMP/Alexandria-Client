@@ -13,10 +13,25 @@ export default function ReviewChip({
   const size = "size-10";
 
   if (status == "accept") {
-    return <CheckCircleIcon className={`${size} text-success`} />;
+    return (
+      <CheckCircleIcon
+        data-testid="review-chip-accept"
+        className={`${size} text-success`}
+      />
+    );
   }
   if (status == "reject") {
-    return <XCircleIcon className={`${size} text-danger`} />;
+    return (
+      <XCircleIcon
+        data-testid="review-chip-reject"
+        className={`${size} text-danger`}
+      />
+    );
   }
-  return <EllipsisHorizontalCircleIcon className={`${size} `} />;
+  return (
+    <EllipsisHorizontalCircleIcon
+      data-testid="review-chip-open"
+      className={`${size} `}
+    />
+  );
 }
