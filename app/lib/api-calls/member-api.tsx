@@ -9,6 +9,7 @@
  */
 export default async function getMemberData(id: string) {
   // TODO
+  await new Promise((resolve) => setTimeout(resolve, 100));
   if (id == "1") {
     return {
       id: "1",

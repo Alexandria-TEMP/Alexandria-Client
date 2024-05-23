@@ -53,7 +53,7 @@ export default function ContributeDropdown() {
           aria-label="Contribution options"
           selectedKeys={selectedOption}
           selectionMode="single"
-          // @ts-ignore
+          // @ts-expect-error ts doesn't see setState as type (string[]) => void
           onSelectionChange={setSelectedOption}
           className="max-w-[300px]"
         >

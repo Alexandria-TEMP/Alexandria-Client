@@ -1,3 +1,6 @@
+variables:
+  HUSKY: 0
+
 default:
   image: node:20.12
   before_script: npm ci
