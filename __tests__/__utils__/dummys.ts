@@ -15,14 +15,24 @@ export const dummyDiscussion = {
   updatedAt: "11 May 2024",
 };
 
-export const dummyMember = {
-  id: "413256",
-  email: "mariecurie@tudelft.nl",
-  firstName: "Marie",
-  picture: "/placeholders/Marie_Curie.jpg",
-  institution: "TU Delft",
-  lastName: "Curie",
-};
+export const dummyMembers = [
+  {
+    id: "413256",
+    email: "mariecurie@tudelft.nl",
+    firstName: "Marie",
+    picture: "/placeholders/Marie_Curie.jpg",
+    institution: "TU Delft",
+    lastName: "Curie",
+  },
+  {
+    id: "2",
+    email: "kopernicus@tudelft.nl",
+    firstName: "Nicolaus",
+    institution: "TU Delft",
+    picture: "/placeholders/Nikolaus_Kopernikus.jpg",
+    lastName: "Copernicus",
+  },
+];
 
 export const dummyPost = {
   title: "Post title",
@@ -41,4 +51,10 @@ export const dummyPost = {
     "Theory of computation",
   ],
   updatedAt: "11 May 2024",
+};
+
+export const dummyTag = {
+  id: "1",
+  tag: "Computer Science",
+  tagType: "ScientificField",
 };
