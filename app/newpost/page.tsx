@@ -60,7 +60,7 @@ export default function NewPost() {
   return (
     <form
       className="w-full relative"
-      onSubmit={(e) =>
+      onSubmit={() =>
         submit({
           title,
           authors,

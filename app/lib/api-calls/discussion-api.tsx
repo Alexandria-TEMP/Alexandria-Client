@@ -7,8 +7,10 @@
 export async function getDiscussionData(id: string) {
   // TODO
   // const res = await fetch();
+  await new Promise((resolve) => setTimeout(resolve, 100));
 
   return {
+    id: id,
     anonymous: false,
     author: {
       email: "mariecurie@tudelft.nl",
@@ -36,5 +38,6 @@ export async function getDiscussionData(id: string) {
 export async function uploadDiscussion(text: string, id: string) {
   // TODO
   // should include author, possible different discussion to reply to (and anything else that I'm forgetting)
-  return Promise.resolve();
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  return `uploaded ${text} under id ${id}`;
 }

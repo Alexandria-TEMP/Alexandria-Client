@@ -1,4 +1,4 @@
-const { expect, describe, it } = require("@jest/globals");
+import { expect, describe, it } from "@jest/globals";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
@@ -10,6 +10,7 @@ jest.mock("@/lib/api-calls/discussion-api");
 describe("InputDiscussion", () => {
   const versionId = "51235312";
   const mockedApi = uploadDiscussion as jest.Mock;
+  mockedApi.mockResolvedValue({});
 
   it("renders a textbox", () => {
     render(<InputDiscussion versionId={versionId} />);
