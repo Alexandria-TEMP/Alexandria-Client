@@ -1,4 +1,3 @@
-import ThemeSwitcher from "@/components/theme-switcher";
 import PostContents from "./components/post-contents";
 import Discussion from "./components/discussion";
 import PostSidebar from "./components/post-sidebar";

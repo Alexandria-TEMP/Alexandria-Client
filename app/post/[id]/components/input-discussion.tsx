@@ -26,7 +26,11 @@ export default function InputDiscussion({
       />
       <Button
         className="mt-4"
-        onClick={() => uploadDiscussion(input, versionId)}
+        onClick={() => {
+          uploadDiscussion(input, versionId).catch(() =>
+            alert("Failed to submit discussion."),
+          );
+        }}
       >
         Post your answer
       </Button>
