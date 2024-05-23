@@ -4,6 +4,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import getPostData from "@/lib/api-calls/post-api";
 import { dummyPost } from "~/__tests__/__utils__/dummys";
+import { Card } from "@nextui-org/react";
 
 // Mock getPostData()
 jest.mock("@/lib/api-calls/post-api");
@@ -11,15 +12,15 @@ jest.mock("@/lib/api-calls/post-api");
 describe("PostCardHeader", () => {
   (getPostData as jest.Mock).mockResolvedValue(dummyPost);
 
-  it("renders title", () => {
-    render(PostCardHeader({ postId: dummyPost.id }));
+  it("renders title", async () => {
+    render(<Card>{await PostCardHeader({ postId: dummyPost.id })}</Card>);
 
     const title = screen.getByText(dummyPost.title);
     expect(title).toBeInTheDocument();
   });
 
-  it("renders metadata", () => {
-    render(PostCardHeader({ postId: dummyPost.id }));
+  it("renders metadata", async () => {
+    render(<Card>{await PostCardHeader({ postId: dummyPost.id })}</Card>);
 
     expect(screen.getByText(dummyPost.postType)).toBeInTheDocument();
     expect(screen.getByText(dummyPost.status)).toBeInTheDocument();
@@ -27,16 +28,24 @@ describe("PostCardHeader", () => {
     expect(screen.getByText(dummyPost.updatedAt)).toBeInTheDocument();
   });
 
-  it("hides contribute button", () => {
-    render(PostCardHeader({ postId: dummyPost.id, hideContribute: true }));
+  it("hides contribute button", async () => {
+    render(
+      <Card>
+        {await PostCardHeader({ postId: dummyPost.id, hideContribute: true })}
+      </Card>,
+    );
 
     expect(
       screen.queryByRole("button", { name: "Contribute" }),
     ).not.toBeInTheDocument();
   });
 
-  it("shows contribute button", () => {
-    render(PostCardHeader({ postId: dummyPost.id, hideContribute: false }));
+  it("shows contribute button", async () => {
+    render(
+      <Card>
+        {await PostCardHeader({ postId: dummyPost.id, hideContribute: false })}
+      </Card>,
+    );
 
     expect(
       screen.queryByRole("button", { name: "Contribute" }),
