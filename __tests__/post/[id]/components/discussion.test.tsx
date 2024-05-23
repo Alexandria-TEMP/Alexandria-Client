@@ -3,27 +3,11 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { getDiscussionData } from "@/lib/api-calls/discussion-api";
 import Discussion from "@/post/[id]/components/discussions/discussion";
+import { dummyDiscussion } from "~/__tests__/__utils__/dummys";
 
 jest.mock("@/lib/api-calls/discussion-api");
 
 describe("Discussion", () => {
-  const dummyDiscussion = {
-    id: "4321",
-    anonymous: false,
-    author: {
-      email: "mariecurie@tudelft.nl",
-      firstName: "Marie",
-      institution: "TU Delft",
-      lastName: "Curie",
-    },
-    createdAt: "11 May 2024",
-    deleted: false,
-    deletedAt: "-",
-    replies: [],
-    text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut ducimus amet ex qui eius corrupti reiciendis, quibusdam suscipit, aspernatur ipsum. Reprehenderit libero molestias nostrum eum sed? Illo, quidem ad.",
-    updatedAt: "11 May 2024",
-  };
-
   (getDiscussionData as jest.Mock).mockResolvedValue(dummyDiscussion);
 
   it("shows its author", async () => {

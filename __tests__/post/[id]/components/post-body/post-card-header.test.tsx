@@ -3,30 +3,12 @@ import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import getPostData from "@/lib/api-calls/post-api";
+import { dummyPost } from "~/__tests__/__utils__/dummys";
 
 // Mock getPostData()
 jest.mock("@/lib/api-calls/post-api");
 
 describe("PostCardHeader", () => {
-  const dummyPost = {
-    title: "This is a dummy title!",
-    status: "Open for review",
-    collaborators: ["1", "2"],
-    createdAt: "10 May 2024",
-    currentVersion: {
-      id: "1",
-      discussions: ["1", "1", "1", "1"],
-    },
-    id: "4312",
-    postType: "Reflection",
-    scientificFieldTags: [
-      "Computer Science",
-      "Mathematics",
-      "Theory of computation",
-    ],
-    updatedAt: "11 May 2024",
-  };
-
   (getPostData as jest.Mock).mockResolvedValue(dummyPost);
 
   it("renders title", () => {

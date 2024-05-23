@@ -3,19 +3,11 @@ import AuthorCard from "@/post/[id]/components/author-card";
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import getMemberData from "@/lib/api-calls/member-api";
+import { dummyMember } from "~/__tests__/__utils__/dummys";
 
 jest.mock("@/lib/api-calls/member-api");
 
 describe("AuthorCard", () => {
-  const dummyMember = {
-    id: "413256",
-    email: "mariecurie@tudelft.nl",
-    firstName: "Marie",
-    picture: "/placeholders/Marie_Curie.jpg",
-    institution: "TU Delft",
-    lastName: "Curie",
-  };
-
   (getMemberData as jest.Mock).mockResolvedValue(dummyMember);
 
   it("shows its label", async () => {
