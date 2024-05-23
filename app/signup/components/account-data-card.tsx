@@ -5,7 +5,9 @@ import { FormType } from "../page";
 /**
  * Component that groups together form fields about account data when creating a new account.
  * This component is not intended to be reusable, it is only here for grouping purposes
- * @param param0 - prop object containing state elements passed down from the parent form
+ * @param control - object passed from parent useForm hook state, needed to control and register custom components
+ * @param formState - object passed form parent useForm hook state, needed to store the state of the input fields
+ * @param watch -  object passed from parent useForm hook state, needed to watch for changes in password input field, so that confirm password field can compare its input to that
  * @returns a div containing email, password, confirm password fields and the submit button
  */
 export default function AccountDataCard({
