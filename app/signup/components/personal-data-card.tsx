@@ -1,5 +1,5 @@
-import { Button, Card, Input } from "@nextui-org/react";
-import { useForm, Controller, FormState, Control } from "react-hook-form";
+import { Input } from "@nextui-org/react";
+import { Controller, FormState, Control } from "react-hook-form";
 import { FormType } from "../page";
 
 /**
@@ -13,7 +13,7 @@ export default function PersonalDataCard({
   control,
   formState,
 }: {
-  control: Control<FormType, any>;
+  control: Control<FormType>;
   formState: FormState<FormType>;
 }) {
   return (

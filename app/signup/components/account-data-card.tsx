@@ -15,7 +15,7 @@ export default function AccountDataCard({
   formState,
   watch,
 }: {
-  control: Control<FormType, any>;
+  control: Control<FormType>;
   formState: FormState<FormType>;
   watch: UseFormWatch<FormType>;
 }) {
