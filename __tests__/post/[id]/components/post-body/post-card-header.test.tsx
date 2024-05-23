@@ -5,11 +5,15 @@ import "@testing-library/jest-dom";
 import getPostData from "@/lib/api-calls/post-api";
 import { dummyPost } from "~/__tests__/__utils__/dummys";
 import { Card } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 // Mock getPostData()
 jest.mock("@/lib/api-calls/post-api");
+// Mock useRouter so it's mounted
+jest.mock("next/navigation");
 
 describe("PostCardHeader", () => {
+  (useRouter as jest.Mock).mockReturnValue(jest.fn());
   (getPostData as jest.Mock).mockResolvedValue(dummyPost);
 
   it("renders title", async () => {
@@ -24,8 +28,12 @@ describe("PostCardHeader", () => {
 
     expect(screen.getByText(dummyPost.postType)).toBeInTheDocument();
     expect(screen.getByText(dummyPost.status)).toBeInTheDocument();
-    expect(screen.getByText(dummyPost.createdAt)).toBeInTheDocument();
-    expect(screen.getByText(dummyPost.updatedAt)).toBeInTheDocument();
+    expect(
+      screen.getByText(dummyPost.createdAt, { exact: false }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(dummyPost.updatedAt, { exact: false }),
+    ).toBeInTheDocument();
   });
 
   it("hides contribute button", async () => {
