@@ -3,6 +3,7 @@
 import { Button, Card, Input, Image } from "@nextui-org/react";
 import { useForm, Controller } from "react-hook-form";
 import { onSubmit } from "./lib/submit";
+import Logo from "@/components/logo";
 
 export default function LoginPage() {
   const { control, handleSubmit, formState } = useForm({
@@ -20,11 +21,7 @@ export default function LoginPage() {
       className="relative flex w-full h-full min-h-fit place-content-center m-auto"
     >
       <Card className="relative p-7 space-y-8 items-center place-content-center min-w-96 w-1/3 min-h-fit m-auto">
-        <Image
-          src="/logo/logo32white.svg"
-          alt="Alexandria Logo"
-          className="h-52"
-        />
+        <Logo className="h-52" />
         <h1>Login to Alexandria</h1>
         <Controller
           name="email"
