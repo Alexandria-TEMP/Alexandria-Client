@@ -5,11 +5,14 @@ import MergeRequestCard from "./merge-request-card";
  *
  * @param ids Merge request IDs
  */
-export default function MergeRequestList({ ids }: Readonly<{ ids: string[] }>) {
+export default function MergeRequestList({
+  ids,
+  grid,
+}: Readonly<{ ids: string[]; grid?: boolean }>) {
   return (
-    <div className="grid grid-cols-4 gap-5 ">
+    <div className={"gap-5 " + (grid ? "grid grid-cols-4" : "flex flex-col")}>
       {ids.map((id) => (
-        <MergeRequestCard key={id} id={id} />
+        <MergeRequestCard short={grid} key={id} id={id} />
       ))}
     </div>
   );
