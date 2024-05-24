@@ -4,7 +4,6 @@ import MergeRequestCard from "@/post/[id]/versions/components/merge-request-card
 import { act, render, screen } from "@testing-library/react";
 import { dummyMergeRequests } from "~/__tests__/__utils__/dummys";
 import { useRouter } from "next/navigation";
-import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 
 jest.mock("@/lib/api-calls/merge-request-api");

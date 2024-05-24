@@ -1,5 +1,4 @@
 import { expect, describe, it } from "@jest/globals";
-import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { getDiscussionData } from "@/lib/api-calls/discussion-api";
 import Discussion from "@/post/[id]/components/discussions/discussion";

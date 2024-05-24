@@ -1,8 +1,6 @@
 import { expect, describe, it } from "@jest/globals";
-import "@testing-library/jest-dom";
 import { render, screen, waitFor, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Member } from "@/lib/api-types";
 import { SingleSelectAutocomplete } from "@/newpost/components/single-select-autocomplete";
 
 const dumTitle = "Dummy title";

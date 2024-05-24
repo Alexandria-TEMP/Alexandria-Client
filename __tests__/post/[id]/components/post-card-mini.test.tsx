@@ -1,5 +1,4 @@
 import { expect, describe, it } from "@jest/globals";
-import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import getPostData from "@/lib/api-calls/post-api";
 import PostCardMini from "@/post/[id]/components/post-card-mini";
