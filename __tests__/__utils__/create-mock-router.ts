@@ -2,6 +2,7 @@ import { NextRouter } from "next/router";
 
 /**
  * Creates a jest mock of NextRouter. All its methods are also mocks.
+ * To use it, nest the component under test in `<RouterContext.Provider value={router}>`.
  * See https://stackoverflow.com/a/70831613.
  *
  * @param router properties of the router which can be manually set
