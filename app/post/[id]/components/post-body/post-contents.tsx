@@ -1,6 +1,6 @@
 import { Card, CardBody } from "@nextui-org/react";
 import PostCardHeader from "./post-card-header";
-import PostEmbed from "../post-embed";
+import PostEmbed from "./post-embed";
 
 /**
  * Main body of a Post. Includes: title, main metadata, and action buttons.
