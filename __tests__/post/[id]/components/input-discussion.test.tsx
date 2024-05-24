@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
 import { uploadDiscussion } from "@/lib/api-calls/discussion-api";
-import InputDiscussion from "@/post/[id]/components/input-discussion";
+import InputDiscussion from "@/post/[id]/components/discussions/input-discussion";
 
 jest.mock("@/lib/api-calls/discussion-api");
 
