@@ -31,7 +31,7 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
   placeholder?: string;
   defaultSelectedKey?: string;
   items: string[];
-  control: Control<FormType>;
+  control?: Control<FormType>;
   name: Path<FormType>;
   rules?: {
     required?:
@@ -43,7 +43,7 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
     validate?: (value: string[]) => boolean | string;
   };
 }) {
-  const { field, fieldState } = useController({
+  const { field } = useController({
     name,
     control,
     rules,
@@ -65,19 +65,25 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
   return (
     <div className="space-y-2">
       <Autocomplete
-        label={<h2 className="max-w-fit inline-block"> {title} </h2>}
+        label={
+          <h2 aria-label={title} className="max-w-fit inline-block">
+            {" "}
+            {title}{" "}
+          </h2>
+        }
         labelPlacement="outside"
         description={description}
         placeholder={placeholder}
         className="max-w-full"
         onSelectionChange={(k) => handleOnChange(k)}
         data-testid="select-element-test-id"
-        isInvalid={!!fieldState.error?.message}
-        errorMessage={fieldState.error?.message?.toString()}
+        // isInvalid={!!fieldState.error} // TODO for some reason these dont work to show the required error, even though i have this exact code for the other custom coponents and it works
+        // errorMessage={fieldState.error?.message?.toString()}
         onBlur={() => field.onBlur()}
         value={field.value}
         defaultSelectedKey={defaultSelectedKey}
-        isRequired={!!rules?.required}
+        isRequired={!!rules?.required} // using this instead to show the required error
+        aria-labelledby={title}
       >
         {keys.map((key) => (
           <AutocompleteItem

@@ -32,7 +32,7 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
   title: string;
   description: string;
   options: Map<string, Type>;
-  control: Control<FormType>;
+  control?: Control<FormType>;
   name: Path<FormType>;
   rules?: {
     required?:
@@ -76,6 +76,7 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
       <span>
         {/* title of the field, if it is does not satisfy form conditions it will be red */}
         <h2
+          aria-label={title}
           className={"inline-block".concat(
             !fieldState.error ? "" : " text-danger",
           )}
@@ -113,6 +114,7 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
           isInvalid={!!fieldState.error?.message}
           errorMessage={fieldState.error?.message?.toString()}
           onInputChange={(s) => s == "" && setNewItem("")}
+          aria-labelledby={title}
         >
           {(item) => (
             <AutocompleteItem key={item[0]} data-testid="select-item-test-id">
