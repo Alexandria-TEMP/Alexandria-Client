@@ -5,80 +5,105 @@ import { Skeleton } from "@nextui-org/react";
 import { getRenderedVersion } from "@/lib/api-calls/version-api";
 import { IdProp } from "@/lib/id-prop";
 
+/**
+ * Isolated iframe with a Version's rendered html.
+ * Detects html's height and sets iframe's height to it.
+ *
+ * @param id Version ID
+ */
 export default function VersionRender({ id }: IdProp) {
+  // State to save data in after it's fetched
   const [html, setHtml] = useState<string | undefined>(undefined);
   const [isLoaded, setLoaded] = useState(false);
 
+  // Fetch html when component renders
   useEffect(() => {
     getRenderedVersion(id)
       .then((res) => {
         setHtml(res);
         setLoaded(true);
       })
-      .catch(() => console.log("something went wrong")); // TODO better error handling
+      .catch(() => {
+        // TODO better error handling
+        console.log("something went wrong");
+      });
   });
 
+  // Reference to iframe, used to get html's height
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [iframeHeight, setIframeHeight] = useState("300px");
+  // State with iframe's height, used to update it once we have html's height
+  const [iframeHeight, setIframeHeight] = useState(300);
 
+  // Setup to get html height once it first renders
   useEffect(() => {
-    const handleIframeLoad = () => {
-      if (iframeRef.current && iframeRef.current.contentWindow) {
-        injectScript(iframeRef.current);
-      }
-    };
+    // First: make it so html sends a message to its parent window with its height
 
-    const handleMessage = (event: MessageEvent<{ height: number }>) => {
-      if (event.data) {
-        setIframeHeight(`${event.data.height}px`);
-      }
-    };
-
+    // Injects a script into the html to make it send the desired message
     const injectScript = (iframe: HTMLIFrameElement) => {
-      const scriptContent = `
-        (function() {
-          function sendHeight() {
+      // Creates a <script> tag
+      const script = iframe.contentDocument?.createElement("script");
+      if (!script) return;
+      // Set content of <script> to a script that sends message with height
+      script.textContent = `
+      (function() {
+        function sendHeight() {
             const height = document.documentElement.scrollHeight;
             window.parent.postMessage({ height: height }, '*');
           }
           sendHeight();
           window.addEventListener('resize', sendHeight);
         })();
-      `;
-      const script = iframe.contentDocument?.createElement("script");
-      if (script) {
-        script.textContent = scriptContent;
-        if (iframe.contentDocument) {
-          iframe.contentDocument.body.appendChild(script);
-        }
+        `;
+      // Inject the script in the html
+      if (iframe.contentDocument) {
+        iframe.contentDocument.body.appendChild(script);
       }
     };
 
-    window.addEventListener("message", handleMessage);
+    const iframe = iframeRef.current; // Shorter name
 
-    if (iframeRef.current) {
-      iframeRef.current.addEventListener("load", handleIframeLoad);
-      if (iframeRef.current.contentDocument?.readyState === "complete") {
+    // When iframe loads, inject script into html
+    const handleIframeLoad = () => {
+      if (iframe && iframe.contentWindow) {
+        injectScript(iframe);
+      }
+    };
+
+    if (iframe) {
+      // Add a listener to actually inject when it loads
+      iframe.addEventListener("load", handleIframeLoad);
+      // Or just call it if it already loaded
+      if (iframe.contentDocument?.readyState === "complete") {
         handleIframeLoad();
       }
     }
 
-    const current = iframeRef.current;
+    // Second: use the data sent by the html to update the iframe's height
+
+    const handleHtmlsMessage = (message: MessageEvent<{ height: number }>) => {
+      // Sets the height state to what the html sent in message
+      if (!message.data) return;
+      setIframeHeight(message.data.height);
+    };
+
+    // Add a listener to actually set the height when a message is sent
+    window.addEventListener("message", handleHtmlsMessage);
 
     return () => {
-      window.removeEventListener("message", handleMessage);
-      if (current) {
-        current.removeEventListener("load", handleIframeLoad);
+      // Cleanup: Remove the listeners
+      window.removeEventListener("message", handleHtmlsMessage);
+      if (iframe) {
+        iframe.removeEventListener("load", handleIframeLoad);
       }
     };
   }, []);
 
   return (
-    <Skeleton isLoaded={isLoaded}>
+    <Skeleton isLoaded={isLoaded} className="rounded-lg">
       <iframe
         ref={iframeRef}
-        srcDoc={isLoaded ? html : ""}
-        style={{ width: "100%", height: iframeHeight, border: "none" }}
+        srcDoc={html}
+        style={{ width: "100%", height: `${iframeHeight}px`, border: "none" }}
       />
     </Skeleton>
   );
