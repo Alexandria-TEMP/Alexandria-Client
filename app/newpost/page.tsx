@@ -5,7 +5,7 @@ import { Divider } from "@nextui-org/divider";
 import { getMembers } from "../lib/api-calls/member-api";
 import { getFields } from "../lib/api-calls/fields-api";
 import { MultiSelectAutocomplete } from "../components/multi-select-autocomplete";
-// import { SingleSelectAutocomplete } from "./components/single-select-autocomplete";
+import { SingleSelectAutocomplete } from "./components/single-select-autocomplete";
 import UploadContentCard from "./components/upload-content-card";
 import { getMemberName, getFieldName } from "@/lib/get-format";
 import { Card, Input } from "@nextui-org/react";
@@ -25,10 +25,6 @@ export default function NewPost() {
   const defType = 0;
   const defCompletion = 0;
 
-  // const [type, setType] = useState(types[defType]);
-  // const [completion, setCompletion] = useState(completions[defCompletion]);
-  // const [feedback, setFeedback] = useState(feedbacks[defFeedback]);
-
   const { handleSubmit, formState, control } = useForm({
     mode: "onTouched",
     defaultValues: {
@@ -44,9 +40,9 @@ export default function NewPost() {
 
   return (
     // disable reason: this is the intended usage for handleSubmit
+    // linter complains about it being a promise, but if i fix it then `submit` function does not get called
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <form className="w-full relative" onSubmit={handleSubmit(submit)}>
-      {/* TODO this is not actually calling submit and linter complains if i fix it */}
       <div className="m-auto max-w-4xl w-10/12">
         {/* Little top bar */}
         <div className="sticky flex justify-between py-5">
@@ -129,13 +125,20 @@ export default function NewPost() {
 
             <Divider />
 
-            {/* <SingleSelectAutocomplete
+            <SingleSelectAutocomplete
               title="What type will your post be?"
               description="The type of post represents what kind of content you are sharing"
               placeholder="Select a type for your post..."
               defaultSelectedKey={defType.toString()}
               items={types}
-              setSelection={setType}
+              control={control}
+              name="type"
+              rules={{
+                required: {
+                  value: true,
+                  message: "Please select the type of post.",
+                },
+              }}
             />
 
             <Divider />
@@ -146,7 +149,14 @@ export default function NewPost() {
               placeholder="Select the type of feedback preferences you want..."
               defaultSelectedKey={defFeedback.toString()}
               items={feedbacks}
-              setSelection={setFeedback}
+              name="feedback"
+              control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: "Please select feedback preferences for your post.",
+                },
+              }}
             />
 
             <Divider />
@@ -157,8 +167,15 @@ export default function NewPost() {
               placeholder="Select the completion status for your post..."
               defaultSelectedKey={defCompletion.toString()}
               items={completions}
-              setSelection={setCompletion}
-            /> */}
+              name="completion"
+              control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: "Please select the completion status of your post.",
+                },
+              }}
+            />
 
             <Divider />
           </div>

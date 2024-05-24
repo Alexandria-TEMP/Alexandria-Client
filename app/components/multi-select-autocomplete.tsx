@@ -26,12 +26,7 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
   options,
   name,
   control,
-  rules = {
-    required: {
-      value: false,
-      message: "Please fill out this field.",
-    },
-  },
+  rules,
   getItemLabel,
 }: {
   title: string;
@@ -64,6 +59,7 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
     const newItems = Array.from(new Set(items.filter((e) => e !== removed)));
     setItems(newItems);
     field.onChange(newItems);
+    field.onBlur();
   };
 
   const handleAddItem = () => {
@@ -71,6 +67,7 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
       const newItems = Array.from(new Set([...items, newItem.toString()]));
       setItems(newItems);
       field.onChange(newItems);
+      field.onBlur();
     }
   };
 
@@ -86,7 +83,7 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
           {title}
         </h2>
         {/* if the field is required, display required asterisk */}
-        {rules.required && (
+        {rules?.required && (
           <h2 className="inline-block text-danger text-small">*</h2>
         )}
       </span>
