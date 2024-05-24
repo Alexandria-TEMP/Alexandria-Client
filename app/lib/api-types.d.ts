@@ -26,7 +26,6 @@ export type Post = {
   postType: PostType;
   scientificFieldTags: string[];
   updatedAt: Date;
-  version: string;
 };
 
 export type PostType = "Reflection" | "Question" | "Project";

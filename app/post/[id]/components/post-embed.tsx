@@ -13,7 +13,7 @@ export default function PostEmbed({ postId }: Readonly<{ postId: string }>) {
     console.log("in useEffect");
     async function getRender() {
       const post = await getPostData(postId);
-      const render = await getRenderedVersion(post.version);
+      const render = await getRenderedVersion(post.currentVersion.id);
 
       setHtml(render);
       setLoaded(true);

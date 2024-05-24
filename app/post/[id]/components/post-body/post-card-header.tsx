@@ -42,8 +42,12 @@ export default async function PostCardHeader({
           <Chip>{data.status}</Chip>
         </div>
         <div className="flex-col">
-          <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
-          <HeaderSubtle>Last update on {data.updatedAt}</HeaderSubtle>
+          <HeaderSubtle>
+            Created on {data.createdAt.toLocaleDateString()}
+          </HeaderSubtle>
+          <HeaderSubtle>
+            Last update on {data.updatedAt.toLocaleDateString()}
+          </HeaderSubtle>
         </div>
       </CardHeader>
     </>

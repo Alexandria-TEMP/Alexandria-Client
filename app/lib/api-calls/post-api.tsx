@@ -13,7 +13,7 @@ export default async function getPostData(id: string): Promise<Post> {
     title: "Post title",
     status: "Open for review",
     collaborators: ["1", "2"],
-    createdAt: new Date(2024, 5, 10),
+    createdAt: new Date(2024, 4, 10),
     currentVersion: {
       id: "1",
       discussions: ["1", "1", "1", "1"],
@@ -25,7 +25,6 @@ export default async function getPostData(id: string): Promise<Post> {
       "Mathematics",
       "Theory of computation",
     ],
-    updatedAt: new Date(2024, 5, 20),
-    version: "1",
+    updatedAt: new Date(2024, 4, 20),
   };
 }
