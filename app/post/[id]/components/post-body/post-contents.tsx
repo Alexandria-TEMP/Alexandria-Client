@@ -1,19 +1,21 @@
 import { Card, CardBody } from "@nextui-org/react";
 import PostCardHeader from "./post-card-header";
-import PostEmbed from "./post-embed";
+import VersionRender from "./version-render";
+import getPostData from "@/lib/api-calls/post-api";
+import { IdProp } from "@/lib/id-prop";
 
 /**
  * Main body of a Post. Includes: title, main metadata, and action buttons.
  *
- * @param postId Post ID
+ * @param id Post ID
  */
-export default function PostContents({ postId }: { postId: string }) {
+export default async function PostContents({ id }: IdProp) {
+  const data = await getPostData(id);
   return (
     <Card>
-      <PostCardHeader postId={postId} />
-      {/* Contents */}
+      <PostCardHeader postId={id} />
       <CardBody>
-        <PostEmbed postId={postId} />
+        <VersionRender id={data.currentVersion.id} />
       </CardBody>
     </Card>
   );

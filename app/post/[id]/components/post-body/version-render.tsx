@@ -2,23 +2,20 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Skeleton } from "@nextui-org/react";
-import getPostData from "@/lib/api-calls/post-api";
 import { getRenderedVersion } from "@/lib/api-calls/version-api";
+import { IdProp } from "@/lib/id-prop";
 
-export default function PostEmbed({ postId }: Readonly<{ postId: string }>) {
+export default function VersionRender({ id }: IdProp) {
   const [html, setHtml] = useState<string | undefined>(undefined);
   const [isLoaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    console.log("in useEffect");
-    async function getRender() {
-      const post = await getPostData(postId);
-      const render = await getRenderedVersion(post.currentVersion.id);
-
-      setHtml(render);
-      setLoaded(true);
-    }
-    getRender().catch(() => console.log("something went wrong")); // TODO better error handling
+    getRenderedVersion(id)
+      .then((res) => {
+        setHtml(res);
+        setLoaded(true);
+      })
+      .catch(() => console.log("something went wrong")); // TODO better error handling
   });
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
