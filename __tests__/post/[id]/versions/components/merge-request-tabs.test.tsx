@@ -1,6 +1,5 @@
 import MergeRequestTabs from "@/post/[id]/versions/components/merge-request-tabs";
 import { expect, describe, it } from "@jest/globals";
-import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 

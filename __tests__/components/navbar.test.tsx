@@ -1,5 +1,4 @@
 import { expect, describe, it } from "@jest/globals";
-import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import AlexandriaNavbar, { navigationItems } from "@/components/navbar";
 import userEvent from "@testing-library/user-event";

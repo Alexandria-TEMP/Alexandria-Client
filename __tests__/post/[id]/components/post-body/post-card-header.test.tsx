@@ -1,7 +1,6 @@
 import PostCardHeader from "@/post/[id]/components/post-body/post-card-header";
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
 import getPostData from "@/lib/api-calls/post-api";
 import { dummyPost } from "~/__tests__/__utils__/dummys";
 import { Card } from "@nextui-org/react";
