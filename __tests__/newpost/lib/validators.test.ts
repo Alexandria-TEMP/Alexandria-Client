@@ -22,12 +22,12 @@ describe("Tests title validator", () => {
 
 describe("Authors list validator", () => {
   it("does not accept empty list", () => {
-    expect(validateAuthors(new Set<string>())).toBe(
+    expect(validateAuthors([])).toBe(
       "You must select at least one author for your post.",
     );
   });
 
   it("works with correct input", () => {
-    expect(validateAuthors(new Set<string>(["1", "2"]))).toBe(true);
+    expect(validateAuthors(["1", "2"])).toBe(true);
   });
 });

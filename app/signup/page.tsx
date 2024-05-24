@@ -42,7 +42,9 @@ export default function SignupPage() {
 
   return (
     <form
-      onSubmit={() => handleSubmit(onSubmit)}
+      // disable reason: this is the intended usage for handleSubmit
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      onSubmit={handleSubmit(onSubmit)}
       className="relative flex flex-col space-y-7 w-full h-full min-h-fit m-auto py-7"
     >
       <h1 className="w-full text-center">Create an Alexandria account</h1>
