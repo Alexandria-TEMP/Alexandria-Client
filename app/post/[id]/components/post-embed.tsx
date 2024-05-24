@@ -3,22 +3,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Skeleton } from "@nextui-org/react";
 import getPostData from "@/lib/api-calls/post-api";
+import { getRenderedVersion } from "@/lib/api-calls/version-api";
 
 export default function PostEmbed({ postId }: Readonly<{ postId: string }>) {
-  const [data, setData] = useState<string | undefined>(undefined); // TODO don't use 'any'!
+  const [html, setHtml] = useState<string | undefined>(undefined);
   const [isLoaded, setLoaded] = useState(false);
 
   useEffect(() => {
     console.log("in useEffect");
-    getPostData(postId)
-      .then((data) => {
-        console.log("got data");
-        setData(data.contents);
-        setLoaded(true);
-      })
-      .catch(() => {
-        console.log("something went wrong");
-      });
+    async function getRender() {
+      const post = await getPostData(postId);
+      const render = await getRenderedVersion(post.version);
+
+      setHtml(render);
+      setLoaded(true);
+    }
+    getRender().catch(() => console.log("something went wrong")); // TODO better error handling
   });
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -80,7 +80,7 @@ export default function PostEmbed({ postId }: Readonly<{ postId: string }>) {
     <Skeleton isLoaded={isLoaded}>
       <iframe
         ref={iframeRef}
-        srcDoc={isLoaded ? data : ""}
+        srcDoc={isLoaded ? html : ""}
         style={{ width: "100%", height: iframeHeight, border: "none" }}
       />
     </Skeleton>
