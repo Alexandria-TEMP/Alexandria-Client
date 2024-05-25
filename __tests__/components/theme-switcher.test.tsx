@@ -1,28 +1,13 @@
-const { expect, describe, it, beforeEach } = require("@jest/globals");
-import "@testing-library/jest-dom";
+import { expect, describe, it, beforeEach } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import ThemeSwitcher from "@/components/theme-switcher";
 import { ThemeProvider } from "next-themes";
+import themeProviderSetup from "../__utils__/theme-provider-setup";
 
 describe("Theme switcher", () => {
-  beforeEach(() => {
-    // This setup is needed for the ThemeProvider to work
-    Object.defineProperty(window, "matchMedia", {
-      writable: true,
-      value: jest.fn().mockImplementation((query) => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addListener: jest.fn(), // Deprecated
-        removeListener: jest.fn(), // Deprecated
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-        dispatchEvent: jest.fn(),
-      })),
-    });
-  });
+  beforeEach(themeProviderSetup);
 
   it("displays a sun on dark mode", async () => {
     const user = userEvent.setup();

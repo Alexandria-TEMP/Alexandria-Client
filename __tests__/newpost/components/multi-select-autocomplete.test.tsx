@@ -1,13 +1,10 @@
 import { expect, describe, it } from "@jest/globals";
-import "@testing-library/jest-dom";
 import {
   render,
   screen,
   waitFor,
-  cleanup,
   within,
   fireEvent,
-  waitForElementToBeRemoved,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MultiSelectAutocomplete } from "@/newpost/components/multi-select-autocomplete";
