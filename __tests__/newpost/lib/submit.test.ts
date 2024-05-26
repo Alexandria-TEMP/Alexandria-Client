@@ -1,6 +1,4 @@
 import { expect, describe, it } from "@jest/globals";
-import "@testing-library/jest-dom";
-import "@testing-library/jest-dom";
 
 const dumFormData = {
   title: "title",

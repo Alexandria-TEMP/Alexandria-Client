@@ -1,42 +1,46 @@
 "use client";
 
 import { Button, ButtonGroup, Divider } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 /**
  * Button group that links to different Post views.
  *
  * @param postId ID of Post the links refer to
- * @param currentView Which Post view is currently active
  */
 export default function PostLinks({
   postId,
-  currentView,
 }: Readonly<{
   postId: string;
-  currentView: "contents" | "versions" | "files";
 }>) {
   const router = useRouter();
+  const pathname = usePathname();
+
+  const hrefs = {
+    contents: `/post/${postId}`,
+    versions: `/post/${postId}/versions`,
+    files: `/post/${postId}/files`,
+  };
 
   return (
     <ButtonGroup>
       <Button
-        isDisabled={currentView === "contents"}
-        onClick={() => router.replace(`/post/${postId}`)}
+        isDisabled={pathname === hrefs["contents"]}
+        onClick={() => router.replace(hrefs["contents"])}
       >
         Contents
       </Button>
       <Divider orientation="vertical" />
       <Button
-        isDisabled={currentView === "versions"}
-        onClick={() => router.replace(`/post/${postId}/versions`)}
+        isDisabled={pathname === hrefs["versions"]}
+        onClick={() => router.replace(hrefs["versions"])}
       >
         Versions
       </Button>
       <Divider orientation="vertical" />
       <Button
-        isDisabled={currentView === "files"}
-        onClick={() => router.replace(`/post/${postId}/files`)}
+        isDisabled={pathname === hrefs["files"]}
+        onClick={() => router.replace(hrefs["files"])}
       >
         Files
       </Button>

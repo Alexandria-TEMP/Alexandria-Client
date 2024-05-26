@@ -37,7 +37,7 @@ export default function LoginPage() {
             <Input
               {...field}
               className="w-2/3"
-              placeholder="Enter your email"
+              placeholder="Enter your email."
               errorMessage={formState.errors.email?.message?.toString()}
               isInvalid={!!formState.errors.email?.message}
             />
@@ -52,7 +52,7 @@ export default function LoginPage() {
             <Input
               {...field}
               className="w-2/3"
-              placeholder="Enter your passowrd"
+              placeholder="Enter your password."
               type="password"
               errorMessage={formState.errors.password?.message?.toString()}
               isInvalid={!!formState.errors.password?.message}

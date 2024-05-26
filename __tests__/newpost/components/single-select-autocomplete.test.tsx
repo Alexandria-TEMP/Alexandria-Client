@@ -1,5 +1,4 @@
 import { expect, describe, it } from "@jest/globals";
-import "@testing-library/jest-dom";
 import { render, screen, waitFor, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SingleSelectAutocomplete } from "@/newpost/components/single-select-autocomplete";

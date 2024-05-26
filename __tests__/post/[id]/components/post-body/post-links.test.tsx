@@ -1,9 +1,8 @@
 import { expect, describe, it } from "@jest/globals";
-import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import { render, screen, waitFor } from "@testing-library/react";
-import { useRouter } from "next/navigation";
-import PostLinks from "@/post/[id]/components/post-links";
+import { render, screen } from "@testing-library/react";
+import { useRouter, usePathname } from "next/navigation";
+import PostLinks from "@/post/[id]/components/post-body/post-links";
 
 // Possible button labels
 type Labels = "contents" | "versions" | "files";
@@ -19,12 +18,7 @@ const redirectsTest = async (label: Labels) => {
   // Tests if clicking the button redirects to correct page
   const postId = "6327282";
 
-  render(
-    <PostLinks
-      postId={postId}
-      currentView={label === "contents" ? "versions" : "contents"}
-    />,
-  );
+  render(<PostLinks postId={postId} />);
   const button = screen.getByText(label, { exact: false });
 
   const user = userEvent.setup();
@@ -37,7 +31,14 @@ const redirectsTest = async (label: Labels) => {
 
 const disabledTest = (label: Labels) => {
   // Tests if button is disabled when in own view
-  render(<PostLinks postId="1" currentView={label} />);
+  const postId = "62728";
+
+  // Mock usePathname
+  (usePathname as jest.Mock).mockReturnValue(
+    label === "contents" ? `/post/${postId}` : `/post/${postId}/${label}`,
+  );
+
+  render(<PostLinks postId={postId} />);
   const button = screen.getByText(label, { exact: false });
   expect(button).toBeDisabled();
 };

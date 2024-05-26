@@ -1,6 +1,5 @@
-const { expect, describe, it, beforeEach } = require("@jest/globals");
+import { expect, describe, it } from "@jest/globals";
 import HeaderSubtle from "@/components/header-subtle";
-import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 
 describe("HeaderSubtle", () => {

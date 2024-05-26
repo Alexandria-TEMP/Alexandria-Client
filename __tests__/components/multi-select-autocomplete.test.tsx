@@ -1,5 +1,3 @@
-import { expect, describe, it } from "@jest/globals";
-import "@testing-library/jest-dom";
 import {
   render,
   screen,
@@ -10,33 +8,15 @@ import {
 import userEvent from "@testing-library/user-event";
 import { MultiSelectAutocomplete } from "@/components/multi-select-autocomplete";
 import { Member } from "@/lib/api-types";
+import { dummyMembers } from "~/__tests__/__utils__/dummys";
 import { useForm, FormProvider } from "react-hook-form";
 
 const dumTitle = "Dummy title";
 const dumDesc = "Dummy description";
+let dumSelected = new Set<string>();
 const dumItems = new Map<string, Member>([
-  [
-    "1",
-    {
-      id: "1",
-      email: "mariecurie@tudelft.nl",
-      firstName: "Marie",
-      picture: "/placeholders/Marie_Curie.jpg",
-      institution: "TU Delft",
-      lastName: "Curie",
-    },
-  ],
-  [
-    "2",
-    {
-      id: "2",
-      email: "kopernicus@tudelft.nl",
-      firstName: "Nicolaus",
-      institution: "TU Delft",
-      picture: "/placeholders/Nikolaus_Kopernikus.jpg",
-      lastName: "Copernicus",
-    },
-  ],
+  [dummyMembers[0].id, dummyMembers[0]],
+  [dummyMembers[1].id, dummyMembers[1]],
 ]);
 const dumGetItemLabel = jest.fn((item: Member | undefined) => "Dummy name");
 

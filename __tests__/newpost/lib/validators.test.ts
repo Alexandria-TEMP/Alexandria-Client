@@ -1,6 +1,4 @@
 import { expect, describe, it } from "@jest/globals";
-import "@testing-library/jest-dom";
-import "@testing-library/jest-dom";
 import { validateAuthors, validateTitle } from "@/newpost/lib/validators";
 
 describe("Tests title validator", () => {
