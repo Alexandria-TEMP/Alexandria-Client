@@ -126,11 +126,11 @@ export default function NewPost() {
             <Divider />
 
             <SingleSelectAutocomplete
-              title="What type will your post be?"
+              label={<h2>What type will your post be?</h2>}
               description="The type of post represents what kind of content you are sharing."
               placeholder="Select a type for your post..."
               defaultSelectedKey={defType.toString()}
-              items={types}
+              options={types}
               control={control}
               name="type"
               rules={{
@@ -144,11 +144,11 @@ export default function NewPost() {
             <Divider />
 
             <SingleSelectAutocomplete
-              title="What are your feedback preferences?"
+              label={<h2>What are your feedback preferences?</h2>}
               description="The type of replies you want to encourage under your post."
               placeholder="Select the type of feedback preferences you want..."
               defaultSelectedKey={defFeedback.toString()}
-              items={feedbacks}
+              options={feedbacks}
               name="feedback"
               control={control}
               rules={{
@@ -162,11 +162,11 @@ export default function NewPost() {
             <Divider />
 
             <SingleSelectAutocomplete
-              title="What is the completion of your project?"
+              label={<h2>What is the completion of your project?</h2>}
               description="This helps other users understand your work and give advice."
               placeholder="Select the completion status for your post..."
               defaultSelectedKey={defCompletion.toString()}
-              items={completions}
+              options={completions}
               name="completion"
               control={control}
               rules={{

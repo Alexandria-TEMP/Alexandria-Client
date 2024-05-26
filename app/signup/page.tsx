@@ -45,6 +45,7 @@ export default function SignupPage() {
   return (
     <form
       // disable reason: this is the intended usage for handleSubmit
+      // the react-hook-form solution for typescripting their function did not work
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       onSubmit={handleSubmit(onSubmit)}
       className="relative flex flex-col space-y-7 w-full h-full min-h-fit m-auto py-7"

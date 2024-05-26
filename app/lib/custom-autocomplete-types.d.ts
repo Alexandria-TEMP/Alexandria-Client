@@ -1,7 +1,7 @@
-import { FieldValues } from "react-hook-form";
+import { FieldValues, Control, Path } from "react-hook-form";
 
 /**
- * Possible parameters for the custom Multi and Single select Autcomplete components
+ * Possible props for the custom Multi and Single select Autcomplete components
  * These components are meant to be children of a form built using react-hook-form
  * The type can be extended with additional properties should they be necessary
  * @template Type: the type of the objects in the options list
@@ -17,8 +17,10 @@ import { FieldValues } from "react-hook-form";
  * @param options: the list of items in the autocomplete dropdown
  * @param name: the (not displayed) name of the field this component corresponds to, as specified in parent react hook form
  * @param control: the form control object passed down from parent form, used to manage field values
+ *                 optional, as it can be injected
  * @param rules: client side validation rules, this component only accepts "required" and "validate" rules for now
  *               see NextUI page for more rules that can be added: https://www.react-hook-form.com/api/useform/register/#options
+ *               optional, because there might be no rules
  * @param getItemLabel: method that returns the desired string representation of the objects in the dropdown
  */
 export type CustomAutocompleteProps<
@@ -32,8 +34,8 @@ export type CustomAutocompleteProps<
   placeholder?: string;
   defaultSelectedKey?: KeyType;
   options: OptionsType;
-  name: string;
-  control: Control<FormType>;
+  name: Path<FormType>;
+  control?: Control<FormType>;
   rules?: {
     required?:
       | string
@@ -45,5 +47,5 @@ export type CustomAutocompleteProps<
     // can be extended with multiple types
     validate?: (value: string[]) => boolean | string;
   };
-  getItemLabel: (i: Type | undefined) => string;
+  getItemLabel?: (i: Type | undefined) => string;
 };

@@ -5,10 +5,10 @@ import userEvent from "@testing-library/user-event";
 import { SingleSelectAutocomplete } from "@/newpost/components/single-select-autocomplete";
 import { FormProvider, useForm } from "react-hook-form";
 
-const dumTitle = "Dummy title";
+const dumLabel = "Dummy title";
 const dumDesc = "Dummy description";
 const dumPlaceholder = "Dummy placeholder";
-const dumItems = ["1", "2", "3"];
+const dumOptions = ["1", "2", "3"];
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const methods = useForm({
@@ -29,10 +29,10 @@ beforeEach(() => {
   render(
     <Wrapper>
       <SingleSelectAutocomplete
-        title={dumTitle}
+        label={dumLabel}
         description={dumDesc}
         placeholder={dumPlaceholder}
-        items={dumItems}
+        options={dumOptions}
         name="dumItem"
         rules={{
           required: {
@@ -49,7 +49,7 @@ afterEach(cleanup);
 
 describe("MultiSelectAutocomplete", () => {
   it("renders the title", () => {
-    const titleElem = screen.getByText(dumTitle);
+    const titleElem = screen.getByText(dumLabel);
     expect(titleElem).toBeInTheDocument();
   });
 
@@ -81,7 +81,7 @@ describe("MultiSelectAutocomplete", () => {
 
     // TODO for some reason it says it only renders one item??
     const items = screen.getAllByTestId("select-item-test-id");
-    expect(items.length).toBe(dumItems.length);
+    expect(items.length).toBe(dumOptions.length);
   });
 
   it("modifies selected list", async () => {
@@ -98,7 +98,7 @@ describe("MultiSelectAutocomplete", () => {
 
     await userEvent.click(selected);
     await waitFor(() => {
-      expect(screen.getByDisplayValue(dumItems[2])).toBeInTheDocument(); // so this check is kind of stupid
+      expect(screen.getByDisplayValue(dumOptions[2])).toBeInTheDocument(); // so this check is kind of stupid
     });
   });
 });

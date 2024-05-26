@@ -5,7 +5,7 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
 import { FieldValues, useController } from "react-hook-form";
-import { CustomAutocompleteProps } from "@/lib/component-types";
+import { CustomAutocompleteProps } from "@/lib/custom-autocomplete-types";
 
 /**
  * Searchable dropdown which mimics multi select by adding the selected items to a list of removable tags.
@@ -28,13 +28,11 @@ export function MultiSelectAutocomplete<
   control,
   name,
   rules,
-  getItemLabel,
+  getItemLabel = () => "No getItemLabel function provided",
 }: CustomAutocompleteProps<Type, Map<string, Type>, KeyType, FormType>) {
   /* Register the field as part of the parent form using appropriate name and rules  */
   const { field, fieldState } = useController({
     name,
-    // disable reason: not sure why the linter says that it is an "any" variable, control does have a type
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     control,
     rules,
   });
