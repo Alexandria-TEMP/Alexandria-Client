@@ -15,7 +15,7 @@ describe("Personal data fields test", () => {
 
   describe("First name tests", () => {
     it("renders field and title", () => {
-      const nameHeaderElem = screen.getByText("First name");
+      const nameHeaderElem = screen.getByText("First Name");
       const nameInputElem = screen.getByTestId("first-name");
 
       expect(nameHeaderElem).toBeInTheDocument();
@@ -24,7 +24,7 @@ describe("Personal data fields test", () => {
 
     it("shows is required error", async () => {
       const user = userEvent.setup();
-      const nameHeaderElem = screen.getByText("First name");
+      const nameHeaderElem = screen.getByText("First Name");
       const nameInputElem = screen.getByTestId("first-name");
 
       await user.type(nameInputElem, "test");
@@ -40,7 +40,7 @@ describe("Personal data fields test", () => {
 
     it("shows max length error", async () => {
       const user = userEvent.setup();
-      const nameHeaderElem = screen.getByText("First name");
+      const nameHeaderElem = screen.getByText("First Name");
       const nameInputElem = screen.getByTestId("first-name");
 
       await user.type(nameInputElem, "a".repeat(101));
@@ -58,7 +58,7 @@ describe("Personal data fields test", () => {
 
   describe("Last name tests", () => {
     it("renders field and title", () => {
-      const nameHeaderElem = screen.getByText("Last name");
+      const nameHeaderElem = screen.getByText("Last Name");
       const nameInputElem = screen.getByTestId("last-name");
 
       expect(nameHeaderElem).toBeInTheDocument();
@@ -67,7 +67,7 @@ describe("Personal data fields test", () => {
 
     it("shows is required error", async () => {
       const user = userEvent.setup();
-      const nameHeaderElem = screen.getByText("Last name");
+      const nameHeaderElem = screen.getByText("Last Name");
       const nameInputElem = screen.getByTestId("last-name");
 
       await user.type(nameInputElem, "test");
@@ -83,7 +83,7 @@ describe("Personal data fields test", () => {
 
     it("shows max length error", async () => {
       const user = userEvent.setup();
-      const nameHeaderElem = screen.getByText("Last name");
+      const nameHeaderElem = screen.getByText("Last Name");
       const nameInputElem = screen.getByTestId("last-name");
 
       await user.type(nameInputElem, "a".repeat(101));
