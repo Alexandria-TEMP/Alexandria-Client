@@ -62,7 +62,7 @@ describe("MultiSelectAutocomplete", () => {
     render(
       <Wrapper defaults={[]}>
         <MultiSelectAutocomplete
-          title={dumTitle}
+          label={dumTitle}
           description={dumDesc}
           options={dumItems}
           name="dumItem"
@@ -96,7 +96,7 @@ describe("MultiSelectAutocomplete", () => {
     render(
       <Wrapper defaults={["1"]}>
         <MultiSelectAutocomplete
-          title={dumTitle}
+          label={dumTitle}
           description={dumDesc}
           options={dumItems}
           name="dumItem"
@@ -169,7 +169,7 @@ describe("MultiSelectAutocomplete that is Required", () => {
     render(
       <Wrapper defaults={[]}>
         <MultiSelectAutocomplete
-          title={dumTitle}
+          label={dumTitle}
           description={dumDesc}
           options={dumItems}
           name="dumItem"
@@ -192,7 +192,7 @@ describe("MultiSelectAutocomplete that is Required", () => {
     const { rerender } = render(
       <Wrapper defaults={["1"]}>
         <MultiSelectAutocomplete
-          title={dumTitle}
+          label={dumTitle}
           description={dumDesc}
           options={dumItems}
           name="dumItem"

@@ -16,6 +16,7 @@ export type FormType = {
   firstName: string;
   lastName: string;
   institution: string;
+  fields: string[];
   password: string;
   confpass: string;
 };
@@ -34,6 +35,7 @@ export default function SignupPage() {
       firstName: "",
       lastName: "",
       institution: "",
+      fields: [] as string[],
       password: "",
       confpass: "",
     },

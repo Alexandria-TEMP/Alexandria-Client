@@ -61,7 +61,7 @@ export default function NewPost() {
                 required: "Please enter a title for your post.",
                 maxLength: {
                   value: 150,
-                  message: "There is a 150 character limit for post titles", // TODO decide how long we actually want this
+                  message: "There is a 150 character limit for post titles.", // TODO decide how long we actually want this
                 },
               }}
               render={({ field }) => (
@@ -85,8 +85,8 @@ export default function NewPost() {
             <Divider />
 
             <MultiSelectAutocomplete
-              title="Authors"
-              description="Select the main people who worked on this post"
+              label={<h2>Authors</h2>}
+              description="Select the main people who worked on this post."
               options={USERS}
               getItemLabel={getMemberName}
               control={control}
@@ -104,8 +104,8 @@ export default function NewPost() {
             <Divider />
 
             <MultiSelectAutocomplete
-              title="Contributors"
-              description="Select the people who helped with this post"
+              label={<h2>Contributors</h2>}
+              description="Select the people who helped with this post."
               options={USERS}
               getItemLabel={getMemberName}
               control={control}
@@ -115,8 +115,8 @@ export default function NewPost() {
             <Divider />
 
             <MultiSelectAutocomplete
-              title="Scientific fields"
-              description="Select the scientific fields your post is about"
+              label={<h2>Scientific Fields</h2>}
+              description="Select the scientific fields your post is about."
               options={FIELDS}
               getItemLabel={getFieldName}
               control={control}
@@ -127,7 +127,7 @@ export default function NewPost() {
 
             <SingleSelectAutocomplete
               title="What type will your post be?"
-              description="The type of post represents what kind of content you are sharing"
+              description="The type of post represents what kind of content you are sharing."
               placeholder="Select a type for your post..."
               defaultSelectedKey={defType.toString()}
               items={types}
@@ -145,7 +145,7 @@ export default function NewPost() {
 
             <SingleSelectAutocomplete
               title="What are your feedback preferences?"
-              description="The type of replies you want to encourage under your post"
+              description="The type of replies you want to encourage under your post."
               placeholder="Select the type of feedback preferences you want..."
               defaultSelectedKey={defFeedback.toString()}
               items={feedbacks}
@@ -163,7 +163,7 @@ export default function NewPost() {
 
             <SingleSelectAutocomplete
               title="What is the completion of your project?"
-              description="This helps other users understand your work and give advice"
+              description="This helps other users understand your work and give advice."
               placeholder="Select the completion status for your post..."
               defaultSelectedKey={defCompletion.toString()}
               items={completions}
