@@ -4,8 +4,24 @@ import { Button, Card, Input } from "@nextui-org/react";
 import { useForm, Controller } from "react-hook-form";
 import { onSubmit } from "./lib/submit";
 import Logo from "@/components/logo";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
+/**
+ * Login page, uses react-hook-form
+ * @returns returns a form containing alexandria logo, email and password fields
+ */
 export default function LoginPage() {
+  /* Make sure page is hydrated properly by only returning the jsx when the component is mounted */
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  /* router to refresh the page if necessary */
+  const router = useRouter();
+
+  /* Create the form state */
   const { control, handleSubmit, formState } = useForm({
     mode: "onTouched",
     defaultValues: {
@@ -14,6 +30,12 @@ export default function LoginPage() {
     },
     shouldUseNativeValidation: true,
   });
+
+  /* if the page is not hydrated, refresh the page */
+  if (!mounted) {
+    router.refresh();
+    return null;
+  }
 
   return (
     <form
