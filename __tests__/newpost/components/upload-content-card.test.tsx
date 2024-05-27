@@ -1,6 +1,5 @@
 import { expect, describe, it } from "@jest/globals";
-import "@testing-library/jest-dom";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import UploadContentCard from "@/newpost/components/upload-content-card";
 
 describe("Upload content", () => {

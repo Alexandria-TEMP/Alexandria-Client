@@ -1,8 +1,8 @@
 import { expect, describe, it } from "@jest/globals";
-import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import getPostData from "@/lib/api-calls/post-api";
 import PostCardMini from "@/post/[id]/components/post-card-mini";
+import { dummyPost } from "~/__tests__/__utils__/dummys";
 
 jest.mock("@/lib/api-calls/post-api");
 
@@ -10,25 +10,6 @@ jest.mock("@/lib/api-calls/post-api");
 jest.mock("next/navigation");
 
 describe("PostCardMini", () => {
-  const dummyPost = {
-    title: "Post title",
-    status: "Open for review",
-    collaborators: ["1", "2"],
-    createdAt: "10 May 2024",
-    currentVersion: {
-      id: "1",
-      discussions: ["1", "1", "1", "1"],
-    },
-    id: "43125",
-    postType: "Reflection",
-    scientificFieldTags: [
-      "Computer Science",
-      "Mathematics",
-      "Theory of computation",
-    ],
-    updatedAt: "11 May 2024",
-  };
-
   (getPostData as jest.Mock).mockResolvedValue(dummyPost);
 
   it("shows the post title after load", async () => {
