@@ -67,8 +67,7 @@ export default function VersionRender({ id }: IdProp) {
     // recognize that `DEFAULT` is a property in the type `ColorScale`
     // track this bug: https://github.com/nextui-org/nextui/issues/1605
     type NextUIColors = {
-      overlay: { DEFAULT: string };
-      foreground: { DEFAULT: string };
+      foreground: { DEFAULT: string; 700: string };
       content1: { DEFAULT: string };
       content2: { DEFAULT: string };
     };
@@ -79,10 +78,14 @@ export default function VersionRender({ id }: IdProp) {
       currentTheme === "dark" ? semanticColors.dark : semanticColors.light;
 
     // Update html colors to match current theme
-    changeColors(iframeRef, {
+    const cleanup = changeColors(iframeRef, {
       background: (themeColors as NextUIColors).content1.DEFAULT,
       text: (themeColors as NextUIColors).foreground.DEFAULT,
+      codeBackground: (themeColors as NextUIColors).content2.DEFAULT,
+      codeText: (themeColors as NextUIColors).foreground["700"],
     });
+
+    return cleanup;
   }, [html, iframeRef, rerender, systemTheme, theme]);
 
   if (failed) {

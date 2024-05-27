@@ -101,17 +101,62 @@ export function setupResize(
  * @export
  * @param iframeRef useRef to iframe
  * @param colors desired colors for html
+ * @returns cleanup function
  */
 export function changeColors(
   iframeRef: React.RefObject<HTMLIFrameElement>,
-  colors: { background: string; text: string },
+  colors: {
+    background: string;
+    text: string;
+    codeBackground: string;
+    codeText: string;
+  },
 ) {
   const iframe = iframeRef.current; // Shorter name
 
   // When iframe loads, go into html body and to change its style
   const handleIframeLoad = () => {
-    getIframeDocument(iframe).body.style.backgroundColor = colors.background;
-    getIframeDocument(iframe).body.style.color = colors.text;
+    const document = getIframeDocument(iframe);
+
+    // Set overall background and text color
+    document.body.style.backgroundColor = colors.background;
+    document.body.style.color = colors.text;
+
+    // Create CSS rules for code blocks
+    const insertedCss = [
+      // Inline code snippets
+      `code { 
+        background-color: ${colors.codeBackground} !important;
+        color: ${colors.codeText} !important;
+      }`,
+      // Code blocks
+      `.sourceCode {
+        background-color: ${colors.codeBackground} !important;
+        color: ${colors.codeText} !important;
+      }`,
+      // Text within code blocks
+      `.sourceCode > span > span {
+        color: ${colors.codeText} !important;
+      }`,
+    ];
+
+    // Inject these rules in the document style sheets
+
+    // Create new style sheet
+    if (!document.defaultView) return;
+    const styleSheet = new document.defaultView.CSSStyleSheet();
+    // Add rules to style sheet
+    insertedCss.forEach((rule) =>
+      styleSheet.insertRule(rule, styleSheet.cssRules.length),
+    );
+    // Append stylesheet to document
+    document.adoptedStyleSheets = [...document.adoptedStyleSheets, styleSheet];
+  };
+
+  // Cleanup function to reset style sheets to original
+  const originalStyleSheets = document.adoptedStyleSheets;
+  const cleanupCss = () => {
+    document.adoptedStyleSheets = originalStyleSheets;
   };
 
   if (iframe) {
@@ -122,4 +167,6 @@ export function changeColors(
       handleIframeLoad();
     }
   }
+
+  return cleanupCss;
 }
