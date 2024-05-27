@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import ThemeSwitcher from "./theme-switcher";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
+import Logo from "./logo";
 
 /**
  * Each item in this array becomes an available path in the navbar
@@ -69,13 +69,7 @@ export default function AlexandriaNavbar() {
       <NavbarContent justify="start">
         {/* Branding */}
         <NavbarBrand as={Link} href="/">
-          <Image
-            alt="Alexandria logo"
-            src="/logo/logo32.svg"
-            width={48}
-            height={48}
-            className="my-4 mr-2"
-          />
+          <Logo width={48} height={48} className="my-4 mr-2" />
           <p className="text-4xl">Alexandria</p>
         </NavbarBrand>
       </NavbarContent>
@@ -109,7 +103,7 @@ export default function AlexandriaNavbar() {
           // Or 'log in' and 'sign up' buttons
           <>
             <NavbarItem>
-              <Link href="/log-in">
+              <Link href="/login">
                 <Button variant="ghost">Log in</Button>
               </Link>
             </NavbarItem>
