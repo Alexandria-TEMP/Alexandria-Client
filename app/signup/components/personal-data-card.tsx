@@ -3,7 +3,7 @@ import { Controller, FormState, Control } from "react-hook-form";
 import { FormType } from "../page";
 import { getFields } from "@/lib/api-calls/fields-api";
 import { getFieldName } from "@/lib/get-format";
-import { MultiSelectAutocomplete } from "@/components/multi-select-autocomplete";
+import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
 
 /**
  * Component that groups together form fields about personal data when creating a new account.

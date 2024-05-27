@@ -6,7 +6,7 @@ import {
   fireEvent,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MultiSelectAutocomplete } from "@/components/multi-select-autocomplete";
+import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
 import { Member } from "@/lib/api-types";
 import { dummyMembers } from "~/__tests__/__utils__/dummys";
 import { useForm, FormProvider } from "react-hook-form";

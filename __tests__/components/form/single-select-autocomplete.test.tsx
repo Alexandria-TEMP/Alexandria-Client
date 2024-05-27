@@ -1,7 +1,7 @@
 import { expect, describe, it } from "@jest/globals";
 import { render, screen, waitFor, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { SingleSelectAutocomplete } from "@/newpost/components/single-select-autocomplete";
+import { SingleSelectAutocomplete } from "@/components/form/single-select-autocomplete";
 import { FormProvider, useForm } from "react-hook-form";
 
 const dumLabel = "Dummy title";
