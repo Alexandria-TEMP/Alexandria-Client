@@ -26,7 +26,5 @@ export default async function getPostData(id: string) {
       "Theory of computation",
     ],
     updatedAt: "11 May 2024",
-    feedbackPreferences: "Community Discussion",
-    completionStatus: "Ongoing",
   };
 }
