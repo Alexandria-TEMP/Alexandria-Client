@@ -2,23 +2,45 @@ import { expect, describe, it } from "@jest/globals";
 import { render, screen, waitFor, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SingleSelectAutocomplete } from "@/newpost/components/single-select-autocomplete";
+import { FormProvider, useForm } from "react-hook-form";
 
-const dumTitle = "Dummy title";
+const dumLabel = "Dummy title";
 const dumDesc = "Dummy description";
 const dumPlaceholder = "Dummy placeholder";
-const dumItems = ["1", "2", "3"];
-const dumSetSelection = jest.fn((item: string) => {});
-let multiSelect;
+const dumOptions = ["1", "2", "3"];
+
+const Wrapper = ({ children }: { children: React.ReactNode }) => {
+  const methods = useForm({
+    defaultValues: {
+      dumItem: "",
+    },
+    mode: "onTouched",
+  });
+
+  return (
+    <FormProvider aria-label="Form" {...methods}>
+      {children}
+    </FormProvider>
+  );
+};
 
 beforeEach(() => {
-  multiSelect = render(
-    <SingleSelectAutocomplete
-      title={dumTitle}
-      description={dumDesc}
-      placeholder={dumPlaceholder}
-      items={dumItems}
-      setSelection={dumSetSelection}
-    />,
+  render(
+    <Wrapper>
+      <SingleSelectAutocomplete
+        label={dumLabel}
+        description={dumDesc}
+        placeholder={dumPlaceholder}
+        options={dumOptions}
+        name="dumItem"
+        rules={{
+          required: {
+            value: true,
+            message: "Please select",
+          },
+        }}
+      />
+    </Wrapper>,
   );
 });
 
@@ -26,7 +48,7 @@ afterEach(cleanup);
 
 describe("MultiSelectAutocomplete", () => {
   it("renders the title", () => {
-    const titleElem = screen.getByText(dumTitle);
+    const titleElem = screen.getByText(dumLabel);
     expect(titleElem).toBeInTheDocument();
   });
 
@@ -57,8 +79,8 @@ describe("MultiSelectAutocomplete", () => {
     });
 
     // TODO for some reason it says it only renders one item??
-    // const items = screen.getAllByTestId("select-item-test-id");
-    // expect(items.length).toBe(dumItems.length);
+    const items = screen.getAllByTestId("select-item-test-id");
+    expect(items.length).toBe(dumOptions.length);
   });
 
   it("modifies selected list", async () => {
@@ -71,10 +93,11 @@ describe("MultiSelectAutocomplete", () => {
         screen.getAllByTestId("select-item-test-id")[0],
       ).toBeInTheDocument();
     });
-    const selected = screen.getAllByTestId("select-item-test-id")[0];
+    const selected = screen.getAllByTestId("select-item-test-id")[0]; // for some reason the first element in this list, is the last element in the actual top-down list
 
     await userEvent.click(selected);
-    //TODO idk why it calls it once for every elem in the list??
-    expect(dumSetSelection).toHaveBeenCalledTimes(3);
+    await waitFor(() => {
+      expect(screen.getByDisplayValue(dumOptions[2])).toBeInTheDocument(); // so this check is kind of stupid
+    });
   });
 });

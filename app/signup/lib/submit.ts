@@ -6,6 +6,7 @@ export type FormData = {
   firstName: string;
   lastName: string;
   institution: string; // TODO might be nice to have some sort of list of institutions,
+  fields: string[];
   password: string;
 };
 

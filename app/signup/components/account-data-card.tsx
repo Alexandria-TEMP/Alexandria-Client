@@ -38,7 +38,7 @@ export default function AccountDataCard({
             className="w-2/3"
             label="Email"
             labelPlacement="outside"
-            placeholder="Enter your email"
+            placeholder="Enter your email."
             isRequired
             errorMessage={formState.errors.email?.message?.toString()}
             isInvalid={!!formState.errors.email?.message}
@@ -68,7 +68,7 @@ export default function AccountDataCard({
             className="w-2/3"
             label="Password"
             labelPlacement="outside"
-            placeholder="Enter a secure passowrd"
+            placeholder="Enter a secure password."
             type="password"
             isRequired
             errorMessage={formState.errors.password?.message?.toString()}
