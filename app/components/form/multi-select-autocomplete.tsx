@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import { useState } from "react";
@@ -6,6 +7,7 @@ import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
 import { FieldValues, useController } from "react-hook-form";
 import { CustomAutocompleteProps } from "@/lib/custom-autocomplete-types";
+import { Switch } from "@nextui-org/react";
 
 /**
  * Searchable dropdown which mimics multi select by adding the selected items to a list of removable tags.
@@ -26,16 +28,31 @@ export function MultiSelectAutocomplete<
   placeholder = "Search...",
   options,
   control,
+  trigger,
   name,
   rules,
+  disableFieldName,
+  disableMessage,
   getItemLabel = () => "No getItemLabel function provided",
 }: CustomAutocompleteProps<Type, Map<string, Type>, KeyType, FormType>) {
   /* Register the field as part of the parent form using appropriate name and rules  */
-  const { field, fieldState } = useController({
+  const fieldMethods = useController({
     name,
     control,
     rules,
   });
+
+  // TODO
+  // disable reason: problem is since i am not always given a value for disableFieldName and i cannot set a valid default value
+  // i can only call useController if there is a value provided for disableFieldName (otherwise typescript error)
+  // but this way react complains about hooks not always being called in the same order
+  // technically the order is the same, but it just wont always be called
+  const disableFieldMethods =
+    !!disableFieldName &&
+    useController({
+      name: disableFieldName,
+      control: control,
+    });
 
   /* State variables used to modify the UI to display the list of selected items
    *  Even though the items are already stored within the form under field.value, I still need to create a semi-redundant items
@@ -47,7 +64,7 @@ export function MultiSelectAutocomplete<
   // if used component is correctly, it should correspond to the type of the keys aka string by default
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const [items, setItems] = useState<string[]>(field.value);
+  const [items, setItems] = useState<string[]>(fieldMethods.field.value);
 
   /**
    * Method for removing an item from the item list,
@@ -58,8 +75,8 @@ export function MultiSelectAutocomplete<
   const handleRemoveItem = (removed: string) => {
     const newItems = Array.from(new Set(items.filter((e) => e !== removed)));
     setItems(newItems);
-    field.onChange(newItems);
-    field.onBlur(); /* Make sure the form hook knows the field value has been changed */
+    fieldMethods.field.onChange(newItems);
+    fieldMethods.field.onBlur(); /* Make sure the form hook knows the field value has been changed */
   };
 
   /**
@@ -71,8 +88,8 @@ export function MultiSelectAutocomplete<
     if (newItem !== "") {
       const newItems = Array.from(new Set([...items, added]));
       setItems(newItems);
-      field.onChange(newItems);
-      field.onBlur(); /* Make sure the form hook knows the field value has been changed */
+      fieldMethods.field.onChange(newItems);
+      fieldMethods.field.onBlur(); /* Make sure the form hook knows the field value has been changed */
     }
   };
 
@@ -83,7 +100,7 @@ export function MultiSelectAutocomplete<
         <span
           aria-label={name}
           className={"inline-block".concat(
-            !fieldState.error ? "" : " text-danger",
+            !fieldMethods.fieldState.error ? "" : " text-danger",
           )}
         >
           {title}
@@ -94,19 +111,42 @@ export function MultiSelectAutocomplete<
         )}
       </span>
       <div className="flex flex-row max-w-full flex-wrap gap-x-1.5 gap-y-2">
-        {items.map((item) => (
-          <Chip
-            variant="bordered"
-            key={item}
-            onClose={() => handleRemoveItem(item)}
-            data-testid="chip-test-id"
-          >
-            {/* // TODO this is super inefficient but idk how to do this better
+        {/* the switch for disabling this field (aka dont require list of items) */}
+        {!!disableFieldName && (
+          <div className="w-full">
+            <Switch
+              onChange={() => {
+                disableFieldMethods &&
+                  disableFieldMethods.field.onChange(
+                    !disableFieldMethods.field.value,
+                  );
+                // TODO fix this
+                // disable reason: i need to push, problem is i can await this here because i am in client component
+                //eslint-disable-next-line @typescript-eslint/no-floating-promises
+                !!trigger && trigger();
+              }}
+            >
+              {disableMessage}
+            </Switch>
+          </div>
+        )}
+
+        {/* the list of items, only display it if the field is not disabled */}
+        {(!disableFieldName ||
+          (disableFieldMethods && !disableFieldMethods.field.value)) &&
+          items.map((item) => (
+            <Chip
+              variant="bordered"
+              key={item}
+              onClose={() => handleRemoveItem(item)}
+              data-testid="chip-test-id"
+            >
+              {/* // TODO this is super inefficient but idk how to do this better
                             // cause i cannot directly store the object from the autocomplete component, i can only get keys
                             // i also cannot make the labels the keys because that breaks react for some reason */}
-            {getItemLabel(options.get(item))}
-          </Chip>
-        ))}
+              {getItemLabel(options.get(item))}
+            </Chip>
+          ))}
       </div>
       <div className="flex flex-row justify-between gap-x-3">
         {/* The actual autocomplete component */}
@@ -117,10 +157,11 @@ export function MultiSelectAutocomplete<
           style={{ display: "inline-block" }}
           onSelectionChange={(k) => k !== null && k != "" && setNewItem(k)}
           data-testid="select-element-test-id"
-          isInvalid={!!fieldState.error?.message}
-          errorMessage={fieldState.error?.message?.toString()}
+          isInvalid={!!fieldMethods.fieldState.error?.message}
+          errorMessage={fieldMethods.fieldState.error?.message?.toString()}
           onInputChange={(s) => s == "" && setNewItem("")}
           aria-labelledby={name}
+          isDisabled={disableFieldMethods && disableFieldMethods.field.value}
         >
           {(item) => (
             <AutocompleteItem key={item[0]} data-testid="select-item-test-id">

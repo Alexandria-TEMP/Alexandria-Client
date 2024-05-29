@@ -1,7 +1,8 @@
-import { validateAuthors, validateTitle } from "./validators";
+import { validateTitle } from "./validators";
 
 type FormData = {
   title: string;
+  anonymous: boolean;
   authors: string[];
   contributors: string[];
   fields: string[];
@@ -12,8 +13,9 @@ type FormData = {
 
 export function validate(formData: FormData) {
   return (
-    validateTitle(formData.title) === true &&
-    validateAuthors(formData.authors) === true
+    validateTitle(formData.title) === true
+    //&&
+    //validateAuthors(formData.authors) === true
   );
 }
 

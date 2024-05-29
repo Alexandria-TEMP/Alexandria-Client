@@ -22,14 +22,14 @@ describe("Validation tests", () => {
     expect(validate(dumFormData)).toBe(false);
   });
 
-  it("fails when validate authors fails", () => {
-    jest.mock("@/newpost/lib/validators", () => ({
-      validateTitle: jest.fn((s: string) => true),
-      validateAuthors: jest.fn((s: Set<string>) => false),
-    }));
-    const { validate } = require("@/newpost/lib/submit");
-    expect(validate(dumFormData)).toBe(false);
-  });
+  // it("fails when validate authors fails", () => {
+  //   jest.mock("@/newpost/lib/validators", () => ({
+  //     validateTitle: jest.fn((s: string) => true),
+  //     validateAuthors: jest.fn((s: Set<string>) => false),
+  //   }));
+  //   const { validate } = require("@/newpost/lib/submit");
+  //   expect(validate(dumFormData)).toBe(false);
+  // });
 
   it("passes when validators pass", () => {
     jest.mock("@/newpost/lib/validators", () => ({

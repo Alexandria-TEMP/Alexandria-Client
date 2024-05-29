@@ -25,10 +25,11 @@ export default function NewPost() {
   const defType = 0;
   const defCompletion = 0;
 
-  const { handleSubmit, formState, control } = useForm({
+  const { handleSubmit, formState, control, trigger, getValues } = useForm({
     mode: "onTouched",
     defaultValues: {
       title: "",
+      anonymous: false,
       authors: [] as string[],
       contributors: [] as string[],
       fields: [] as string[],
@@ -90,15 +91,17 @@ export default function NewPost() {
               options={USERS}
               getItemLabel={getMemberName}
               control={control}
+              trigger={trigger}
               name="authors"
               rules={{
-                required: {
-                  value: true,
-                  message: "Please add at least one author.",
+                validate: (v: string[]) => {
+                  if (!getValues("anonymous") && v.length <= 0)
+                    return "Please add at least one author or make this post anonymous.";
+                  return true;
                 },
-                validate: (v: string[]) =>
-                  v.length > 0 || "Please add at least one author.",
               }}
+              disableFieldName="anonymous"
+              disableMessage="Post this anonymously (no authors will be posted)"
             />
 
             <Divider />
