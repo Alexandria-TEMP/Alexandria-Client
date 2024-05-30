@@ -9,3 +9,13 @@ export async function getRenderedVersion(id: string): Promise<string> {
   console.log(`fetching render for ${id}`);
   return (await (await fetch("http://localhost:8000/")).blob()).text();
 }
+
+export async function getVersionData(id: string) {
+  // TODO
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  return {
+    id,
+    discussionIDs: [0, 1, 2, 3],
+    renderStatus: "success",
+  };
+}

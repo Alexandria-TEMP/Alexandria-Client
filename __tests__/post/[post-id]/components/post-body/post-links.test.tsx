@@ -2,7 +2,7 @@ import { expect, describe, it } from "@jest/globals";
 import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
 import { useRouter, usePathname } from "next/navigation";
-import PostLinks from "@/post/[id]/components/post-body/post-links";
+import PostLinks from "@/post/[post-id]/components/post-body/post-links";
 
 // Possible button labels
 type Labels = "contents" | "versions" | "files";
