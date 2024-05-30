@@ -46,10 +46,6 @@ export default function CreateMR({ params }: { params: { id: string } }) {
   const feedbacks = ["Community Discussion", "Formal Feedback"];
   const completions = ["Ideation (to begin)", "Ongoing", "Completed"];
 
-  // default values, should be refactored into a different file maybe
-  const defFeedback = 0;
-  const defCompletion = 0;
-
   const { handleSubmit, formState, control, getValues, trigger } = useForm({
     mode: "onTouched",
     defaultValues: {
@@ -187,7 +183,6 @@ export default function CreateMR({ params }: { params: { id: string } }) {
                     label={<h2>Feedback preferences</h2>}
                     description="Update the type of discussions you would like to see under the updated post."
                     placeholder="Select the type of feedback preferences you want..."
-                    defaultSelectedKey={defFeedback.toString()} /* TODO make this work via the default value somehow */
                     options={feedbacks}
                     name="updatedFeedbackPreferences"
                     control={control}
@@ -199,7 +194,6 @@ export default function CreateMR({ params }: { params: { id: string } }) {
                     label={<h2>Update the completion status of this post</h2>}
                     description="Update the compleion status of the post. "
                     placeholder="Select the completion status for your post..."
-                    defaultSelectedKey={defCompletion.toString()} /* TODO make this work via the default value somehow */
                     options={completions}
                     name="updatedCompletionStatus"
                     control={control}

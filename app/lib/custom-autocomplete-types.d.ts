@@ -13,7 +13,6 @@ import { FieldValues, Control, Path, UseFormTrigger } from "react-hook-form";
  * @param title: the displayed title of what the component represents, can be just text or a node (for ex, if its a header element)
  * @param description: the displayed description of what the component represents
  * @param placeholder: the displayed placeholder before an item is selected
- * @param defaultSelectedKey: the default selected item, if any
  * @param options: the list of items in the autocomplete dropdown
  * @param name: the (not displayed) name of the field this component corresponds to, as specified in parent react hook form
  * @param control: the form control object passed down from parent form, used to manage field values
@@ -31,13 +30,11 @@ import { FieldValues, Control, Path, UseFormTrigger } from "react-hook-form";
 export type CustomAutocompleteProps<
   Type,
   OptionsType,
-  KeyType,
   FormType extends FieldValues,
 > = {
   label: React.ReactNode;
   description?: string;
   placeholder?: string;
-  defaultSelectedKey?: KeyType;
   options: OptionsType;
   name: Path<FormType>;
   control?: Control<FormType>;

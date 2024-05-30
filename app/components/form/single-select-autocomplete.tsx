@@ -19,12 +19,11 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
   label,
   description,
   placeholder,
-  defaultSelectedKey,
   options,
   name,
   control,
   rules,
-}: CustomAutocompleteProps<string, string[], string, FormType>) {
+}: CustomAutocompleteProps<string, string[], FormType>) {
   /* Register the field as part of the parent form using appropriate name and rules  */
   const { field } = useController({
     name,
@@ -41,6 +40,7 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
    */
   const keys = Array.from(Array(options.length).keys());
   const values = new Map(keys.map((k) => [k.toString(), options[k]]));
+  const defaultKey = options.indexOf(field.value).toString();
 
   /**
    * Method that updates the form field when an element is selected
@@ -71,7 +71,7 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
         data-testid="select-element-test-id"
         onBlur={() => field.onBlur()}
         value={field.value}
-        defaultSelectedKey={defaultSelectedKey}
+        defaultSelectedKey={defaultKey}
         isRequired={
           !!rules?.required
         } /* using build in NextUI isRequired option to display error */

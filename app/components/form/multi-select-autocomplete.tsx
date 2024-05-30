@@ -18,11 +18,7 @@ import { Switch } from "@nextui-org/react";
  *                 it is expected that they key is a string
  * @returns a div containing the title, list of selected items, the dropdown and add button
  */
-export function MultiSelectAutocomplete<
-  Type,
-  KeyType,
-  FormType extends FieldValues,
->({
+export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
   label: title,
   description,
   placeholder = "Search...",
@@ -34,7 +30,7 @@ export function MultiSelectAutocomplete<
   disableFieldName,
   disableMessage,
   getItemLabel = () => "No getItemLabel function provided",
-}: CustomAutocompleteProps<Type, Map<string, Type>, KeyType, FormType>) {
+}: CustomAutocompleteProps<Type, Map<string, Type>, FormType>) {
   /* Register the field as part of the parent form using appropriate name and rules  */
   const fieldMethods = useController({
     name,

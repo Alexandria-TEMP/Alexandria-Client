@@ -132,7 +132,6 @@ export default function NewPost() {
               label={<h2>What type will your post be?</h2>}
               description="The type of post represents what kind of content you are sharing."
               placeholder="Select a type for your post..."
-              defaultSelectedKey={defType.toString()}
               options={types}
               control={control}
               name="type"
@@ -150,7 +149,6 @@ export default function NewPost() {
               label={<h2>What are your feedback preferences?</h2>}
               description="The type of replies you want to encourage under your post."
               placeholder="Select the type of feedback preferences you want..."
-              defaultSelectedKey={defFeedback.toString()}
               options={feedbacks}
               name="feedback"
               control={control}
@@ -168,7 +166,6 @@ export default function NewPost() {
               label={<h2>What is the completion of your project?</h2>}
               description="This helps other users understand your work and give advice."
               placeholder="Select the completion status for your post..."
-              defaultSelectedKey={defCompletion.toString()}
               options={completions}
               name="completion"
               control={control}
