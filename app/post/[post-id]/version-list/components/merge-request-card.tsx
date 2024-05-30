@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
 import MergeRequestCardSkeleton from "./merge-request-card-skeleton";
+import { MergeRequest } from "@/lib/api-types";
 
 /**
  * Card that represents some merge request for a post.
@@ -20,16 +21,7 @@ export default function MergeRequestCard({
   short,
 }: IdProp & { short?: boolean }) {
   const router = useRouter();
-  const [data, setData] = useState<
-    | {
-        title: string;
-        mergeRequestStatus: string;
-        createdAt: string;
-        closedAt: string;
-        reviews: string[];
-      }
-    | undefined
-  >(undefined);
+  const [data, setData] = useState<MergeRequest | undefined>(undefined);
 
   useEffect(() => {
     getMergeRequestData(id)
@@ -48,18 +40,20 @@ export default function MergeRequestCard({
       onPress={() => router.push(`/post-version/${id}`)}
     >
       <CardBody>
-        <h3 className="font-semibold">{data.title}</h3>
-        <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
+        <h3 className="font-semibold">{data.mergeRequestTitle}</h3>
+        <HeaderSubtle>
+          Created on {data.createdAt.toLocaleDateString()}
+        </HeaderSubtle>
       </CardBody>
       <CardFooter>
         <p className="text-sm">
-          {data.mergeRequestStatus != "open" &&
-            `${capitalizeFirstLetter(data.mergeRequestStatus)} on ${data.closedAt}`}
+          {data.status != "open" &&
+            `${capitalizeFirstLetter(data.status)} on ${data.closedAt.toLocaleDateString()}`}
         </p>
         <div className="grow" />
-        <ReviewChip status={data.reviews[0]} />
-        <ReviewChip status={data.reviews[1]} />
-        <ReviewChip status={data.reviews[2]} />
+        <ReviewChip status={data.reviewIDs[0]} />
+        <ReviewChip status={data.reviewIDs[1]} />
+        <ReviewChip status={data.reviewIDs[2]} />
       </CardFooter>
     </Card>
   ) : (
@@ -69,16 +63,18 @@ export default function MergeRequestCard({
       onPress={() => router.push(`/post-version/${id}`)}
     >
       <CardHeader>
-        <h3 className="font-semibold mr-2">{data.title}</h3>
-        <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
+        <h3 className="font-semibold mr-2">{data.mergeRequestTitle}</h3>
+        <HeaderSubtle>
+          Created on {data.createdAt.toLocaleDateString()}
+        </HeaderSubtle>
         <p className="text-sm ml-1">
-          {data.mergeRequestStatus != "open" &&
-            `| ${capitalizeFirstLetter(data.mergeRequestStatus)} on ${data.closedAt}`}
+          {data.status != "open" &&
+            `| ${capitalizeFirstLetter(data.status)} on ${data.closedAt.toLocaleDateString()}`}
         </p>
         <div className="grow" />
-        <ReviewChip status={data.reviews[0]} />
-        <ReviewChip status={data.reviews[1]} />
-        <ReviewChip status={data.reviews[2]} />
+        <ReviewChip status={data.reviewIDs[0]} />
+        <ReviewChip status={data.reviewIDs[1]} />
+        <ReviewChip status={data.reviewIDs[2]} />
       </CardHeader>
     </Card>
   );

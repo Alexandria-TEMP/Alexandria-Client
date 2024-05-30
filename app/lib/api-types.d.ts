@@ -28,4 +28,21 @@ export type Post = {
   updatedAt: Date;
 };
 
+export type MergeRequest = {
+  anonymous: boolean;
+  collaboratorIDs: string[];
+  id: string;
+  mergeRequestTitle: string;
+  newPostTitle: string;
+  newVersionID: string;
+  previousVersionID: string;
+  projectPostID: string;
+  createdAt: Date;
+  closedAt: Date;
+  reviewIDs: string[];
+  updatedCompletionStatus: string;
+  updatedScientificFields: string[];
+  status: string;
+};
+
 export type PostType = "Reflection" | "Question" | "Project";

@@ -1,4 +1,4 @@
-import { Post } from "@/lib/api-types";
+import { MergeRequest, Post } from "@/lib/api-types";
 
 export const dummyDiscussion = {
   id: "4321",
@@ -61,48 +61,58 @@ export const dummyTag = {
   tagType: "ScientificField",
 };
 
-export const dummyMergeRequests = {
+export const dummyMergeRequests: {
+  rejected: MergeRequest;
+  accepted: MergeRequest;
+  open: MergeRequest;
+} = {
   rejected: {
-    id: "5423623",
-    title: "Remove contents section",
-    version: "1",
-    reviews: ["accept", "reject", "accept"],
+    id: "547964732",
+    newPostTitle: "Post title",
+    projectPostID: "1",
+    mergeRequestTitle: "Remove contents section",
+    newVersionID: "1",
+    reviewIDs: ["accept", "reject", "accept"],
     anonymous: false,
-    createdAt: "19 May 2024",
-    collaborators: ["1", "2"],
+    createdAt: new Date(2024, 4, 19),
+    collaboratorIDs: ["1", "2"],
     updatedCompletionStatus: "Ideation",
-    updatedScientificTags: ["Mathematics"],
-    mergeRequestStatus: "rejected",
-    versionWhenClosed: "2",
-    closedAt: "20 May 2024",
+    updatedScientificFields: ["Mathematics"],
+    status: "rejected",
+    previousVersionID: "2",
+    closedAt: new Date(2024, 4, 20),
   },
   open: {
-    id: "086146",
-    title: "Add new experiment",
-    version: "1",
-    reviews: ["accept", "reject"],
+    id: "0514616",
+    newPostTitle: "Post title",
+    projectPostID: "1",
+    mergeRequestTitle: "Add new experiment",
+    newVersionID: "1",
+    reviewIDs: ["accept", "accept"],
     anonymous: false,
-    createdAt: "19 May 2024",
-    collaborators: ["1", "2"],
+    createdAt: new Date(2024, 4, 19),
+    collaboratorIDs: ["1", "2"],
     updatedCompletionStatus: "Ideation",
-    updatedScientificTags: ["Mathematics"],
-    mergeRequestStatus: "open",
-    versionWhenClosed: "2",
-    closedAt: "20 May 2024",
+    updatedScientificFields: ["Mathematics"],
+    status: "open",
+    previousVersionID: "2",
+    closedAt: new Date(2024, 4, 20),
   },
   accepted: {
-    id: "743865399",
-    title: "Expand literature review",
-    version: "1",
-    reviews: ["accept", "accept", "accept"],
+    id: "647348345",
+    newPostTitle: "Post title",
+    projectPostID: "1",
+    mergeRequestTitle: "Expand literature review",
+    newVersionID: "1",
+    reviewIDs: ["accept", "accept", "accept"],
     anonymous: false,
-    createdAt: "19 May 2024",
-    collaborators: ["1", "2"],
+    createdAt: new Date(2024, 4, 19),
+    collaboratorIDs: ["1", "2"],
     updatedCompletionStatus: "Ideation",
-    updatedScientificTags: ["Mathematics"],
-    mergeRequestStatus: "accepted",
-    versionWhenClosed: "2",
-    closedAt: "20 May 2024",
+    updatedScientificFields: ["Mathematics"],
+    status: "accepted",
+    previousVersionID: "2",
+    closedAt: new Date(2024, 4, 20),
   },
 };
 

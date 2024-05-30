@@ -1,27 +1,31 @@
+import { MergeRequest } from "../api-types";
+
 /**
  * Gets data for a Merge request given their ID.
  *
  * @async
  * @param id Merge request ID
  */
-export async function getMergeRequestData(id: string) {
+export async function getMergeRequestData(id: string): Promise<MergeRequest> {
   // TODO
   await new Promise((resolve) => setTimeout(resolve, 800));
   if (id == "1") {
     // Rejected
     return {
       id: id,
-      title: "Remove contents section",
-      version: "1",
-      reviews: ["accept", "reject", "accept"],
+      newPostTitle: "Post title",
+      projectPostID: "1",
+      mergeRequestTitle: "Remove contents section",
+      newVersionID: "1",
+      reviewIDs: ["accept", "reject", "accept"],
       anonymous: false,
-      createdAt: "19 May 2024",
-      collaborators: ["1", "2"],
+      createdAt: new Date(2024, 4, 19),
+      collaboratorIDs: ["1", "2"],
       updatedCompletionStatus: "Ideation",
-      updatedScientificTags: ["Mathematics"],
-      mergeRequestStatus: "rejected",
-      versionWhenClosed: "2",
-      closedAt: "20 May 2024",
+      updatedScientificFields: ["Mathematics"],
+      status: "rejected",
+      previousVersionID: "2",
+      closedAt: new Date(2024, 4, 20),
     };
   }
 
@@ -29,17 +33,19 @@ export async function getMergeRequestData(id: string) {
     // Open
     return {
       id: id,
-      title: "Add new experiment",
-      version: "1",
-      reviews: ["accept", "accept"],
+      newPostTitle: "Post title",
+      projectPostID: "1",
+      mergeRequestTitle: "Add new experiment",
+      newVersionID: "1",
+      reviewIDs: ["accept", "accept"],
       anonymous: false,
-      createdAt: "19 May 2024",
-      collaborators: ["1", "2"],
+      createdAt: new Date(2024, 4, 19),
+      collaboratorIDs: ["1", "2"],
       updatedCompletionStatus: "Ideation",
-      updatedScientificTags: ["Mathematics"],
-      mergeRequestStatus: "open",
-      versionWhenClosed: "2",
-      closedAt: "20 May 2024",
+      updatedScientificFields: ["Mathematics"],
+      status: "open",
+      previousVersionID: "2",
+      closedAt: new Date(2024, 4, 20),
     };
   }
 
@@ -47,34 +53,38 @@ export async function getMergeRequestData(id: string) {
     // Open
     return {
       id: id,
-      title: "Grammar fixes",
-      version: "1",
-      reviews: ["accept"],
+      newPostTitle: "Post title",
+      projectPostID: "1",
+      mergeRequestTitle: "Grammar fixes",
+      newVersionID: "1",
+      reviewIDs: ["accept"],
       anonymous: false,
-      createdAt: "19 May 2024",
-      collaborators: ["1", "2"],
+      createdAt: new Date(2024, 4, 19),
+      collaboratorIDs: ["1", "2"],
       updatedCompletionStatus: "Ideation",
-      updatedScientificTags: ["Mathematics"],
-      mergeRequestStatus: "open",
-      versionWhenClosed: "2",
-      closedAt: "20 May 2024",
+      updatedScientificFields: ["Mathematics"],
+      status: "open",
+      previousVersionID: "2",
+      closedAt: new Date(2024, 4, 20),
     };
   }
 
   // Accepted
   return {
     id: id,
-    title: "Expand literature review",
-    version: "1",
-    reviews: ["accept", "accept", "accept"],
+    newPostTitle: "Post title",
+    projectPostID: "1",
+    mergeRequestTitle: "Expand literature review",
+    newVersionID: "1",
+    reviewIDs: ["accept", "accept", "accept"],
     anonymous: false,
-    createdAt: "19 May 2024",
-    collaborators: ["1", "2"],
+    createdAt: new Date(2024, 4, 19),
+    collaboratorIDs: ["1", "2"],
     updatedCompletionStatus: "Ideation",
-    updatedScientificTags: ["Mathematics"],
-    mergeRequestStatus: "accepted",
-    versionWhenClosed: "2",
-    closedAt: "20 May 2024",
+    updatedScientificFields: ["Mathematics"],
+    status: "accepted",
+    previousVersionID: "2",
+    closedAt: new Date(2024, 4, 20),
   };
 }
 
