@@ -33,12 +33,16 @@ describe("MergeRequestCard", () => {
   });
 
   it("shows title", () => {
-    const title = screen.getByText(dummyMergeRequests["open"].title);
+    const title = screen.getByText(
+      dummyMergeRequests["open"].mergeRequestTitle,
+    );
     expect(title).toBeInTheDocument();
   });
 
   it("navigates on click", async () => {
-    const title = screen.getByText(dummyMergeRequests["open"].title);
+    const title = screen.getByText(
+      dummyMergeRequests["open"].mergeRequestTitle,
+    );
 
     const user = userEvent.setup();
     await user.click(title);

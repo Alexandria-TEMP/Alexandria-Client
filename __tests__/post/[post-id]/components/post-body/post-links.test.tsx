@@ -5,7 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import PostLinks from "@/post/[post-id]/components/post-body/post-links";
 
 // Possible button labels
-type Labels = "contents" | "versions" | "files";
+type Labels = "contents" | "version-list" | "files";
 
 // Mock useRouter to spy on replace
 const routerReplaceMock = jest.fn().mockName("router.replace()");
@@ -14,12 +14,12 @@ jest.mock("next/navigation");
 
 // Tests are reused for each of the different buttons
 
-const redirectsTest = async (label: Labels) => {
+const redirectsTest = async (label: Labels, text?: string) => {
   // Tests if clicking the button redirects to correct page
   const postId = "6327282";
 
   render(<PostLinks postId={postId} />);
-  const button = screen.getByText(label, { exact: false });
+  const button = screen.getByText(text ?? label, { exact: false });
 
   const user = userEvent.setup();
   await user.click(button);
@@ -29,7 +29,7 @@ const redirectsTest = async (label: Labels) => {
   );
 };
 
-const disabledTest = (label: Labels) => {
+const disabledTest = (label: Labels, text?: string) => {
   // Tests if button is disabled when in own view
   const postId = "62728";
 
@@ -39,18 +39,20 @@ const disabledTest = (label: Labels) => {
   );
 
   render(<PostLinks postId={postId} />);
-  const button = screen.getByText(label, { exact: false });
+  const button = screen.getByText(text ?? label, { exact: false });
   expect(button).toBeDisabled();
 };
 
 const testGroup = (label: Labels) => {
   // Returns test group for given label
   return () => {
-    it("redirects", () => redirectsTest(label));
-    it(`gets disabled in ${label}`, () => disabledTest(label));
+    it("redirects", () =>
+      redirectsTest(label, label === "version-list" ? "versions" : label));
+    it(`gets disabled in ${label}`, () =>
+      disabledTest(label, label === "version-list" ? "versions" : label));
   };
 };
 
-describe("Versions link", testGroup("versions"));
+describe("Versions link", testGroup("version-list"));
 describe("Contents link", testGroup("contents"));
 describe("Files link", testGroup("files"));
