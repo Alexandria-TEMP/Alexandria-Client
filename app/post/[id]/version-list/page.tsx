@@ -6,7 +6,7 @@ import MergeRequestList from "./components/merge-request-list";
 
 /**
  * Page that shows all merge requests of a Post.
- * The route is /post/[id]/**versions** as a more user-friendly name, but the internal naming
+ * The route is /post/[id]/**version**-list as a more user-friendly name, but the internal naming
  * is **merge request** to avoid confusion with the **version** entity.
  *
  * @param params.id Post ID, taken from route's dynamic segment /[id].

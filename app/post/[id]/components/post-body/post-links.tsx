@@ -18,7 +18,7 @@ export default function PostLinks({
 
   const hrefs = {
     contents: `/post/${postId}`,
-    versions: `/post/${postId}/versions`,
+    versions: `/post/${postId}/version-list`,
     files: `/post/${postId}/files`,
   };
 
