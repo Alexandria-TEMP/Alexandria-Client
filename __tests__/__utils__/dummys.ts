@@ -105,3 +105,15 @@ export const dummyMergeRequests = {
     closedAt: "20 May 2024",
   },
 };
+
+export const dummyHtml = {
+  html: `
+  <!DOCTYPE html>
+  <html>
+    <body>
+      <h1>This is a heading</h1>
+      <p>This is a paragraph</p>
+    </body>
+  </html>
+  `,
+};

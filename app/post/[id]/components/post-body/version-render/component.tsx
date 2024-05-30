@@ -92,11 +92,10 @@ export default function VersionRender({ id }: IdProp) {
     return <Error reset={reset} />;
   }
 
-  // TODO sanitize html
-
   return (
     <Skeleton isLoaded={isLoaded} className="rounded-lg">
       <iframe
+        title={iframeTitle}
         ref={iframeRef}
         srcDoc={html}
         style={{ width: "100%", height: `${iframeHeight}px`, border: "none" }}
@@ -104,3 +103,6 @@ export default function VersionRender({ id }: IdProp) {
     </Skeleton>
   );
 }
+
+// Exported for testing purposes
+export const iframeTitle = "Rendered publication";

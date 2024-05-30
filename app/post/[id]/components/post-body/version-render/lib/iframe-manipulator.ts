@@ -150,7 +150,10 @@ export function changeColors(
       styleSheet.insertRule(rule, styleSheet.cssRules.length),
     );
     // Append stylesheet to document
-    document.adoptedStyleSheets = [...document.adoptedStyleSheets, styleSheet];
+    document.adoptedStyleSheets = [
+      ...(document.adoptedStyleSheets ?? []),
+      styleSheet,
+    ];
   };
 
   // Cleanup function to reset style sheets to original
