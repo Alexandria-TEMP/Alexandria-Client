@@ -5,7 +5,7 @@ import ContributeDropdown from "./contribute-dropdown";
 import getPostData from "@/lib/api-calls/post-api";
 
 /**
- * Header for post contents card. Uses <CardHeader>, so it must be child of a <Card></Card>.
+ * Header for post contents card. Uses CardHeader, so it must be child of a Card.
  * Includes title, main metadata, and action buttons.
  *
  * @param postId Post ID
@@ -42,8 +42,12 @@ export default async function PostCardHeader({
           <Chip>{data.status}</Chip>
         </div>
         <div className="flex-col">
-          <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
-          <HeaderSubtle>Last update on {data.updatedAt}</HeaderSubtle>
+          <HeaderSubtle>
+            Created on {data.createdAt.toLocaleDateString()}
+          </HeaderSubtle>
+          <HeaderSubtle>
+            Last update on {data.updatedAt.toLocaleDateString()}
+          </HeaderSubtle>
         </div>
       </CardHeader>
     </>

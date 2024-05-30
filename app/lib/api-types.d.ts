@@ -12,3 +12,20 @@ export type Tag = {
   tag: string;
   tagType: string;
 };
+
+export type Post = {
+  title: string;
+  status: string;
+  collaborators: string[];
+  createdAt: Date;
+  currentVersion: {
+    id: string;
+    discussions: string[];
+  };
+  id: string;
+  postType: PostType;
+  scientificFieldTags: string[];
+  updatedAt: Date;
+};
+
+export type PostType = "Reflection" | "Question" | "Project";

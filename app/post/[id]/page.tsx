@@ -19,7 +19,7 @@ export default async function Post({ params }: { params: { id: string } }) {
       {/* Main body */}
       <div className="flex flex-col space-y-4 w-10/12">
         {/* Title, contents, main metadata and action buttons */}
-        <PostContents postId={params.id} />
+        <PostContents id={params.id} />
         {/* Discussions */}
         <h2>{discussions.length} Replies</h2>
         {discussions.map((id) => (

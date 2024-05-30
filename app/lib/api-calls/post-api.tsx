@@ -1,19 +1,19 @@
+import { Post } from "../api-types";
+
 /**
  * Gets data for a Post given their ID.
  *
  * @async
  * @param id Post ID
  */
-export default async function getPostData(id: string) {
-  // TODO
-  // const res = await fetch();
+export default async function getPostData(id: string): Promise<Post> {
   await new Promise((resolve) => setTimeout(resolve, 100));
 
   return {
     title: "Post title",
     status: "Open for review",
     collaborators: ["1", "2"],
-    createdAt: "10 May 2024",
+    createdAt: new Date(2024, 4, 10),
     currentVersion: {
       id: "1",
       discussions: ["1", "1", "1", "1"],
@@ -25,6 +25,6 @@ export default async function getPostData(id: string) {
       "Mathematics",
       "Theory of computation",
     ],
-    updatedAt: "11 May 2024",
+    updatedAt: new Date(2024, 4, 20),
   };
 }
