@@ -1,6 +1,6 @@
 export type FormData = {
   mrTitle: string; // hihi mister title
-  collaborators: string[];
+  contributors: string[];
   anonymous: boolean;
   originalPostId: string;
   updatedTitle: string;
@@ -15,8 +15,8 @@ export function submit(formData: FormData) {
     "Title: " +
       formData.mrTitle +
       "\n" +
-      "Collaborators: " +
-      formData.collaborators.map((a) => a.toString()).toString() +
+      "Contributors: " +
+      formData.contributors.map((a) => a.toString()).toString() +
       "\n" +
       "Is anonymous: " +
       formData.anonymous +

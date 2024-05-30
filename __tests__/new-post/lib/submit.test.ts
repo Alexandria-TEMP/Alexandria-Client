@@ -14,52 +14,52 @@ beforeEach(jest.resetModules);
 
 describe("Validation tests", () => {
   it("fails when validate title fails", () => {
-    jest.mock("@/newpost/lib/validators", () => ({
+    jest.mock("@/new-post/lib/validators", () => ({
       validateTitle: jest.fn((s: string) => false),
       validateAuthors: jest.fn((s: Set<string>) => true),
     }));
-    const { validate } = require("@/newpost/lib/submit");
+    const { validate } = require("@/new-post/lib/submit");
     expect(validate(dumFormData)).toBe(false);
   });
 
   // it("fails when validate authors fails", () => {
-  //   jest.mock("@/newpost/lib/validators", () => ({
+  //   jest.mock("@/new-post/lib/validators", () => ({
   //     validateTitle: jest.fn((s: string) => true),
   //     validateAuthors: jest.fn((s: Set<string>) => false),
   //   }));
-  //   const { validate } = require("@/newpost/lib/submit");
+  //   const { validate } = require("@/new-post/lib/submit");
   //   expect(validate(dumFormData)).toBe(false);
   // });
 
   it("passes when validators pass", () => {
-    jest.mock("@/newpost/lib/validators", () => ({
+    jest.mock("@/new-post/lib/validators", () => ({
       validateTitle: jest.fn((s: string) => true),
       validateAuthors: jest.fn((s: Set<string>) => true),
     }));
-    const { validate } = require("@/newpost/lib/submit");
+    const { validate } = require("@/new-post/lib/submit");
     expect(validate(dumFormData)).toBe(true);
   });
 });
 
 describe("Submit tests", () => {
   it("shows something wrong when validation fails", () => {
-    jest.mock("@/newpost/lib/validators", () => ({
+    jest.mock("@/new-post/lib/validators", () => ({
       validateTitle: jest.fn((s: string) => false),
       validateAuthors: jest.fn((s: Set<string>) => false),
     }));
     jest.spyOn(window, "alert").mockImplementation(() => {});
-    const { submit } = require("@/newpost/lib/submit");
+    const { submit } = require("@/new-post/lib/submit");
     expect(submit(dumFormData)).toBe(false);
     expect(window.alert).toBeCalledWith("Something went wrong");
   });
 
   // it("shows something correct when validation passes", () => {
-  //   jest.mock("@/newpost/lib/validators", () => ({
+  //   jest.mock("@/new-post/lib/validators", () => ({
   //     validateTitle: jest.fn((s: string) => true),
   //     validateAuthors: jest.fn((s: Set<string>) => true),
   //   }));
   //   jest.spyOn(window, "alert").mockImplementation(() => {});
-  //   const { submit } = require("@/newpost/lib/submit");
+  //   const { submit } = require("@/new-post/lib/submit");
   //   expect(submit(dumFormData)).toBe(true);
   //   expect(window.alert).toBeCalledWith(
   //     "Title: " +

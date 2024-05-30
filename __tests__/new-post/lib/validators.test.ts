@@ -1,5 +1,5 @@
 import { expect, describe, it } from "@jest/globals";
-import { validateAuthors, validateTitle } from "@/newpost/lib/validators";
+import { validateAuthors, validateTitle } from "@/new-post/lib/validators";
 
 describe("Tests title validator", () => {
   it("gives error message for empty title", () => {

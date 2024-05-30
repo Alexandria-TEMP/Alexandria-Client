@@ -18,14 +18,14 @@ import {
 import { submit } from "./lib/submit";
 import { getMemberName, getFieldName } from "@/lib/get-format";
 
-export default function CreateMR({ params }: { params: { id: string } }) {
+export default function ProposeChanges({ params }: { params: { id: string } }) {
   //   const data = await getPostData(params.id);
   // TODO make this work with async data fetch somehow
   const data = {
     title: "Post title",
     status: "Open for review",
     authors: ["3"],
-    collaborators: ["1", "2"],
+    contributors: ["1", "2"],
     anonymous: false,
     createdAt: "10 May 2024",
     currentVersion: {
@@ -50,7 +50,7 @@ export default function CreateMR({ params }: { params: { id: string } }) {
     mode: "onTouched",
     defaultValues: {
       mrTitle: "",
-      collaborators: [] as string[],
+      contributors: [] as string[],
       anonymous: false,
       originalPostId: params.id,
       updatedTitle: data.title,
@@ -69,9 +69,8 @@ export default function CreateMR({ params }: { params: { id: string } }) {
         {/* Little top bar */}
         <div className="sticky flex justify-between py-5">
           <h1 className="max-w-fit">Create a new MR</h1>{" "}
-          {/*TODO maybe rename this to suggest changes or something?*/}
           <Button variant="ghost" type="submit">
-            Publish
+            Publish Changes
           </Button>
         </div>
         {/* The actual form */}
@@ -109,22 +108,22 @@ export default function CreateMR({ params }: { params: { id: string } }) {
             <Divider />
 
             <MultiSelectAutocomplete
-              label={<h2>Collaborators</h2>}
+              label={<h2>Contributors</h2>}
               description="Select the people who worked on these changes."
               options={USERS}
               getItemLabel={getMemberName}
               control={control}
               trigger={trigger}
-              name="collaborators"
+              name="contributors"
               rules={{
                 validate: (v: string[]) => {
                   if (!getValues("anonymous") && v.length <= 0)
-                    return "Please add at least one collaborator or make these suggestions anonymously.";
+                    return "Please add at least one contributor or make these suggestions anonymously.";
                   return true;
                 },
               }}
               disableFieldName="anonymous"
-              disableMessage="Suggest these changes anonymously (no collaborators will be added)"
+              disableMessage="Suggest these changes anonymously (no contributors will be added)"
             />
 
             <Divider />

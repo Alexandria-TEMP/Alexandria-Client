@@ -87,7 +87,7 @@ export default function NewPost() {
 
             <MultiSelectAutocomplete
               label={<h2>Authors</h2>}
-              description="Select the main people who worked on this post."
+              description="Select the people who worked on this post."
               options={USERS}
               getItemLabel={getMemberName}
               control={control}
@@ -102,17 +102,6 @@ export default function NewPost() {
               }}
               disableFieldName="anonymous"
               disableMessage="Post this anonymously (no authors will be posted)"
-            />
-
-            <Divider />
-
-            <MultiSelectAutocomplete
-              label={<h2>Contributors</h2>}
-              description="Select the people who helped with this post."
-              options={USERS}
-              getItemLabel={getMemberName}
-              control={control}
-              name="contributors"
             />
 
             <Divider />
