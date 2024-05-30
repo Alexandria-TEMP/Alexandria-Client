@@ -1,6 +1,6 @@
 import { CardHeader, Chip } from "@nextui-org/react";
 import HeaderSubtle from "@/components/header-subtle";
-import PostLinks from "./post-links";
+import LinkGroup from "./link-group";
 import ContributeDropdown from "./contribute-dropdown";
 import getPostData from "@/lib/api-calls/post-api";
 
@@ -19,6 +19,12 @@ export default async function PostCardHeader({
 }) {
   const data = await getPostData(postId);
 
+  const links = [
+    { label: "Contents", href: `/post/${postId}` },
+    { label: "Versions", href: `/post/${postId}/version-list` },
+    { label: "Files", href: `/post/${postId}/files` },
+  ];
+
   return (
     <>
       {/* Title */}
@@ -28,7 +34,7 @@ export default async function PostCardHeader({
 
       {/* (part of) Metadata */}
       <CardHeader className="-mt-4 flex gap-12">
-        <PostLinks postId={postId} />
+        <LinkGroup links={links} />
         {!hideContribute && <ContributeDropdown />}
 
         <div className="grow" />
