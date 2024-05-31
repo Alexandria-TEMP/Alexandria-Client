@@ -8,40 +8,80 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
+  Tooltip,
 } from "@nextui-org/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+export type ContributeOptions = "contribute" | "review" | "fork";
 
 /**
  * Dropdown style button group for post contribution options.
  *
+ * @param disabled Disables specific options in dropdown
  */
-export default function ContributeDropdown() {
-  const [selectedOption, setSelectedOption] = useState(new Set(["contribute"]));
+export default function ContributeDropdown({
+  disabled,
+}: Readonly<{ disabled?: ContributeOptions[] }>) {
+  const [selectedOptionKey, setSelectedOptionKey] = useState(
+    new Set(["contribute"]),
+  );
 
-  const descriptionsMap = {
-    contribute:
-      "Suggest changes to this post, which might be incorporated after a peer review.",
-    review:
-      "Peer review this version. If the version is accepted by three peers, it'll become the post's main version.",
-    fork: "Start a new post, using this one as a base.",
-  };
+  const [options, setOptions] = useState([
+    {
+      key: "contribute",
+      label: "Contribute",
+      description:
+        "Suggest changes to this post, which might be incorporated after a peer review.",
+    },
+    {
+      key: "review",
+      label: "Review",
+      description:
+        "Peer review this version. If the version is accepted by three peers, it'll become the post's main version.",
+    },
+    {
+      key: "fork",
+      label: "Fork",
+      description: "Start a new post, using this one as a base.",
+    },
+  ]);
 
-  const labelsMap: {
-    [index: string]: string;
-  } = {
-    contribute: "Contribute",
-    review: "Review",
-    fork: "Fork",
-  };
+  // Set options based on what is disabled
+  useEffect(() => {
+    if (!disabled) return;
+    // Filters options that are not disabled
+    const enabledOptions = options.filter(
+      (option) =>
+        !disabled.some((disabledOption) => disabledOption === option.key),
+    );
+    // All are disabled!
+    if (enabledOptions.length == 0) {
+      throw new Error("all options in contribute dropdown are disabled");
+    }
+    // Set default option as first enabled one
+    setSelectedOptionKey(new Set([enabledOptions[0].key]));
+    // Set available options
+    setOptions(enabledOptions);
+  }, [options, disabled]);
 
-  // Convert the Set to an Array and get the first value.
-  const selectedOptionValue = Array.from(selectedOption)[0];
+  // Get currently selected option from option array
+  const selectedOption = options.filter(
+    (option) => option.key === Array.from(selectedOptionKey)[0],
+  )[0];
+
+  // If there's only one option, don't render dropdown
+  if (options.length == 1) {
+    return (
+      <Tooltip content={selectedOption.description}>
+        <Button>{selectedOption.label}</Button>
+      </Tooltip>
+    );
+  }
 
   // TODO actions
-  // TODO disable 'review' and 'contribute' when appropriate
   return (
     <ButtonGroup>
-      <Button>{labelsMap[selectedOptionValue]}</Button>
+      <Button>{selectedOption.label}</Button>
       <Dropdown placement="bottom-end">
         <DropdownTrigger>
           <Button isIconOnly>
@@ -51,24 +91,18 @@ export default function ContributeDropdown() {
         <DropdownMenu
           disallowEmptySelection
           aria-label="Contribution options"
-          selectedKeys={selectedOption}
+          selectedKeys={selectedOptionKey}
           selectionMode="single"
           // @ts-expect-error ts doesn't see setState as type (string[]) => void
-          onSelectionChange={setSelectedOption}
+          onSelectionChange={setSelectedOptionKey}
           className="max-w-[300px]"
+          items={options}
         >
-          <DropdownItem
-            key="contribute"
-            description={descriptionsMap["contribute"]}
-          >
-            {labelsMap["contribute"]}
-          </DropdownItem>
-          <DropdownItem key="review" description={descriptionsMap["review"]}>
-            {labelsMap["review"]}
-          </DropdownItem>
-          <DropdownItem key="fork" description={descriptionsMap["fork"]}>
-            {labelsMap["fork"]}
-          </DropdownItem>
+          {(option) => (
+            <DropdownItem key={option.key} description={option.description}>
+              {option.label}
+            </DropdownItem>
+          )}
         </DropdownMenu>
       </Dropdown>
     </ButtonGroup>

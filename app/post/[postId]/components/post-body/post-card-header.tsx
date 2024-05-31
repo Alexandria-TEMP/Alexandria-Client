@@ -1,7 +1,7 @@
 import { CardHeader, Chip } from "@nextui-org/react";
 import HeaderSubtle from "@/components/header-subtle";
 import LinkGroup from "./link-group";
-import ContributeDropdown from "./contribute-dropdown";
+import ContributeDropdown, { ContributeOptions } from "./contribute-dropdown";
 import getPostData from "@/lib/api-calls/post-api";
 
 /**
@@ -9,13 +9,17 @@ import getPostData from "@/lib/api-calls/post-api";
  * Includes title, main metadata, and action buttons.
  *
  * @param postId Post ID
+ * @param hideContribute Hides contribute button and dropdown
+ * @param disabledContribute Disables specific options in contribute dropdown
  */
 export default async function PostCardHeader({
   postId,
   hideContribute,
+  disabledContribute,
 }: {
   postId: string;
   hideContribute?: boolean;
+  disabledContribute?: ContributeOptions[];
 }) {
   const data = await getPostData(postId);
 
@@ -35,7 +39,9 @@ export default async function PostCardHeader({
             { label: "Files", href: `/post/${postId}/files` },
           ]}
         />
-        {!hideContribute && <ContributeDropdown />}
+        {!hideContribute && (
+          <ContributeDropdown disabled={disabledContribute} />
+        )}
 
         <div className="grow" />
 
