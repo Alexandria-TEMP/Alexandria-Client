@@ -4,7 +4,7 @@ import { getRenderedVersion } from "@/lib/api-calls/version-api";
 import { dummyHtml } from "~/__tests__/__utils__/dummys";
 import VersionRender, {
   iframeTitle,
-} from "@/post/[postId]/components/post-body/version-render/component";
+} from "@/post/[postId]/components/version-render/component";
 
 jest.mock("@/lib/api-calls/version-api");
 

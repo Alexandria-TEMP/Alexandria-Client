@@ -1,7 +1,7 @@
 import { expect, describe, it } from "@jest/globals";
 import { render, screen, waitFor } from "@testing-library/react";
 import getPostData from "@/lib/api-calls/post-api";
-import PostCardMini from "@/post/[postId]/components/post-card-mini";
+import PostCardMini from "@/post/[postId]/components/cards/post-card-mini";
 import { dummyPost } from "~/__tests__/__utils__/dummys";
 
 jest.mock("@/lib/api-calls/post-api");

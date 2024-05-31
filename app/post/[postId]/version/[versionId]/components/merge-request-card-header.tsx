@@ -1,12 +1,10 @@
 import { CardHeader, Chip } from "@nextui-org/react";
 import HeaderSubtle from "@/components/header-subtle";
-// import PostLinks from "./post-links";
-// import ContributeDropdown from "./contribute-dropdown";
 import { IdProp } from "@/lib/id-prop";
 import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
-import LinkGroup from "@/post/[postId]/components/post-body/link-group";
-import ContributeDropdown from "@/post/[postId]/components/post-body/contribute-dropdown";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
+import LinkGroup from "@/post/[postId]/components/buttons/link-group";
+import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
 
 /**
  * Header for merge request contents card. Uses CardHeader, so it must be child of a Card.

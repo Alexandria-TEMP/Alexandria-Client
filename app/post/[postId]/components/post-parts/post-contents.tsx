@@ -1,8 +1,8 @@
 import { Card, CardBody } from "@nextui-org/react";
 import PostCardHeader from "./post-card-header";
-import VersionRender from "./version-render/component";
 import getPostData from "@/lib/api-calls/post-api";
 import { IdProp } from "@/lib/id-prop";
+import VersionRender from "../version-render/component";
 
 /**
  * Main body of a Post. Includes: title, main metadata, and action buttons.

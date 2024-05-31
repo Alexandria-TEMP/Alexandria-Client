@@ -1,8 +1,8 @@
-import AuthorCard from "./author-card";
-import PostCardMini from "./post-card-mini";
-import getPostData from "../../../lib/api-calls/post-api";
 import { Chip } from "@nextui-org/react";
 import { ClassNameProp } from "@/lib/classname-prop";
+import getPostData from "@/lib/api-calls/post-api";
+import PostCardMini from "../cards/post-card-mini";
+import AuthorCard from "../cards/author-card";
 
 /**
  * Sidebar that is shown in a Post's page. Includes most of post's metadata.

@@ -1,7 +1,9 @@
 import { CardHeader, Chip } from "@nextui-org/react";
 import HeaderSubtle from "@/components/header-subtle";
-import LinkGroup from "./link-group";
-import ContributeDropdown, { ContributeOptions } from "./contribute-dropdown";
+import LinkGroup from "../buttons/link-group";
+import ContributeDropdown, {
+  ContributeOptions,
+} from "../buttons/contribute-dropdown";
 import getPostData from "@/lib/api-calls/post-api";
 
 /**

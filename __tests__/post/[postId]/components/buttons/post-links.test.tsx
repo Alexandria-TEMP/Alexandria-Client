@@ -2,7 +2,7 @@ import { expect, describe, it } from "@jest/globals";
 import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
 import { useRouter, usePathname } from "next/navigation";
-import LinkGroup from "@/post/[postId]/components/post-body/link-group";
+import LinkGroup from "@/post/[postId]/components/buttons/link-group";
 
 // Possible button labels
 type Labels = "contents" | "version-list" | "files";
