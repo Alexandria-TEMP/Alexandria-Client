@@ -1,11 +1,17 @@
-import { getVersionData } from "@/lib/api-calls/version-api";
+import { parseId } from "@/lib/string-utils";
+import MergeRequestContents from "./components/merge-request-contents";
 
-export default async function PostVersion({
+export default function PostVersion({
   params,
 }: {
-  params: { id: string };
+  params: { postId: string; versionId: string };
 }) {
-  const data = await getVersionData(params.id);
+  // const data = await getMergeRequestData(parseId(params.versionId));
 
-  return <p>HELLLO! {data.renderStatus}</p>;
+  return (
+    <MergeRequestContents
+      postId={parseId(params.postId)}
+      mergeRequestId={parseId(params.versionId)}
+    />
+  );
 }

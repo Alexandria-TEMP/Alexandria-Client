@@ -1,24 +1,33 @@
 import { CardHeader, Chip } from "@nextui-org/react";
 import HeaderSubtle from "@/components/header-subtle";
-import { IdProp } from "@/lib/id-prop";
 import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
 import LinkGroup from "@/post/[postId]/components/buttons/link-group";
-import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
+import ContributeDropdown, {
+  ContributeOptions,
+} from "@/post/[postId]/components/buttons/contribute-dropdown";
+import { reviewStatusToTensedVerb } from "@/lib/get-format";
+import { idType } from "@/lib/types/api-types";
 
 /**
  * Header for merge request contents card. Uses CardHeader, so it must be child of a Card.
  * Includes title, main metadata, and action buttons.
  *
- * @param id Merge request ID
+ * TODO update jsdoc
  */
 export default async function MergeRequestCardHeader({
-  id,
+  postId,
+  mergeRequestId,
   hideContribute,
-}: IdProp & {
+}: {
+  postId: idType;
+  mergeRequestId: idType;
   hideContribute?: boolean;
 }) {
-  const data = await getMergeRequestData(id);
+  const data = await getMergeRequestData(mergeRequestId);
+  const status = reviewStatusToTensedVerb(data.mergeRequestDecision);
+  const disabledContribute: ContributeOptions[] =
+    status === "open" ? ["contribute"] : ["contribute", "review"];
 
   return (
     <>
@@ -31,29 +40,37 @@ export default async function MergeRequestCardHeader({
       <CardHeader className="-mt-4 flex gap-12">
         <LinkGroup
           links={[
-            { href: `/todo`, label: "Contents" },
-            { href: `/todo`, label: "Files" },
+            {
+              href: `/post/${postId}/version/${mergeRequestId}`,
+              label: "Contents",
+            },
+            {
+              href: `/post/${postId}/version/${mergeRequestId}/files`,
+              label: "Files",
+            },
           ]}
         />
-        {!hideContribute && <ContributeDropdown />}
+        {!hideContribute && (
+          <ContributeDropdown disabled={disabledContribute} />
+        )}
 
         <div className="grow" />
 
         <div className="flex-col">
           <HeaderSubtle>Completion</HeaderSubtle>
-          <Chip>{data.updatedCompletionStatus}</Chip>
+          <Chip>{capitalizeFirstLetter(data.updatedCompletionStatus)}</Chip>
         </div>
+
         <div className="flex-col">
           <HeaderSubtle>Status</HeaderSubtle>
-          <Chip>{data.status}</Chip>
+          <Chip>{capitalizeFirstLetter(status)}</Chip>
         </div>
+
         <div className="flex-col">
-          <HeaderSubtle>
-            Created on {data.createdAt.toLocaleDateString()}
-          </HeaderSubtle>
-          {data.status !== "open" && (
+          <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
+          {status !== "open" && (
             <HeaderSubtle>
-              {`${capitalizeFirstLetter(data.status)} on ${data.closedAt.toLocaleDateString()}`}
+              {`${capitalizeFirstLetter(status)} on ${data.updatedAt}`}
             </HeaderSubtle>
           )}
         </div>

@@ -1,3 +1,5 @@
+export type idType = number;
+
 export type Member = {
   id: string;
   email: string;
@@ -30,19 +32,25 @@ export type Post = {
 
 export type MergeRequest = {
   anonymous: boolean;
-  collaboratorIDs: string[];
-  id: string;
+  collaboratorIDs: idType[];
+  createdAt: string;
+  id: idType;
+  mergeRequestDecision: MergeRequestReviewStatus;
   mergeRequestTitle: string;
   newPostTitle: string;
-  newVersionID: string;
-  previousVersionID: string;
-  projectPostID: string;
-  createdAt: Date;
-  closedAt: Date;
-  reviewIDs: string[];
+  newVersionID: idType;
+  previousVersionID: idType;
+  projectPostID: idType;
+  reviewIDs: idType[];
+  updatedAt: string;
   updatedCompletionStatus: string;
   updatedScientificFields: string[];
-  status: string;
 };
 
+export type MergeRequestReviewStatus =
+  | "open for review"
+  | "peer reviewed"
+  | "rejected";
+
+// TODO decide on if keep this
 export type PostType = "Reflection" | "Question" | "Project";

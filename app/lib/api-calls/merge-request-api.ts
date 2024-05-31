@@ -1,4 +1,4 @@
-import { MergeRequest } from "../types/api-types";
+import { MergeRequest, idType } from "../types/api-types";
 
 /**
  * Gets data for a Merge request given their ID.
@@ -6,86 +6,60 @@ import { MergeRequest } from "../types/api-types";
  * @async
  * @param id Merge request ID
  */
-export async function getMergeRequestData(id: string): Promise<MergeRequest> {
+export async function getMergeRequestData(id: idType): Promise<MergeRequest> {
   // TODO
   await new Promise((resolve) => setTimeout(resolve, 800));
-  if (id == "1") {
-    // Rejected
+  if (id == 1)
     return {
       id: id,
       newPostTitle: "Post title",
-      projectPostID: "1",
+      projectPostID: 1,
       mergeRequestTitle: "Remove contents section",
-      newVersionID: "1",
-      reviewIDs: ["accept", "reject", "accept"],
+      newVersionID: 1,
+      reviewIDs: [0, 1, 0],
       anonymous: false,
-      createdAt: new Date(2024, 4, 19),
-      collaboratorIDs: ["1", "2"],
-      updatedCompletionStatus: "Ideation",
+      createdAt: "19 May 2024",
+      collaboratorIDs: [0, 1],
+      updatedAt: "20 May 2024",
+      updatedCompletionStatus: "ideation",
       updatedScientificFields: ["Mathematics"],
-      status: "rejected",
-      previousVersionID: "2",
-      closedAt: new Date(2024, 4, 20),
+      mergeRequestDecision: "rejected",
+      previousVersionID: 2,
     };
-  }
-
-  if (id == "2") {
-    // Open
+  else if (id == 2)
     return {
       id: id,
       newPostTitle: "Post title",
-      projectPostID: "1",
-      mergeRequestTitle: "Add new experiment",
-      newVersionID: "1",
-      reviewIDs: ["accept", "accept"],
+      projectPostID: 1,
+      mergeRequestTitle: "Do some stuff",
+      newVersionID: 1,
+      reviewIDs: [1],
       anonymous: false,
-      createdAt: new Date(2024, 4, 19),
-      collaboratorIDs: ["1", "2"],
-      updatedCompletionStatus: "Ideation",
+      createdAt: "19 May 2024",
+      collaboratorIDs: [0, 1],
+      updatedAt: "20 May 2024",
+      updatedCompletionStatus: "ideation",
       updatedScientificFields: ["Mathematics"],
-      status: "open",
-      previousVersionID: "2",
-      closedAt: new Date(2024, 4, 20),
+      mergeRequestDecision: "open for review",
+      previousVersionID: 2,
     };
-  }
-
-  if (id == "3") {
-    // Open
+  else
     return {
       id: id,
       newPostTitle: "Post title",
-      projectPostID: "1",
+      projectPostID: 1,
       mergeRequestTitle: "Grammar fixes",
-      newVersionID: "1",
-      reviewIDs: ["accept"],
+      newVersionID: 1,
+      reviewIDs: [1, 1, 1],
       anonymous: false,
-      createdAt: new Date(2024, 4, 19),
-      collaboratorIDs: ["1", "2"],
-      updatedCompletionStatus: "Ideation",
+      createdAt: "19 May 2024",
+      collaboratorIDs: [0, 1],
+      updatedAt: "20 May 2024",
+      updatedCompletionStatus: "ideation",
       updatedScientificFields: ["Mathematics"],
-      status: "open",
-      previousVersionID: "2",
-      closedAt: new Date(2024, 4, 20),
+      mergeRequestDecision: "peer reviewed",
+      previousVersionID: 2,
     };
-  }
-
-  // Accepted
-  return {
-    id: id,
-    newPostTitle: "Post title",
-    projectPostID: "1",
-    mergeRequestTitle: "Expand literature review",
-    newVersionID: "1",
-    reviewIDs: ["accept", "accept", "accept"],
-    anonymous: false,
-    createdAt: new Date(2024, 4, 19),
-    collaboratorIDs: ["1", "2"],
-    updatedCompletionStatus: "Ideation",
-    updatedScientificFields: ["Mathematics"],
-    status: "accepted",
-    previousVersionID: "2",
-    closedAt: new Date(2024, 4, 20),
-  };
 }
 
 /**
@@ -96,7 +70,7 @@ export async function getMergeRequestData(id: string): Promise<MergeRequest> {
  */
 // TODO remove next line
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function getPostMergeRequests(id: string) {
+export async function getPostMergeRequests(id: idType) {
   await new Promise((resolve) => setTimeout(resolve, 100));
   return {
     rejected: ["1", "1", "1", "1"],
@@ -122,4 +96,11 @@ export async function getPostMergeRequests(id: string) {
       "4",
     ],
   };
+}
+
+export async function getMergeRequestReviewStatuses(id: idType) {
+  await new Promise((resolve) => setTimeout(resolve, 70));
+  if (id == 1) return ["accept", "reject", "accept"];
+  else if (id == 2) return ["accept", "open", "open"];
+  else return ["accept", "accept", "accept"];
 }
