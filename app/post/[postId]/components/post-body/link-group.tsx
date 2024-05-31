@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, ButtonGroup } from "@nextui-org/react";
+import { Button, ButtonGroup, Divider } from "@nextui-org/react";
 import { usePathname, useRouter } from "next/navigation";
 
 /**
@@ -16,15 +16,17 @@ export default function LinkGroup({
 
   return (
     <ButtonGroup>
-      {links.map((link) => (
-        // index !== 0 && <Divider orientation="vertical" />
-        <Button
-          key={link.href}
-          isDisabled={pathname === link.href}
-          onClick={() => router.replace(link.href)}
-        >
-          {link.label}
-        </Button>
+      {links.map((link, index) => (
+        <>
+          {index !== 0 && <Divider orientation="vertical" />}
+          <Button
+            key={link.href}
+            isDisabled={pathname === link.href}
+            onClick={() => router.replace(link.href)}
+          >
+            {link.label}
+          </Button>
+        </>
       ))}
     </ButtonGroup>
   );
