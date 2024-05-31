@@ -1,4 +1,4 @@
-import PostCardHeader from "@/post/[post-id]/components/post-body/post-card-header";
+import PostCardHeader from "@/post/[postId]/components/post-body/post-card-header";
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import getPostData from "@/lib/api-calls/post-api";

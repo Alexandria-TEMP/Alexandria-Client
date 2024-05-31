@@ -7,11 +7,11 @@ import InputDiscussion from "./components/discussions/input-discussion";
 /**
  * Page that shows contents of a Post.
  *
- * @param params.id Post ID, taken from route's dynamic segment /[id].
+ * @param params.postId Post ID, taken from route's dynamic segment /[postId].
  * Read more: https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
  */
-export default async function Post({ params }: { params: { id: string } }) {
-  const data = await getPostData(params.id);
+export default async function Post({ params }: { params: { postId: string } }) {
+  const data = await getPostData(params.postId);
   const discussions = data.currentVersion.discussions;
 
   return (
@@ -19,7 +19,7 @@ export default async function Post({ params }: { params: { id: string } }) {
       {/* Main body */}
       <div className="flex flex-col space-y-4 w-10/12">
         {/* Title, contents, main metadata and action buttons */}
-        <PostContents id={params.id} />
+        <PostContents id={params.postId} />
         {/* Discussions */}
         <h2>{discussions.length} Replies</h2>
         {discussions.map((id) => (
@@ -29,7 +29,7 @@ export default async function Post({ params }: { params: { id: string } }) {
         <InputDiscussion versionId={data.currentVersion.id} />
       </div>
       {/* Sidebar with additional metadata */}
-      <PostSidebar postId={params.id} className="w-2/12" />
+      <PostSidebar postId={params.postId} className="w-2/12" />
     </div>
   );
 }

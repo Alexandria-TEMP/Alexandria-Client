@@ -1,7 +1,7 @@
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import { getDiscussionData } from "@/lib/api-calls/discussion-api";
-import Discussion from "@/post/[post-id]/components/discussions/discussion";
+import Discussion from "@/post/[postId]/components/discussions/discussion";
 import { dummyDiscussion } from "~/__tests__/__utils__/dummys";
 
 jest.mock("@/lib/api-calls/discussion-api");

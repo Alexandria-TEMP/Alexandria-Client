@@ -1,4 +1,4 @@
-import AuthorCard from "../../[post-id]/components/author-card";
+import AuthorCard from "./author-card";
 import PostCardMini from "./post-card-mini";
 import getPostData from "../../../lib/api-calls/post-api";
 import { Chip } from "@nextui-org/react";

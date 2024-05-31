@@ -19,12 +19,6 @@ export default async function PostCardHeader({
 }) {
   const data = await getPostData(postId);
 
-  const links = [
-    { label: "Contents", href: `/post/${postId}` },
-    { label: "Versions", href: `/post/${postId}/version-list` },
-    { label: "Files", href: `/post/${postId}/files` },
-  ];
-
   return (
     <>
       {/* Title */}
@@ -34,7 +28,13 @@ export default async function PostCardHeader({
 
       {/* (part of) Metadata */}
       <CardHeader className="-mt-4 flex gap-12">
-        <LinkGroup links={links} />
+        <LinkGroup
+          links={[
+            { label: "Contents", href: `/post/${postId}` },
+            { label: "Versions", href: `/post/${postId}/version-list` },
+            { label: "Files", href: `/post/${postId}/files` },
+          ]}
+        />
         {!hideContribute && <ContributeDropdown />}
 
         <div className="grow" />

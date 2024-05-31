@@ -2,7 +2,7 @@ import { expect, describe, it } from "@jest/globals";
 import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
 import { uploadDiscussion } from "@/lib/api-calls/discussion-api";
-import InputDiscussion from "@/post/[post-id]/components/discussions/input-discussion";
+import InputDiscussion from "@/post/[postId]/components/discussions/input-discussion";
 
 jest.mock("@/lib/api-calls/discussion-api");
 

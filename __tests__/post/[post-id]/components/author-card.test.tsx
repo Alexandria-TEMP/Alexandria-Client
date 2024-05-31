@@ -1,5 +1,5 @@
 import { expect, describe, it } from "@jest/globals";
-import AuthorCard from "@/post/[post-id]/components/author-card";
+import AuthorCard from "@/post/[postId]/components/author-card";
 import { render, screen } from "@testing-library/react";
 import getMemberData from "@/lib/api-calls/member-api";
 import { dummyMembers } from "~/__tests__/__utils__/dummys";

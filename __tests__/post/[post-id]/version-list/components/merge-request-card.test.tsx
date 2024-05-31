@@ -1,6 +1,6 @@
 import { expect } from "@jest/globals";
 import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
-import MergeRequestCard from "@/post/[post-id]/version-list/components/merge-request-card";
+import MergeRequestCard from "@/post/[postId]/version-list/components/merge-request-card";
 import { act, render, screen } from "@testing-library/react";
 import { dummyMergeRequests } from "~/__tests__/__utils__/dummys";
 import { useRouter } from "next/navigation";
