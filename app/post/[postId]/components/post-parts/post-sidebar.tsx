@@ -1,8 +1,8 @@
-import { Chip } from "@nextui-org/react";
 import { ClassNameProp } from "@/lib/classname-prop";
 import getPostData from "@/lib/api-calls/post-api";
 import PostCardMini from "../cards/post-card-mini";
-import AuthorCard from "../cards/author-card";
+import ChipList from "@/components/chip-list";
+import AuthorCardList from "../cards/author-card-list";
 
 /**
  * Sidebar that is shown in a Post's page. Includes most of post's metadata.
@@ -20,11 +20,7 @@ export default async function PostSidebar({
     <div className={className}>
       <h2>About</h2>
       <h3>Scientific fields</h3>
-      <div className="flex flex-row flex-wrap gap-x-3 gap-y-2">
-        {data.scientificFieldTags.map((field, index) => (
-          <Chip key={index}>{field}</Chip>
-        ))}
-      </div>
+      <ChipList labels={data.scientificFieldTags} />
 
       <div className="h-4" />
 
@@ -33,21 +29,15 @@ export default async function PostSidebar({
 
       <div className="h-4" />
 
+      {/* TODO distinguish between authors and collaborators */}
+
       <h3>Authors</h3>
-      <div className="flex flex-col gap-y-2">
-        {data.collaborators.map((id) => (
-          <AuthorCard memberId={id} key={id} />
-        ))}
-      </div>
+      <AuthorCardList collaboratorIds={data.collaborators} />
 
       <div className="h-4" />
 
       <h3>Collaborators</h3>
-      <div className="flex flex-col gap-y-2">
-        {data.collaborators.map((id) => (
-          <AuthorCard memberId={id} key={id} />
-        ))}
-      </div>
+      <AuthorCardList collaboratorIds={data.collaborators} />
     </div>
   );
 }
