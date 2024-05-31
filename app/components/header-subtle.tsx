@@ -1,4 +1,4 @@
-import { ChildrenProp } from "@/lib/children-prop";
+import { ChildrenProp } from "@/lib/types/react-props/children-prop";
 
 /**
  * Heading meant to not call attention to itself. Faded color and small text size.

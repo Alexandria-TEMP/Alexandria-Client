@@ -1,4 +1,4 @@
-import { MergeRequest, Post } from "@/lib/api-types";
+import { MergeRequest, Post } from "@/lib/types/api-types";
 
 export const dummyDiscussion = {
   id: "4321",

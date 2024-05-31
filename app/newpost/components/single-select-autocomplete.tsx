@@ -3,7 +3,7 @@
 import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { useController, FieldValues } from "react-hook-form";
 import { Key } from "react";
-import { CustomAutocompleteProps } from "@/lib/custom-autocomplete-types";
+import { CustomAutocompleteProps } from "@/lib/types/custom-autocomplete-types";
 
 /**
  * Searchable dropdown with single select (can select only one item). Intended to be used when you want user to pick from small number of predetermined options.

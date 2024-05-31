@@ -1,4 +1,4 @@
-import { ClassNameProp } from "@/lib/classname-prop";
+import { ClassNameProp } from "@/lib/types/react-props/classname-prop";
 import getPostData from "@/lib/api-calls/post-api";
 import PostCardMini from "../cards/post-card-mini";
 import ChipList from "@/components/chip-list";

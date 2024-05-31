@@ -5,7 +5,7 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
 import { FieldValues, useController } from "react-hook-form";
-import { CustomAutocompleteProps } from "@/lib/custom-autocomplete-types";
+import { CustomAutocompleteProps } from "@/lib/types/custom-autocomplete-types";
 
 /**
  * Searchable dropdown which mimics multi select by adding the selected items to a list of removable tags.

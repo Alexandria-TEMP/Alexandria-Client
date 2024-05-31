@@ -1,4 +1,4 @@
-import { Post } from "../api-types";
+import { Post } from "../types/api-types";
 
 /**
  * Gets data for a Post given their ID.

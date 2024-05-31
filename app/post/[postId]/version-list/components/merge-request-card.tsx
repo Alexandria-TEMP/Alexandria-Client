@@ -2,14 +2,14 @@
 
 import HeaderSubtle from "@/components/header-subtle";
 import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
-import { IdProp } from "@/lib/id-prop";
+import { IdProp } from "@/lib/types/react-props/id-prop";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
 import ReviewChip from "./review-chip";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
 import MergeRequestCardSkeleton from "./merge-request-card-skeleton";
-import { MergeRequest } from "@/lib/api-types";
+import { MergeRequest } from "@/lib/types/api-types";
 
 /**
  * Card that represents some merge request for a post.

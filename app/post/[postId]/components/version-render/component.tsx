@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Skeleton } from "@nextui-org/react";
 import { getRenderedVersion } from "@/lib/api-calls/version-api";
-import { IdProp } from "@/lib/id-prop";
+import { IdProp } from "@/lib/types/react-props/id-prop";
 import Error from "./error";
 import { setupResize, changeColors } from "./lib/iframe-manipulator";
 import { useTheme } from "next-themes";

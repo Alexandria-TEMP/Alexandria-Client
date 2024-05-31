@@ -2,8 +2,8 @@
 
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { ChildrenProp } from "./lib/children-prop";
-import { ClassNameProp } from "./lib/classname-prop";
+import { ChildrenProp } from "./lib/types/react-props/children-prop";
+import { ClassNameProp } from "./lib/types/react-props/classname-prop";
 
 /**
  * Wrapper for the entire website. Should be very close to the root in the html tree.

@@ -1,4 +1,4 @@
-import { Member, Tag } from "./api-types";
+import { Member, Tag } from "./types/api-types";
 
 export function getMemberName(i: Member | undefined) {
   return i === undefined ? "Not found" : i.firstName + " " + i.lastName;

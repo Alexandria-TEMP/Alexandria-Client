@@ -1,7 +1,7 @@
 import { Card, CardBody } from "@nextui-org/react";
 import PostCardHeader from "./post-card-header";
 import getPostData from "@/lib/api-calls/post-api";
-import { IdProp } from "@/lib/id-prop";
+import { IdProp } from "@/lib/types/react-props/id-prop";
 import VersionRender from "../version-render/component";
 
 /**

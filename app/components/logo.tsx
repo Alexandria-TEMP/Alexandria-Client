@@ -1,6 +1,6 @@
 "use client";
 
-import { ClassNameProp } from "@/lib/classname-prop";
+import { ClassNameProp } from "@/lib/types/react-props/classname-prop";
 import { Image } from "@nextui-org/react";
 import { useTheme } from "next-themes";
 

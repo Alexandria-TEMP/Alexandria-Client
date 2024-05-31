@@ -1,4 +1,4 @@
-import { MergeRequest } from "../api-types";
+import { MergeRequest } from "../types/api-types";
 
 /**
  * Gets data for a Merge request given their ID.
