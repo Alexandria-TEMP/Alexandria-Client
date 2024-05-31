@@ -37,7 +37,6 @@ const redirectsTest = async (label: Labels, text?: string) => {
 
 const disabledTest = (label: Labels, text?: string) => {
   // Tests if button is disabled when in own view
-  const postId = "62728";
 
   // Mock usePathname
   (usePathname as jest.Mock).mockReturnValue(
