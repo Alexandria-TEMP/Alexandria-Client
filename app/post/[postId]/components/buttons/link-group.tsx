@@ -2,6 +2,7 @@
 
 import { Button, ButtonGroup, Divider } from "@nextui-org/react";
 import { usePathname, useRouter } from "next/navigation";
+import { Fragment } from "react";
 
 /**
  * Button group that links to different Post views.
@@ -17,16 +18,15 @@ export default function LinkGroup({
   return (
     <ButtonGroup>
       {links.map((link, index) => (
-        <>
+        <Fragment key={link.href}>
           {index !== 0 && <Divider orientation="vertical" />}
           <Button
-            key={link.href}
             isDisabled={pathname === link.href}
             onClick={() => router.replace(link.href)}
           >
             {link.label}
           </Button>
-        </>
+        </Fragment>
       ))}
     </ButtonGroup>
   );
