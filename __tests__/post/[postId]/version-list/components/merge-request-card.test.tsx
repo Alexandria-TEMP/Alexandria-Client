@@ -1,5 +1,8 @@
 import { expect } from "@jest/globals";
-import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
+import {
+  getMergeRequestData,
+  getMergeRequestReviewStatuses,
+} from "@/lib/api-calls/merge-request-api";
 import MergeRequestCard from "@/post/[postId]/(main-post-view)/version-list/components/merge-request-card";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { dummyMergeRequests } from "~/__tests__/__utils__/dummys";
@@ -17,6 +20,11 @@ describe("MergeRequestCard", () => {
   (getMergeRequestData as jest.Mock).mockResolvedValue(
     dummyMergeRequests["open"],
   );
+  (getMergeRequestReviewStatuses as jest.Mock).mockResolvedValue([
+    "open",
+    "open",
+    "open",
+  ]);
 
   beforeEach(async () => {
     // disable reason: we need this to wait for a change in MergeRequestCard
