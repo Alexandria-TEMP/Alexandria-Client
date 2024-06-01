@@ -1,3 +1,5 @@
+import { baseUrl } from "./api-common";
+
 /**
  * Fetches HTML render of a version's Quarto project.
  *
@@ -6,6 +8,13 @@
  * @returns Text contents of the HTML render
  */
 export async function getRenderedVersion(id: string): Promise<string> {
-  console.log(`fetching render for ${id}`);
-  return (await (await fetch("http://localhost:8000/")).blob()).text();
+  const res = await fetch(`${baseUrl}/versions/${id}/render`);
+  if (!res.ok) {
+    // TODO
+    throw new Error(await res.text());
+  }
+
+  // TODO
+
+  return "";
 }
