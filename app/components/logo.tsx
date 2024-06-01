@@ -3,6 +3,7 @@
 import { ClassNameProp } from "@/lib/types/react-props/classname-prop";
 import { Image } from "@nextui-org/react";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 /**
  * Image component with Alexandria's logo. Adapts color to current theme.
@@ -17,10 +18,15 @@ export default function Logo({
   height,
 }: ClassNameProp & { width?: number; height?: number }) {
   const { theme } = useTheme();
+  const [src, setSrc] = useState("/logo/logo32.svg");
+  useEffect(() => {
+    setSrc(theme === "light" ? "/logo/logo32.svg" : "/logo/logo32white.svg");
+  }, [theme]);
+
   return (
     <Image
       alt="Alexandria logo"
-      src={theme === "light" ? "/logo/logo32.svg" : "/logo/logo32white.svg"}
+      src={src}
       width={width}
       height={height}
       className={className}

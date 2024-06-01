@@ -62,7 +62,11 @@ export default function ContributeDropdown({
     setSelectedOptionKey(new Set([enabledOptions[0].key]));
     // Set available options
     setOptions(enabledOptions);
-  }, [options, disabled]);
+
+    // disable reason: it wishes to add 'options' as a dependency, but since we
+    // use setOptions within the hook, this would trigger an infinite rerender loop
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [disabled]);
 
   // Get currently selected option from option array
   const selectedOption = options.filter(
