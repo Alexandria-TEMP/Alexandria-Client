@@ -1,6 +1,6 @@
 const { expect, describe, it } = require("@jest/globals");
 import "@testing-library/jest-dom";
-import { submit, FormData } from "@/signup/lib/submit";
+import { onSubmit, FormData } from "@/signup/lib/submit";
 
 // TODO update tests when this is actually integrated with backend
 describe("dummy onSubmit test", () => {
@@ -15,7 +15,7 @@ describe("dummy onSubmit test", () => {
 
   it("shows alert", () => {
     jest.spyOn(window, "alert").mockImplementation(() => {});
-    expect(submit(dumFormData)).toBe(true);
+    expect(onSubmit(dumFormData)).toBe(true);
     expect(window.alert).toBeCalledWith(
       "Email: " +
         dumFormData.email +

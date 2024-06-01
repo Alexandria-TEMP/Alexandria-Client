@@ -7,7 +7,7 @@
 export default async function getPostData(id: string) {
   // TODO
   // const res = await fetch();
-  await new Promise((resolve) => setTimeout(resolve, 100));
+  await new Promise((resolve) => setTimeout(resolve, 500));
   return {
     title: "Post title",
     status: "Open for review",

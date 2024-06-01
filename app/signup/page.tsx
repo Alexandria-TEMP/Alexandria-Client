@@ -2,7 +2,7 @@
 
 import { Card, Divider } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
-import { submit } from "./lib/submit";
+import { onSubmit } from "./lib/submit";
 import PersonalDataCard from "./components/personal-data-card";
 import AccountDataCard from "./components/account-data-card";
 
@@ -47,7 +47,7 @@ export default function SignupPage() {
       // disable reason: this is the intended usage for handleSubmit
       // the react-hook-form solution for typescripting their function did not work
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      onSubmit={handleSubmit(submit)}
+      onSubmit={handleSubmit(onSubmit)}
       className="relative flex flex-col space-y-7 w-full h-full min-h-fit m-auto py-7"
     >
       <h1 className="w-full text-center">Create an Alexandria account</h1>

@@ -19,7 +19,7 @@ export function validate(formData: FormData) {
   );
 }
 
-export function submit(formData: FormData) {
+export function onSubmit(formData: FormData) {
   if (validate(formData)) {
     alert(
       "Title: " +

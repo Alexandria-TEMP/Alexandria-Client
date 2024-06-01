@@ -14,8 +14,8 @@ import { Switch } from "@nextui-org/react";
  * As a field of a form, this corresponds to an array of item keys (strings in this case)
  * Should be a child of a form that uses react-hook-form
  * See `component-types.d.ts` for documentation on prop types and fields, additionally:
- * @param options: the list of items in the dropdown, needs to be a key-value pair, the key is what is used for selected items
- *                 it is expected that they key is a string
+ * @param optionsGetter: funciton that fetches the list of items in the dropdown from the servrer, should return a list of key-value pairs,
+ *                        the key is what is used for selected items, it is expected that they key is a string
  * @returns a div containing the title, list of selected items, the dropdown and add button
  */
 export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
@@ -31,22 +31,6 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
   getItemLabel = () => "No getItemLabel function provided",
   optionsGetter,
 }: CustomAutocompleteProps<Type, Map<string, Type>, FormType>) {
-  const [options, setOptions] = useState<Map<string, Type>>(new Map());
-
-  /**
-   * Update the options list when request for them finishes
-   */
-  useEffect(() => {
-    const getOptions = async () => {
-      const opts = await optionsGetter();
-      setOptions(opts);
-    };
-
-    // the whole point of use effect is to fake await promise cause cant do async
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    getOptions();
-  }, [optionsGetter]);
-
   /* Register the field as part of the parent form using appropriate name and rules  */
   const fieldMethods = useController({
     name,
@@ -54,6 +38,7 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
     rules,
   });
 
+  /* Register the anonimity/disable switch with the form, if one is provided */
   const disableFieldMethods =
     !!disableFieldName &&
     useController({
@@ -77,6 +62,26 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
   useEffect(() => {
     setItems(fieldMethods.field.value);
   }, [fieldMethods.field.value]);
+
+  /**
+   * The list of options that the user can select from,
+   * This has to be a map because of how this component is structured, though its not mega robust
+   */
+  const [options, setOptions] = useState<Map<string, Type>>(new Map());
+
+  /**
+   * Update the options list when request for them finishes
+   */
+  useEffect(() => {
+    const getOptions = async () => {
+      const opts = await optionsGetter();
+      setOptions(opts);
+    };
+
+    // the whole point of use effect is to fake await promise cause cant do async
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    getOptions();
+  }, [optionsGetter]);
 
   /**
    * Method for removing an item from the item list,

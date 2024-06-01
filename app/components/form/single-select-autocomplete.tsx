@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
  * so this component DOES NOT store keys in the form, it stores the string itself
  * Should be a child of a form that uses react-hook-form
  * See `component-types.d.ts` for documentation on prop types and fields, additionally:
- * @param options: a list of strings which represent the items themselves
+ * @param optionsGetter: a function that fetches options from the server, should provide them as an array of strings that represent the labels themselves
  * @param rules: IMPORTANT necessary for form validation, howver custom error messages set by rules do not work at the moment
  * @returns a div containing the title and the dropdown
  */
@@ -26,7 +26,6 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
   optionsGetter,
 }: CustomAutocompleteProps<string, string[], FormType>) {
   const [options, setOptions] = useState<string[]>([]);
-
   /**
    * Update the options list when request for them finishes
    */

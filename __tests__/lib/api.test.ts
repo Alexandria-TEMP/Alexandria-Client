@@ -1,5 +1,5 @@
 import { expect, describe, it } from "@jest/globals";
-import { getMembersAsMap } from "@/lib/api-calls/member-api";
+import { getMembersMap } from "@/lib/api-calls/member-api";
 import { getFieldsMap } from "@/lib/api-calls/fields-api";
 import { Member, Tag } from "@/lib/api-types";
 import {

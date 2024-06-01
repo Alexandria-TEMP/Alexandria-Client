@@ -2,14 +2,14 @@
 
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
-import { getMembersAsMap } from "../lib/api-calls/member-api";
+import { getMembersMap } from "../lib/api-calls/member-api";
 import { getFieldsMap } from "../lib/api-calls/fields-api";
 import { MultiSelectAutocomplete } from "../components/form/multi-select-autocomplete";
 import { SingleSelectAutocomplete } from "../components/form/single-select-autocomplete";
 import UploadContentCard from "../components/form/upload-content-card";
 import { getMemberName, getFieldName } from "@/lib/get-format";
 import { Card, Input } from "@nextui-org/react";
-import { submit } from "./lib/submit";
+import { onSubmit } from "./lib/submit";
 import { useForm, Controller } from "react-hook-form";
 import {
   getCompletionTypes,
@@ -36,7 +36,7 @@ export default function NewPost() {
     // disable reason: this is the intended usage for handleSubmit
     // linter complains about it being a promise, but if i fix it then `submit` function does not get called
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    <form className="w-full relative" onSubmit={handleSubmit(submit)}>
+    <form className="w-full relative" onSubmit={handleSubmit(onSubmit)}>
       <div className="m-auto max-w-4xl w-10/12">
         {/* Little top bar */}
         <div className="sticky flex justify-between py-5">
@@ -94,7 +94,7 @@ export default function NewPost() {
               }}
               disableFieldName="anonymous"
               disableMessage="Post this anonymously (no authors will be posted)"
-              optionsGetter={getMembersAsMap}
+              optionsGetter={getMembersMap}
             />
 
             <Divider />

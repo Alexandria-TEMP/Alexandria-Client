@@ -1,7 +1,7 @@
 "use client";
 
 import { getFieldsMap } from "@/lib/api-calls/fields-api";
-import { getMembersAsMap } from "@/lib/api-calls/member-api";
+import { getMembersMap } from "@/lib/api-calls/member-api";
 import { useForm, Controller } from "react-hook-form";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
 import { SingleSelectAutocomplete } from "@/components/form/single-select-autocomplete";
@@ -13,14 +13,14 @@ import {
   Button,
   Accordion,
   AccordionItem,
-  Spinner,
 } from "@nextui-org/react";
-import { submit } from "./lib/submit";
+import { onSubmit } from "./lib/submit";
 import { getMemberName, getFieldName } from "@/lib/get-format";
 import useSWR from "swr";
 import getPostData from "@/lib/api-calls/post-api";
 import { useEffect } from "react";
 import { getCompletionTypes, getFeedbackTypes } from "@/lib/api-calls/tags-api";
+import GenericLoadingPage from "@/components/loading-page";
 
 export default function ProposeChanges({ params }: { params: { id: string } }) {
   const postReq = useSWR("/fake/api", getPostData);
@@ -55,13 +55,13 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
     }
   }, [postReq, setValue]);
 
-  if (postReq.isLoading) return <Spinner></Spinner>;
+  if (postReq.isLoading) return <GenericLoadingPage />;
 
   return (
     // disable reason: this is the intended usage for handleSubmit
     // linter complains about it being a promise, but if i fix it then `submit` function does not get called
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    <form className="w-full relative" onSubmit={handleSubmit(submit)}>
+    <form className="w-full relative" onSubmit={handleSubmit(onSubmit)}>
       <div className="m-auto max-w-4xl w-10/12">
         {/* Little top bar */}
         <div className="sticky flex justify-between py-5">
@@ -120,7 +120,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
               }}
               disableFieldName="anonymous"
               disableMessage="Suggest these changes anonymously (no contributors will be added)"
-              optionsGetter={getMembersAsMap}
+              optionsGetter={getMembersMap}
             />
 
             <Divider />

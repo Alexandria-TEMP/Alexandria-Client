@@ -8,7 +8,7 @@ export type FormData = {
 };
 
 // : SubmitHandler<FormType>
-export const submit = (data: FormData) => {
+export const onSubmit = (data: FormData) => {
   alert(
     "Email: " +
       data.email +

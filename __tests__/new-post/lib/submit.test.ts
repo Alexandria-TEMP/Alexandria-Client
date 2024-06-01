@@ -41,15 +41,15 @@ describe("Validation tests", () => {
   });
 });
 
-describe("Submit tests", () => {
+describe("onSubmit tests", () => {
   it("shows something wrong when validation fails", () => {
     jest.mock("@/new-post/lib/validators", () => ({
       validateTitle: jest.fn((s: string) => false),
       validateAuthors: jest.fn((s: Set<string>) => false),
     }));
     jest.spyOn(window, "alert").mockImplementation(() => {});
-    const { submit } = require("@/new-post/lib/submit");
-    expect(submit(dumFormData)).toBe(false);
+    const { onSubmit } = require("@/new-post/lib/submit");
+    expect(onSubmit(dumFormData)).toBe(false);
     expect(window.alert).toBeCalledWith("Something went wrong");
   });
 
@@ -59,8 +59,8 @@ describe("Submit tests", () => {
   //     validateAuthors: jest.fn((s: Set<string>) => true),
   //   }));
   //   jest.spyOn(window, "alert").mockImplementation(() => {});
-  //   const { submit } = require("@/new-post/lib/submit");
-  //   expect(submit(dumFormData)).toBe(true);
+  //   const { onSubmit } = require("@/new-post/lib/onSubmit");
+  //   expect(onSubmit(dumFormData)).toBe(true);
   //   expect(window.alert).toBeCalledWith(
   //     "Title: " +
   //       dumFormData.title +

@@ -4,6 +4,7 @@ import {
   waitFor,
   within,
   fireEvent,
+  act,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
@@ -38,18 +39,20 @@ const Wrapper = ({
 };
 
 describe("MultiSelectAutocomplete", () => {
-  beforeEach(() => {
-    render(
-      <Wrapper defaults={[]}>
-        <MultiSelectAutocomplete
-          label={dumTitle}
-          description={dumDesc}
-          name="dumItem"
-          getItemLabel={dumGetItemLabel}
-          optionsGetter={async () => dumItems}
-        />
-      </Wrapper>,
-    );
+  beforeEach(async () => {
+    await act(async () => {
+      render(
+        <Wrapper defaults={[]}>
+          <MultiSelectAutocomplete
+            label={dumTitle}
+            description={dumDesc}
+            name="dumItem"
+            getItemLabel={dumGetItemLabel}
+            optionsGetter={async () => dumItems}
+          />
+        </Wrapper>,
+      );
+    });
   });
 
   it("renders the title", () => {
@@ -72,18 +75,20 @@ describe("MultiSelectAutocomplete", () => {
     expect(inputElem).toBeInTheDocument();
   });
 
-  it("renders author tags", () => {
-    render(
-      <Wrapper defaults={["1"]}>
-        <MultiSelectAutocomplete
-          label={dumTitle}
-          description={dumDesc}
-          name="dumItem"
-          getItemLabel={dumGetItemLabel}
-          optionsGetter={async () => dumItems}
-        />
-      </Wrapper>,
-    );
+  it("renders author tags", async () => {
+    await act(async () => {
+      render(
+        <Wrapper defaults={["1"]}>
+          <MultiSelectAutocomplete
+            label={dumTitle}
+            description={dumDesc}
+            name="dumItem"
+            getItemLabel={dumGetItemLabel}
+            optionsGetter={async () => dumItems}
+          />
+        </Wrapper>,
+      );
+    });
 
     const tagElem = screen.getByTestId("chip-test-id");
     expect(tagElem).toBeInTheDocument();
@@ -145,47 +150,51 @@ describe("MultiSelectAutocomplete", () => {
 });
 
 describe("MultiSelectAutocomplete that is Required", () => {
-  it("shows danger asterisk", () => {
-    render(
-      <Wrapper defaults={[]}>
-        <MultiSelectAutocomplete
-          label={dumTitle}
-          description={dumDesc}
-          name="dumItem"
-          getItemLabel={dumGetItemLabel}
-          rules={{
-            required: {
-              value: true,
-              message: "pls select",
-            },
-          }}
-          optionsGetter={async () => dumItems}
-        />
-      </Wrapper>,
-    );
+  it("shows danger asterisk", async () => {
+    await act(async () => {
+      render(
+        <Wrapper defaults={[]}>
+          <MultiSelectAutocomplete
+            label={dumTitle}
+            description={dumDesc}
+            name="dumItem"
+            getItemLabel={dumGetItemLabel}
+            rules={{
+              required: {
+                value: true,
+                message: "pls select",
+              },
+            }}
+            optionsGetter={async () => dumItems}
+          />
+        </Wrapper>,
+      );
+    });
 
     const asterskElem = screen.getByText("*");
     expect(asterskElem).toBeInTheDocument();
   });
 
   it("diplays error message when emptied list", async () => {
-    const { rerender } = render(
-      <Wrapper defaults={["1"]}>
-        <MultiSelectAutocomplete
-          label={dumTitle}
-          description={dumDesc}
-          name="dumItem"
-          getItemLabel={dumGetItemLabel}
-          rules={{
-            required: {
-              value: true,
-              message: "pls select",
-            },
-          }}
-          optionsGetter={async () => dumItems}
-        />
-      </Wrapper>,
-    );
+    const { rerender } = await act(async () => {
+      return render(
+        <Wrapper defaults={["1"]}>
+          <MultiSelectAutocomplete
+            label={dumTitle}
+            description={dumDesc}
+            name="dumItem"
+            getItemLabel={dumGetItemLabel}
+            rules={{
+              required: {
+                value: true,
+                message: "pls select",
+              },
+            }}
+            optionsGetter={async () => dumItems}
+          />
+        </Wrapper>,
+      );
+    });
 
     const tagElem = screen.getByTestId("chip-test-id");
     const tagBtn = within(tagElem).getByRole("button");
