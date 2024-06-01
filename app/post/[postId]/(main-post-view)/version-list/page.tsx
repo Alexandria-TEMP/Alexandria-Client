@@ -19,6 +19,7 @@ export default async function PostMergeRequests({
   params: { postId: string };
 }) {
   const mergeRequests = await getPostMergeRequests(parseId(params.postId));
+  const id = parseId(params.postId);
   return (
     <div>
       <Card className="pb-4 mb-12">
@@ -26,24 +27,13 @@ export default async function PostMergeRequests({
       </Card>
       <MergeRequestTabs
         historyList={
-          <MergeRequestList
-            ids={mergeRequests.accepted}
-            postId={params.postId}
-          />
+          <MergeRequestList ids={mergeRequests.accepted} postId={id} />
         }
         openList={
-          <MergeRequestList
-            grid
-            ids={mergeRequests.open}
-            postId={params.postId}
-          />
+          <MergeRequestList grid ids={mergeRequests.open} postId={id} />
         }
         rejectedList={
-          <MergeRequestList
-            grid
-            ids={mergeRequests.rejected}
-            postId={params.postId}
-          />
+          <MergeRequestList grid ids={mergeRequests.rejected} postId={id} />
         }
       />
     </div>

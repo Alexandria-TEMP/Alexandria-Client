@@ -1,3 +1,4 @@
+import { idType } from "@/lib/types/api-types";
 import MergeRequestCard from "./merge-request-card";
 
 /**
@@ -11,7 +12,7 @@ export default function MergeRequestList({
   ids,
   postId,
   grid,
-}: Readonly<{ ids: string[]; postId: string; grid?: boolean }>) {
+}: Readonly<{ ids: string[]; postId: idType; grid?: boolean }>) {
   return (
     <div className={"gap-5 " + (grid ? "grid grid-cols-4" : "flex flex-col")}>
       {ids.map((id) => (
