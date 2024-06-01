@@ -1,8 +1,8 @@
-import PostContents from "./components/post-parts/post-contents";
-import Discussion from "./components/discussions/discussion";
-import getPostData from "../../lib/api-calls/post-api";
-import InputDiscussion from "./components/discussions/input-discussion";
-import PostSidebar from "./components/post-parts/post-sidebar";
+import PostContents from "../components/post-parts/post-contents";
+import Discussion from "../components/discussions/discussion";
+import getPostData from "../../../lib/api-calls/post-api";
+import InputDiscussion from "../components/discussions/input-discussion";
+import PostSidebar from "../components/post-parts/post-sidebar";
 
 /**
  * Page that shows contents of a Post.

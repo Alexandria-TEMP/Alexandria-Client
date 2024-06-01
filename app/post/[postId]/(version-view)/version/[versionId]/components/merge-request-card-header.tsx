@@ -63,6 +63,8 @@ export default async function MergeRequestCardHeader({
           <ContributeDropdown disabled={disabledContribute} />
         )}
 
+        {/* TODO add review chips somewhere here */}
+
         <div className="grow" />
 
         <div className="flex-col">

@@ -1,4 +1,4 @@
-import MergeRequestCardSkeleton from "@/post/[postId]/version-list/components/merge-request-card-skeleton";
+import MergeRequestCardSkeleton from "@/post/[postId]/(main-post-view)/version-list/components/merge-request-card-skeleton";
 import { render } from "@testing-library/react";
 import { expect } from "@jest/globals";
 

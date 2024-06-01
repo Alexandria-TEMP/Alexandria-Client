@@ -1,4 +1,4 @@
-import MergeRequestTabs from "@/post/[postId]/version-list/components/merge-request-tabs";
+import MergeRequestTabs from "@/post/[postId]/(main-post-view)/version-list/components/merge-request-tabs";
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";

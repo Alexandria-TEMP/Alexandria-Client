@@ -1,8 +1,8 @@
 import { Card } from "@nextui-org/react";
 import PostCardHeader from "../components/post-parts/post-card-header";
-import MergeRequestTabs from "../../[postId]/version-list/components/merge-request-tabs";
+import MergeRequestTabs from "../(main-post-view)/version-list/components/merge-request-tabs";
 import { getPostMergeRequests } from "@/lib/api-calls/merge-request-api";
-import MergeRequestList from "../../[postId]/version-list/components/merge-request-list";
+import MergeRequestList from "../(main-post-view)/version-list/components/merge-request-list";
 import { parseId } from "@/lib/string-utils";
 
 /**
