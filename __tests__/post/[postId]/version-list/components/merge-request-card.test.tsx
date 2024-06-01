@@ -1,7 +1,7 @@
 import { expect } from "@jest/globals";
 import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
 import MergeRequestCard from "@/post/[postId]/(main-post-view)/version-list/components/merge-request-card";
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { dummyMergeRequests } from "~/__tests__/__utils__/dummys";
 import { useRouter } from "next/navigation";
 import userEvent from "@testing-library/user-event";
@@ -23,13 +23,20 @@ describe("MergeRequestCard", () => {
     // but since there's no explicit await in the block, eslint doesn't like it
     // eslint-disable-next-line @typescript-eslint/require-await
     await act(async () => {
-      render(<MergeRequestCard id={dummyMergeRequests["open"].id} />);
+      render(
+        <MergeRequestCard
+          id={dummyMergeRequests["open"].id.toString()}
+          postId={dummyMergeRequests["open"].projectPostID}
+        />,
+      );
     });
   });
 
-  it("shows review chips", () => {
-    const chips = screen.getAllByTestId("review-chip", { exact: false });
-    expect(chips).toHaveLength(3);
+  it("shows review chips", async () => {
+    await waitFor(() => {
+      const chips = screen.getAllByTestId("review-chip", { exact: false });
+      expect(chips).toHaveLength(3);
+    });
   });
 
   it("shows title", () => {
@@ -48,7 +55,7 @@ describe("MergeRequestCard", () => {
     await user.click(title);
 
     expect(routerPushMock).toHaveBeenCalledWith(
-      `/post-version/${dummyMergeRequests["open"].id}`,
+      `/post/${dummyMergeRequests["open"].projectPostID}/version/${dummyMergeRequests["open"].id}`,
     );
   });
 });

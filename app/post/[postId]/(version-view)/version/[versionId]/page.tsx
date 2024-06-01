@@ -22,6 +22,7 @@ export default async function PostVersion({
         }
         versionId={data.newVersionID}
       />
+      {/* TODO section with peer reviews */}
       <DiscussionSection versionId={data.newVersionID} />
     </div>
   );
