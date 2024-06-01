@@ -22,8 +22,9 @@ import { reviewStatusToTensedVerb } from "@/lib/get-format";
  */
 export default function MergeRequestCard({
   id,
+  postId,
   short,
-}: IdProp & { short?: boolean }) {
+}: IdProp & { postId: string; short?: boolean }) {
   const router = useRouter();
   const [data, setData] = useState<MergeRequest | undefined>(undefined);
   const [reviews, setReviews] = useState(["open", "open", "open"]);
@@ -41,6 +42,9 @@ export default function MergeRequestCard({
   if (data === undefined) {
     return <MergeRequestCardSkeleton />;
   }
+
+  // We create variables for the separate parts of the card to avoid code duplication
+  // between the short and !short card versions
 
   const titleAndCreateDate = (
     <>
@@ -65,12 +69,10 @@ export default function MergeRequestCard({
     </>
   );
 
+  const onPress = () => router.push(`/post/${postId}/version/${id}`);
+
   return short ? (
-    <Card
-      className="w-full"
-      isPressable
-      onPress={() => router.push(`/post-version/${id}`)}
-    >
+    <Card className="w-full" isPressable onPress={onPress}>
       <CardBody>{titleAndCreateDate}</CardBody>
       <CardFooter>
         {updateDate}
@@ -78,11 +80,7 @@ export default function MergeRequestCard({
       </CardFooter>
     </Card>
   ) : (
-    <Card
-      className="w-full"
-      isPressable
-      onPress={() => router.push(`/post-version/${id}`)}
-    >
+    <Card className="w-full" isPressable onPress={onPress}>
       <CardHeader className="gap-2">
         {titleAndCreateDate}
         {updateDate}

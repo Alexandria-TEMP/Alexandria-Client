@@ -25,9 +25,26 @@ export default async function PostMergeRequests({
         <PostCardHeader postId={params.postId} hideContribute />
       </Card>
       <MergeRequestTabs
-        historyList={<MergeRequestList ids={mergeRequests.accepted} />}
-        openList={<MergeRequestList grid ids={mergeRequests.open} />}
-        rejectedList={<MergeRequestList grid ids={mergeRequests.rejected} />}
+        historyList={
+          <MergeRequestList
+            ids={mergeRequests.accepted}
+            postId={params.postId}
+          />
+        }
+        openList={
+          <MergeRequestList
+            grid
+            ids={mergeRequests.open}
+            postId={params.postId}
+          />
+        }
+        rejectedList={
+          <MergeRequestList
+            grid
+            ids={mergeRequests.rejected}
+            postId={params.postId}
+          />
+        }
       />
     </div>
   );
