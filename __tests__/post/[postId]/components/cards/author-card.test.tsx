@@ -15,7 +15,7 @@ describe("AuthorCard", () => {
 
     // Written like this because Jest currently doesn't support async
     // server-side components. https://github.com/testing-library/react-testing-library/issues/1209
-    render(await AuthorCard({ memberId: dummyMember.id }));
+    render(await AuthorCard({ id: dummyMember.id }));
 
     const nameElement = screen.getByText(fullName);
     expect(nameElement).toBeInTheDocument();

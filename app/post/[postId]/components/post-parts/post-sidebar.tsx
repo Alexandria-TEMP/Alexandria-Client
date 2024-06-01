@@ -2,6 +2,7 @@ import getPostData from "@/lib/api-calls/post-api";
 import ChipList from "@/components/chip-list";
 import AuthorCardList from "../cards/author-card-list";
 import Sidebar from "@/components/sidebar";
+import { parseId } from "@/lib/string-utils";
 // import PostCardMini from "../cards/post-card-mini";
 
 /**
@@ -16,7 +17,6 @@ export default async function PostSidebar({
 
   return (
     <Sidebar
-      title="About"
       items={[
         {
           title: "Scientific fields",
@@ -25,16 +25,16 @@ export default async function PostSidebar({
         // TODO render this conditionally
         // {
         //   title: "Forked from",
-        //   node: <PostCardMini postId="2" />,
+        //   node: <PostCardMini id="2" />,
         // },
         // TODO distinguish between authors and collaborators
         {
           title: "Authors",
-          node: <AuthorCardList collaboratorIds={data.collaborators} />,
+          node: <AuthorCardList ids={data.collaborators.map(parseId)} />,
         },
         {
           title: "Collaborators",
-          node: <AuthorCardList collaboratorIds={data.collaborators} />,
+          node: <AuthorCardList ids={data.collaborators.map(parseId)} />,
         },
       ]}
     />

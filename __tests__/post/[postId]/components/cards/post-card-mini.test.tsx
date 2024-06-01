@@ -13,7 +13,7 @@ describe("PostCardMini", () => {
   (getPostData as jest.Mock).mockResolvedValue(dummyPost);
 
   it("shows the post title after load", async () => {
-    render(<PostCardMini postId={dummyPost.id} />);
+    render(<PostCardMini id={dummyPost.id} />);
 
     // Wait for the data to load and skeleton to be gone
     await waitFor(() => {

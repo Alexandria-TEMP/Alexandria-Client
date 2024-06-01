@@ -1,4 +1,6 @@
 import getMemberData from "@/lib/api-calls/member-api";
+import { getMemberName } from "@/lib/get-format";
+import { IdProp } from "@/lib/types/react-props/id-prop";
 import { User } from "@nextui-org/react";
 
 //  TODO link to profile
@@ -6,37 +8,18 @@ import { User } from "@nextui-org/react";
 /**
  * Small card that represents a member.
  *
- * @param memberId Member ID
+ * @param id Member ID
  */
-export default async function AuthorCard({
-  memberId,
-}: Readonly<{
-  memberId: string;
-}>) {
-  const data = await getMemberData(memberId);
-  const fullName = `${data.firstName} ${data.lastName}`;
+export default async function AuthorCard({ id }: IdProp) {
+  const data = await getMemberData(id);
 
   return (
     <div>
       <User
-        name={fullName}
+        name={getMemberName(data)}
         description={data.institution}
         avatarProps={{ src: data.picture }}
       />
     </div>
   );
-
-  // return (
-  //   <div className="flex gap-3">
-  //     <Avatar radius="full" size="md" src={data.picture} />
-  //     <div className="flex flex-col gap-1 items-start justify-center">
-  //       <h4 className="text-small font-semibold leading-none text-default-600">
-  //         {fullName}
-  //       </h4>
-  //       <h5 className="text-small tracking-tight text-default-400">
-  //         {data.institution}
-  //       </h5>
-  //     </div>
-  //   </div>
-  // );
 }

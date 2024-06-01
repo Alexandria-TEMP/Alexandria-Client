@@ -1,12 +1,11 @@
+import { idType } from "@/lib/types/api-types";
 import AuthorCard from "./author-card";
 
-export default function AuthorCardList({
-  collaboratorIds,
-}: Readonly<{ collaboratorIds: string[] }>) {
+export default function AuthorCardList({ ids }: Readonly<{ ids: idType[] }>) {
   return (
     <div className="flex flex-col gap-y-2">
-      {collaboratorIds.map((id) => (
-        <AuthorCard memberId={id} key={id} />
+      {ids.map((id) => (
+        <AuthorCard id={id.toString()} key={id} />
       ))}
     </div>
   );

@@ -4,13 +4,14 @@ import getPostData from "@/lib/api-calls/post-api";
 import { Card, CardBody, CardFooter, Chip, Skeleton } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { IdProp } from "@/lib/types/react-props/id-prop";
 
 /**
  * Mini card that represents a post. Clicking it redirects to the post page.
  *
- * @param postId ID of post in card
+ * @param id ID of post in card
  */
-export default function PostCardMini({ postId }: Readonly<{ postId: string }>) {
+export default function PostCardMini({ id }: IdProp) {
   const router = useRouter();
   const [data, setData] = useState<
     | {
@@ -23,7 +24,7 @@ export default function PostCardMini({ postId }: Readonly<{ postId: string }>) {
   const [isLoaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    getPostData(postId)
+    getPostData(id)
       .then((data) => {
         setData(data);
       })
@@ -33,7 +34,7 @@ export default function PostCardMini({ postId }: Readonly<{ postId: string }>) {
       .finally(() => {
         setLoaded(true);
       });
-  }, [postId]);
+  }, [id]);
 
   return (
     <Card

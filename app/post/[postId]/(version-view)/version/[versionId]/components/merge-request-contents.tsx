@@ -7,6 +7,7 @@ export default function MergeRequestContents({
   mergeRequestId,
 }: Readonly<{ postId: idType; mergeRequestId: idType }>) {
   // const data = await getMergeRequestData(mergeRequestId);
+  // TODO render, peer reviews and then discussions
   return (
     <Card>
       <MergeRequestCardHeader postId={postId} mergeRequestId={mergeRequestId} />
