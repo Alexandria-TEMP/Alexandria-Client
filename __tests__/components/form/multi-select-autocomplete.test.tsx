@@ -10,10 +10,10 @@ import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomp
 import { Member } from "@/lib/api-types";
 import { dummyMembers } from "~/__tests__/__utils__/dummys";
 import { useForm, FormProvider } from "react-hook-form";
+import { expect, describe, it } from "@jest/globals";
 
 const dumTitle = "Dummy title";
 const dumDesc = "Dummy description";
-let dumSelected = new Set<string>();
 const dumItems = new Map<string, Member>([
   [dummyMembers[0].id, dummyMembers[0]],
   [dummyMembers[1].id, dummyMembers[1]],
@@ -44,9 +44,9 @@ describe("MultiSelectAutocomplete", () => {
         <MultiSelectAutocomplete
           label={dumTitle}
           description={dumDesc}
-          options={dumItems}
           name="dumItem"
           getItemLabel={dumGetItemLabel}
+          optionsGetter={async () => dumItems}
         />
       </Wrapper>,
     );
@@ -78,9 +78,9 @@ describe("MultiSelectAutocomplete", () => {
         <MultiSelectAutocomplete
           label={dumTitle}
           description={dumDesc}
-          options={dumItems}
           name="dumItem"
           getItemLabel={dumGetItemLabel}
+          optionsGetter={async () => dumItems}
         />
       </Wrapper>,
     );
@@ -151,7 +151,6 @@ describe("MultiSelectAutocomplete that is Required", () => {
         <MultiSelectAutocomplete
           label={dumTitle}
           description={dumDesc}
-          options={dumItems}
           name="dumItem"
           getItemLabel={dumGetItemLabel}
           rules={{
@@ -160,6 +159,7 @@ describe("MultiSelectAutocomplete that is Required", () => {
               message: "pls select",
             },
           }}
+          optionsGetter={async () => dumItems}
         />
       </Wrapper>,
     );
@@ -174,7 +174,6 @@ describe("MultiSelectAutocomplete that is Required", () => {
         <MultiSelectAutocomplete
           label={dumTitle}
           description={dumDesc}
-          options={dumItems}
           name="dumItem"
           getItemLabel={dumGetItemLabel}
           rules={{
@@ -183,6 +182,7 @@ describe("MultiSelectAutocomplete that is Required", () => {
               message: "pls select",
             },
           }}
+          optionsGetter={async () => dumItems}
         />
       </Wrapper>,
     );

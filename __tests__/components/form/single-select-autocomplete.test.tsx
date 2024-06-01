@@ -31,7 +31,6 @@ beforeEach(() => {
         label={dumLabel}
         description={dumDesc}
         placeholder={dumPlaceholder}
-        options={dumOptions}
         name="dumItem"
         rules={{
           required: {
@@ -39,6 +38,7 @@ beforeEach(() => {
             message: "Please select",
           },
         }}
+        optionsGetter={async () => dumOptions}
       />
     </Wrapper>,
   );

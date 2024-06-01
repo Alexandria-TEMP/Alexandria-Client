@@ -3,6 +3,7 @@ import Discussion from "./components/discussions/discussion";
 import PostSidebar from "./components/post-sidebar";
 import getPostData from "../../lib/api-calls/post-api";
 import InputDiscussion from "./components/discussions/input-discussion";
+import { PostT } from "@/lib/api-types";
 
 /**
  * Page that shows contents of a Post.
@@ -11,7 +12,7 @@ import InputDiscussion from "./components/discussions/input-discussion";
  * Read more: https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
  */
 export default async function Post({ params }: { params: { id: string } }) {
-  const data = await getPostData(params.id);
+  const data: PostT = await getPostData(params.id);
   const discussions = data.currentVersion.discussions;
 
   return (

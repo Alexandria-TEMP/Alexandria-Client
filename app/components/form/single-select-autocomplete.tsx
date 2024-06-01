@@ -4,6 +4,7 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { useController, FieldValues } from "react-hook-form";
 import { Key } from "react";
 import { CustomAutocompleteProps } from "@/lib/custom-autocomplete-types";
+import { useState, useEffect } from "react";
 
 /**
  * Searchable dropdown with single select (can select only one item). Intended to be used when you want user to pick from small number of predetermined options.
@@ -19,11 +20,27 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
   label,
   description,
   placeholder,
-  options,
   name,
   control,
   rules,
+  optionsGetter,
 }: CustomAutocompleteProps<string, string[], FormType>) {
+  const [options, setOptions] = useState<string[]>([]);
+
+  /**
+   * Update the options list when request for them finishes
+   */
+  useEffect(() => {
+    const getOptions = async () => {
+      const opts = await optionsGetter();
+      setOptions(opts);
+    };
+
+    // the whole point of use effect is to fake await promise cause cant do async
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    getOptions();
+  }, [optionsGetter]);
+
   /* Register the field as part of the parent form using appropriate name and rules  */
   const { field } = useController({
     name,
@@ -40,7 +57,14 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
    */
   const keys = Array.from(Array(options.length).keys());
   const values = new Map(keys.map((k) => [k.toString(), options[k]]));
-  const defaultKey = options.indexOf(field.value).toString();
+  const [defaultKey, setDefaultKey] = useState(
+    options.indexOf(field.value).toString(),
+  );
+
+  /** idk why this doesnt work cause the value does load correctly but the default value doesnt get set */
+  useEffect(() => {
+    setDefaultKey(options.indexOf(field.value).toString());
+  }, [field.value, options]);
 
   /**
    * Method that updates the form field when an element is selected

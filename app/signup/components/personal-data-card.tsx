@@ -1,7 +1,7 @@
 import { Input } from "@nextui-org/react";
 import { Controller, FormState, Control } from "react-hook-form";
 import { FormType } from "../page";
-import { getFields } from "@/lib/api-calls/fields-api";
+import { getFieldsMap } from "@/lib/api-calls/fields-api";
 import { getFieldName } from "@/lib/get-format";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
 
@@ -19,8 +19,6 @@ export default function PersonalDataCard({
   control: Control<FormType>;
   formState: FormState<FormType>;
 }) {
-  const FIELDS = getFields();
-
   return (
     <div className="space-y-12 items-center min-w-96 w-1/3 min-h-fit mx-auto place-content-center flex-col flex">
       <h2>Personal Data</h2>
@@ -102,10 +100,10 @@ export default function PersonalDataCard({
         <MultiSelectAutocomplete
           label={<span className="text-small">Fields of Expertise</span>}
           description="Select the scientific fields that you study."
-          options={FIELDS}
           getItemLabel={getFieldName}
           control={control}
           name="fields"
+          optionsGetter={getFieldsMap}
         />
       </div>
     </div>

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
@@ -22,7 +22,6 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
   label: title,
   description,
   placeholder = "Search...",
-  options,
   control,
   trigger,
   name,
@@ -30,7 +29,24 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
   disableFieldName,
   disableMessage,
   getItemLabel = () => "No getItemLabel function provided",
+  optionsGetter,
 }: CustomAutocompleteProps<Type, Map<string, Type>, FormType>) {
+  const [options, setOptions] = useState<Map<string, Type>>(new Map());
+
+  /**
+   * Update the options list when request for them finishes
+   */
+  useEffect(() => {
+    const getOptions = async () => {
+      const opts = await optionsGetter();
+      setOptions(opts);
+    };
+
+    // the whole point of use effect is to fake await promise cause cant do async
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    getOptions();
+  }, [optionsGetter]);
+
   /* Register the field as part of the parent form using appropriate name and rules  */
   const fieldMethods = useController({
     name,
@@ -38,11 +54,6 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
     rules,
   });
 
-  // TODO
-  // disable reason: problem is since i am not always given a value for disableFieldName and i cannot set a valid default value
-  // i can only call useController if there is a value provided for disableFieldName (otherwise typescript error)
-  // but this way react complains about hooks not always being called in the same order
-  // technically the order is the same, but it just wont always be called
   const disableFieldMethods =
     !!disableFieldName &&
     useController({
@@ -61,6 +72,11 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const [items, setItems] = useState<string[]>(fieldMethods.field.value);
+
+  /* Update the value when post request finishes */
+  useEffect(() => {
+    setItems(fieldMethods.field.value);
+  }, [fieldMethods.field.value]);
 
   /**
    * Method for removing an item from the item list,
@@ -147,7 +163,7 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
       <div className="flex flex-row justify-between gap-x-3">
         {/* The actual autocomplete component */}
         <Autocomplete
-          defaultItems={options.entries()}
+          defaultItems={options}
           placeholder={placeholder}
           description={description}
           style={{ display: "inline-block" }}
@@ -158,6 +174,7 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
           onInputChange={(s) => s == "" && setNewItem("")}
           aria-labelledby={name}
           isDisabled={disableFieldMethods && disableFieldMethods.field.value}
+          // isLoading={optionsReq.isLoading}
         >
           {(item) => (
             <AutocompleteItem key={item[0]} data-testid="select-item-test-id">

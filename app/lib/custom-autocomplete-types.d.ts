@@ -26,6 +26,9 @@ import { FieldValues, Control, Path, UseFormTrigger } from "react-hook-form";
  * @param disableFieldName: the name of the form field that holds the switch value, intented to be used for anonimity feature
  * @param disableMessage: the description of what disabling this field does
  * @param getItemLabel: method that returns the desired string representation of the objects in the dropdown
+ * @param isLoading: whether the list of items is currently not fully fetched
+ * @param apiPath: path to call to get the options
+ * @param fetcher: fetcher for the options from api call
  */
 export type CustomAutocompleteProps<
   Type,
@@ -35,7 +38,6 @@ export type CustomAutocompleteProps<
   label: React.ReactNode;
   description?: string;
   placeholder?: string;
-  options: OptionsType;
   name: Path<FormType>;
   control?: Control<FormType>;
   trigger?: UseFormTrigger<FormType>;
@@ -53,4 +55,5 @@ export type CustomAutocompleteProps<
   disableFieldName?: Path<FormType>;
   disableMessage?: string;
   getItemLabel?: (i: Type | undefined) => string;
+  optionsGetter: () => Promise<OptionsType>;
 };

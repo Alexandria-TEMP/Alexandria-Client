@@ -1,8 +1,7 @@
 "use client";
 
-// import getPostData from "@/lib/api-calls/post-api";
-import { getFields } from "@/lib/api-calls/fields-api";
-import { getMembers } from "@/lib/api-calls/member-api";
+import { getFieldsMap } from "@/lib/api-calls/fields-api";
+import { getMembersAsMap } from "@/lib/api-calls/member-api";
 import { useForm, Controller } from "react-hook-form";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
 import { SingleSelectAutocomplete } from "@/components/form/single-select-autocomplete";
@@ -14,51 +13,49 @@ import {
   Button,
   Accordion,
   AccordionItem,
+  Spinner,
 } from "@nextui-org/react";
 import { submit } from "./lib/submit";
 import { getMemberName, getFieldName } from "@/lib/get-format";
+import useSWR from "swr";
+import getPostData from "@/lib/api-calls/post-api";
+import { useEffect } from "react";
+import { getCompletionTypes, getFeedbackTypes } from "@/lib/api-calls/tags-api";
 
 export default function ProposeChanges({ params }: { params: { id: string } }) {
-  //   const data = await getPostData(params.id);
-  // TODO make this work with async data fetch somehow
-  const data = {
-    title: "Post title",
-    status: "Open for review",
-    authors: ["3"],
-    contributors: ["1", "2"],
-    anonymous: false,
-    createdAt: "10 May 2024",
-    currentVersion: {
-      id: "1",
-      discussions: ["1", "1", "1", "1"],
-    },
-    id: "1",
-    postType: "Reflection",
-    scientificFieldTags: ["1", "2", "3"],
-    updatedAt: "11 May 2024",
-    feedbackPreferences: "Community Discussion",
-    completionStatus: "Ongoing",
-  };
-  const FIELDS = getFields();
-  const USERS = getMembers();
+  const postReq = useSWR("/fake/api", getPostData);
 
-  // TODO refactor these into separate api file maybe?
-  const feedbacks = ["Community Discussion", "Formal Feedback"];
-  const completions = ["Ideation (to begin)", "Ongoing", "Completed"];
+  const { handleSubmit, formState, control, getValues, trigger, setValue } =
+    useForm({
+      mode: "onTouched",
+      defaultValues: {
+        mrTitle: "",
+        contributors: [] as string[],
+        anonymous: false,
+        originalPostId: params.id,
+        updatedTitle: postReq.data ? postReq.data.title : "[Loading...]",
+        updatedCompletionStatus: postReq.data
+          ? postReq.data.completionStatus
+          : "[Loading...]",
+        updatedFeedbackPreferences: postReq.data
+          ? postReq.data.feedbackPreferences
+          : "[Loading...]",
+        updatedScientificFields: postReq.data
+          ? postReq.data.scientificFieldTags
+          : [],
+      },
+    });
 
-  const { handleSubmit, formState, control, getValues, trigger } = useForm({
-    mode: "onTouched",
-    defaultValues: {
-      mrTitle: "",
-      contributors: [] as string[],
-      anonymous: false,
-      originalPostId: params.id,
-      updatedTitle: data.title,
-      updatedCompletionStatus: data.completionStatus,
-      updatedFeedbackPreferences: data.feedbackPreferences,
-      updatedScientificFields: data.scientificFieldTags,
-    },
-  });
+  useEffect(() => {
+    if (!!postReq.data && !postReq.isLoading) {
+      setValue("updatedTitle", postReq.data.title);
+      setValue("updatedScientificFields", postReq.data.scientificFieldTags);
+      setValue("updatedCompletionStatus", postReq.data.completionStatus);
+      setValue("updatedFeedbackPreferences", postReq.data.feedbackPreferences);
+    }
+  }, [postReq, setValue]);
+
+  if (postReq.isLoading) return <Spinner></Spinner>;
 
   return (
     // disable reason: this is the intended usage for handleSubmit
@@ -110,7 +107,6 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
             <MultiSelectAutocomplete
               label={<h2>Contributors</h2>}
               description="Select the people who worked on these changes."
-              options={USERS}
               getItemLabel={getMemberName}
               control={control}
               trigger={trigger}
@@ -124,19 +120,19 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
               }}
               disableFieldName="anonymous"
               disableMessage="Suggest these changes anonymously (no contributors will be added)"
+              optionsGetter={getMembersAsMap}
             />
 
             <Divider />
 
-            {/* from here, update sectiom */}
-            {/* TODO make this like dropdown card of sorts */}
-            {/* the old title of the post */}
+            {/* dropdown with the old fields of the post that can be updated */}
             <Accordion aria-label="update accordion">
               <AccordionItem
                 key="1"
                 title="Update Existing Fields"
                 subtitle="Change existing information about the post to match the changes you made."
               >
+                {/* the old title of the post */}
                 <div className="space-y-5">
                   <div>
                     <Controller
@@ -170,32 +166,34 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                   <MultiSelectAutocomplete
                     label={<h2>Scientific Fields</h2>}
                     description="Modify the list of scientific fields to match the changes you made."
-                    options={FIELDS}
                     getItemLabel={getFieldName}
                     control={control}
                     name="updatedScientificFields"
+                    optionsGetter={getFieldsMap}
                   />
 
                   <Divider />
 
+                  {/* update feedback preferences, default values passed via control obj */}
                   <SingleSelectAutocomplete
                     label={<h2>Feedback preferences</h2>}
                     description="Update the type of discussions you would like to see under the updated post."
                     placeholder="Select the type of feedback preferences you want..."
-                    options={feedbacks}
                     name="updatedFeedbackPreferences"
                     control={control}
+                    optionsGetter={getFeedbackTypes}
                   />
 
                   <Divider />
 
+                  {/* update completion type, default values passed via control obj */}
                   <SingleSelectAutocomplete
                     label={<h2>Update the completion status of this post</h2>}
                     description="Update the compleion status of the post. "
                     placeholder="Select the completion status for your post..."
-                    options={completions}
                     name="updatedCompletionStatus"
                     control={control}
+                    optionsGetter={getCompletionTypes}
                   />
                 </div>
               </AccordionItem>

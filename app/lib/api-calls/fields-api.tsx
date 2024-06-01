@@ -1,8 +1,8 @@
 // methods in this file will be heavily changed once integration with back end it done
 // just retrieve some dummy data for now
 
-export function getFields() {
-  // TODO
+export async function getFieldsMap() {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const data = [
     {
       id: "1",
