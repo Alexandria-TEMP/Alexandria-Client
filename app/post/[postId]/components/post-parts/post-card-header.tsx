@@ -12,18 +12,18 @@ import getPostData from "@/lib/api-calls/post-api";
  *
  * @param postId Post ID
  * @param hideContribute Hides contribute button and dropdown
- * @param disabledContribute Disables specific options in contribute dropdown
  */
 export default async function PostCardHeader({
   postId,
   hideContribute,
-  disabledContribute,
 }: {
   postId: string;
   hideContribute?: boolean;
-  disabledContribute?: ContributeOptions[];
 }) {
   const data = await getPostData(postId);
+
+  // TODO peer reviewed/rejected -> disable review & open -> disable contribute
+  const disabledContribute: ContributeOptions[] = [];
 
   return (
     <>

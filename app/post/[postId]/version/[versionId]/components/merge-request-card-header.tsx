@@ -26,8 +26,17 @@ export default async function MergeRequestCardHeader({
 }) {
   const data = await getMergeRequestData(mergeRequestId);
   const status = reviewStatusToTensedVerb(data.mergeRequestDecision);
-  const disabledContribute: ContributeOptions[] =
-    status === "open" ? ["contribute"] : ["contribute", "review"];
+
+  const disabledContribute: ContributeOptions[] = (() => {
+    switch (status) {
+      case "accepted":
+        return ["contribute", "review"];
+      case "rejected":
+        return ["review"];
+      case "open":
+        return ["contribute"];
+    }
+  })();
 
   return (
     <>
