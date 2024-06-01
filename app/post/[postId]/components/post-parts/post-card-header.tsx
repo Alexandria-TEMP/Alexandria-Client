@@ -1,10 +1,11 @@
-import { CardHeader, Chip } from "@nextui-org/react";
+import { CardHeader } from "@nextui-org/react";
 import HeaderSubtle from "@/components/header-subtle";
 import LinkGroup from "../buttons/link-group";
 import ContributeDropdown, {
   ContributeOptions,
 } from "../buttons/contribute-dropdown";
 import getPostData from "@/lib/api-calls/post-api";
+import ChipWithTitle from "@/components/chip-with-title";
 
 /**
  * Header for post contents card. Uses CardHeader, so it must be child of a Card.
@@ -41,20 +42,16 @@ export default async function PostCardHeader({
             { label: "Files", href: `/post/${postId}/files` },
           ]}
         />
+
         {!hideContribute && (
           <ContributeDropdown disabled={disabledContribute} />
         )}
 
         <div className="grow" />
 
-        <div className="flex-col">
-          <HeaderSubtle>Post type</HeaderSubtle>
-          <Chip>{data.postType}</Chip>
-        </div>
-        <div className="flex-col">
-          <HeaderSubtle>Status</HeaderSubtle>
-          <Chip>{data.status}</Chip>
-        </div>
+        <ChipWithTitle title="Post type">{data.postType}</ChipWithTitle>
+        <ChipWithTitle title="Status">{data.status}</ChipWithTitle>
+
         <div className="flex-col">
           <HeaderSubtle>
             Created on {data.createdAt.toLocaleDateString()}

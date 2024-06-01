@@ -1,4 +1,4 @@
-import { CardHeader, Chip } from "@nextui-org/react";
+import { CardHeader } from "@nextui-org/react";
 import HeaderSubtle from "@/components/header-subtle";
 import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
@@ -8,6 +8,7 @@ import ContributeDropdown, {
 } from "@/post/[postId]/components/buttons/contribute-dropdown";
 import { reviewStatusToTensedVerb } from "@/lib/get-format";
 import { idType } from "@/lib/types/api-types";
+import ChipWithTitle from "@/components/chip-with-title";
 
 /**
  * Header for merge request contents card. Uses CardHeader, so it must be child of a Card.
@@ -18,11 +19,9 @@ import { idType } from "@/lib/types/api-types";
 export default async function MergeRequestCardHeader({
   postId,
   mergeRequestId,
-  hideContribute,
 }: {
   postId: idType;
   mergeRequestId: idType;
-  hideContribute?: boolean;
 }) {
   const data = await getMergeRequestData(mergeRequestId);
   const status = reviewStatusToTensedVerb(data.mergeRequestDecision);
@@ -59,30 +58,34 @@ export default async function MergeRequestCardHeader({
             },
           ]}
         />
-        {!hideContribute && (
-          <ContributeDropdown disabled={disabledContribute} />
-        )}
+
+        <ContributeDropdown disabled={disabledContribute} />
 
         {/* TODO add review chips somewhere here */}
 
         <div className="grow" />
 
-        <div className="flex-col">
-          <HeaderSubtle>Completion</HeaderSubtle>
-          <Chip>{capitalizeFirstLetter(data.updatedCompletionStatus)}</Chip>
-        </div>
+        <ChipWithTitle title="Completion">
+          {capitalizeFirstLetter(data.updatedCompletionStatus)}
+        </ChipWithTitle>
+
+        <ChipWithTitle title="Status">
+          {capitalizeFirstLetter(status)}
+        </ChipWithTitle>
 
         <div className="flex-col">
-          <HeaderSubtle>Status</HeaderSubtle>
-          <Chip>{capitalizeFirstLetter(status)}</Chip>
-        </div>
-
-        <div className="flex-col">
-          <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
-          {status !== "open" && (
-            <HeaderSubtle>
-              {`${capitalizeFirstLetter(status)} on ${data.updatedAt}`}
-            </HeaderSubtle>
+          {status === "open" ? (
+            <>
+              <HeaderSubtle>Created on</HeaderSubtle>
+              <HeaderSubtle>{data.createdAt}</HeaderSubtle>
+            </>
+          ) : (
+            <>
+              <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
+              <HeaderSubtle>
+                {`${capitalizeFirstLetter(status)} on ${data.updatedAt}`}
+              </HeaderSubtle>
+            </>
           )}
         </div>
       </CardHeader>
