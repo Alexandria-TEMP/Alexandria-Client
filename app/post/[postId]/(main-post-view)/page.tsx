@@ -1,7 +1,8 @@
-import PostContents from "../components/post-parts/post-contents";
-import Discussion from "../components/discussions/discussion";
+import VersionContentCard from "../components/post-parts/version-content-card";
 import getPostData from "../../../lib/api-calls/post-api";
-import InputDiscussion from "../components/discussions/input-discussion";
+import PostCardHeader from "../components/post-parts/post-card-header";
+import { parseId } from "@/lib/string-utils";
+import DiscussionSection from "../components/discussions/discussion-section";
 
 /**
  * Page that shows contents of a Post.
@@ -11,19 +12,14 @@ import InputDiscussion from "../components/discussions/input-discussion";
  */
 export default async function Post({ params }: { params: { postId: string } }) {
   const data = await getPostData(params.postId);
-  const discussions = data.currentVersion.discussions;
 
   return (
     <div className="flex flex-col space-y-4 w-full">
-      {/* Title, contents, main metadata and action buttons */}
-      <PostContents id={params.postId} />
-      {/* Discussions */}
-      <h2>{discussions.length} Replies</h2>
-      {discussions.map((id) => (
-        <Discussion id={id} key={id} />
-      ))}
-      {/* Input box for a new discussion */}
-      <InputDiscussion versionId={data.currentVersion.id} />
+      <VersionContentCard
+        header={<PostCardHeader postId={params.postId} />}
+        versionId={parseId(data.currentVersion.id)}
+      />
+      <DiscussionSection versionId={parseId(data.currentVersion.id)} />
     </div>
   );
 }
