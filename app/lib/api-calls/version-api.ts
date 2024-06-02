@@ -9,12 +9,13 @@ import { baseUrl } from "./api-common";
  */
 export async function getRenderedVersion(id: string): Promise<string> {
   const res = await fetch(`${baseUrl}/versions/${id}/render`);
+  if (res.status === 202) {
+    return "pending";
+  }
   if (!res.ok) {
-    // TODO
-    throw new Error(await res.text());
+    const error = (await res.json()) as { code: number; message: string };
+    throw new Error(error.message);
   }
 
-  // TODO
-
-  return "";
+  return res.text();
 }
