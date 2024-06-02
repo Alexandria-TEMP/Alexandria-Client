@@ -1,4 +1,4 @@
-import ReviewChip from "@/post/[postId]/(main-post-view)/version-list/components/review-chip";
+import ReviewChip from "@/post/[postId]/components/review-chip";
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 
