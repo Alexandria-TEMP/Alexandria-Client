@@ -54,7 +54,7 @@ export default async function getMemberData(id: string) {
  *
  * @returns A map of all members with their database id as key, and the whole member object as value
  */
-export async function getMembersMap() {
+export async function getMembers() {
   // pretend this does multiple fetches
   await new Promise((resolve) => setTimeout(resolve, 100));
   const members = [
@@ -92,5 +92,5 @@ export async function getMembersMap() {
     },
   ];
 
-  return new Map(members.map((m) => [m.id, m]));
+  return members;
 }

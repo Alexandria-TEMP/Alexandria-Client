@@ -3,7 +3,7 @@
 import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { useController, FieldValues } from "react-hook-form";
 import { Key } from "react";
-import { CustomAutocompleteProps } from "@/lib/custom-autocomplete-types";
+import { SingleSelectAutocompleteT } from "@/lib/custom-autocomplete-types";
 import { useState, useEffect } from "react";
 
 /**
@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
  * Should be a child of a form that uses react-hook-form
  * See `component-types.d.ts` for documentation on prop types and fields, additionally:
  * @param optionsGetter: a function that fetches options from the server, should provide them as an array of strings that represent the labels themselves
- * @param rules: IMPORTANT necessary for form validation, howver custom error messages set by rules do not work at the moment
+ * @param rules: IMPORTANT: necessary for form validation, however custom error messages set by rules do not work at the moment
  * @returns a div containing the title and the dropdown
  */
 export function SingleSelectAutocomplete<FormType extends FieldValues>({
@@ -24,14 +24,14 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
   control,
   rules,
   optionsGetter,
-}: CustomAutocompleteProps<string, string[], FormType>) {
+}: SingleSelectAutocompleteT<FormType>) {
   const [options, setOptions] = useState<string[]>([]);
   /**
    * Update the options list when request for them finishes
    */
   useEffect(() => {
     const getOptions = async () => {
-      const opts = await optionsGetter();
+      const opts: string[] = await optionsGetter();
       setOptions(opts);
     };
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { getFieldsMap } from "@/lib/api-calls/fields-api";
-import { getMembersMap } from "@/lib/api-calls/member-api";
+import { getFields } from "@/lib/api-calls/fields-api";
+import { getMembers } from "@/lib/api-calls/member-api";
 import { useForm, Controller } from "react-hook-form";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
 import { SingleSelectAutocomplete } from "@/components/form/single-select-autocomplete";
@@ -21,6 +21,17 @@ import getPostData from "@/lib/api-calls/post-api";
 import { useEffect } from "react";
 import { getCompletionTypes, getFeedbackTypes } from "@/lib/api-calls/tags-api";
 import GenericLoadingPage from "@/components/loading-page";
+import { Member } from "@/lib/api-types";
+
+// TODO, in the future the currently logged in member should be fetched from some sort of session variable
+const loggedIn: Member = {
+  id: "3",
+  email: "kopernicus@tudelft.nl",
+  firstName: "Metal Bar",
+  institution: "TU Delft",
+  picture: "/placeholders/Nikolaus_Kopernikus.jpg",
+  lastName: "Clanging",
+};
 
 export default function ProposeChanges({ params }: { params: { id: string } }) {
   const postReq = useSWR("/fake/api", getPostData);
@@ -30,7 +41,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
       mode: "onTouched",
       defaultValues: {
         mrTitle: "",
-        contributors: [] as string[],
+        contributors: [loggedIn.id],
         anonymous: false,
         originalPostId: params.id,
         updatedTitle: postReq.data ? postReq.data.title : "[Loading...]",
@@ -65,7 +76,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
       <div className="m-auto max-w-4xl w-10/12">
         {/* Little top bar */}
         <div className="sticky flex justify-between py-5">
-          <h1 className="max-w-fit">Create a new MR</h1>{" "}
+          <h1 className="max-w-fit">Propose Changes to a Post</h1>{" "}
           <Button variant="ghost" type="submit">
             Publish Changes
           </Button>
@@ -119,8 +130,10 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                 },
               }}
               disableFieldName="anonymous"
-              disableMessage="Suggest these changes anonymously (no contributors will be added)"
-              optionsGetter={getMembersMap}
+              disableMessage="Suggest these changes anonymously"
+              optionsGetter={getMembers}
+              nonRemovables={[loggedIn.id]}
+              nonRemoveReason="You must be in the contributor list, or make these suggestions anonymous."
             />
 
             <Divider />
@@ -169,7 +182,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                     getItemLabel={getFieldName}
                     control={control}
                     name="updatedScientificFields"
-                    optionsGetter={getFieldsMap}
+                    optionsGetter={getFields}
                   />
 
                   <Divider />
@@ -188,7 +201,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
 
                   {/* update completion type, default values passed via control obj */}
                   <SingleSelectAutocomplete
-                    label={<h2>Update the completion status of this post</h2>}
+                    label={<h2>Completion Status</h2>}
                     description="Update the compleion status of the post. "
                     placeholder="Select the completion status for your post..."
                     name="updatedCompletionStatus"

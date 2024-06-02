@@ -1,7 +1,7 @@
 import { Input } from "@nextui-org/react";
 import { Controller, FormState, Control } from "react-hook-form";
 import { FormType } from "../page";
-import { getFieldsMap } from "@/lib/api-calls/fields-api";
+import { getFields } from "@/lib/api-calls/fields-api";
 import { getFieldName } from "@/lib/get-format";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
 
@@ -103,7 +103,7 @@ export default function PersonalDataCard({
           getItemLabel={getFieldName}
           control={control}
           name="fields"
-          optionsGetter={getFieldsMap}
+          optionsGetter={getFields}
         />
       </div>
     </div>

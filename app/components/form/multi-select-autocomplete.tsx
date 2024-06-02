@@ -6,19 +6,20 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
 import { FieldValues, useController } from "react-hook-form";
-import { CustomAutocompleteProps } from "@/lib/custom-autocomplete-types";
-import { Switch } from "@nextui-org/react";
+import { MultiSelectAutocompleteT } from "@/lib/custom-autocomplete-types";
+import { Switch, Tooltip } from "@nextui-org/react";
 
 /**
  * Searchable dropdown which mimics multi select by adding the selected items to a list of removable tags.
  * As a field of a form, this corresponds to an array of item keys (strings in this case)
  * Should be a child of a form that uses react-hook-form
  * See `component-types.d.ts` for documentation on prop types and fields, additionally:
- * @param optionsGetter: funciton that fetches the list of items in the dropdown from the servrer, should return a list of key-value pairs,
- *                        the key is what is used for selected items, it is expected that they key is a string
  * @returns a div containing the title, list of selected items, the dropdown and add button
  */
-export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
+export function MultiSelectAutocomplete<
+  Type extends { id: string },
+  FormType extends FieldValues,
+>({
   label: title,
   description,
   placeholder = "Search...",
@@ -28,9 +29,11 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
   rules,
   disableFieldName,
   disableMessage,
-  getItemLabel = () => "No getItemLabel function provided",
+  getItemLabel,
   optionsGetter,
-}: CustomAutocompleteProps<Type, Map<string, Type>, FormType>) {
+  nonRemovables = [] as string[],
+  nonRemoveReason,
+}: MultiSelectAutocompleteT<Type, FormType>) {
   /* Register the field as part of the parent form using appropriate name and rules  */
   const fieldMethods = useController({
     name,
@@ -74,8 +77,8 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
    */
   useEffect(() => {
     const getOptions = async () => {
-      const opts = await optionsGetter();
-      setOptions(opts);
+      const opts: Type[] = await optionsGetter();
+      setOptions(new Map(opts.map((o: Type) => [o.id, o])));
     };
 
     // the whole point of use effect is to fake await promise cause cant do async
@@ -151,19 +154,30 @@ export function MultiSelectAutocomplete<Type, FormType extends FieldValues>({
         {/* the list of items, only display it if the field is not disabled */}
         {(!disableFieldName ||
           (disableFieldMethods && !disableFieldMethods.field.value)) &&
-          items.map((item) => (
-            <Chip
-              variant="bordered"
-              key={item}
-              onClose={() => handleRemoveItem(item)}
-              data-testid="chip-test-id"
-            >
-              {/* // TODO this is super inefficient but idk how to do this better
+          items.map((item) =>
+            !nonRemovables.includes(item) ? (
+              <Chip
+                variant="bordered"
+                key={item}
+                onClose={() => handleRemoveItem(item)}
+                data-testid="chip-test-id"
+              >
+                {/* // TODO this is super inefficient but idk how to do this better
                             // cause i cannot directly store the object from the autocomplete component, i can only get keys
                             // i also cannot make the labels the keys because that breaks react for some reason */}
-              {getItemLabel(options.get(item))}
-            </Chip>
-          ))}
+                {getItemLabel(options.get(item))}
+              </Chip>
+            ) : (
+              <Tooltip content={nonRemoveReason} placement="bottom" key="t">
+                <Chip variant="bordered" key={item} data-testid="chip-test-id">
+                  {/* // TODO this is super inefficient but idk how to do this better
+                            // cause i cannot directly store the object from the autocomplete component, i can only get keys
+                            // i also cannot make the labels the keys because that breaks react for some reason */}
+                  {getItemLabel(options.get(item))}
+                </Chip>
+              </Tooltip>
+            ),
+          )}
       </div>
       <div className="flex flex-row justify-between gap-x-3">
         {/* The actual autocomplete component */}

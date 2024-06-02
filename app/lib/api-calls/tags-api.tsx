@@ -4,7 +4,7 @@
  */
 export async function getCompletionTypes() {
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  return ["Community Discussion", "Formal Feedback"];
+  return ["Ideation (to begin)", "Ongoing", "Completed"];
 }
 
 /**
@@ -13,7 +13,7 @@ export async function getCompletionTypes() {
  */
 export async function getFeedbackTypes() {
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  return ["Ideation (to begin)", "Ongoing", "Completed"];
+  return ["Community Discussion", "Formal Feedback"];
 }
 
 /**

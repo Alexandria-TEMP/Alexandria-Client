@@ -10,15 +10,12 @@ import userEvent from "@testing-library/user-event";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
 import { Member } from "@/lib/api-types";
 import { dummyMembers } from "~/__tests__/__utils__/dummys";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, UseFormReturn } from "react-hook-form";
 import { expect, describe, it } from "@jest/globals";
 
 const dumTitle = "Dummy title";
 const dumDesc = "Dummy description";
-const dumItems = new Map<string, Member>([
-  [dummyMembers[0].id, dummyMembers[0]],
-  [dummyMembers[1].id, dummyMembers[1]],
-]);
+const dumItems = dummyMembers;
 const dumGetItemLabel = jest.fn((item: Member | undefined) => "Dummy name");
 
 const Wrapper = ({
@@ -124,7 +121,7 @@ describe("MultiSelectAutocomplete", () => {
     });
 
     const items = screen.getAllByTestId("select-item-test-id");
-    expect(items.length).toBe(dumItems.size);
+    expect(items.length).toBe(dumItems.length);
   });
 
   //   it("modifies selected list", async () => {

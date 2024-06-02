@@ -2,8 +2,8 @@
 
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
-import { getMembersMap } from "../lib/api-calls/member-api";
-import { getFieldsMap } from "../lib/api-calls/fields-api";
+import { getMembers } from "../lib/api-calls/member-api";
+import { getFields } from "../lib/api-calls/fields-api";
 import { MultiSelectAutocomplete } from "../components/form/multi-select-autocomplete";
 import { SingleSelectAutocomplete } from "../components/form/single-select-autocomplete";
 import UploadContentCard from "../components/form/upload-content-card";
@@ -16,6 +16,17 @@ import {
   getFeedbackTypes,
   getPostTypes,
 } from "@/lib/api-calls/tags-api";
+import { Member } from "@/lib/api-types";
+
+// TODO, in the future the currently logged in member should be fetched from some sort of session variable
+const loggedIn: Member = {
+  id: "3",
+  email: "kopernicus@tudelft.nl",
+  firstName: "Metal Bar",
+  institution: "TU Delft",
+  picture: "/placeholders/Nikolaus_Kopernikus.jpg",
+  lastName: "Clanging",
+};
 
 export default function NewPost() {
   const { handleSubmit, formState, control, trigger, getValues } = useForm({
@@ -23,7 +34,7 @@ export default function NewPost() {
     defaultValues: {
       title: "",
       anonymous: false,
-      authors: [] as string[],
+      authors: [loggedIn.id],
       contributors: [] as string[],
       fields: [] as string[],
       type: "Ideation (to begin)",
@@ -94,7 +105,7 @@ export default function NewPost() {
               }}
               disableFieldName="anonymous"
               disableMessage="Post this anonymously (no authors will be posted)"
-              optionsGetter={getMembersMap}
+              optionsGetter={getMembers}
             />
 
             <Divider />
@@ -105,7 +116,9 @@ export default function NewPost() {
               getItemLabel={getFieldName}
               control={control}
               name="fields"
-              optionsGetter={getFieldsMap}
+              optionsGetter={getFields}
+              nonRemovables={[loggedIn.id]}
+              nonRemoveReason="You must be in the author list, or make this post anonymous."
             />
 
             <Divider />

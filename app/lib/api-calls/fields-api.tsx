@@ -1,7 +1,7 @@
 // methods in this file will be heavily changed once integration with back end it done
 // just retrieve some dummy data for now
 
-export async function getFieldsMap() {
+export async function getFields() {
   await new Promise((resolve) => setTimeout(resolve, 1000));
   const data = [
     {
@@ -26,5 +26,5 @@ export async function getFieldsMap() {
     },
   ];
 
-  return new Map(data.map((m) => [m.id, m]));
+  return data;
 }
