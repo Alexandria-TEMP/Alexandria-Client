@@ -40,7 +40,7 @@ exports[`MergeRequestCardSkeleton matches snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="size-10 "
+            class="size-10"
             data-slot="icon"
             data-testid="review-chip-open"
             fill="none"
@@ -65,7 +65,7 @@ exports[`MergeRequestCardSkeleton matches snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="size-10 "
+            class="size-10"
             data-slot="icon"
             data-testid="review-chip-open"
             fill="none"
@@ -90,7 +90,7 @@ exports[`MergeRequestCardSkeleton matches snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="size-10 "
+            class="size-10"
             data-slot="icon"
             data-testid="review-chip-open"
             fill="none"
