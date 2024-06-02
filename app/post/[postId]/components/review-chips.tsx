@@ -4,7 +4,7 @@ export default function ReviewChips({
   reviews,
 }: Readonly<{ reviews: string[] }>) {
   return (
-    <div className="flex flex-row gap-1">
+    <div className="flex flex-row">
       <ReviewChip status={reviews[0]} />
       <ReviewChip status={reviews[1]} />
       <ReviewChip status={reviews[2]} />

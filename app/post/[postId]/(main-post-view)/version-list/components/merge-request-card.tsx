@@ -13,7 +13,7 @@ import { capitalizeFirstLetter, parseId } from "@/lib/string-utils";
 import MergeRequestCardSkeleton from "./merge-request-card-skeleton";
 import { MergeRequest, idType } from "@/lib/types/api-types";
 import { reviewStatusToTensedVerb } from "@/lib/get-format";
-import ReviewChips from "./review-chips";
+import ReviewChips from "../../../components/review-chips";
 
 /**
  * Card that represents some merge request for a post.

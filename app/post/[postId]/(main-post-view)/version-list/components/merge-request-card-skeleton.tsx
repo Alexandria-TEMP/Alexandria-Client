@@ -1,6 +1,6 @@
 import HeaderSubtle from "@/components/header-subtle";
 import { Card, CardBody, CardFooter, Skeleton } from "@nextui-org/react";
-import ReviewChip from "./review-chip";
+import ReviewChip from "../../../components/review-chip";
 
 /**
  * Placeholder card for [MergeRequestCard](./merge-request-card.tsx), which

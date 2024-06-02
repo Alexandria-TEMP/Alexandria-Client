@@ -5,14 +5,20 @@ import { idType } from "@/lib/types/api-types";
 // TODO jsdoc
 export default function VersionContentCard({
   header,
+  footer,
   versionId,
-}: Readonly<{ header: React.ReactNode; versionId: idType }>) {
+}: Readonly<{
+  header: React.ReactNode;
+  footer?: React.ReactNode;
+  versionId: idType;
+}>) {
   return (
     <Card>
       {header}
       <CardBody>
         <VersionRender id={versionId.toString()} />
       </CardBody>
+      {footer}
     </Card>
   );
 }

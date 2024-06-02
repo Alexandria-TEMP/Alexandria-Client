@@ -47,6 +47,17 @@ export type MergeRequest = {
   updatedScientificFields: string[];
 };
 
+export type Review = {
+  feedback: string;
+  id: idType;
+  memberID: idType;
+  mergeRequestDecision: ReviewDecision;
+  mergeRequestID: idType;
+  createdAt: string;
+};
+
+export type ReviewDecision = "rejected" | "approved";
+
 export type MergeRequestReviewStatus =
   | "open for review"
   | "peer reviewed"

@@ -8,11 +8,13 @@ import { EllipsisHorizontalCircleIcon } from "@heroicons/react/24/outline";
  */
 export default function ReviewChip({
   status,
+  small,
   // TODO better type (enum review status)
-}: Readonly<{ status: string | undefined }>) {
-  const size = "size-10";
+}: Readonly<{ status: string | undefined; small?: boolean }>) {
+  const size = small ? "size-5" : "size-10";
 
-  if (status == "accept") {
+  // TODO simplify if when types is improved
+  if (status == "accept" || status == "approved") {
     return (
       <CheckCircleIcon
         data-testid="review-chip-accept"
@@ -20,7 +22,7 @@ export default function ReviewChip({
       />
     );
   }
-  if (status == "reject") {
+  if (status == "reject" || status == "rejected") {
     return (
       <XCircleIcon
         data-testid="review-chip-reject"
@@ -31,7 +33,7 @@ export default function ReviewChip({
   return (
     <EllipsisHorizontalCircleIcon
       data-testid="review-chip-open"
-      className={`${size} `}
+      className={`${size}`}
     />
   );
 }
