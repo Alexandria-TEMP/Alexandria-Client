@@ -1,8 +1,18 @@
 const { expect, describe, it } = require("@jest/globals");
 import "@testing-library/jest-dom";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import SignupPage from "@/signup/page";
+
+// mock the router since it depends on the context
+jest.mock("next/navigation", () => ({
+  useRouter() {
+    return {
+      prefetch: () => null,
+      refresh: () => null,
+    };
+  },
+}));
 
 describe("Account data fields test", () => {
   beforeEach(() => {

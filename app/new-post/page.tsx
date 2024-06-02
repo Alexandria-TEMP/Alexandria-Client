@@ -104,8 +104,10 @@ export default function NewPost() {
                 },
               }}
               disableFieldName="anonymous"
-              disableMessage="Post this anonymously (no authors will be posted)"
+              disableMessage="Post this anonymously."
               optionsGetter={getMembers}
+              nonRemovables={[loggedIn.id]}
+              nonRemoveReason="You must be in the author list, or make this post anonymous."
             />
 
             <Divider />

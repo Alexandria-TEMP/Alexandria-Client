@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { onSubmit } from "./lib/submit";
 import PersonalDataCard from "./components/personal-data-card";
 import AccountDataCard from "./components/account-data-card";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 /**
  * The types of the fields the form contains.
@@ -28,6 +30,16 @@ export type FormType = {
  * the account data half also contains the submit button
  */
 export default function SignupPage() {
+  /* Make sure page is hydrated properly by only returning the jsx when the component is mounted */
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  /* router to refresh the page if necessary */
+  const router = useRouter();
+
+  /* create the form state */
   const { control, handleSubmit, formState, watch } = useForm({
     mode: "onTouched",
     defaultValues: {
@@ -41,6 +53,12 @@ export default function SignupPage() {
     },
     shouldUseNativeValidation: true,
   });
+
+  /* if the page is not hydrated, refresh the page */
+  if (!mounted) {
+    router.refresh();
+    return null;
+  }
 
   return (
     <form
