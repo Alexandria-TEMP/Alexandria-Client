@@ -14,7 +14,7 @@ import {
   Accordion,
   AccordionItem,
 } from "@nextui-org/react";
-import { onSubmit } from "./lib/submit";
+import { onSubmit, FormData } from "./lib/submit";
 import { getMemberName, getFieldName } from "@/lib/get-format";
 import useSWR from "swr";
 import getPostData from "@/lib/api-calls/post-api";
@@ -37,7 +37,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
   const postReq = useSWR("/fake/api", getPostData);
 
   const { handleSubmit, formState, control, getValues, trigger, setValue } =
-    useForm({
+    useForm<FormData>({
       mode: "onTouched",
       defaultValues: {
         mrTitle: "",
@@ -54,6 +54,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
         updatedScientificFields: postReq.data
           ? postReq.data.scientificFieldTags
           : [],
+        newFiles: null,
       },
     });
 
@@ -111,7 +112,16 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
 
             <Divider />
 
-            <UploadContentCard />
+            <UploadContentCard
+              name="newFiles"
+              control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: "Please upload a zipped version of your project.",
+                },
+              }}
+            />
 
             <Divider />
 

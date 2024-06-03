@@ -7,6 +7,7 @@ export type FormData = {
   updatedCompletionStatus: string;
   updatedFeedbackPreferences: string;
   updatedScientificFields: string[];
+  newFiles: File | null;
 };
 
 // : SubmitHandler<FormData>

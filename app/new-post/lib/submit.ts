@@ -1,6 +1,6 @@
 import { validateTitle } from "./validators";
 
-type FormData = {
+export type FormData = {
   title: string;
   anonymous: boolean;
   authors: string[];
@@ -9,6 +9,7 @@ type FormData = {
   type: string;
   completion: string;
   feedback: string;
+  files: File | null;
 };
 
 export function validate(formData: FormData) {

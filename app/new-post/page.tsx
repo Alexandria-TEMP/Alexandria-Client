@@ -9,7 +9,7 @@ import { SingleSelectAutocomplete } from "../components/form/single-select-autoc
 import UploadContentCard from "../components/form/upload-content-card";
 import { getMemberName, getFieldName } from "@/lib/get-format";
 import { Card, Input } from "@nextui-org/react";
-import { onSubmit } from "./lib/submit";
+import { onSubmit, FormData } from "./lib/submit";
 import { useForm, Controller } from "react-hook-form";
 import {
   getCompletionTypes,
@@ -29,19 +29,21 @@ const loggedIn: Member = {
 };
 
 export default function NewPost() {
-  const { handleSubmit, formState, control, trigger, getValues } = useForm({
-    mode: "onTouched",
-    defaultValues: {
-      title: "",
-      anonymous: false,
-      authors: [loggedIn.id],
-      contributors: [] as string[],
-      fields: [] as string[],
-      type: "Ideation (to begin)",
-      completion: "Project",
-      feedback: "Community Discussion", // TODO these are hardcoded, could just make them empty
-    },
-  });
+  const { handleSubmit, formState, control, trigger, getValues } =
+    useForm<FormData>({
+      mode: "onTouched",
+      defaultValues: {
+        title: "",
+        anonymous: false,
+        authors: [loggedIn.id],
+        contributors: [] as string[],
+        fields: [] as string[],
+        type: "Ideation (to begin)",
+        completion: "Project",
+        feedback: "Community Discussion", // TODO these are hardcoded, could just make them empty
+        files: null,
+      },
+    });
 
   return (
     // disable reason: this is the intended usage for handleSubmit
@@ -85,7 +87,16 @@ export default function NewPost() {
 
             <Divider />
 
-            <UploadContentCard />
+            <UploadContentCard
+              name="files"
+              control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: "Please upload a zipped version of your project.",
+                },
+              }}
+            />
 
             <Divider />
 
