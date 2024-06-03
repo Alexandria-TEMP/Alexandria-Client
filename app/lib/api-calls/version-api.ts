@@ -13,8 +13,8 @@ export async function getRenderedVersion(id: string): Promise<string> {
     return "pending";
   }
   if (!res.ok) {
-    const error = (await res.json()) as { code: number; message: string };
-    throw new Error(error.message);
+    const error = res.headers.get("error") ?? undefined;
+    throw new Error(error);
   }
 
   return res.text();
