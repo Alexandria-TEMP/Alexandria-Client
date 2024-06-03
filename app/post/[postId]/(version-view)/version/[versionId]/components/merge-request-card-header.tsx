@@ -3,9 +3,7 @@ import HeaderSubtle from "@/components/header-subtle";
 import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
 import LinkGroup from "@/post/[postId]/components/buttons/link-group";
-import ContributeDropdown, {
-  ContributeOptions,
-} from "@/post/[postId]/components/buttons/contribute-dropdown";
+import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
 import { reviewStatusToTensedVerb } from "@/lib/get-format";
 import { idType } from "@/lib/types/api-types";
 import ChipWithTitle from "@/components/chip-with-title";
@@ -26,16 +24,15 @@ export default async function MergeRequestCardHeader({
   const data = await getMergeRequestData(mergeRequestId);
   const status = reviewStatusToTensedVerb(data.mergeRequestDecision);
 
-  const disabledContribute: ContributeOptions[] = (() => {
-    switch (status) {
-      case "accepted":
-        return ["contribute", "review"];
-      case "rejected":
-        return ["review"];
-      case "open":
-        return ["contribute"];
-    }
-  })();
+  const contributeRoutes = {
+    // Enabled buttons per status:
+    // Accepted -> Fork
+    // Rejected -> Fork, Contribute
+    // Open     -> Fork, Review
+    fork: `/todo`,
+    contribute: status == "rejected" ? `/todo` : undefined,
+    review: status == "open" ? `/todo` : undefined,
+  };
 
   return (
     <>
@@ -59,7 +56,8 @@ export default async function MergeRequestCardHeader({
           ]}
         />
 
-        <ContributeDropdown disabled={disabledContribute} />
+        {/* TODO actions */}
+        <ContributeDropdown routes={contributeRoutes} />
 
         {/* TODO add review chips somewhere here */}
 

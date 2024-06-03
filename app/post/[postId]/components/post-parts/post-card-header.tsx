@@ -1,9 +1,7 @@
 import { CardHeader } from "@nextui-org/react";
 import HeaderSubtle from "@/components/header-subtle";
 import LinkGroup from "../buttons/link-group";
-import ContributeDropdown, {
-  ContributeOptions,
-} from "../buttons/contribute-dropdown";
+import ContributeDropdown from "../buttons/contribute-dropdown";
 import getPostData from "@/lib/api-calls/post-api";
 import ChipWithTitle from "@/components/chip-with-title";
 
@@ -23,8 +21,12 @@ export default async function PostCardHeader({
 }) {
   const data = await getPostData(postId);
 
-  // TODO peer reviewed/rejected -> disable review & open -> disable contribute
-  const disabledContribute: ContributeOptions[] = [];
+  const contributeRoutes = {
+    // TODO peer reviewed/rejected -> disable review & open -> disable contribute
+    fork: `/todo`,
+    contribute: `/todo`,
+    review: `/todo`,
+  };
 
   return (
     <>
@@ -43,9 +45,7 @@ export default async function PostCardHeader({
           ]}
         />
 
-        {!hideContribute && (
-          <ContributeDropdown disabled={disabledContribute} />
-        )}
+        {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
 
         <div className="grow" />
 
