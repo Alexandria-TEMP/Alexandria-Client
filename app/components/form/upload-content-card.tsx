@@ -1,14 +1,19 @@
+"use client";
+
 import { Card, CardHeader, CardBody } from "@nextui-org/react";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
+import { useRef } from "react";
 
-// TODO this will need some props for returning the files somehow
-// test
 /**
  * Component which has the title and the available options for uploading content.
  * @return a div containing the title and cards for each type of file upload option
  */
 export default function UploadContentCard() {
+  const hiddenFile = useRef<HTMLInputElement>(null);
+
+  const handleClick = () => hiddenFile.current?.click();
+
   return (
     <div className="space-y-2">
       <h2>Upload Content</h2>
@@ -16,7 +21,16 @@ export default function UploadContentCard() {
         <Card className="grow w-1/2" data-testid="upload-files-test-id">
           <CardHeader>Upload Files</CardHeader>
           <CardBody>
-            <Button>Add Files</Button>
+            <Button onClick={handleClick}>Add Files</Button>
+            <input
+              id="upload-files"
+              type="file"
+              accept=".zip"
+              className="button"
+              hidden
+              ref={hiddenFile}
+              style={{ display: "none" }}
+            />
           </CardBody>
         </Card>
         <Card
