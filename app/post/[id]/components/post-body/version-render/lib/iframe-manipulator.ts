@@ -1,4 +1,8 @@
+import { Inter } from "next/font/google";
 import React from "react";
+
+// Gets the font family used accross the website
+const inter = Inter({ subsets: ["latin"] });
 
 /**
  * Gets iframe.contentDocument, throwing errors if any of
@@ -121,6 +125,12 @@ export function changeColors(
     // Set overall background and text color
     document.body.style.backgroundColor = colors.background;
     document.body.style.color = colors.text;
+    // Set font style as the same as the rest of the website
+    document.body.style.fontFamily = inter.style.fontFamily;
+    if (inter.style.fontStyle)
+      document.body.style.fontStyle = inter.style.fontStyle;
+    if (inter.style.fontWeight)
+      document.body.style.fontWeight = inter.style.fontWeight.toString();
 
     // Create CSS rules for code blocks
     const insertedCss = [
