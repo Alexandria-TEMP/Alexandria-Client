@@ -1,3 +1,9 @@
+// disable reason: this is kind of a shitty one to have to disable,
+// but basicallly it is complaining because the useController hook is called conditionally
+// this is because the "control" parameter is marked as optional
+// it is not optional in practice
+// but if i dont make it optional it breaks the tests and i have not figured out how to solve that
+// added a todo in custom component types
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
@@ -81,9 +87,7 @@ export function MultiSelectAutocomplete<
       setOptions(new Map(opts.map((o: Type) => [o.id, o])));
     };
 
-    // the whole point of use effect is to fake await promise cause cant do async
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    getOptions();
+    getOptions().catch(() => console.log("error fetching data")); // TODO maybe make it refetch the data if it fails
   }, [optionsGetter]);
 
   /**
@@ -193,7 +197,6 @@ export function MultiSelectAutocomplete<
           onInputChange={(s) => s == "" && setNewItem("")}
           aria-labelledby={name}
           isDisabled={disableFieldMethods && disableFieldMethods.field.value}
-          // isLoading={optionsReq.isLoading}
         >
           {(item) => (
             <AutocompleteItem key={item[0]} data-testid="select-item-test-id">

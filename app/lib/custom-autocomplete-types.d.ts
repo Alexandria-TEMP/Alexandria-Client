@@ -38,12 +38,17 @@ export type CustomAutocompletePropsT<Type, FormType extends FieldValues> = {
   optionsGetter: () => Promise<Type[]>;
 };
 
+/**
+ * Same as the props for CustomeAutocompelteProps, except the SingleSelectAutocomplete component
+ * is specifically designed to work with an array of strings as the options
+ * see SingleSelectAutocomplete for more info
+ */
 export type SingleSelectAutocompleteT<FormType extends FieldValues> =
   CustomAutocompletePropsT<string, FormType>;
 
 /**
- * Type specifically made for the MultiSelectAutocomplete componnet
- * The same as CustomAutocompletePropsT, addictionally:
+ * Type specifically made for the MultiSelectAutocomplete component
+ * The same as CustomAutocompletePropsT, additionally:
  * @template Type: the type of the objects in the options list, these objects must have an ID
  *                 since MultiSelect needs to make a map of them
  *

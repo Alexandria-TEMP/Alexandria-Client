@@ -4,6 +4,7 @@ import { FormType } from "../page";
 import { getFields } from "@/lib/api-calls/fields-api";
 import { getFieldName } from "@/lib/get-format";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
+import { maxInstitution, maxName } from "@/lib/validation-rules";
 
 /**
  * Component that groups together form fields about personal data when creating a new account.
@@ -28,8 +29,9 @@ export default function PersonalDataCard({
         rules={{
           required: "Please enter your first name.",
           maxLength: {
-            value: 100,
-            message: "There is a 100 charcter restriction on name input.",
+            value: maxName,
+            message:
+              "There is a " + maxName + " charcter restriction on name input.",
           },
         }}
         render={({ field }) => (
@@ -53,8 +55,9 @@ export default function PersonalDataCard({
         rules={{
           required: "Please enter your last name.",
           maxLength: {
-            value: 100,
-            message: "There is a 100 charcter restriction on name input.",
+            value: maxName,
+            message:
+              "There is a " + maxName + " charcter restriction on name input.",
           },
         }}
         render={({ field }) => (
@@ -77,8 +80,11 @@ export default function PersonalDataCard({
         control={control}
         rules={{
           maxLength: {
-            value: 150,
-            message: "There is a 150 charcter restriction on institution name.",
+            value: maxInstitution,
+            message:
+              "There is a " +
+              maxInstitution +
+              " charcter restriction on institution name.",
           },
         }}
         render={({ field }) => (

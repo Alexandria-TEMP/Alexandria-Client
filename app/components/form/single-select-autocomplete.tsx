@@ -35,9 +35,7 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
       setOptions(opts);
     };
 
-    // the whole point of use effect is to fake await promise cause cant do async
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    getOptions();
+    getOptions().catch(() => console.log("error fetching data")); // TODO maybe make it refetch the data if it fails
   }, [optionsGetter]);
 
   /* Register the field as part of the parent form using appropriate name and rules  */
