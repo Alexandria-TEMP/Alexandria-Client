@@ -5,6 +5,7 @@ import getPostData from "@/lib/api-calls/post-api";
 import { dummyPost } from "~/__tests__/__utils__/dummys";
 import { Card } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
+import createMockRouter from "~/__tests__/__utils__/create-mock-router";
 
 // Mock getPostData()
 jest.mock("@/lib/api-calls/post-api");
@@ -12,7 +13,7 @@ jest.mock("@/lib/api-calls/post-api");
 jest.mock("next/navigation");
 
 describe("PostCardHeader", () => {
-  (useRouter as jest.Mock).mockReturnValue(jest.fn());
+  (useRouter as jest.Mock).mockReturnValue(createMockRouter());
   (getPostData as jest.Mock).mockResolvedValue(dummyPost);
 
   it("renders title", async () => {
