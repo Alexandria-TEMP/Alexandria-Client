@@ -1,42 +1,36 @@
 import { validateAuthors, validateTitle } from "./validators";
 
-type createPostForm = {
+type FormData = {
   title: string;
-  authors: Set<string>;
-  contributors: Set<string>;
-  fields: Set<string>;
+  authors: string[];
+  contributors: string[];
+  fields: string[];
   type: string;
   completion: string;
   feedback: string;
 };
 
-export function validate(formData: createPostForm) {
+export function validate(formData: FormData) {
   return (
     validateTitle(formData.title) === true &&
     validateAuthors(formData.authors) === true
   );
 }
 
-export function submit(formData: createPostForm) {
+export function submit(formData: FormData) {
   if (validate(formData)) {
     alert(
       "Title: " +
         formData.title +
         "\n" +
         "Authors: " +
-        Array.from(formData.authors.keys())
-          .map((a) => a.toString())
-          .toString() +
+        formData.authors.map((a) => a.toString()).toString() +
         "\n" +
         "Contributors: " +
-        Array.from(formData.contributors.keys())
-          .map((a) => a.toString())
-          .toString() +
+        formData.contributors.map((a) => a.toString()).toString() +
         "\n" +
         "Fields: " +
-        Array.from(formData.fields.keys())
-          .map((a) => a.toString())
-          .toString() +
+        formData.fields.map((a) => a.toString()).toString() +
         "\n" +
         "Completion: " +
         formData.completion +

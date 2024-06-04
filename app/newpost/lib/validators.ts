@@ -12,10 +12,10 @@ export function validateTitle(title: string) {
 }
 
 // --- Authors ---
-export function validateAuthors(authors: Set<string>) {
+export function validateAuthors(authors: string[]) {
   // TODO this should check that the user who is creating the post is in the author list
   // or at least in the contributor list
-  if (authors.size <= 0) {
+  if (authors.length <= 0) {
     return "You must select at least one author for your post.";
   }
 

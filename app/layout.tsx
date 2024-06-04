@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import { ChildrenProp } from "./lib/children-prop-type";
+import { ChildrenProp } from "./lib/children-prop";
 import AlexandriaNavbar from "./components/navbar";
 import Footer from "./components/footer";
 
@@ -14,14 +14,17 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: ChildrenProp) {
-  const bodyCSSClasses = "px-24";
+  // Applied to everything (including header and footer)
+  const rootClassName = "h-dvh flex flex-col";
+  // Applied to the parent of everything in between header and footer
+  const bodyClassName = "px-24 grow";
 
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
+        <Providers className={rootClassName}>
           <AlexandriaNavbar />
-          <div className={bodyCSSClasses}>{children}</div>
+          <div className={bodyClassName}>{children}</div>
           <Footer />
         </Providers>
       </body>
