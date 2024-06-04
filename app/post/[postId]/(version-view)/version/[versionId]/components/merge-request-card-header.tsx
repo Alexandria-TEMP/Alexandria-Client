@@ -1,12 +1,16 @@
-import { CardHeader } from "@nextui-org/react";
+"use client";
+
+import { CardHeader, Switch } from "@nextui-org/react";
 import HeaderSubtle from "@/components/header-subtle";
 import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
 import LinkGroup from "@/post/[postId]/components/buttons/link-group";
 import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
 import { reviewStatusToTensedVerb } from "@/lib/get-format";
-import { idType } from "@/lib/types/api-types";
+import { MergeRequest, idType } from "@/lib/types/api-types";
 import ChipWithTitle from "@/components/chip-with-title";
+import MergeRequestCardHeaderSkeleton from "./merge-request-card-header-skeleton";
+import { useEffect, useMemo, useState } from "react";
 
 /**
  * Header for merge request contents card. Uses CardHeader, so it must be child of a Card.
@@ -14,17 +18,33 @@ import ChipWithTitle from "@/components/chip-with-title";
  *
  * TODO update jsdoc
  */
-export default async function MergeRequestCardHeader({
+export default function MergeRequestCardHeader({
   postId,
   mergeRequestId,
   hideContribute,
+  onCompare,
 }: {
   postId: idType;
   mergeRequestId: idType;
   hideContribute?: boolean;
+  onCompare?: (value: boolean) => void;
 }) {
-  const data = await getMergeRequestData(mergeRequestId);
-  const status = reviewStatusToTensedVerb(data.mergeRequestDecision);
+  const [data, setData] = useState<MergeRequest>();
+  const [isLoading, setIsLoading] = useState(true);
+  const status = useMemo(
+    () =>
+      data ? reviewStatusToTensedVerb(data.mergeRequestDecision) : undefined,
+    [data],
+  );
+
+  useEffect(() => {
+    getMergeRequestData(mergeRequestId)
+      .then(setData)
+      .catch((e) => {
+        throw e;
+      })
+      .finally(() => setIsLoading(false));
+  }, [mergeRequestId]);
 
   const contributeRoutes = {
     // Enabled buttons per status:
@@ -38,6 +58,8 @@ export default async function MergeRequestCardHeader({
         ? `/post/${postId}/version/${mergeRequestId}/review`
         : undefined,
   };
+
+  if (isLoading || !data) return <MergeRequestCardHeaderSkeleton />;
 
   return (
     <>
@@ -63,6 +85,8 @@ export default async function MergeRequestCardHeader({
 
         {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
 
+        {!!onCompare && <Switch onValueChange={onCompare}>Compare</Switch>}
+
         {/* TODO add review chips somewhere here */}
 
         <div className="grow" />
@@ -71,9 +95,11 @@ export default async function MergeRequestCardHeader({
           {capitalizeFirstLetter(data.updatedCompletionStatus)}
         </ChipWithTitle>
 
-        <ChipWithTitle title="Status">
-          {capitalizeFirstLetter(status)}
-        </ChipWithTitle>
+        {status && (
+          <ChipWithTitle title="Status">
+            {capitalizeFirstLetter(status)}
+          </ChipWithTitle>
+        )}
 
         <div className="flex-col">
           {status === "open" ? (
@@ -82,12 +108,14 @@ export default async function MergeRequestCardHeader({
               <HeaderSubtle>{data.createdAt}</HeaderSubtle>
             </>
           ) : (
-            <>
-              <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
-              <HeaderSubtle>
-                {`${capitalizeFirstLetter(status)} on ${data.updatedAt}`}
-              </HeaderSubtle>
-            </>
+            status && (
+              <>
+                <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
+                <HeaderSubtle>
+                  {`${capitalizeFirstLetter(status)} on ${data.updatedAt}`}
+                </HeaderSubtle>
+              </>
+            )
           )}
         </div>
       </CardHeader>

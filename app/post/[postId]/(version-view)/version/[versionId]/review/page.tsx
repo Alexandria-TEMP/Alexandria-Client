@@ -1,8 +1,7 @@
 import { parseId } from "@/lib/string-utils";
-import VersionContentCard from "@/post/[postId]/components/post-parts/version-content-card";
-import MergeRequestCardHeader from "../components/merge-request-card-header";
-import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
 import PeerReviewInput from "../components/peer-review-inputs";
+import CompareVersionContentCard from "../components/compare-version-content-card";
+import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
 
 export default async function PostVersionReview({
   params,
@@ -14,15 +13,11 @@ export default async function PostVersionReview({
   return (
     <div className="flex flex-col space-y-4 w-full">
       <PeerReviewInput />
-      <VersionContentCard
-        versionId={data.newVersionID}
-        header={
-          <MergeRequestCardHeader
-            postId={parseId(params.postId)}
-            mergeRequestId={parseId(params.versionId)}
-            hideContribute
-          />
-        }
+      <CompareVersionContentCard
+        newVersionId={data.newVersionID}
+        previousVersionId={data.previousVersionID}
+        postId={parseId(params.postId)}
+        mergeRequestId={parseId(params.versionId)}
       />
     </div>
   );

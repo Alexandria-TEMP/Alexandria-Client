@@ -1,8 +1,9 @@
-import VersionContentCard from "../components/post-parts/version-content-card";
 import getPostData from "../../../lib/api-calls/post-api";
 import PostCardHeader from "../components/post-parts/post-card-header";
 import { parseId } from "@/lib/string-utils";
 import DiscussionSection from "../components/discussions/discussion-section";
+import { Card, CardBody } from "@nextui-org/react";
+import VersionRender from "../components/version-render/component";
 
 /**
  * Page that shows contents of a Post.
@@ -15,10 +16,13 @@ export default async function Post({ params }: { params: { postId: string } }) {
 
   return (
     <div className="flex flex-col space-y-4 w-full">
-      <VersionContentCard
-        header={<PostCardHeader postId={params.postId} />}
-        versionId={parseId(data.currentVersion.id)}
-      />
+      <Card>
+        <PostCardHeader postId={params.postId} />
+        <CardBody>
+          <VersionRender id={data.currentVersion.id} />
+        </CardBody>
+      </Card>
+
       <DiscussionSection versionId={parseId(data.currentVersion.id)} />
     </div>
   );
