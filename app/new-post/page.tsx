@@ -4,37 +4,43 @@ import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
 import { getMembers } from "../lib/api-calls/member-api";
 import { getFields } from "../lib/api-calls/fields-api";
-import { MultiSelectAutocomplete } from "../components/multi-select-autocomplete";
-import { SingleSelectAutocomplete } from "./components/single-select-autocomplete";
-import UploadContentCard from "./components/upload-content-card";
+import { MultiSelectAutocomplete } from "../components/form/multi-select-autocomplete";
+import { SingleSelectAutocomplete } from "../components/form/single-select-autocomplete";
+import UploadContentCard from "../components/form/upload-content-card";
 import { getMemberName, getFieldName } from "@/lib/get-format";
 import { Card, Input } from "@nextui-org/react";
-import { submit } from "./lib/submit";
+import { onSubmit } from "./lib/submit";
 import { useForm, Controller } from "react-hook-form";
+import {
+  getCompletionTypes,
+  getFeedbackTypes,
+  getPostTypes,
+} from "@/lib/api-calls/tags-api";
+import { Member } from "@/lib/api-types";
+import { maxTitle } from "@/lib/validation-rules";
+
+// TODO, in the future the currently logged in member should be fetched from some sort of session variable
+const loggedIn: Member = {
+  id: "3",
+  email: "kopernicus@tudelft.nl",
+  firstName: "Metal Bar",
+  institution: "TU Delft",
+  picture: "/placeholders/Nikolaus_Kopernikus.jpg",
+  lastName: "Clanging",
+};
 
 export default function NewPost() {
-  const USERS = getMembers();
-  const FIELDS = getFields();
-
-  const feedbacks = ["Community Discussion", "Formal Feedback"];
-  const types = ["Project", "Question", "Reflection"];
-  const completions = ["Ideation (to begin)", "Ongoing", "Completed"];
-
-  // default values, should be refactored into a different file maybe
-  const defFeedback = 0;
-  const defType = 0;
-  const defCompletion = 0;
-
-  const { handleSubmit, formState, control } = useForm({
+  const { handleSubmit, formState, control, trigger, getValues } = useForm({
     mode: "onTouched",
     defaultValues: {
       title: "",
-      authors: [] as string[],
+      anonymous: false,
+      authors: [loggedIn.id],
       contributors: [] as string[],
       fields: [] as string[],
-      type: types[defType],
-      completion: completions[defCompletion],
-      feedback: feedbacks[defFeedback],
+      type: "Ideation (to begin)",
+      completion: "Project",
+      feedback: "Community Discussion", // TODO these are hardcoded, could just make them empty
     },
   });
 
@@ -42,7 +48,7 @@ export default function NewPost() {
     // disable reason: this is the intended usage for handleSubmit
     // linter complains about it being a promise, but if i fix it then `submit` function does not get called
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    <form className="w-full relative" onSubmit={handleSubmit(submit)}>
+    <form className="w-full relative" onSubmit={handleSubmit(onSubmit)}>
       <div className="m-auto max-w-4xl w-10/12">
         {/* Little top bar */}
         <div className="sticky flex justify-between py-5">
@@ -60,8 +66,11 @@ export default function NewPost() {
               rules={{
                 required: "Please enter a title for your post.",
                 maxLength: {
-                  value: 150,
-                  message: "There is a 150 character limit for post titles.", // TODO decide how long we actually want this
+                  value: maxTitle,
+                  message:
+                    "There is a " +
+                    maxTitle +
+                    " character limit for post titles.",
                 },
               }}
               render={({ field }) => (
@@ -86,30 +95,23 @@ export default function NewPost() {
 
             <MultiSelectAutocomplete
               label={<h2>Authors</h2>}
-              description="Select the main people who worked on this post."
-              options={USERS}
+              description="Select the people who worked on this post."
               getItemLabel={getMemberName}
               control={control}
+              trigger={trigger}
               name="authors"
               rules={{
-                required: {
-                  value: true,
-                  message: "Please add at least one author.",
+                validate: (v: string[]) => {
+                  if (!getValues("anonymous") && v.length <= 0)
+                    return "Please add at least one author or make this post anonymous.";
+                  return true;
                 },
-                validate: (v: string[]) =>
-                  v.length > 0 || "Please add at least one author.",
               }}
-            />
-
-            <Divider />
-
-            <MultiSelectAutocomplete
-              label={<h2>Contributors</h2>}
-              description="Select the people who helped with this post."
-              options={USERS}
-              getItemLabel={getMemberName}
-              control={control}
-              name="contributors"
+              disableFieldName="anonymous"
+              disableMessage="Post this anonymously."
+              optionsGetter={getMembers}
+              nonRemovables={[loggedIn.id]}
+              nonRemoveReason="You must be in the author list, or make this post anonymous."
             />
 
             <Divider />
@@ -117,10 +119,12 @@ export default function NewPost() {
             <MultiSelectAutocomplete
               label={<h2>Scientific Fields</h2>}
               description="Select the scientific fields your post is about."
-              options={FIELDS}
               getItemLabel={getFieldName}
               control={control}
               name="fields"
+              optionsGetter={getFields}
+              nonRemovables={[loggedIn.id]}
+              nonRemoveReason="You must be in the author list, or make this post anonymous."
             />
 
             <Divider />
@@ -129,8 +133,6 @@ export default function NewPost() {
               label={<h2>What type will your post be?</h2>}
               description="The type of post represents what kind of content you are sharing."
               placeholder="Select a type for your post..."
-              defaultSelectedKey={defType.toString()}
-              options={types}
               control={control}
               name="type"
               rules={{
@@ -139,6 +141,7 @@ export default function NewPost() {
                   message: "Please select the type of post.",
                 },
               }}
+              optionsGetter={getPostTypes}
             />
 
             <Divider />
@@ -147,8 +150,6 @@ export default function NewPost() {
               label={<h2>What are your feedback preferences?</h2>}
               description="The type of replies you want to encourage under your post."
               placeholder="Select the type of feedback preferences you want..."
-              defaultSelectedKey={defFeedback.toString()}
-              options={feedbacks}
               name="feedback"
               control={control}
               rules={{
@@ -157,6 +158,7 @@ export default function NewPost() {
                   message: "Please select feedback preferences for your post.",
                 },
               }}
+              optionsGetter={getFeedbackTypes}
             />
 
             <Divider />
@@ -165,8 +167,6 @@ export default function NewPost() {
               label={<h2>What is the completion of your project?</h2>}
               description="This helps other users understand your work and give advice."
               placeholder="Select the completion status for your post..."
-              defaultSelectedKey={defCompletion.toString()}
-              options={completions}
               name="completion"
               control={control}
               rules={{
@@ -175,6 +175,7 @@ export default function NewPost() {
                   message: "Please select the completion status of your post.",
                 },
               }}
+              optionsGetter={getCompletionTypes}
             />
 
             <Divider />

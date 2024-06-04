@@ -7,12 +7,14 @@
 export default async function getPostData(id: string) {
   // TODO
   // const res = await fetch();
-  await new Promise((resolve) => setTimeout(resolve, 100));
-
+  await new Promise((resolve) => setTimeout(resolve, 500));
   return {
     title: "Post title",
     status: "Open for review",
-    collaborators: ["1", "2"],
+    authors: ["3"],
+    contributors: ["1", "2"],
+    collaborators: ["1", "2"], /// i think these should be different, but mr and post are strutured differently so we need both
+    anonymous: false,
     createdAt: "10 May 2024",
     currentVersion: {
       id: "1",
@@ -20,11 +22,9 @@ export default async function getPostData(id: string) {
     },
     id: id,
     postType: "Reflection",
-    scientificFieldTags: [
-      "Computer Science",
-      "Mathematics",
-      "Theory of computation",
-    ],
+    scientificFieldTags: ["1", "2", "3"],
     updatedAt: "11 May 2024",
+    feedbackPreferences: "Community Discussion",
+    completionStatus: "Ongoing",
   };
 }

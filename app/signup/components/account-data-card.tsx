@@ -1,6 +1,7 @@
 import { Button, Input } from "@nextui-org/react";
 import { Controller, FormState, Control, UseFormWatch } from "react-hook-form";
 import { FormType } from "../page";
+import { emailRegex, passwordRegex } from "@/lib/validation-rules";
 
 /**
  * Component that groups together form fields about account data when creating a new account.
@@ -28,7 +29,7 @@ export default function AccountDataCard({
         rules={{
           required: "Please enter an email address.",
           pattern: {
-            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{1,4}$/i,
+            value: emailRegex,
             message: "Please enter a valid email address.",
           },
         }}
@@ -57,7 +58,7 @@ export default function AccountDataCard({
             message: "Password must contain at least 8 charcters.",
           },
           pattern: {
-            value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])/i,
+            value: passwordRegex,
             message:
               "Password must contain at least one upper case and one lower case letter, a number and a special character.",
           },

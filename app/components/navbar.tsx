@@ -24,7 +24,7 @@ export const navigationItems = [
     label: "Home",
   },
   {
-    href: "/newpost",
+    href: "/new-post",
     label: "Publish",
   },
   {

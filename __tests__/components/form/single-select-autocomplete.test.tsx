@@ -1,7 +1,7 @@
 import { expect, describe, it } from "@jest/globals";
-import { render, screen, waitFor, cleanup } from "@testing-library/react";
+import { render, screen, waitFor, cleanup, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { SingleSelectAutocomplete } from "@/newpost/components/single-select-autocomplete";
+import { SingleSelectAutocomplete } from "@/components/form/single-select-autocomplete";
 import { FormProvider, useForm } from "react-hook-form";
 
 const dumLabel = "Dummy title";
@@ -24,24 +24,26 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-beforeEach(() => {
-  render(
-    <Wrapper>
-      <SingleSelectAutocomplete
-        label={dumLabel}
-        description={dumDesc}
-        placeholder={dumPlaceholder}
-        options={dumOptions}
-        name="dumItem"
-        rules={{
-          required: {
-            value: true,
-            message: "Please select",
-          },
-        }}
-      />
-    </Wrapper>,
-  );
+beforeEach(async () => {
+  await act(async () => {
+    render(
+      <Wrapper>
+        <SingleSelectAutocomplete
+          label={dumLabel}
+          description={dumDesc}
+          placeholder={dumPlaceholder}
+          name="dumItem"
+          rules={{
+            required: {
+              value: true,
+              message: "Please select",
+            },
+          }}
+          optionsGetter={async () => dumOptions}
+        />
+      </Wrapper>,
+    );
+  });
 });
 
 afterEach(cleanup);
