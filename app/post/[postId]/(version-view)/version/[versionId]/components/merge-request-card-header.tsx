@@ -17,9 +17,11 @@ import ChipWithTitle from "@/components/chip-with-title";
 export default async function MergeRequestCardHeader({
   postId,
   mergeRequestId,
+  hideContribute,
 }: {
   postId: idType;
   mergeRequestId: idType;
+  hideContribute?: boolean;
 }) {
   const data = await getMergeRequestData(mergeRequestId);
   const status = reviewStatusToTensedVerb(data.mergeRequestDecision);
@@ -31,7 +33,10 @@ export default async function MergeRequestCardHeader({
     // Open     -> Fork, Review
     fork: `/todo`,
     contribute: status == "rejected" ? `/todo` : undefined,
-    review: status == "open" ? `/todo` : undefined,
+    review:
+      status == "open"
+        ? `/post/${postId}/version/${mergeRequestId}/review`
+        : undefined,
   };
 
   return (
@@ -56,8 +61,7 @@ export default async function MergeRequestCardHeader({
           ]}
         />
 
-        {/* TODO actions */}
-        <ContributeDropdown routes={contributeRoutes} />
+        {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
 
         {/* TODO add review chips somewhere here */}
 
