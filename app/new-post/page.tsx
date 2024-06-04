@@ -17,6 +17,7 @@ import {
   getPostTypes,
 } from "@/lib/api-calls/tags-api";
 import { Member } from "@/lib/api-types";
+import { maxTitle } from "@/lib/validation-rules";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
 const loggedIn: Member = {
@@ -67,8 +68,11 @@ export default function NewPost() {
               rules={{
                 required: "Please enter a title for your post.",
                 maxLength: {
-                  value: 150,
-                  message: "There is a 150 character limit for post titles.", // TODO decide how long we actually want this
+                  value: maxTitle,
+                  message:
+                    "There is a " +
+                    maxTitle +
+                    " character limit for post titles.",
                 },
               }}
               render={({ field }) => (

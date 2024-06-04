@@ -24,7 +24,7 @@ export type PostT = {
   status: string;
   authors: string[];
   contributors: string[];
-  collaborators: string[]; // i think these should be different, but mr and post are strutured differently so we need both
+  collaborators: string[]; // TODO duplicates will be fixed in issue #27
   anonymous: boolean;
   createdAt: string;
   currentVersion: Version;

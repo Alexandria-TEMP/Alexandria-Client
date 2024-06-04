@@ -91,6 +91,7 @@ describe("MultiSelectAutocomplete", () => {
     expect(tagElem).toBeInTheDocument();
   });
 
+  // TODO fix this test
   //   it("removes author tags", async () => {
   //     render(
   //       <Wrapper defaults={["1"]}>
@@ -124,6 +125,7 @@ describe("MultiSelectAutocomplete", () => {
     expect(items.length).toBe(dumItems.length);
   });
 
+  // TODO fix this test
   //   it("modifies selected list", async () => {
   //     const inputElem = screen.getByTestId("select-element-test-id");
   //     await userEvent.type(inputElem, "Marie"); // TODO idk why this doesnt work?

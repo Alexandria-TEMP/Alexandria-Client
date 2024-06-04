@@ -22,6 +22,7 @@ import { useEffect } from "react";
 import { getCompletionTypes, getFeedbackTypes } from "@/lib/api-calls/tags-api";
 import GenericLoadingPage from "@/components/loading-page";
 import { Member } from "@/lib/api-types";
+import { maxTitle } from "@/lib/validation-rules";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
 const loggedIn: Member = {
@@ -77,9 +78,9 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
       <div className="m-auto max-w-4xl w-10/12">
         {/* Little top bar */}
         <div className="sticky flex justify-between py-5">
-          <h1 className="max-w-fit">Propose Changes to a Post</h1>{" "}
+          <h1 className="max-w-fit">Contribute to a Post</h1>{" "}
           <Button variant="ghost" type="submit">
-            Publish Changes
+            Publish Contribution
           </Button>
         </div>
         {/* The actual form */}
@@ -89,10 +90,11 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
               name="mrTitle"
               control={control}
               rules={{
-                required: "Please enter a title for your MR.",
+                required: "Please enter a title for your contribution.",
                 maxLength: {
-                  value: 150,
-                  message: "There is a 150 character limit for MR titles.", // TODO decide how long we actually want this
+                  value: maxTitle,
+                  message:
+                    "There is a " + maxTitle + " character limit for titles.", // TODO decide how long we actually want this
                 },
               }}
               render={({ field }) => (
@@ -100,8 +102,8 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                   {...field}
                   label={<h2 className="max-w-fit inline-block">Title</h2>}
                   labelPlacement="outside"
-                  placeholder="Enter a title for your MR..."
-                  description="What new changes does this MR bring?"
+                  placeholder="Enter a title for your contribution..."
+                  description="Briefly describe the changes your proposal brings."
                   className="space-y-2"
                   isRequired
                   errorMessage={formState.errors.mrTitle?.message?.toString()}
@@ -135,7 +137,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
               rules={{
                 validate: (v: string[]) => {
                   if (!getValues("anonymous") && v.length <= 0)
-                    return "Please add at least one contributor or make these suggestions anonymously.";
+                    return "Please add at least one contributor or make this contribution anonymously.";
                   return true;
                 },
               }}
@@ -143,7 +145,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
               disableMessage="Suggest these changes anonymously"
               optionsGetter={getMembers}
               nonRemovables={[loggedIn.id]}
-              nonRemoveReason="You must be in the contributor list, or make these suggestions anonymous."
+              nonRemoveReason="You must be in the contributor list, or make this contribution anonymously."
             />
 
             <Divider />
@@ -163,9 +165,11 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                       control={control}
                       rules={{
                         maxLength: {
-                          value: 150,
+                          value: maxTitle,
                           message:
-                            "There is a 150 character limit for post titles.", // TODO decide how long we actually want this
+                            "There is a " +
+                            maxTitle +
+                            " character limit for post titles.", // TODO decide how long we actually want this
                         },
                       }}
                       render={({ field }) => (
