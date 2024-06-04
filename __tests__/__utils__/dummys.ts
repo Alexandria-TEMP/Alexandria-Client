@@ -1,4 +1,4 @@
-import { Post } from "@/lib/api-types";
+import { PostT } from "@/lib/api-types";
 
 export const dummyDiscussion = {
   id: "4321",
@@ -36,11 +36,16 @@ export const dummyMembers = [
   },
 ];
 
-export const dummyPost: Post = {
+export const dummyPost: PostT = {
   title: "Post title",
   status: "Open for review",
   collaborators: ["1", "2"],
-  createdAt: new Date(10, 4, 2024),
+  authors: ["1", "2"],
+  contributors: ["1", "2"],
+  anonymous: false,
+  feedbackPreferences: "Formal feedback",
+  completionStatus: "Ideation",
+  createdAt: "10 May 2024",
   currentVersion: {
     id: "1",
     discussions: ["1", "1", "1", "1"],
@@ -52,7 +57,7 @@ export const dummyPost: Post = {
     "Mathematics",
     "Theory of computation",
   ],
-  updatedAt: new Date(11, 4, 2024),
+  updatedAt: "04 June 2024",
 };
 
 export const dummyTag = {

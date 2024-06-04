@@ -3,6 +3,7 @@ import PostCardHeader from "./post-card-header";
 import VersionRender from "./version-render/component";
 import getPostData from "@/lib/api-calls/post-api";
 import { IdProp } from "@/lib/id-prop";
+import { PostT } from "@/lib/api-types";
 
 /**
  * Main body of a Post. Includes: title, main metadata, and action buttons.
@@ -10,7 +11,7 @@ import { IdProp } from "@/lib/id-prop";
  * @param id Post ID
  */
 export default async function PostContents({ id }: IdProp) {
-  const data = await getPostData(id);
+  const data: PostT = await getPostData(id);
   return (
     <Card>
       <PostCardHeader postId={id} />

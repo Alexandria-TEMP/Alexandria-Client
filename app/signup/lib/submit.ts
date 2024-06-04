@@ -1,6 +1,3 @@
-import { FormType } from "../page";
-import { SubmitHandler } from "react-hook-form";
-
 export type FormData = {
   email: string;
   firstName: string;
@@ -10,7 +7,8 @@ export type FormData = {
   password: string;
 };
 
-export const onSubmit: SubmitHandler<FormType> = (data: FormData) => {
+// : SubmitHandler<FormType>
+export const onSubmit = (data: FormData) => {
   alert(
     "Email: " +
       data.email +

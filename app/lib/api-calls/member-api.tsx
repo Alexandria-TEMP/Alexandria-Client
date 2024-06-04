@@ -19,7 +19,7 @@ export default async function getMemberData(id: string) {
       institution: "TU Delft",
       lastName: "Curie",
     };
-  } else {
+  } else if (id == "2") {
     return {
       id: "2",
       email: "kopernicus@tudelft.nl",
@@ -28,19 +28,35 @@ export default async function getMemberData(id: string) {
       picture: "/placeholders/Nikolaus_Kopernikus.jpg",
       lastName: "Copernicus",
     };
+  } else if (id == "3") {
+    return {
+      id: "3",
+      email: "kopernicus@tudelft.nl",
+      firstName: "Metal Bar",
+      institution: "TU Delft",
+      picture: "/placeholders/Nikolaus_Kopernikus.jpg",
+      lastName: "Clanging",
+    };
+  } else {
+    return {
+      id: "4",
+      email: "kopernicus@tudelft.nl",
+      firstName: "Michael",
+      institution: "TU Delft",
+      picture: "/placeholders/Nikolaus_Kopernikus.jpg",
+      lastName: "Yippie",
+    };
   }
 }
 
 /**
- * Method that gets all members from the database
+ * Method that gets all members from the database, should be deprecated?
  *
  * @returns A map of all members with their database id as key, and the whole member object as value
  */
-export function getMembers() {
-  // TODO
-
-  // simulate long time to get list of users, this should be done without fetching all users
-  // ideally we would fetch as we go but i dont really know how to do that
+export async function getMembers() {
+  // pretend this does multiple fetches
+  await new Promise((resolve) => setTimeout(resolve, 100));
   const members = [
     {
       id: "1",
@@ -76,5 +92,5 @@ export function getMembers() {
     },
   ];
 
-  return new Map(members.map((m) => [m.id, m]));
+  return members;
 }

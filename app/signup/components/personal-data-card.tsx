@@ -3,7 +3,8 @@ import { Controller, FormState, Control } from "react-hook-form";
 import { FormType } from "../page";
 import { getFields } from "@/lib/api-calls/fields-api";
 import { getFieldName } from "@/lib/get-format";
-import { MultiSelectAutocomplete } from "@/components/multi-select-autocomplete";
+import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
+import { maxInstitution, maxName } from "@/lib/validation-rules";
 
 /**
  * Component that groups together form fields about personal data when creating a new account.
@@ -19,8 +20,6 @@ export default function PersonalDataCard({
   control: Control<FormType>;
   formState: FormState<FormType>;
 }) {
-  const FIELDS = getFields();
-
   return (
     <div className="space-y-12 items-center min-w-96 w-1/3 min-h-fit mx-auto place-content-center flex-col flex">
       <h2>Personal Data</h2>
@@ -30,8 +29,9 @@ export default function PersonalDataCard({
         rules={{
           required: "Please enter your first name.",
           maxLength: {
-            value: 100,
-            message: "There is a 100 charcter restriction on name input.",
+            value: maxName,
+            message:
+              "There is a " + maxName + " charcter restriction on name input.",
           },
         }}
         render={({ field }) => (
@@ -55,8 +55,9 @@ export default function PersonalDataCard({
         rules={{
           required: "Please enter your last name.",
           maxLength: {
-            value: 100,
-            message: "There is a 100 charcter restriction on name input.",
+            value: maxName,
+            message:
+              "There is a " + maxName + " charcter restriction on name input.",
           },
         }}
         render={({ field }) => (
@@ -79,8 +80,11 @@ export default function PersonalDataCard({
         control={control}
         rules={{
           maxLength: {
-            value: 150,
-            message: "There is a 150 charcter restriction on institution name.",
+            value: maxInstitution,
+            message:
+              "There is a " +
+              maxInstitution +
+              " charcter restriction on institution name.",
           },
         }}
         render={({ field }) => (
@@ -102,10 +106,10 @@ export default function PersonalDataCard({
         <MultiSelectAutocomplete
           label={<span className="text-small">Fields of Expertise</span>}
           description="Select the scientific fields that you study."
-          options={FIELDS}
           getItemLabel={getFieldName}
           control={control}
           name="fields"
+          optionsGetter={getFields}
         />
       </div>
     </div>

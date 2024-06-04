@@ -1,6 +1,6 @@
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import UploadContentCard from "@/newpost/components/upload-content-card";
+import UploadContentCard from "@/components/form/upload-content-card";
 
 describe("Upload content", () => {
   it("renders correct elements", () => {
