@@ -1,3 +1,5 @@
+import { PostT } from "@/lib/api-types";
+
 export const dummyDiscussion = {
   id: "4321",
   anonymous: false,
@@ -34,10 +36,15 @@ export const dummyMembers = [
   },
 ];
 
-export const dummyPost = {
+export const dummyPost: PostT = {
   title: "Post title",
   status: "Open for review",
   collaborators: ["1", "2"],
+  authors: ["1", "2"],
+  contributors: ["1", "2"],
+  anonymous: false,
+  feedbackPreferences: "Formal feedback",
+  completionStatus: "Ideation",
   createdAt: "10 May 2024",
   currentVersion: {
     id: "1",
@@ -50,7 +57,7 @@ export const dummyPost = {
     "Mathematics",
     "Theory of computation",
   ],
-  updatedAt: "11 May 2024",
+  updatedAt: "04 June 2024",
 };
 
 export const dummyTag = {
@@ -102,4 +109,16 @@ export const dummyMergeRequests = {
     versionWhenClosed: "2",
     closedAt: "20 May 2024",
   },
+};
+
+export const dummyHtml = {
+  html: `
+  <!DOCTYPE html>
+  <html>
+    <body>
+      <h1>This is a heading</h1>
+      <p>This is a paragraph</p>
+    </body>
+  </html>
+  `,
 };

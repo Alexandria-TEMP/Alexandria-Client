@@ -16,13 +16,15 @@ export default async function PostSidebar({
   className,
 }: Readonly<{ postId: string }> & ClassNameProp) {
   const data: PostT = await getPostData(postId);
+  const scientificFields: string[] = data.scientificFieldTags;
+  const collaborators: string[] = data.collaborators;
 
   return (
     <div className={className}>
       <h2>About</h2>
       <h3>Scientific fields</h3>
       <div className="flex flex-row flex-wrap gap-x-3 gap-y-2">
-        {data.scientificFieldTags.map((field, index) => (
+        {scientificFields.map((field, index) => (
           <Chip key={index}>{field}</Chip>
         ))}
       </div>
@@ -36,7 +38,7 @@ export default async function PostSidebar({
 
       <h3>Authors</h3>
       <div className="flex flex-col gap-y-2">
-        {data.collaborators.map((id) => (
+        {collaborators.map((id) => (
           <AuthorCard memberId={id} key={id} />
         ))}
       </div>
@@ -45,7 +47,7 @@ export default async function PostSidebar({
 
       <h3>Collaborators</h3>
       <div className="flex flex-col gap-y-2">
-        {data.collaborators.map((id) => (
+        {collaborators.map((id) => (
           <AuthorCard memberId={id} key={id} />
         ))}
       </div>

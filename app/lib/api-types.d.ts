@@ -13,7 +13,7 @@ export type Tag = {
   tagType: string;
 };
 
-export type Version = {
+export type VersionT = {
   id: string;
   discussions: string[];
 };
@@ -27,10 +27,12 @@ export type PostT = {
   collaborators: string[]; // TODO duplicates will be fixed in issue #27
   anonymous: boolean;
   createdAt: string;
-  currentVersion: Version;
+  currentVersion: VersionT;
   postType: string;
   scientificFieldTags: string[];
   updatedAt: string;
   feedbackPreferences: string;
   completionStatus: string;
 };
+
+export type PostType = "Reflection" | "Question" | "Project";
