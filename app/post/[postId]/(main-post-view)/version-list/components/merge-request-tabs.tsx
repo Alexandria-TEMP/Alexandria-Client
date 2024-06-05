@@ -7,7 +7,6 @@ import { Tab, Tabs } from "@nextui-org/react";
 /**
  * Renders a tabbed list view of post merge requests.
  * Includes the tabs "Version history", "Proposed changes" and "Rejected changes".
- *
  * @param historyList Component that gets rendered on the "Version history" tab
  * @param openList Component that gets rendered on the "Proposed changes" tab
  * @param rejectedList Component that gets rendered on the "Rejected changes" tab

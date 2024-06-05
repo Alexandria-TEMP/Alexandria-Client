@@ -9,7 +9,6 @@ import MergeRequestList from "./components/merge-request-list";
  * Page that shows all merge requests of a Post.
  * The route is /post/[postId]/**version**-list as a more user-friendly name, but the internal naming
  * is **merge request** to avoid confusion with the **version** entity.
- *
  * @param params.postId Post ID, taken from route's dynamic segment /[postId].
  * Read more: https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
  */

@@ -3,7 +3,6 @@
 
 /**
  * Gets data for a Member given their ID.
- *
  * @async
  * @param id Member ID
  */
@@ -33,7 +32,6 @@ export default async function getMemberData(id: string) {
 
 /**
  * Method that gets all members from the database
- *
  * @returns A map of all members with their database id as key, and the whole member object as value
  */
 export function getMembers() {

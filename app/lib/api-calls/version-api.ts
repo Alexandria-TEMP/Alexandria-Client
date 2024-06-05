@@ -2,7 +2,6 @@ import { idType } from "../types/api-types";
 
 /**
  * Fetches HTML render of a version's Quarto project.
- *
  * @async
  * @param id Version ID
  * @returns Text contents of the HTML render

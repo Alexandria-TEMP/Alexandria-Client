@@ -5,7 +5,7 @@ import { Button } from "@nextui-org/button";
 // TODO this will need some props for returning the files somehow
 /**
  * Component which has the title and the available options for uploading content.
- * @return a div containing the title and cards for each type of file upload option
+ * @returns a div containing the title and cards for each type of file upload option
  */
 export default function UploadContentCard() {
   return (

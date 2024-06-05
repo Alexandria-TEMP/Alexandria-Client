@@ -12,8 +12,8 @@ import { CustomAutocompleteProps } from "@/lib/types/custom-autocomplete-types";
  * As a field of a form, this corresponds to an array of item keys (strings in this case)
  * Should be a child of a form that uses react-hook-form
  * See `component-types.d.ts` for documentation on prop types and fields, additionally:
- * @param options: the list of items in the dropdown, needs to be a key-value pair, the key is what is used for selected items
- *                 it is expected that they key is a string
+ * @param options the list of items in the dropdown, needs to be a key-value pair, the key is what is used for selected items
+ *                it is expected that they key is a string
  * @returns a div containing the title, list of selected items, the dropdown and add button
  */
 export function MultiSelectAutocomplete<

@@ -8,7 +8,6 @@ import ChipWithTitle from "@/components/chip-with-title";
 /**
  * Header for post contents card. Uses CardHeader, so it must be child of a Card.
  * Includes title, main metadata, and action buttons.
- *
  * @param postId Post ID
  * @param hideContribute Hides contribute button and dropdown
  */

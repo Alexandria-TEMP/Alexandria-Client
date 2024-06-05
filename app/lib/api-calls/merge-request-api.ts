@@ -2,7 +2,6 @@ import { MergeRequest, idType } from "../types/api-types";
 
 /**
  * Gets data for a Merge request given their ID.
- *
  * @async
  * @param id Merge request ID
  */
@@ -64,7 +63,6 @@ export async function getMergeRequestData(id: idType): Promise<MergeRequest> {
 
 /**
  * Gets merge requests of a post given their ID.
- *
  * @async
  * @param id Post ID
  */

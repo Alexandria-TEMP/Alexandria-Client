@@ -7,7 +7,6 @@ import { parseId } from "@/lib/string-utils";
 
 /**
  * Sidebar that is shown in a Post's page. Includes most of post's metadata.
- *
  * @param postId Post ID
  */
 export default async function PostSidebar({

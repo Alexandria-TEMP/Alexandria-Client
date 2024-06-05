@@ -3,7 +3,6 @@ import MergeRequestCard from "./merge-request-card";
 
 /**
  * List of [MergeRequestCard](./merge-request-card.tsx) with the given IDs.
- *
  * @param ids Merge request IDs
  * @param postId Post ID that merge requests belong to
  * @param grid Render list as a grid

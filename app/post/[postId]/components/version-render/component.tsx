@@ -12,7 +12,6 @@ import { semanticColors } from "@nextui-org/react";
 /**
  * Isolated iframe with a Version's rendered html.
  * Detects html's height and sets iframe's height to it.
- *
  * @param id Version ID
  */
 export default function VersionRender({ id }: IdProp) {

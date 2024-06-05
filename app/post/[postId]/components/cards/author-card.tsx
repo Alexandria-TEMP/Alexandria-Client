@@ -7,7 +7,6 @@ import { User } from "@nextui-org/react";
 
 /**
  * Small card that represents a member.
- *
  * @param id Member ID
  */
 export default async function AuthorCard({ id }: IdProp) {

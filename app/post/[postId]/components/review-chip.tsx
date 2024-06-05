@@ -3,7 +3,6 @@ import { EllipsisHorizontalCircleIcon } from "@heroicons/react/24/outline";
 
 /**
  * Circular chip that indicates status of a review.
- *
  * @param status Review status
  */
 export default function ReviewChip({

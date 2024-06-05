@@ -5,7 +5,6 @@ import { Card, CardBody } from "@nextui-org/react";
 
 /**
  * Displays a discussion, including: contents, author, creation date, and 'reply' button.
- *
  * @param id Discussion ID
  */
 export default async function Discussion({ id }: Readonly<{ id: string }>) {

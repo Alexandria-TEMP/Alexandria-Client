@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 
 /**
  * Image component with Alexandria's logo. Adapts color to current theme.
- *
  * @param className CSS classes
  * @param width represents the rendered width in pixels, so it will affect how large the image appears.
  * @param height represents the rendered height in pixels, so it will affect how large the image appears.

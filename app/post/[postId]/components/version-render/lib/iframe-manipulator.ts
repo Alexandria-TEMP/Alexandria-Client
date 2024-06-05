@@ -4,7 +4,6 @@ import React from "react";
  * Gets iframe.contentDocument, throwing errors if any of
  * iframe, iframe.contentWindow or iframe.contentDocument
  * are undefined.
- *
  * @param iframe reference to iframe
  * @returns iframe.contentDocument
  */
@@ -21,7 +20,6 @@ function getIframeDocument(iframe: HTMLIFrameElement | null) {
 /**
  * Creates a <script> tag at the end of the given document with
  * arbitrary javascript code.
- *
  * @param iframeDocument reference to html document
  * @param script javascript code to be injected in the document
  */
@@ -37,8 +35,6 @@ function injectScript(iframeDocument: Document, script: string) {
 /**
  * Sets it up so after html is loaded, it's height is saved
  * in a useState state variable.
- *
- * @export
  * @param iframeRef useRef to iframe
  * @param setIframeHeight useState setter for iframe height
  * @returns cleanup function
@@ -97,8 +93,6 @@ export function setupResize(
 
 /**
  * Changes the style of html in given iframe.
- *
- * @export
  * @param iframeRef useRef to iframe
  * @param colors desired colors for html
  * @returns cleanup function

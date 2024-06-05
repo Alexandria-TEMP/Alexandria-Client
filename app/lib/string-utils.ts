@@ -3,8 +3,6 @@ import { idType } from "./types/api-types";
 /**
  * Capitalizes the first letter of a string, keeping the rest of
  * the string unchanged. Never throws an error.
- *
- * @export
  * @param str string to be capitalized
  * @returns capitalized string
  */

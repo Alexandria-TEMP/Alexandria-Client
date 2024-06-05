@@ -6,7 +6,6 @@ import { Fragment } from "react";
 
 /**
  * Button group that links to different Post views.
- *
  * @param postId ID of Post the links refer to
  */
 export default function LinkGroup({

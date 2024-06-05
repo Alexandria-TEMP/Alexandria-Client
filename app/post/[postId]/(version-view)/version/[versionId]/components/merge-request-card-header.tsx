@@ -15,7 +15,6 @@ import { useEffect, useMemo, useState } from "react";
 /**
  * Header for merge request contents card. Uses CardHeader, so it must be child of a Card.
  * Includes title, main metadata, and action buttons.
- *
  * TODO update jsdoc
  */
 export default function MergeRequestCardHeader({

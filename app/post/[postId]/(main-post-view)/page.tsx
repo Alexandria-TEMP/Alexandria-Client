@@ -7,7 +7,6 @@ import VersionRender from "../components/version-render/component";
 
 /**
  * Page that shows contents of a Post.
- *
  * @param params.postId Post ID, taken from route's dynamic segment /[postId].
  * Read more: https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
  */

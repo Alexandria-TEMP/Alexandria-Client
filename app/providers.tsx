@@ -7,7 +7,6 @@ import { ClassNameProp } from "./lib/types/react-props/classname-prop";
 
 /**
  * Wrapper for the entire website. Should be very close to the root in the html tree.
- *
  * @param children React children.
  */
 export function Providers({

@@ -17,7 +17,6 @@ export type ContributeOptions = "contribute" | "review" | "fork";
 
 /**
  * Dropdown style button group for post contribution options.
- *
  * @param routes Defines route to redirect to when each button is pressed. If a route is not included, the button is disabled.
  */
 export default function ContributeDropdown({

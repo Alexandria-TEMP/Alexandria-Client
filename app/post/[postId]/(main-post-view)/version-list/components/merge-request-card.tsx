@@ -17,7 +17,6 @@ import ReviewChips from "../../../components/review-chips";
 
 /**
  * Card that represents some merge request for a post.
- *
  * @param id Merge request ID
  */
 export default function MergeRequestCard({

@@ -8,7 +8,6 @@ import { IdProp } from "@/lib/types/react-props/id-prop";
 
 /**
  * Mini card that represents a post. Clicking it redirects to the post page.
- *
  * @param id ID of post in card
  */
 export default function PostCardMini({ id }: IdProp) {
