@@ -7,6 +7,10 @@ import PeerReview from "./peer-review";
 import { Tabs, Tab } from "@nextui-org/tabs";
 import { useMemo } from "react";
 
+/**
+ * Shows a tabbed view of the current peer reviews
+ * @param reviewIDs ID of displayed peer reviews
+ */
 export default function PeerReviewSection({
   reviewIDs,
 }: Readonly<{ reviewIDs: idType[] }>) {

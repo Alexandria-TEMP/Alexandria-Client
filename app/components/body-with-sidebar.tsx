@@ -1,5 +1,10 @@
 import { ChildrenProp } from "@/lib/types/react-props/children-prop";
 
+/**
+ * Displays a structure with a body and a sidebar on its right side
+ * @param children body
+ * @param sidebar sidebar
+ */
 export default function BodyWithSidebar({
   children,
   sidebar,

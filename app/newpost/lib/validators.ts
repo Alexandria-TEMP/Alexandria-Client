@@ -1,4 +1,7 @@
 // --- Title ---
+/**
+ * TODO jsdoc when properly implemented
+ */
 export function validateTitle(title: string) {
   // TODO decide on max title length
   // TODO do i do input sanitization front end for the title?
@@ -12,6 +15,9 @@ export function validateTitle(title: string) {
 }
 
 // --- Authors ---
+/**
+ * TODO jsdoc when properly implemented
+ */
 export function validateAuthors(authors: string[]) {
   // TODO this should check that the user who is creating the post is in the author list
   // or at least in the contributor list

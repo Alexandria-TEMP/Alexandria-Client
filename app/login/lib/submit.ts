@@ -3,6 +3,9 @@ export type FormData = {
   password: string;
 };
 
+/**
+ * TODO jsdoc when properly implemented
+ */
 export function onSubmit(data: FormData) {
   alert(data.email + ", " + data.password);
   return true;

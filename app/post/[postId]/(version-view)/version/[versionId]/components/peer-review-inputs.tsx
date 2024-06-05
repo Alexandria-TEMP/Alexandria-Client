@@ -11,6 +11,9 @@ import {
 } from "@nextui-org/react";
 import { useState } from "react";
 
+/**
+ * Input box for a new peer review
+ */
 export default function PeerReviewInput() {
   const [feedback, setFeedback] = useState<string | undefined>(undefined);
   const [approval, setApproval] = useState<string | undefined>(undefined); // TODO api typing

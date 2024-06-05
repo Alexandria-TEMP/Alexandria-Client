@@ -12,6 +12,9 @@ import { Card, Input } from "@nextui-org/react";
 import { submit } from "./lib/submit";
 import { useForm, Controller } from "react-hook-form";
 
+/**
+ * TODO jsdoc @miruna
+ */
 export default function NewPost() {
   const USERS = getMembers();
   const FIELDS = getFields();

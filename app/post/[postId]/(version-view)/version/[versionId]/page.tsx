@@ -5,6 +5,11 @@ import { CardFooter, Divider } from "@nextui-org/react";
 import CompareVersionContentCard from "./components/compare-version-content-card";
 import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
 
+/**
+ * Page with merge request version comparison, its reviews and discussion
+ * @param params.postId Post ID, taken from route's dynamic segment /[postId]
+ * @param params.versionId Version ID, taken from route's dynamic segment /[versionId]
+ */
 export default async function PostVersion({
   params,
 }: {

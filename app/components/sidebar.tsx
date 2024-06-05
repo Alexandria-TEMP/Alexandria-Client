@@ -1,5 +1,11 @@
 import { Fragment } from "react";
 
+/**
+ * Displays a column list of items, each with a small gap between them.
+ * The list sticks to the top of the page when scrolling.
+ * @param title optional header for the sidebar
+ * @param items items rendered within the sidebar
+ */
 export default function Sidebar({
   title,
   items,

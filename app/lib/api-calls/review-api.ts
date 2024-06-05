@@ -1,5 +1,8 @@
 import { Review, idType } from "../types/api-types";
 
+/**
+ * TODO jsdoc when properly implemented
+ */
 export async function getReviewData(id: idType): Promise<Review> {
   await new Promise((resolve) => setTimeout(resolve, 150));
   if (id == 1)

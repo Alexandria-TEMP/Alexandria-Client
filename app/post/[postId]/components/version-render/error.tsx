@@ -2,6 +2,11 @@
 
 import { Button } from "@nextui-org/react";
 
+/**
+ * Displays a box with warning color, that allows the component to be reset without
+ * refreshing the entire page. Should be used in case something goes wrong when fetching data.
+ * @param reset called when the button "Try again" is pressed
+ */
 export default function Error({ reset }: { reset: () => void }) {
   return (
     <div

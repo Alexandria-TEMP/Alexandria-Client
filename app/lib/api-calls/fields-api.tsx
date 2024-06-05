@@ -1,6 +1,9 @@
 // methods in this file will be heavily changed once integration with back end it done
 // just retrieve some dummy data for now
 
+/**
+ * TODO jsdoc when properly implemented
+ */
 export function getFields() {
   // TODO
   const data = [

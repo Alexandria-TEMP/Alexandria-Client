@@ -2,6 +2,10 @@ import PostSidebar from "../components/post-parts/post-sidebar";
 import { ChildrenProp } from "@/lib/types/react-props/children-prop";
 import BodyWithSidebar from "@/components/body-with-sidebar";
 
+/**
+ * Layout for post pages, which inserts a [PostSidebar](../components/post-parts/post-sidebar)
+ * @param params.postId Post ID, taken from route's dynamic segment /[postId]
+ */
 export default function MainPostViewLayout({
   children,
   params,

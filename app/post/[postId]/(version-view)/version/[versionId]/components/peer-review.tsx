@@ -18,6 +18,10 @@ import {
 } from "@nextui-org/react";
 import { useEffect, useMemo, useState } from "react";
 
+/**
+ * Displays peer review with feedback, author, decision and date
+ * @param id peer review ID
+ */
 export default function PeerReview({ id }: IdProp) {
   const [data, setData] = useState<Review | undefined>();
   const [author, setAuthor] = useState<Member | undefined>();

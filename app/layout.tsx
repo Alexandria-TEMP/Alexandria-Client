@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   description: "Collaborative and open access scientific publishing.",
 };
 
+/**
+ * Root layout. Required by NextJS.
+ */
 export default function RootLayout({ children }: ChildrenProp) {
   // Applied to everything (including header and footer)
   const rootClassName = "h-dvh flex flex-col";

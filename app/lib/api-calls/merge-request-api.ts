@@ -96,6 +96,9 @@ export async function getPostMergeRequests(id: idType) {
   };
 }
 
+/**
+ * TODO jsdoc when properly implemented
+ */
 export async function getMergeRequestReviewStatuses(id: idType) {
   await new Promise((resolve) => setTimeout(resolve, 70));
   if (id == 1) return ["accept", "reject", "accept"];

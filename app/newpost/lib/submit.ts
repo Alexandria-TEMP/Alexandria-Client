@@ -10,6 +10,9 @@ type FormData = {
   feedback: string;
 };
 
+/**
+ * TODO jsdoc when properly implemented
+ */
 export function validate(formData: FormData) {
   return (
     validateTitle(formData.title) === true &&
@@ -17,6 +20,9 @@ export function validate(formData: FormData) {
   );
 }
 
+/**
+ * TODO jsdoc when properly implemented
+ */
 export function submit(formData: FormData) {
   if (validate(formData)) {
     alert(

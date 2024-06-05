@@ -6,7 +6,17 @@ import VersionRender from "@/post/[postId]/components/version-render/component";
 import { useState } from "react";
 import MergeRequestCardHeader from "./merge-request-card-header";
 
-// TODO jsdoc
+/**
+ * Displays a Card for a merge request, containing a
+ * [MergeRequestCardHeader](./merge-request-card-header), and two side-by-side
+ * [VersionRender](@/post/[postId]/components/version-render/component) which
+ * can be turned into a single VersionRender by clicking a Switch.
+ * @param footer optional CardFooter component, gets placed at the end of the Card
+ * @param newVersionID new version ID
+ * @param previousVersionID previous version ID
+ * @param postId post ID
+ * @param mergeRequestId merge request ID
+ */
 export default function CompareVersionContentCard({
   footer,
   newVersionId,

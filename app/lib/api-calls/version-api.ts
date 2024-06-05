@@ -11,6 +11,9 @@ export async function getRenderedVersion(id: string): Promise<string> {
   return (await (await fetch("http://localhost:8000/")).blob()).text();
 }
 
+/**
+ * TODO jsdoc when properly implemented
+ */
 export async function getVersionData(id: idType) {
   // TODO
   await new Promise((resolve) => setTimeout(resolve, 100));

@@ -2,7 +2,9 @@ import { Button, CardHeader, Skeleton } from "@nextui-org/react";
 import HeaderSubtle from "@/components/header-subtle";
 import ChipWithTitle from "@/components/chip-with-title";
 
-// TODO jsdoc
+/**
+ * Skeleton for a MergeRequestCardHeader, to be displayed while it loads
+ */
 export default function MergeRequestCardHeaderSkeleton({
   hideContribute,
 }: {
