@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DiscussionSectionTest matches snapshot 1`] = `
+<div>
+  <h2>
+    4
+     Replies
+  </h2>
+  <p>
+    Discussion
+  </p>
+  <p>
+    Discussion
+  </p>
+  <p>
+    Discussion
+  </p>
+  <p>
+    Discussion
+  </p>
+  <input />
+</div>
+`;

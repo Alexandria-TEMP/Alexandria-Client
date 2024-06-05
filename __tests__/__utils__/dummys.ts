@@ -127,3 +127,8 @@ export const dummyHtml = {
   </html>
   `,
 };
+
+export const dummyVersion = {
+  id: 1,
+  discussionIDs: [1, 2, 3, 4],
+};
