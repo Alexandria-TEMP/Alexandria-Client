@@ -1,27 +1,23 @@
 "use client";
 
-import { Card, Divider } from "@nextui-org/react";
-import { useForm } from "react-hook-form";
-import { onSubmit } from "./lib/submit";
+import {
+  Card,
+  Divider,
+  useDisclosure,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+} from "@nextui-org/react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { FormType, submitHandler } from "./lib/submit";
 import PersonalDataCard from "./components/personal-data-card";
 import AccountDataCard from "./components/account-data-card";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
-/**
- * The types of the fields the form contains.
- * This is not the same as the FormData used for submitting
- * since the form also has a "confirm password field"
- */
-export type FormType = {
-  email: string;
-  firstName: string;
-  lastName: string;
-  institution: string;
-  fields: string[];
-  password: string;
-  confpass: string;
-};
+import GenericLoadingPage from "@/components/loading-page";
 
 /**
  * @returns A page containing the title and the sinup form
@@ -54,31 +50,64 @@ export default function SignupPage() {
     shouldUseNativeValidation: true,
   });
 
+  /* is loading set to true, if the form is submitting */
+  const [isLoading, setIsLoading] = useState(false);
+
+  /* controls for the error dialog for the form submition */
+  const errorModal = useDisclosure();
+
+  /* submit function that also passes the loading and error states */
+  const onSubmit: SubmitHandler<FormType> = (data: FormType) =>
+    submitHandler(data, setIsLoading, errorModal.onOpen);
+
   /* if the page is not hydrated, refresh the page */
   if (!mounted) {
     router.refresh();
     return null;
   }
 
-  return (
-    <form
-      // disable reason: this is the intended usage for handleSubmit
-      // the react-hook-form solution for typescripting their function did not work
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      onSubmit={handleSubmit(onSubmit)}
-      className="relative flex flex-col space-y-7 w-full h-full min-h-fit m-auto py-7"
-    >
-      <h1 className="w-full text-center">Create an Alexandria account</h1>
+  /* if the form is being submitted, return the loading page, i could make something fancier in the future */
+  if (isLoading) return <GenericLoadingPage />;
 
-      <Card className="flex flex-row justify-between content-center p-10">
-        <PersonalDataCard control={control} formState={formState} />
-        <Divider orientation="vertical" />
-        <AccountDataCard
-          control={control}
-          formState={formState}
-          watch={watch}
-        />
-      </Card>
-    </form>
+  return (
+    <>
+      {/* error alert, only visible if there is an error */}
+      <Modal isOpen={errorModal.isOpen} onOpenChange={errorModal.onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader>Error</ModalHeader>
+              <ModalBody>
+                There was an error when submitting your post. Please try again.
+              </ModalBody>
+              <ModalFooter>
+                <Button color="primary" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      <form
+        // disable reason: this is the intended usage for handleSubmit
+        // the react-hook-form solution for typescripting their function did not work
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        onSubmit={handleSubmit(onSubmit)}
+        className="relative flex flex-col space-y-7 w-full h-full min-h-fit m-auto py-7"
+      >
+        <h1 className="w-full text-center">Create an Alexandria account</h1>
+
+        <Card className="flex flex-row justify-between content-center p-10">
+          <PersonalDataCard control={control} formState={formState} />
+          <Divider orientation="vertical" />
+          <AccountDataCard
+            control={control}
+            formState={formState}
+            watch={watch}
+          />
+        </Card>
+      </form>
+    </>
   );
 }
