@@ -1,6 +1,6 @@
 import { parseId } from "@/lib/string-utils";
-import PeerReviewInput from "../components/peer-review-inputs";
-import CompareVersionContentCard from "../components/compare-version-content-card";
+import PeerReviewInput from "../components/peer-review/peer-review-input";
+import CompareVersionContentCard from "../components/merge-request-parts/compare-version-content-card";
 import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
 
 /**

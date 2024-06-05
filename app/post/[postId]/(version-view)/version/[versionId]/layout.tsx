@@ -1,6 +1,6 @@
 import { ChildrenProp } from "@/lib/types/react-props/children-prop";
 import BodyWithSidebar from "@/components/body-with-sidebar";
-import MergeRequestSidebar from "./components/merge-request-sidebar";
+import MergeRequestSidebar from "./components/merge-request-parts/merge-request-sidebar";
 
 /**
  * Layout for merge request pages, which inserts a [MergeRequestSidebar](./components/merge-request-sidebar)

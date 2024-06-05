@@ -1,8 +1,8 @@
 import { parseId } from "@/lib/string-utils";
 import DiscussionSection from "@/post/[postId]/components/discussions/discussion-section";
-import PeerReviewSection from "./components/peer-review-section";
+import PeerReviewSection from "./components/peer-review/peer-review-section";
 import { CardFooter, Divider } from "@nextui-org/react";
-import CompareVersionContentCard from "./components/compare-version-content-card";
+import CompareVersionContentCard from "./components/merge-request-parts/compare-version-content-card";
 import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
 
 /**
