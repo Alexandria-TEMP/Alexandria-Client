@@ -16,13 +16,18 @@ export default function UploadContentCard<FormType extends FieldValues>({
   control,
   rules,
 }: UploadContentT<FormType>) {
+  /* Register the field with the parent form */
   const { field, fieldState } = useController({ name, control, rules });
+
+  /* I need a reference to the hidden html input elem so that i can simulate a click on it , whenever i click the add files button */
   const hiddenFile = useRef<HTMLInputElement | null>(null);
 
+  /* when the button is clicked, also click the hidden input elem to actually open the select file prompt */
   const handleClick = () => {
     hiddenFile.current?.click();
   };
 
+  /* when a file is selected, add it to the field in the form */
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -49,18 +54,29 @@ export default function UploadContentCard<FormType extends FieldValues>({
       </span>
       <div className="flex flex-row gap-x-5">
         {/* card for uploading files from computer */}
-        <Card className={"grow w-1/2"} data-testid="upload-files-test-id">
+        <Card
+          className={"grow w-1/2".concat(
+            !fieldState.error ? "" : " bg-danger-50",
+          )}
+          data-testid="upload-files-test-id"
+        >
           <CardHeader aria-label={name}>Upload Files</CardHeader>
 
           <CardBody className={"space-y-2"}>
             {/* paragagraph diplaying the name of the uploaded file */}
-            <p>{field.value ? field.value.name : "No zip archive selected."}</p>
+            <p data-testid="upload-title">
+              {field.value ? field.value.name : "No zip archive selected."}
+            </p>
 
             {/* paragraph displaying the erorr message if the rules are not met */}
-            {fieldState.error && <p>{fieldState.error.message}</p>}
+            {fieldState.error && (
+              <p data-testid="upload-error">{fieldState.error.message}</p>
+            )}
 
             {/* the button for opening file manager */}
-            <Button onClick={handleClick}>Upload Project</Button>
+            <Button onClick={handleClick} data-testid="upload-btn">
+              {field.value ? "Change Project Zip" : "Upload Project Zip"}
+            </Button>
 
             {/* the actual html input field where the file gets stored, 
             this is needed to actually store the file and handle opening the file explorer
@@ -76,11 +92,16 @@ export default function UploadContentCard<FormType extends FieldValues>({
               hidden
               style={{ opacity: 0 }}
               onChange={handleChange}
+              data-testid="upload-hidden-input"
             />
             {/* the description for uploading files */}
             {/* TODO be more explicit about what a user has to do */}
-            <p className="text-tiny text-foreground-400">
-              Please zip the files in your Quarto project before uploading.
+            <p
+              className="text-tiny text-foreground-400"
+              data-testid="upload-desc"
+            >
+              Please zip the files in your Quarto project before uploading. Do
+              not zip the entire folder, zip directly the files and subfolders.
             </p>
           </CardBody>
         </Card>
