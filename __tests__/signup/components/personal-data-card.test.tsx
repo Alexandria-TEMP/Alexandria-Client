@@ -1,4 +1,4 @@
-const { expect, describe, it } = require("@jest/globals");
+import { expect, describe, it } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -53,7 +53,8 @@ describe("Personal data fields test", () => {
       const nameHeaderElem = screen.getByText("First Name");
       const nameInputElem = screen.getByTestId("first-name");
 
-      await user.type(nameInputElem, "a".repeat(101));
+      await user.click(nameInputElem);
+      await user.paste("a".repeat(101));
       await user.click(nameHeaderElem); // click away for error to appear
 
       await waitFor(() => {
