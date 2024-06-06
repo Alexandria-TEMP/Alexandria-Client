@@ -55,7 +55,7 @@ export default function AccountDataCard({
           required: "Please enter a password.",
           minLength: {
             value: 8,
-            message: "Password must contain at least 8 charcters.",
+            message: "Password must contain at least 8 characters.",
           },
           pattern: {
             value: passwordRegex,
