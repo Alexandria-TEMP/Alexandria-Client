@@ -15,7 +15,11 @@ import { useEffect, useMemo, useState } from "react";
 /**
  * Header for merge request contents card. Uses CardHeader, so it must be child of a Card.
  * Includes title, main metadata, and action buttons.
- * TODO update jsdoc
+ * @param postId post ID, used for routing only
+ * @param mergeRequestId merge request ID
+ * @param hideContribute hides button with contribution options
+ * @param onCompare called when "Compare" switch is toggled,
+ *                  if undefined the switch won't be rendered
  */
 export default function MergeRequestCardHeader({
   postId,
@@ -85,8 +89,6 @@ export default function MergeRequestCardHeader({
         {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
 
         {!!onCompare && <Switch onValueChange={onCompare}>Compare</Switch>}
-
-        {/* TODO add review chips somewhere here */}
 
         <div className="grow" />
 
