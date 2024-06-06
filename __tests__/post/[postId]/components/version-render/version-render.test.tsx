@@ -12,7 +12,10 @@ describe("VersionRender", () => {
   const setupGoodWeather = async () => {
     (getRenderedVersion as jest.Mock).mockResolvedValue(dummyHtml.html);
 
-    const content = await act(() => render(<VersionRender id="1" />));
+    // Disable reason: Need the async keyword for act to work properly
+    // but render is not awaitable so eslint complains
+    // eslint-disable-next-line @typescript-eslint/require-await
+    const content = await act(async () => render(<VersionRender id="1" />));
 
     const iframe = content.getByTitle(iframeTitle) as HTMLIFrameElement;
     return { content, iframe };
@@ -22,7 +25,10 @@ describe("VersionRender", () => {
     const errorMessage = "this is a test failure!";
     (getRenderedVersion as jest.Mock).mockRejectedValue(errorMessage);
 
-    const content = await act(() => render(<VersionRender id="1" />));
+    // Disable reason: Need the async keyword for act to work properly
+    // but render is not awaitable so eslint complains
+    // eslint-disable-next-line @typescript-eslint/require-await
+    const content = await act(async () => render(<VersionRender id="1" />));
 
     const error = screen.getByTestId("render-error");
     return { errorMessage, content, error };
