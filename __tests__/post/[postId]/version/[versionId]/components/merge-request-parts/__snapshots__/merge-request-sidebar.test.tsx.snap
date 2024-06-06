@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MergeRequestSidebarTest matches snapshot 1`] = `
+<div>
+  <div
+    class="sticky top-20"
+  >
+    <h3>
+      Version of
+    </h3>
+    <p>
+      PostCardMini
+    </p>
+    <div
+      class="h-4"
+    />
+    <h3>
+      Scientific fields
+    </h3>
+    <p>
+      ChipList
+    </p>
+    <div
+      class="h-4"
+    />
+    <h3>
+      Contributors
+    </h3>
+    <p>
+      AuthorCardList
+    </p>
+    <div
+      class="h-4"
+    />
+  </div>
+</div>
+`;
