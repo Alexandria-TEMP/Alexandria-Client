@@ -1,5 +1,5 @@
 import { expect, describe, it } from "@jest/globals";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import UploadContentCard from "@/components/form/upload-content-card";
 import { useForm, FormProvider } from "react-hook-form";
 import userEvent from "@testing-library/user-event";
@@ -18,7 +18,14 @@ const Wrapper = ({
     mode: "onTouched",
   });
 
-  return <FormProvider {...methods}>{children}</FormProvider>;
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(() => console.log("fake submit"))}>
+        {children}
+        <button type="submit" data-testid="fake-submit-button" />
+      </form>
+    </FormProvider>
+  );
 };
 
 describe("Upload content tests", () => {
@@ -42,7 +49,7 @@ describe("Upload content tests", () => {
 
   it("renders correct elements inside upload files card", () => {
     const title = screen.getByTestId("upload-title");
-    const btn = screen.getByTestId("upload-btn");
+    const btn = screen.getByText("Upload Project Zip");
     const hiddenInput = screen.getByTestId("upload-hidden-input");
     const desc = screen.getByTestId("upload-desc");
     const noFilesMessage = screen.getByText("No zip archive selected.");
@@ -72,6 +79,10 @@ describe("Upload content tests", () => {
 
     const fileName = screen.getByText("test.zip");
     expect(fileName).toBeInTheDocument();
+    // also test if button text changed
+    await waitFor(() => {
+      expect(screen.getByText("Change Project Zip")).toBeInTheDocument();
+    });
   });
 });
 
@@ -95,5 +106,14 @@ describe("Upload content is required tests", () => {
   it("shows danger asterisk", () => {
     const asterisk = screen.getByText("*");
     expect(asterisk).toBeInTheDocument();
+  });
+
+  it("displays error message", async () => {
+    const fakeSubmit = screen.getByTestId("fake-submit-button");
+    await userEvent.click(fakeSubmit);
+    const error = screen.getByTestId("upload-error");
+    await waitFor(() => {
+      expect(error).toBeInTheDocument();
+    });
   });
 });
