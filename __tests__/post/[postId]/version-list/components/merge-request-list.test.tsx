@@ -1,8 +1,8 @@
-import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
+import { getBranchData } from "@/lib/api-calls/merge-request-api";
 import MergeRequestList from "@/post/[postId]/(main-post-view)/version-list/components/merge-request-list";
 import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";
-import { dummyMergeRequests } from "~/__tests__/__utils__/dummys";
+import { dummyBranches } from "~/__tests__/__utils__/dummys";
 import MergeRequestCard from "@/post/[postId]/(main-post-view)/version-list/components/merge-request-card";
 
 jest.mock("@/lib/api-calls/merge-request-api");
@@ -11,9 +11,7 @@ jest.mock(
 );
 
 describe("MergeRequestList", () => {
-  (getMergeRequestData as jest.Mock).mockResolvedValue(
-    dummyMergeRequests["open"],
-  );
+  (getBranchData as jest.Mock).mockResolvedValue(dummyBranches["open"]);
   (MergeRequestCard as jest.Mock).mockReturnValue(<p>Card</p>);
 
   it("matches snapshot", () => {

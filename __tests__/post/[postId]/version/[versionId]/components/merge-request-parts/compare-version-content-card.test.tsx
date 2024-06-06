@@ -1,4 +1,4 @@
-import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
+import { getBranchData } from "@/lib/api-calls/merge-request-api";
 import CompareVersionContentCard from "@/post/[postId]/(version-view)/version/[versionId]/components/merge-request-parts/compare-version-content-card";
 import VersionRender from "@/post/[postId]/components/version-render/component";
 import { expect, describe, it } from "@jest/globals";
@@ -6,7 +6,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/navigation";
 import createMockRouter from "~/__tests__/__utils__/create-mock-router";
-import { dummyMergeRequests } from "~/__tests__/__utils__/dummys";
+import { dummyBranches } from "~/__tests__/__utils__/dummys";
 
 // Mock getMergeRequestData()
 jest.mock("@/lib/api-calls/merge-request-api");
@@ -17,9 +17,7 @@ jest.mock("@/post/[postId]/components/version-render/component");
 
 describe("CompareVersionContentCard", () => {
   (useRouter as jest.Mock).mockReturnValue(createMockRouter());
-  (getMergeRequestData as jest.Mock).mockResolvedValue(
-    dummyMergeRequests["accepted"],
-  );
+  (getBranchData as jest.Mock).mockResolvedValue(dummyBranches["accepted"]);
 
   beforeEach(async () => {
     (VersionRender as jest.Mock).mockImplementation(({ id }) =>
@@ -41,7 +39,7 @@ describe("CompareVersionContentCard", () => {
 
     await waitFor(() => {
       const title = screen.getByRole("heading", {
-        name: dummyMergeRequests["accepted"].newPostTitle,
+        name: dummyBranches["accepted"].newPostTitle,
       });
       expect(title).toBeInTheDocument();
     });

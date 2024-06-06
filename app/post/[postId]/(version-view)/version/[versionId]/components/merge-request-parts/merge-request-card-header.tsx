@@ -2,12 +2,12 @@
 
 import { CardHeader, Switch } from "@nextui-org/react";
 import HeaderSubtle from "@/components/header-subtle";
-import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
+import { getBranchData } from "@/lib/api-calls/merge-request-api";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
 import LinkGroup from "@/post/[postId]/components/buttons/link-group";
 import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
 import { reviewStatusToTensedVerb } from "@/lib/get-format";
-import { MergeRequest, idType } from "@/lib/types/api-types";
+import { BranchT, idType } from "@/lib/types/api-types";
 import ChipWithTitle from "@/components/chip-with-title";
 import MergeRequestCardHeaderSkeleton from "./merge-request-card-header-skeleton";
 import { useEffect, useMemo, useState } from "react";
@@ -32,16 +32,16 @@ export default function MergeRequestCardHeader({
   hideContribute?: boolean;
   onCompare?: (value: boolean) => void;
 }) {
-  const [data, setData] = useState<MergeRequest>();
+  const [data, setData] = useState<BranchT>();
   const [isLoading, setIsLoading] = useState(true);
   const status = useMemo(
     () =>
-      data ? reviewStatusToTensedVerb(data.mergeRequestDecision) : undefined,
+      data ? reviewStatusToTensedVerb(data.branchReviewStatus) : undefined,
     [data],
   );
 
   useEffect(() => {
-    getMergeRequestData(mergeRequestId)
+    getBranchData(mergeRequestId)
       .then(setData)
       .catch((e) => {
         throw e;

@@ -1,11 +1,11 @@
 import { expect } from "@jest/globals";
 import {
-  getMergeRequestData,
-  getMergeRequestReviewStatuses,
+  getBranchData,
+  getBranchReviewStatuses,
 } from "@/lib/api-calls/merge-request-api";
 import MergeRequestCard from "@/post/[postId]/(main-post-view)/version-list/components/merge-request-card";
 import { act, render, screen, waitFor } from "@testing-library/react";
-import { dummyMergeRequests } from "~/__tests__/__utils__/dummys";
+import { dummyBranches } from "~/__tests__/__utils__/dummys";
 import { useRouter } from "next/navigation";
 import userEvent from "@testing-library/user-event";
 
@@ -17,10 +17,8 @@ jest.mock("next/navigation");
 
 describe("MergeRequestCard", () => {
   (useRouter as jest.Mock).mockReturnValue({ push: routerPushMock });
-  (getMergeRequestData as jest.Mock).mockResolvedValue(
-    dummyMergeRequests["open"],
-  );
-  (getMergeRequestReviewStatuses as jest.Mock).mockResolvedValue([
+  (getBranchData as jest.Mock).mockResolvedValue(dummyBranches["open"]);
+  (getBranchReviewStatuses as jest.Mock).mockResolvedValue([
     "open",
     "open",
     "open",
@@ -33,8 +31,8 @@ describe("MergeRequestCard", () => {
     await act(async () => {
       render(
         <MergeRequestCard
-          id={dummyMergeRequests["open"].id.toString()}
-          postId={dummyMergeRequests["open"].projectPostID}
+          id={dummyBranches["open"].id.toString()}
+          postId={dummyBranches["open"].projectPostID}
         />,
       );
     });
@@ -48,22 +46,18 @@ describe("MergeRequestCard", () => {
   });
 
   it("shows title", () => {
-    const title = screen.getByText(
-      dummyMergeRequests["open"].mergeRequestTitle,
-    );
+    const title = screen.getByText(dummyBranches["open"].branchTitle);
     expect(title).toBeInTheDocument();
   });
 
   it("navigates on click", async () => {
-    const title = screen.getByText(
-      dummyMergeRequests["open"].mergeRequestTitle,
-    );
+    const title = screen.getByText(dummyBranches["open"].branchTitle);
 
     const user = userEvent.setup();
     await user.click(title);
 
     expect(routerPushMock).toHaveBeenCalledWith(
-      `/post/${dummyMergeRequests["open"].projectPostID}/version/${dummyMergeRequests["open"].id}`,
+      `/post/${dummyBranches["open"].projectPostID}/version/${dummyBranches["open"].id}`,
     );
   });
 });

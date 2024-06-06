@@ -1,4 +1,4 @@
-import { Member, MergeRequestReviewStatus, Tag } from "./types/api-types";
+import { Member, BranchReviewStatusT, Tag } from "./types/api-types";
 
 /**
  * Parses member data to return some full name for them
@@ -21,7 +21,7 @@ export function getFieldName(i: Tag | undefined) {
 /**
  * Maps type MergeRequestReviewStatus to a verb in past or present tense
  */
-export function reviewStatusToTensedVerb(status: MergeRequestReviewStatus) {
+export function reviewStatusToTensedVerb(status: BranchReviewStatusT) {
   switch (status) {
     case "open for review":
       return "open";

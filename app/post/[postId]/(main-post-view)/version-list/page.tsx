@@ -1,5 +1,5 @@
 import { Card } from "@nextui-org/react";
-import { getPostMergeRequests } from "@/lib/api-calls/merge-request-api";
+import { getPostBranches } from "@/lib/api-calls/merge-request-api";
 import { parseId } from "@/lib/string-utils";
 import PostCardHeader from "../../components/post-parts/post-card-header";
 import MergeRequestTabs from "./components/merge-request-tabs";
@@ -17,7 +17,7 @@ export default async function PostMergeRequests({
 }: {
   params: { postId: string };
 }) {
-  const mergeRequests = await getPostMergeRequests(parseId(params.postId));
+  const mergeRequests = await getPostBranches(parseId(params.postId));
   const id = parseId(params.postId);
   return (
     <div>

@@ -1,11 +1,11 @@
-import { MergeRequest, idType } from "../types/api-types";
+import { BranchT, idType } from "../types/api-types";
 
 /**
- * Gets data for a Merge request given their ID.
+ * Gets data for a branch given their ID.
  * @async
- * @param id Merge request ID
+ * @param id branch ID
  */
-export async function getMergeRequestData(id: idType): Promise<MergeRequest> {
+export async function getBranchData(id: idType): Promise<BranchT> {
   // TODO
   await new Promise((resolve) => setTimeout(resolve, 800));
   if (id == 1)
@@ -13,16 +13,15 @@ export async function getMergeRequestData(id: idType): Promise<MergeRequest> {
       id: id,
       newPostTitle: "Post title",
       projectPostID: 1,
-      mergeRequestTitle: "Remove contents section",
+      branchTitle: "Remove contents section",
       newVersionID: 1,
       reviewIDs: [0, 1, 0],
-      anonymous: false,
       createdAt: "19 May 2024",
       collaboratorIDs: [0, 1],
       updatedAt: "20 May 2024",
       updatedCompletionStatus: "ideation",
       updatedScientificFields: ["Mathematics"],
-      mergeRequestDecision: "rejected",
+      branchReviewStatus: "rejected",
       previousVersionID: 2,
     };
   else if (id == 2)
@@ -30,16 +29,15 @@ export async function getMergeRequestData(id: idType): Promise<MergeRequest> {
       id: id,
       newPostTitle: "Post title",
       projectPostID: 1,
-      mergeRequestTitle: "Do some stuff",
+      branchTitle: "Do some stuff",
       newVersionID: 1,
       reviewIDs: [1],
-      anonymous: false,
       createdAt: "19 May 2024",
       collaboratorIDs: [0, 1],
       updatedAt: "20 May 2024",
       updatedCompletionStatus: "ideation",
       updatedScientificFields: ["Mathematics"],
-      mergeRequestDecision: "open for review",
+      branchReviewStatus: "open for review",
       previousVersionID: 2,
     };
   else
@@ -47,28 +45,27 @@ export async function getMergeRequestData(id: idType): Promise<MergeRequest> {
       id: id,
       newPostTitle: "Post title",
       projectPostID: 1,
-      mergeRequestTitle: "Grammar fixes",
+      branchTitle: "Grammar fixes",
       newVersionID: 1,
       reviewIDs: [1, 1, 1],
-      anonymous: false,
       createdAt: "19 May 2024",
       collaboratorIDs: [0, 1],
       updatedAt: "20 May 2024",
       updatedCompletionStatus: "ideation",
       updatedScientificFields: ["Mathematics"],
-      mergeRequestDecision: "peer reviewed",
+      branchReviewStatus: "peer reviewed",
       previousVersionID: 2,
     };
 }
 
 /**
- * Gets merge requests of a post given their ID.
+ * Gets branches of a post given their ID.
  * @async
  * @param id Post ID
  */
 // TODO remove next line
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function getPostMergeRequests(id: idType) {
+export async function getPostBranches(id: idType) {
   await new Promise((resolve) => setTimeout(resolve, 100));
   return {
     rejected: ["1", "1", "1", "1"],
@@ -99,7 +96,7 @@ export async function getPostMergeRequests(id: idType) {
 /**
  * TODO jsdoc when properly implemented
  */
-export async function getMergeRequestReviewStatuses(id: idType) {
+export async function getBranchReviewStatuses(id: idType) {
   await new Promise((resolve) => setTimeout(resolve, 70));
   if (id == 1) return ["accept", "reject", "accept"];
   else if (id == 2) return ["accept", "open", "open"];

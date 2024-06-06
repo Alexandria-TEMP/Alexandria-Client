@@ -1,6 +1,6 @@
 import ChipList from "@/components/chip-list";
 import Sidebar from "@/components/sidebar";
-import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
+import { getBranchData } from "@/lib/api-calls/merge-request-api";
 import { parseId } from "@/lib/string-utils";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import AuthorCardList from "@/post/[postId]/components/cards/author-card-list";
@@ -12,7 +12,7 @@ import PostCardMini from "@/post/[postId]/components/cards/post-card-mini";
  * @param id merge request ID
  */
 export default async function MergeRequestSidebar({ id }: IdProp) {
-  const data = await getMergeRequestData(parseId(id));
+  const data = await getBranchData(parseId(id));
 
   return (
     <Sidebar

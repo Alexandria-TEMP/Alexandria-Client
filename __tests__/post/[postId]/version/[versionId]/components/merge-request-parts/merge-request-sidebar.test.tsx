@@ -4,8 +4,8 @@ import AuthorCardList from "@/post/[postId]/components/cards/author-card-list";
 import PostCardMini from "@/post/[postId]/components/cards/post-card-mini";
 import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";
-import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
-import { dummyMergeRequests } from "~/__tests__/__utils__/dummys";
+import { getBranchData } from "@/lib/api-calls/merge-request-api";
+import { dummyBranches } from "~/__tests__/__utils__/dummys";
 
 jest.mock("@/lib/api-calls/merge-request-api");
 jest.mock("@/components/chip-list");
@@ -13,9 +13,7 @@ jest.mock("@/post/[postId]/components/cards/author-card-list");
 jest.mock("@/post/[postId]/components/cards/post-card-mini");
 
 describe("MergeRequestSidebarTest", () => {
-  (getMergeRequestData as jest.Mock).mockReturnValue(
-    dummyMergeRequests["accepted"],
-  );
+  (getBranchData as jest.Mock).mockReturnValue(dummyBranches["accepted"]);
   (ChipList as jest.Mock).mockReturnValue(<p>ChipList</p>);
   (AuthorCardList as jest.Mock).mockReturnValue(<p>AuthorCardList</p>);
   (PostCardMini as jest.Mock).mockReturnValue(<p>PostCardMini</p>);

@@ -2,8 +2,8 @@
 
 import HeaderSubtle from "@/components/header-subtle";
 import {
-  getMergeRequestData,
-  getMergeRequestReviewStatuses,
+  getBranchData,
+  getBranchReviewStatuses,
 } from "@/lib/api-calls/merge-request-api";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { capitalizeFirstLetter, parseId } from "@/lib/string-utils";
 import MergeRequestCardSkeleton from "./merge-request-card-skeleton";
-import { MergeRequest, idType } from "@/lib/types/api-types";
+import { BranchT, idType } from "@/lib/types/api-types";
 import { reviewStatusToTensedVerb } from "@/lib/get-format";
 import ReviewChips from "../../../components/review-chips";
 
@@ -25,13 +25,13 @@ export default function MergeRequestCard({
   short,
 }: IdProp & { postId: idType; short?: boolean }) {
   const router = useRouter();
-  const [data, setData] = useState<MergeRequest | undefined>(undefined);
+  const [data, setData] = useState<BranchT | undefined>(undefined);
   const [reviews, setReviews] = useState<string[] | undefined>(undefined);
 
   useEffect(() => {
     const getData = async () => {
-      setData(await getMergeRequestData(parseId(id)));
-      setReviews(await getMergeRequestReviewStatuses(parseId(id)));
+      setData(await getBranchData(parseId(id)));
+      setReviews(await getBranchReviewStatuses(parseId(id)));
     };
     getData().catch(() => {
       setData(undefined);
@@ -48,15 +48,15 @@ export default function MergeRequestCard({
 
   const titleAndCreateDate = (
     <>
-      <h3 className="font-semibold">{data.mergeRequestTitle}</h3>
+      <h3 className="font-semibold">{data.branchTitle}</h3>
       <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
     </>
   );
 
   const updateDate = (
     <p className="text-sm">
-      {data.mergeRequestDecision != "open for review" &&
-        `${capitalizeFirstLetter(reviewStatusToTensedVerb(data.mergeRequestDecision))} on ${data.updatedAt}`}
+      {data.branchReviewStatus != "open for review" &&
+        `${capitalizeFirstLetter(reviewStatusToTensedVerb(data.branchReviewStatus))} on ${data.updatedAt}`}
     </p>
   );
 

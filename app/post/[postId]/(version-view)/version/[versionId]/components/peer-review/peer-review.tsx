@@ -6,7 +6,7 @@ import getMemberData from "@/lib/api-calls/member-api";
 import { getReviewData } from "@/lib/api-calls/review-api";
 import { getMemberName } from "@/lib/get-format";
 import { capitalizeFirstLetter, parseId } from "@/lib/string-utils";
-import { Member, Review } from "@/lib/types/api-types";
+import { Member, ReviewT } from "@/lib/types/api-types";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import ReviewChip from "@/post/[postId]/components/review-chip";
 import {
@@ -23,7 +23,7 @@ import { useEffect, useMemo, useState } from "react";
  * @param id peer review ID
  */
 export default function PeerReview({ id }: IdProp) {
-  const [data, setData] = useState<Review | undefined>();
+  const [data, setData] = useState<ReviewT | undefined>();
   const [author, setAuthor] = useState<Member | undefined>();
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function PeerReview({ id }: IdProp) {
 
   const decisionColor: "success" | "danger" = useMemo(
     () =>
-      data && data.mergeRequestDecision === "approved" ? "success" : "danger",
+      data && data.branchReviewDecision === "approved" ? "success" : "danger",
     [data],
   );
 
@@ -63,13 +63,13 @@ export default function PeerReview({ id }: IdProp) {
 
       <CardFooter>
         <Skeleton isLoaded={!!data} className="rounded-full">
-          <ReviewChip small status={data && data.mergeRequestDecision} />
+          <ReviewChip small status={data && data.branchReviewDecision} />
         </Skeleton>
 
         <Skeleton isLoaded={!!data} className="rounded-lg">
           <h3 className={`text-${decisionColor} font-semibold ml-2`}>
             {capitalizeFirstLetter(
-              data ? data.mergeRequestDecision : "Review loading...",
+              data ? data.branchReviewDecision : "Review loading...",
             )}
           </h3>
         </Skeleton>
