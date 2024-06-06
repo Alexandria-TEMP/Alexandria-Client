@@ -7,34 +7,46 @@ import { useRouter } from "next/navigation";
 import createMockRouter from "~/__tests__/__utils__/create-mock-router";
 import { dummyMergeRequests } from "~/__tests__/__utils__/dummys";
 
-
 // Mock getMergeRequestData()
 jest.mock("@/lib/api-calls/merge-request-api");
 // Mock useRouter so it's mounted
 jest.mock("next/navigation");
 
 describe("MergeRequestCardHeaderTest", () => {
-
   (useRouter as jest.Mock).mockReturnValue(createMockRouter());
-  
-  const generateSnapshotTestForStatus = (status : "accepted" | "rejected" | "open") => {
+
+  const generateSnapshotTestForStatus = (
+    status: "accepted" | "rejected" | "open",
+  ) => {
     return async () => {
-      (getMergeRequestData as jest.Mock).mockResolvedValue(dummyMergeRequests[status]);
+      (getMergeRequestData as jest.Mock).mockResolvedValue(
+        dummyMergeRequests[status],
+      );
       const { container } = render(
         <Card>
           <MergeRequestCardHeader postId={0} mergeRequestId={0} />
-        </Card>
+        </Card>,
       );
       await waitFor(() => {
-        const title = screen.getByRole("heading", {name: dummyMergeRequests[status].newPostTitle});
-        expect(title).toBeInTheDocument()
+        const title = screen.getByRole("heading", {
+          name: dummyMergeRequests[status].newPostTitle,
+        });
+        expect(title).toBeInTheDocument();
       });
       expect(container).toMatchSnapshot();
-    }
-  }
+    };
+  };
 
-  it("matches snapshot when status is accepted", generateSnapshotTestForStatus("accepted"))
-  it("matches snapshot when status is rejected", generateSnapshotTestForStatus("rejected"))
-  it("matches snapshot when status is open", generateSnapshotTestForStatus("open"))
-
+  it(
+    "matches snapshot when status is accepted",
+    generateSnapshotTestForStatus("accepted"),
+  );
+  it(
+    "matches snapshot when status is rejected",
+    generateSnapshotTestForStatus("rejected"),
+  );
+  it(
+    "matches snapshot when status is open",
+    generateSnapshotTestForStatus("open"),
+  );
 });

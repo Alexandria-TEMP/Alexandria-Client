@@ -16,37 +16,48 @@ jest.mock("next/navigation");
 jest.mock("@/post/[postId]/components/version-render/component");
 
 describe("CompareVersionContentCard", () => {
-
   (useRouter as jest.Mock).mockReturnValue(createMockRouter());
-  (getMergeRequestData as jest.Mock).mockResolvedValue(dummyMergeRequests["accepted"]);
- 
-  beforeEach(async () => {
-    (VersionRender as jest.Mock)
-      .mockImplementation(({id}) => 
-        id === "1" 
-        ? <p data-testid="new-version">This is the new version</p>
-        : <p data-testid="old-version">This version is being replaced</p>
-      );
+  (getMergeRequestData as jest.Mock).mockResolvedValue(
+    dummyMergeRequests["accepted"],
+  );
 
-    render(<CompareVersionContentCard newVersionId={1} previousVersionId={2} postId={0} mergeRequestId={0} />);
+  beforeEach(async () => {
+    (VersionRender as jest.Mock).mockImplementation(({ id }) =>
+      id === "1" ? (
+        <p data-testid="new-version">This is the new version</p>
+      ) : (
+        <p data-testid="old-version">This version is being replaced</p>
+      ),
+    );
+
+    render(
+      <CompareVersionContentCard
+        newVersionId={1}
+        previousVersionId={2}
+        postId={0}
+        mergeRequestId={0}
+      />,
+    );
 
     await waitFor(() => {
-      const title = screen.getByRole("heading", {name: dummyMergeRequests["accepted"].newPostTitle});
-      expect(title).toBeInTheDocument()
+      const title = screen.getByRole("heading", {
+        name: dummyMergeRequests["accepted"].newPostTitle,
+      });
+      expect(title).toBeInTheDocument();
     });
-  })
+  });
 
-  it("shows one version when compare is off",  () => {
+  it("shows one version when compare is off", () => {
     const newVersion = screen.getByTestId("new-version");
     const oldVersion = screen.getByTestId("old-version");
 
     expect(newVersion).toBeInTheDocument();
     expect(oldVersion).toBeInTheDocument();
   });
-  
+
   it("shows both versions when compare is on", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("switch", {name: "Compare"}));
+    await user.click(screen.getByRole("switch", { name: "Compare" }));
 
     await waitFor(() => {
       const newVersion = screen.getByTestId("new-version");
