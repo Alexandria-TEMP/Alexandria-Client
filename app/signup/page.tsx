@@ -55,7 +55,7 @@ export default function SignupPage() {
   });
 
   /* if the page is not hydrated, refresh the page */
-  if (!mounted) {
+  if (!mounted && typeof window !== "undefined") {
     router.refresh();
     return null;
   }

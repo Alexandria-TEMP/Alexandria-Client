@@ -15,19 +15,26 @@ export type Tag = {
   tagType: string;
 };
 
-export type Post = {
+export type VersionT = {
+  id: string;
+  discussions: string[];
+};
+
+export type PostT = {
+  id: string;
   title: string;
   status: string;
-  collaborators: string[];
-  createdAt: Date;
-  currentVersion: {
-    id: string;
-    discussions: string[];
-  };
-  id: string;
-  postType: PostType;
+  authors: string[];
+  contributors: string[];
+  collaborators: string[]; // TODO duplicates will be fixed in issue #27
+  anonymous: boolean;
+  createdAt: string;
+  currentVersion: VersionT;
+  postType: string;
   scientificFieldTags: string[];
-  updatedAt: Date;
+  updatedAt: string;
+  feedbackPreferences: string;
+  completionStatus: string;
 };
 
 export type MergeRequest = {

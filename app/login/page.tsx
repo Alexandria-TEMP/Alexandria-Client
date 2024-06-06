@@ -6,6 +6,7 @@ import { onSubmit } from "./lib/submit";
 import Logo from "@/components/logo";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { emailRegex } from "@/lib/validation-rules";
 
 /**
  * Login page, uses react-hook-form
@@ -32,7 +33,7 @@ export default function LoginPage() {
   });
 
   /* if the page is not hydrated, refresh the page */
-  if (!mounted) {
+  if (!mounted && typeof window !== "undefined") {
     router.refresh();
     return null;
   }
@@ -53,7 +54,7 @@ export default function LoginPage() {
           rules={{
             required: "Please enter an email address.",
             pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{1,4}$/i,
+              value: emailRegex,
               message: "Please enter a valid email address.",
             },
           }}

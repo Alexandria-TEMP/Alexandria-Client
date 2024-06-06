@@ -9,6 +9,7 @@ describe("dummy onSubmit test", () => {
     firstName: "first name",
     lastName: "last name",
     institution: "institution", // TODO might be nice to have some sort of list of institutions,
+    fields: ["1", "2"],
     password: "pass",
   };
 

@@ -4,20 +4,18 @@ import {
   waitFor,
   within,
   fireEvent,
+  act,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MultiSelectAutocomplete } from "@/components/multi-select-autocomplete";
 import { Member } from "@/lib/types/api-types";
+import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
 import { dummyMembers } from "~/__tests__/__utils__/dummys";
 import { useForm, FormProvider } from "react-hook-form";
+import { expect, describe, it } from "@jest/globals";
 
 const dumTitle = "Dummy title";
 const dumDesc = "Dummy description";
-let dumSelected = new Set<string>();
-const dumItems = new Map<string, Member>([
-  [dummyMembers[0].id, dummyMembers[0]],
-  [dummyMembers[1].id, dummyMembers[1]],
-]);
+const dumItems = dummyMembers;
 const dumGetItemLabel = jest.fn((item: Member | undefined) => "Dummy name");
 
 const Wrapper = ({
@@ -38,18 +36,20 @@ const Wrapper = ({
 };
 
 describe("MultiSelectAutocomplete", () => {
-  beforeEach(() => {
-    render(
-      <Wrapper defaults={[]}>
-        <MultiSelectAutocomplete
-          label={dumTitle}
-          description={dumDesc}
-          options={dumItems}
-          name="dumItem"
-          getItemLabel={dumGetItemLabel}
-        />
-      </Wrapper>,
-    );
+  beforeEach(async () => {
+    await act(async () => {
+      render(
+        <Wrapper defaults={[]}>
+          <MultiSelectAutocomplete
+            label={dumTitle}
+            description={dumDesc}
+            name="dumItem"
+            getItemLabel={dumGetItemLabel}
+            optionsGetter={async () => dumItems}
+          />
+        </Wrapper>,
+      );
+    });
   });
 
   it("renders the title", () => {
@@ -72,23 +72,26 @@ describe("MultiSelectAutocomplete", () => {
     expect(inputElem).toBeInTheDocument();
   });
 
-  it("renders author tags", () => {
-    render(
-      <Wrapper defaults={["1"]}>
-        <MultiSelectAutocomplete
-          label={dumTitle}
-          description={dumDesc}
-          options={dumItems}
-          name="dumItem"
-          getItemLabel={dumGetItemLabel}
-        />
-      </Wrapper>,
-    );
+  it("renders author tags", async () => {
+    await act(async () => {
+      render(
+        <Wrapper defaults={["1"]}>
+          <MultiSelectAutocomplete
+            label={dumTitle}
+            description={dumDesc}
+            name="dumItem"
+            getItemLabel={dumGetItemLabel}
+            optionsGetter={async () => dumItems}
+          />
+        </Wrapper>,
+      );
+    });
 
     const tagElem = screen.getByTestId("chip-test-id");
     expect(tagElem).toBeInTheDocument();
   });
 
+  // TODO fix this test
   //   it("removes author tags", async () => {
   //     render(
   //       <Wrapper defaults={["1"]}>
@@ -119,9 +122,10 @@ describe("MultiSelectAutocomplete", () => {
     });
 
     const items = screen.getAllByTestId("select-item-test-id");
-    expect(items.length).toBe(dumItems.size);
+    expect(items.length).toBe(dumItems.length);
   });
 
+  // TODO fix this test
   //   it("modifies selected list", async () => {
   //     const inputElem = screen.getByTestId("select-element-test-id");
   //     await userEvent.type(inputElem, "Marie"); // TODO idk why this doesnt work?
@@ -145,47 +149,51 @@ describe("MultiSelectAutocomplete", () => {
 });
 
 describe("MultiSelectAutocomplete that is Required", () => {
-  it("shows danger asterisk", () => {
-    render(
-      <Wrapper defaults={[]}>
-        <MultiSelectAutocomplete
-          label={dumTitle}
-          description={dumDesc}
-          options={dumItems}
-          name="dumItem"
-          getItemLabel={dumGetItemLabel}
-          rules={{
-            required: {
-              value: true,
-              message: "pls select",
-            },
-          }}
-        />
-      </Wrapper>,
-    );
+  it("shows danger asterisk", async () => {
+    await act(async () => {
+      render(
+        <Wrapper defaults={[]}>
+          <MultiSelectAutocomplete
+            label={dumTitle}
+            description={dumDesc}
+            name="dumItem"
+            getItemLabel={dumGetItemLabel}
+            rules={{
+              required: {
+                value: true,
+                message: "pls select",
+              },
+            }}
+            optionsGetter={async () => dumItems}
+          />
+        </Wrapper>,
+      );
+    });
 
     const asterskElem = screen.getByText("*");
     expect(asterskElem).toBeInTheDocument();
   });
 
   it("diplays error message when emptied list", async () => {
-    const { rerender } = render(
-      <Wrapper defaults={["1"]}>
-        <MultiSelectAutocomplete
-          label={dumTitle}
-          description={dumDesc}
-          options={dumItems}
-          name="dumItem"
-          getItemLabel={dumGetItemLabel}
-          rules={{
-            required: {
-              value: true,
-              message: "pls select",
-            },
-          }}
-        />
-      </Wrapper>,
-    );
+    const { rerender } = await act(async () => {
+      return render(
+        <Wrapper defaults={["1"]}>
+          <MultiSelectAutocomplete
+            label={dumTitle}
+            description={dumDesc}
+            name="dumItem"
+            getItemLabel={dumGetItemLabel}
+            rules={{
+              required: {
+                value: true,
+                message: "pls select",
+              },
+            }}
+            optionsGetter={async () => dumItems}
+          />
+        </Wrapper>,
+      );
+    });
 
     const tagElem = screen.getByTestId("chip-test-id");
     const tagBtn = within(tagElem).getByRole("button");

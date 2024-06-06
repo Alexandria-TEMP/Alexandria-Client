@@ -4,6 +4,7 @@ import LinkGroup from "../buttons/link-group";
 import ContributeDropdown from "../buttons/contribute-dropdown";
 import getPostData from "@/lib/api-calls/post-api";
 import ChipWithTitle from "@/components/chip-with-title";
+import { PostT } from "@/lib/types/api-types";
 
 /**
  * Header for post contents card. Uses CardHeader, so it must be child of a Card.
@@ -18,7 +19,7 @@ export default async function PostCardHeader({
   postId: string;
   hideContribute?: boolean;
 }) {
-  const data = await getPostData(postId);
+  const data: PostT = await getPostData(postId);
 
   const contributeRoutes = {
     // TODO peer reviewed/rejected -> disable review & open -> disable contribute
@@ -52,12 +53,8 @@ export default async function PostCardHeader({
         <ChipWithTitle title="Status">{data.status}</ChipWithTitle>
 
         <div className="flex-col">
-          <HeaderSubtle>
-            Created on {data.createdAt.toLocaleDateString()}
-          </HeaderSubtle>
-          <HeaderSubtle>
-            Last update on {data.updatedAt.toLocaleDateString()}
-          </HeaderSubtle>
+          <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
+          <HeaderSubtle>Last update on {data.updatedAt}</HeaderSubtle>
         </div>
       </CardHeader>
     </>

@@ -29,12 +29,12 @@ describe("PostCardHeader", () => {
     expect(screen.getByText(dummyPost.postType)).toBeInTheDocument();
     expect(screen.getByText(dummyPost.status)).toBeInTheDocument();
     expect(
-      screen.getByText(dummyPost.createdAt.toLocaleDateString(), {
+      screen.getByText(dummyPost.createdAt, {
         exact: false,
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(dummyPost.updatedAt.toLocaleDateString(), {
+      screen.getByText(dummyPost.updatedAt, {
         exact: false,
       }),
     ).toBeInTheDocument();

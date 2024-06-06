@@ -4,8 +4,9 @@
 /**
  * TODO jsdoc when properly implemented
  */
-export function getFields() {
+export async function getFields() {
   // TODO
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const data = [
     {
       id: "1",
@@ -29,5 +30,5 @@ export function getFields() {
     },
   ];
 
-  return new Map(data.map((m) => [m.id, m]));
+  return data;
 }

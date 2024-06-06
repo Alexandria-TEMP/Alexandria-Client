@@ -8,6 +8,7 @@ import Error from "./error";
 import { setupResize, changeColors } from "./lib/iframe-manipulator";
 import { useTheme } from "next-themes";
 import { semanticColors } from "@nextui-org/react";
+import RenderPending from "./render-pending";
 
 /**
  * Isolated iframe with a Version's rendered html.
@@ -21,6 +22,7 @@ export default function VersionRender({ id }: IdProp) {
   // Component status
   const [isLoaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [pending, setPending] = useState(false);
 
   // Used to trigger a rerender in case of an error
   const [rerender, setRerender] = useState(false);
@@ -35,6 +37,7 @@ export default function VersionRender({ id }: IdProp) {
 
   const reset = () => {
     setFailed(false);
+    setPending(false);
     setLoaded(false);
     setIframeHeight(300);
     setRerender(!rerender);
@@ -44,7 +47,11 @@ export default function VersionRender({ id }: IdProp) {
   useEffect(() => {
     getRenderedVersion(id)
       .then((res) => {
-        setHtml(res);
+        if (res === "pending") {
+          setPending(true);
+        } else {
+          setHtml(res);
+        }
       })
       .catch((reason) => {
         console.log(
@@ -89,6 +96,10 @@ export default function VersionRender({ id }: IdProp) {
 
   if (failed) {
     return <Error reset={reset} />;
+  }
+
+  if (pending) {
+    return <RenderPending refresh={reset} />;
   }
 
   return (
