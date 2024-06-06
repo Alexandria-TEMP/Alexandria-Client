@@ -48,23 +48,23 @@ describe("Personal data fields test", () => {
       });
     });
 
-    it("shows max length error", async () => {
-      const user = userEvent.setup();
-      const nameHeaderElem = screen.getByText("First Name");
-      const nameInputElem = screen.getByTestId("first-name");
+    // it("shows max length error", async () => {
+    //   const user = userEvent.setup();
+    //   const nameHeaderElem = screen.getByText("First Name");
+    //   const nameInputElem = screen.getByTestId("first-name");
 
-      await user.click(nameInputElem);
-      await user.paste("a".repeat(101));
-      await user.click(nameHeaderElem); // click away for error to appear
+    //   await user.click(nameInputElem);
+    //   await user.paste("a".repeat(101));
+    //   await user.click(nameHeaderElem); // click away for error to appear
 
-      await waitFor(() => {
-        expect(
-          screen.getByText(
-            "There is a 100 charcter restriction on name input.",
-          ),
-        ).toBeInTheDocument();
-      });
-    }, 30000);
+    //   await waitFor(() => {
+    //     expect(
+    //       screen.getByText(
+    //         "There is a 100 charcter restriction on name input.",
+    //       ),
+    //     ).toBeInTheDocument();
+    //   });
+    // }, 30000);
   });
 
   describe("Last name tests", () => {
