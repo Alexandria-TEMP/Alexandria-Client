@@ -71,3 +71,29 @@ export type MultiSelectAutocompleteT<
   nonRemovables?: string[];
   nonRemoveReason?: string;
 };
+
+/**
+ * Possible props for the custom UploadContentCard component
+ * This component should be a child of a form built using react-hook-form
+ * @template FormType the type of the the fields of the parent form, required for form control object
+ * @param name the (not displayed) name of the field this component corresponds to, as specified in parent react hook form
+ * @param control the form control object passed down from parent form, used to manage field values
+ *                optional, as it can be injected
+ * @param rules client side validation rules, this component only accepts "required" and "validate" rules for now
+ *              see NextUI page for more rules that can be added: https://www.react-hook-form.com/api/useform/register/#options
+ *              optional, because there might be no rules
+ */
+export type UploadContentT<FormType extends FieldValues> = {
+  name: Path<FormType>;
+  control?: Control<FormType>;
+  rules?: {
+    required?:
+      | string
+      | {
+          value: boolean;
+          message: string;
+        };
+    // can be extended with multiple types
+    validate?: (value: string[]) => boolean | string;
+  };
+};

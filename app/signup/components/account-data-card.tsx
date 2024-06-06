@@ -1,6 +1,6 @@
 import { Button, Input } from "@nextui-org/react";
 import { Controller, FormState, Control, UseFormWatch } from "react-hook-form";
-import { FormType } from "../page";
+import { FormType } from "../lib/submit";
 import { emailRegex, passwordRegex } from "@/lib/validation-rules";
 
 /**

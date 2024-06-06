@@ -7,7 +7,7 @@ import {
   act,
 } from "@testing-library/react";
 import { expect, describe, it } from "@jest/globals";
-import GenericLoadingPage from "@/components/loading-page";
+import GenericLoadingPage from "@/loading";
 
 describe("Generic loading screen tests", () => {
   it("renders", () => {
