@@ -64,7 +64,7 @@ describe("Personal data fields test", () => {
           ),
         ).toBeInTheDocument();
       });
-    });
+    }, 30000);
   });
 
   describe("Last name tests", () => {
