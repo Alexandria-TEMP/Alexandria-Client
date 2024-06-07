@@ -55,7 +55,7 @@ export default function MergeRequestCardHeader({
     // Rejected -> Fork, Contribute
     // Open     -> Fork, Review
     fork: `/todo`,
-    contribute: status == "rejected" ? `/todo` : undefined,
+    contribute: status == "rejected" ? `/propose-changes/${postId}` : undefined,
     review:
       status == "open"
         ? `/post/${postId}/version/${mergeRequestId}/review`
