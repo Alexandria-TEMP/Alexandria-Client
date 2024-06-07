@@ -3,7 +3,7 @@ import MergeRequestCardHeader from "@/post/[postId]/(version-view)/version/[vers
 import { expect, describe, it } from "@jest/globals";
 import { Card } from "@nextui-org/react";
 import { render, screen, waitFor } from "@testing-library/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import createMockRouter from "~/__tests__/__utils__/create-mock-router";
 import { dummyMergeRequests } from "~/__tests__/__utils__/dummys";
 
@@ -13,6 +13,7 @@ jest.mock("@/lib/api-calls/merge-request-api");
 jest.mock("next/navigation");
 
 describe("MergeRequestCardHeaderTest", () => {
+  (usePathname as jest.Mock).mockReturnValue("");
   (useRouter as jest.Mock).mockReturnValue(createMockRouter());
 
   const generateSnapshotTestForStatus = (
