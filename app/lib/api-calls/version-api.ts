@@ -32,3 +32,20 @@ export async function getVersionData(id: idType) {
     renderStatus: "success",
   };
 }
+
+/**
+ * TODO jsdoc when properly implemented
+ */
+export async function getFileTree(id: idType) {
+  console.log(id); // TODO remove line
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  return {
+    "a/b/c.txt": 5,
+    "a/b": -1,
+    a: -1,
+    "rootfile.txt": 86,
+    "a/file.txt": 41,
+    "dir/f.txt": 52,
+    dir: -1,
+  };
+}
