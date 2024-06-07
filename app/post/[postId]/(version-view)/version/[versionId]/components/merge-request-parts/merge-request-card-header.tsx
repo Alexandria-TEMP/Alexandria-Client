@@ -11,6 +11,7 @@ import { MergeRequest, idType } from "@/lib/types/api-types";
 import ChipWithTitle from "@/components/chip-with-title";
 import MergeRequestCardHeaderSkeleton from "./merge-request-card-header-skeleton";
 import { useEffect, useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
 
 /**
  * Header for merge request contents card. Uses CardHeader, so it must be child of a Card.
@@ -49,6 +50,10 @@ export default function MergeRequestCardHeader({
       .finally(() => setIsLoading(false));
   }, [mergeRequestId]);
 
+  // Pathname is used to switch between "Content" and "File" views
+  const pathname = usePathname();
+  const basePath = useMemo(() => pathname.replace("/files", ""), [pathname]);
+
   const contributeRoutes = {
     // Enabled buttons per status:
     // Accepted -> Fork
@@ -75,14 +80,8 @@ export default function MergeRequestCardHeader({
       <CardHeader className="-mt-4 flex gap-12">
         <LinkGroup
           links={[
-            {
-              href: `/post/${postId}/version/${mergeRequestId}`,
-              label: "Contents",
-            },
-            {
-              href: `/post/${postId}/version/${mergeRequestId}/files`,
-              label: "Files",
-            },
+            { href: basePath, label: "Contents" },
+            { href: `${basePath}/files`, label: "Files" },
           ]}
         />
 
