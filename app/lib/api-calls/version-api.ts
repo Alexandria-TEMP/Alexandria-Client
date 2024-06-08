@@ -47,8 +47,8 @@ export async function getFileTree(id: idType): Promise<FileTreeT> {
     "a/b": -1,
     a: -1,
     "rootfile.txt": 86,
-    "a/file.txt": 41,
-    "dir/f.txt": 52,
+    "a/file.txt": 8235000,
+    "dir/f.txt": 2430,
     dir: -1,
   });
 }

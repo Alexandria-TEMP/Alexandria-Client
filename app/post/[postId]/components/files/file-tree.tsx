@@ -20,14 +20,14 @@ import { IdProp } from "@/lib/types/react-props/id-prop";
 import { parseId } from "@/lib/string-utils";
 import { useFileTree } from "@/lib/api-hooks/version-hooks";
 import GenericLoadingPage from "@/loading";
+import { numberToByteMultiple } from "@/lib/file-size-utils";
+import { DocumentIcon, FolderIcon } from "@heroicons/react/20/solid";
 
 export default function FileTree({ id }: IdProp) {
   const { data, isLoading, error } = useFileTree(parseId(id));
 
   const [path, setPath] = useState<string[]>([]);
-  const [rows, setRows] = useState<{ name: string; size: number | string }[]>(
-    [],
-  );
+  const [rows, setRows] = useState<{ name: string; size: number }[]>([]);
   const [openedFile, setOpenedFile] = useState(false);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function FileTree({ id }: IdProp) {
       setRows(
         Object.entries(opened).map((entry) => ({
           name: entry[0],
-          size: typeof entry[1] === "number" ? entry[1] : "-",
+          size: typeof entry[1] === "number" ? entry[1] : -1,
         })),
       );
     }
@@ -80,10 +80,10 @@ export default function FileTree({ id }: IdProp) {
   const fileTable = (
     <Table
       onRowAction={(name) => setPath([...path, name as string])}
+      selectionMode="single" // highlights on hover
       removeWrapper
       classNames={{
         tbody: ["divide-y"],
-        tr: ["hover:bg-primary-50"],
       }}
     >
       <TableHeader>
@@ -98,7 +98,19 @@ export default function FileTree({ id }: IdProp) {
       >
         {(item) => (
           <TableRow key={item.name}>
-            {(col) => <TableCell>{item[col as "name" | "size"]}</TableCell>}
+            <TableCell>
+              <div className="flex flex-row items-end gap-2">
+                {item.size < 0 ? (
+                  <FolderIcon className="size-4" />
+                ) : (
+                  <DocumentIcon className="size-4" />
+                )}
+                {item.name}
+              </div>
+            </TableCell>
+            <TableCell className="w-56">
+              {item.size < 0 ? "-" : numberToByteMultiple(item.size)}
+            </TableCell>
           </TableRow>
         )}
       </TableBody>
