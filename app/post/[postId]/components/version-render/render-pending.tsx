@@ -8,7 +8,7 @@ import { Button } from "@nextui-org/react";
 export default function RenderPending({ refresh }: { refresh: () => void }) {
   return (
     <div
-      className="py-20 flex flex-col justify-center items-center bg-default-200 rounded-lg"
+      className="h-80 flex flex-col justify-center items-center bg-default-200 rounded-lg"
       data-testid="render-pending"
     >
       <h1>Rendering...</h1>
