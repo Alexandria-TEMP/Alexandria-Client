@@ -1,6 +1,5 @@
 /**
  * Gets data for a discussion given its ID.
- *
  * @async
  * @param id Discussion ID
  */
@@ -30,7 +29,6 @@ export async function getDiscussionData(id: string) {
 // TODO parameter type should include all data needed for a discussion
 /**
  * Creates a new Discussion for a given Version.
- *
  * @async
  * @param text Discussion contents
  * @param id ID of the Version the Discussion references

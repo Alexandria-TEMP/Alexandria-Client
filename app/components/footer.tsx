@@ -1,5 +1,8 @@
 import { Divider } from "@nextui-org/react";
 
+/**
+ * Website footer
+ */
 export default function Footer() {
   return (
     <div className="mt-12 mb-2 w-full flex flex-col items-center">

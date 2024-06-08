@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sidebar matches snapshot 1`] = `
+<div>
+  <div
+    class="sticky top-20"
+  >
+    <h2>
+      Test sidebar
+    </h2>
+    <h3>
+      First item
+    </h3>
+    <p>
+      First item
+    </p>
+    <div
+      class="h-4"
+    />
+    <h3>
+      Second item
+    </h3>
+    <h2>
+      Second item
+    </h2>
+    <div
+      class="h-4"
+    />
+    <h3>
+      Third item
+    </h3>
+    <h4>
+      One more
+    </h4>
+    <div
+      class="h-4"
+    />
+  </div>
+</div>
+`;

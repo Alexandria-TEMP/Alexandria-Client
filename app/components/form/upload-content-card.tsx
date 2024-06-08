@@ -4,12 +4,12 @@ import { Card, CardHeader, CardBody } from "@nextui-org/react";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { useRef } from "react";
-import { UploadContentT } from "@/lib/custom-autocomplete-types";
+import { UploadContentT } from "@/lib/types/custom-autocomplete-types";
 import { FieldValues, useController } from "react-hook-form";
 
 /**
  * Component which has the title and the available options for uploading content.
- * @return a div containing the title and cards for each type of file upload option
+ * @returns a div containing the title and cards for each type of file upload option
  */
 export default function UploadContentCard<FormType extends FieldValues>({
   name,

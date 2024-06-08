@@ -17,7 +17,7 @@ import PersonalDataCard from "./components/personal-data-card";
 import AccountDataCard from "./components/account-data-card";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import GenericLoadingPage from "@/components/loading-page";
+import GenericLoadingPage from "@/loading";
 
 /**
  * @returns A page containing the title and the sinup form
@@ -61,7 +61,7 @@ export default function SignupPage() {
     submitHandler(data, setIsLoading, errorModal.onOpen);
 
   /* if the page is not hydrated, refresh the page */
-  if (!mounted) {
+  if (!mounted && typeof window !== "undefined") {
     router.refresh();
     return null;
   }

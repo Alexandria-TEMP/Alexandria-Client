@@ -25,10 +25,10 @@ import {
   getFeedbackTypes,
   getPostTypes,
 } from "@/lib/api-calls/tags-api";
-import { Member } from "@/lib/api-types";
+import { Member } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
 import { useState } from "react";
-import GenericLoadingPage from "@/components/loading-page";
+import GenericLoadingPage from "@/loading";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
 const loggedIn: Member = {
@@ -40,6 +40,9 @@ const loggedIn: Member = {
   lastName: "Clanging",
 };
 
+/**
+ * TODO jsdoc @miruna
+ */
 export default function NewPost() {
   /* create the form state */
   const { handleSubmit, formState, control, trigger, getValues } =

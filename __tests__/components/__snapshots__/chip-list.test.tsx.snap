@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChipList matches snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-row flex-wrap gap-3"
+  >
+    <div
+      class="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-default text-default-foreground"
+    >
+      <span
+        class="flex-1 text-inherit font-normal px-2"
+      >
+        test1
+      </span>
+    </div>
+    <div
+      class="relative max-w-fit inline-flex items-center box-border whitespace-nowrap text-small rounded-full bg-default text-default-foreground w-6 h-6 min-w-6 min-h-6 px-0 justify-center"
+    >
+      <span
+        class="text-inherit font-normal px-0 flex-none"
+      >
+        a
+      </span>
+    </div>
+    <div
+      class="relative max-w-fit inline-flex items-center box-border whitespace-nowrap text-small rounded-full bg-default text-default-foreground w-6 h-6 min-w-6 min-h-6 px-0 justify-center"
+    >
+      <span
+        class="text-inherit font-normal px-0 flex-none"
+      >
+        b
+      </span>
+    </div>
+    <div
+      class="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-default text-default-foreground"
+    >
+      <span
+        class="flex-1 text-inherit font-normal px-2"
+      >
+        test2
+      </span>
+    </div>
+    <div
+      class="relative max-w-fit inline-flex items-center box-border whitespace-nowrap text-small rounded-full bg-default text-default-foreground w-6 h-6 min-w-6 min-h-6 px-0 justify-center"
+    >
+      <span
+        class="text-inherit font-normal px-0 flex-none"
+      >
+        3
+      </span>
+    </div>
+    <div
+      class="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-default text-default-foreground"
+    >
+      <span
+        class="flex-1 text-inherit font-normal px-2"
+      >
+        0101
+      </span>
+    </div>
+  </div>
+</div>
+`;

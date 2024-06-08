@@ -3,7 +3,7 @@
 import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { useController, FieldValues } from "react-hook-form";
 import { Key } from "react";
-import { SingleSelectAutocompleteT } from "@/lib/custom-autocomplete-types";
+import { SingleSelectAutocompleteT } from "@/lib/types/custom-autocomplete-types";
 import { useState, useEffect } from "react";
 
 /**
@@ -12,8 +12,8 @@ import { useState, useEffect } from "react";
  * so this component DOES NOT store keys in the form, it stores the string itself
  * Should be a child of a form that uses react-hook-form
  * See `component-types.d.ts` for documentation on prop types and fields, additionally:
- * @param optionsGetter: a function that fetches options from the server, should provide them as an array of strings that represent the labels themselves
- * @param rules: IMPORTANT: necessary for form validation, however custom error messages set by rules do not work at the moment
+ * @param optionsGetter a function that fetches options from the server, should provide them as an array of strings that represent the labels themselves
+ * @param rules IMPORTANT: necessary for form validation, however custom error messages set by rules do not work at the moment
  * @returns a div containing the title and the dropdown
  */
 export function SingleSelectAutocomplete<FormType extends FieldValues>({
@@ -67,7 +67,7 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
    * Method that updates the form field when an element is selected
    * Before updating, it makes sure that the element is actually one of the options,
    * and not something that the user typed
-   * @param k: the key (index) of the item that is selected, or null if the item is not in the options
+   * @param k the key (index) of the item that is selected, or null if the item is not in the options
    */
   const handleOnChange = (k: Key | null) => {
     if (k !== null && values.has(k.toString())) {

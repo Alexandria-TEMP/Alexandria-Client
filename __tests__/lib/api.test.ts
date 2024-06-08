@@ -1,7 +1,7 @@
 import { expect, describe, it } from "@jest/globals";
 import { getMembers } from "@/lib/api-calls/member-api";
 import { getFields } from "@/lib/api-calls/fields-api";
-import { Member, Tag } from "@/lib/api-types";
+import { Member, Tag } from "@/lib/types/api-types";
 import {
   getDiscussionData,
   uploadDiscussion,

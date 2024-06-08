@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostSidebar matches snapshot 1`] = `
+<div>
+  <div
+    class="sticky top-20"
+  >
+    <h3>
+      Scientific fields
+    </h3>
+    <div
+      class="flex flex-row flex-wrap gap-3"
+    >
+      <div
+        class="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-default text-default-foreground"
+      >
+        <span
+          class="flex-1 text-inherit font-normal px-2"
+        >
+          Computer Science
+        </span>
+      </div>
+      <div
+        class="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-default text-default-foreground"
+      >
+        <span
+          class="flex-1 text-inherit font-normal px-2"
+        >
+          Mathematics
+        </span>
+      </div>
+      <div
+        class="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-default text-default-foreground"
+      >
+        <span
+          class="flex-1 text-inherit font-normal px-2"
+        >
+          Theory of computation
+        </span>
+      </div>
+    </div>
+    <div
+      class="h-4"
+    />
+    <h3>
+      Authors
+    </h3>
+    <p>
+      List of members
+    </p>
+    <div
+      class="h-4"
+    />
+    <h3>
+      Collaborators
+    </h3>
+    <p>
+      List of members
+    </p>
+    <div
+      class="h-4"
+    />
+  </div>
+</div>
+`;

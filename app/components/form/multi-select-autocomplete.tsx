@@ -12,7 +12,7 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
 import { FieldValues, useController } from "react-hook-form";
-import { MultiSelectAutocompleteT } from "@/lib/custom-autocomplete-types";
+import { MultiSelectAutocompleteT } from "@/lib/types/custom-autocomplete-types";
 import { Switch, Tooltip } from "@nextui-org/react";
 
 /**

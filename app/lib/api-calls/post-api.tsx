@@ -1,13 +1,13 @@
+import { PostT } from "../types/api-types";
+
 /**
  * Gets data for a Post given their ID.
- *
  * @async
  * @param id Post ID
  */
-export default async function getPostData(id: string) {
-  // TODO
-  // const res = await fetch();
-  await new Promise((resolve) => setTimeout(resolve, 500));
+export default async function getPostData(id: string): Promise<PostT> {
+  await new Promise((resolve) => setTimeout(resolve, 100));
+
   return {
     title: "Post title",
     status: "Open for review",

@@ -26,8 +26,8 @@ import useSWR from "swr";
 import getPostData from "@/lib/api-calls/post-api";
 import { useEffect, useState } from "react";
 import { getCompletionTypes, getFeedbackTypes } from "@/lib/api-calls/tags-api";
-import GenericLoadingPage from "@/components/loading-page";
-import { Member } from "@/lib/api-types";
+import GenericLoadingPage from "@/loading";
+import { Member, PostT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
@@ -40,9 +40,14 @@ const loggedIn: Member = {
   lastName: "Clanging",
 };
 
+/**
+ * TODO jsdoc @Miruna
+ */
 export default function ProposeChanges({ params }: { params: { id: string } }) {
-  /* get data about the existing post */
-  const postReq = useSWR("/fake/api", getPostData);
+  const postReq: { data: PostT | undefined; isLoading: boolean } = useSWR(
+    "/fake/api",
+    getPostData,
+  );
 
   /* create form state */
   const { handleSubmit, formState, control, getValues, trigger, setValue } =

@@ -3,6 +3,9 @@ export type FormType = {
   password: string;
 };
 
+/**
+ * TODO jsdoc when properly implemented
+ */
 export const submitHandler = async (
   data: FormType,
   setIsLoading: (v: boolean) => void,

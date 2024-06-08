@@ -10,6 +10,9 @@ export type FormType = {
   file: File | null;
 };
 
+/**
+ * TODO jsdoc when properly implemented
+ */
 export const submitHandler = async (
   data: FormType,
   setIsLoading: (v: boolean) => void,

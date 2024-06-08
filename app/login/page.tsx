@@ -21,7 +21,7 @@ import Logo from "@/components/logo";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { emailRegex } from "@/lib/validation-rules";
-import GenericLoadingPage from "@/components/loading-page";
+import GenericLoadingPage from "@/loading";
 
 /**
  * Login page, uses react-hook-form
@@ -58,7 +58,7 @@ export default function LoginPage() {
     submitHandler(data, setIsLoading, errorModal.onOpen);
 
   /* if the page is not hydrated, refresh the page */
-  if (!mounted) {
+  if (!mounted && typeof window !== "undefined") {
     router.refresh();
     return null;
   }
