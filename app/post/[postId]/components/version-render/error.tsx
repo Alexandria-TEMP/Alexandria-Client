@@ -10,7 +10,7 @@ import { Button } from "@nextui-org/react";
 export default function Error({ reset }: { reset: () => void }) {
   return (
     <div
-      className="py-20 flex flex-col justify-center items-center bg-warning-100 rounded-lg"
+      className="py-20 flex flex-col justify-center items-center bg-warning-100 rounded-lg h-[900px]"
       data-testid="render-error"
     >
       <h1 className="text-warning">Something went wrong!</h1>

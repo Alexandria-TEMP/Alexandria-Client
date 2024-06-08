@@ -12,6 +12,7 @@ import MergeRequestCardHeader from "./merge-request-card-header";
  * [VersionRender](@/post/[postId]/components/version-render/component) which
  * can be turned into a single VersionRender by clicking a Switch.
  * @param footer optional CardFooter component, gets placed at the end of the Card
+ * @param hideContribute hides button with contribution options
  * @param newVersionID new version ID
  * @param previousVersionID previous version ID
  * @param postId post ID
@@ -23,12 +24,14 @@ export default function CompareVersionContentCard({
   previousVersionId,
   postId,
   mergeRequestId,
+  hideContribute,
 }: Readonly<{
   footer?: React.ReactNode;
   newVersionId: idType;
   previousVersionId: idType;
   postId: idType;
   mergeRequestId: idType;
+  hideContribute?: boolean;
 }>) {
   const [compare, setCompare] = useState(false);
 
@@ -38,6 +41,7 @@ export default function CompareVersionContentCard({
         postId={postId}
         mergeRequestId={mergeRequestId}
         onCompare={setCompare}
+        hideContribute={hideContribute}
       />
 
       {compare && (

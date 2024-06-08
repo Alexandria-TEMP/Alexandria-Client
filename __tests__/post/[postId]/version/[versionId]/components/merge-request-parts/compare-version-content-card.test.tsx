@@ -4,7 +4,7 @@ import VersionRender from "@/post/[postId]/components/version-render/component";
 import { expect, describe, it } from "@jest/globals";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import createMockRouter from "~/__tests__/__utils__/create-mock-router";
 import { dummyMergeRequests } from "~/__tests__/__utils__/dummys";
 
@@ -16,6 +16,7 @@ jest.mock("next/navigation");
 jest.mock("@/post/[postId]/components/version-render/component");
 
 describe("CompareVersionContentCard", () => {
+  (usePathname as jest.Mock).mockReturnValue("");
   (useRouter as jest.Mock).mockReturnValue(createMockRouter());
   (getMergeRequestData as jest.Mock).mockResolvedValue(
     dummyMergeRequests["accepted"],

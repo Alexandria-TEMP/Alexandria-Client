@@ -23,6 +23,7 @@ export default async function PostVersionReview({
         previousVersionId={data.previousVersionID}
         postId={parseId(params.postId)}
         mergeRequestId={parseId(params.versionId)}
+        hideContribute
       />
     </div>
   );
