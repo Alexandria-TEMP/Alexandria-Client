@@ -15,6 +15,7 @@ import {
   TableRow,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
+import FileView from "./file-view";
 
 // TODO remove
 const data = {
@@ -28,18 +29,20 @@ export default function FileTree() {
   const [rows, setRows] = useState<{ name: string; size: number | string }[]>(
     [],
   );
+  const [openedFile, setOpenedFile] = useState(false);
 
   useEffect(() => {
     const opened = getNestedValue(data, path);
 
     if (!opened) {
-      //
-      throw new Error("!"); // TODO proper handling
+      throw new Error(
+        `file tree ${JSON.stringify(data)} has no file in path ${path.toString()}`,
+      );
     }
 
-    if (typeof opened === "number") {
-      // TODO is file, display contents
-    } else {
+    setOpenedFile(typeof opened === "number");
+
+    if (typeof opened !== "number") {
       setRows(
         Object.entries(opened).map((entry) => ({
           name: entry[0],
@@ -57,7 +60,7 @@ export default function FileTree() {
     setPath(path.slice(0, path.indexOf(part) + 1));
   };
 
-  return (
+  const fileTable = (
     <Table
       onRowAction={(name) => setPath([...path, name as string])}
       removeWrapper
@@ -65,18 +68,6 @@ export default function FileTree() {
         tbody: ["divide-y"],
         tr: ["hover:bg-primary-50"],
       }}
-      topContent={
-        <Breadcrumbs
-          onAction={(key) => handleNavigation(key as string)}
-          variant="solid"
-          className="-mb-2"
-        >
-          <BreadcrumbItem>Root</BreadcrumbItem>
-          {path.map((part) => (
-            <BreadcrumbItem key={part}>{part}</BreadcrumbItem>
-          ))}
-        </Breadcrumbs>
-      }
     >
       <TableHeader>
         <TableColumn key={"name"}>Name</TableColumn>
@@ -95,5 +86,27 @@ export default function FileTree() {
         )}
       </TableBody>
     </Table>
+  );
+
+  return (
+    <div className="flex flex-col gap-2">
+      <Breadcrumbs
+        onAction={(key) => handleNavigation(key as string)}
+        variant="solid"
+      >
+        <BreadcrumbItem>Root</BreadcrumbItem>
+        {path.map((part) => (
+          <BreadcrumbItem key={part}>{part}</BreadcrumbItem>
+        ))}
+      </Breadcrumbs>
+      {!openedFile ? (
+        fileTable
+      ) : (
+        <FileView
+          versionId={-1}
+          path={path.reduce((accum, item) => accum.concat(`/${item}`), "")}
+        />
+      )}
+    </div>
   );
 }
