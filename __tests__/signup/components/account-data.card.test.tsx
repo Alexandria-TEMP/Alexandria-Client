@@ -99,7 +99,7 @@ describe("Account data fields test", () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText("Password must contain at least 8 charcters."),
+          screen.getByText("Password must contain at least 8 characters."),
         ).toBeInTheDocument();
       });
     });

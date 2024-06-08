@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PeerReviewSection matches snapshot 1`] = `
+<div>
+  <div
+    class="inline-flex w-full"
+    data-slot="base"
+  >
+    <div
+      aria-orientation="horizontal"
+      class="flex p-1 h-fit gap-2 items-center flex-nowrap overflow-x-scroll scrollbar-hide bg-transparent dark:bg-transparent rounded-medium w-full"
+      data-slot="tabList"
+      id="react-aria-:r0:"
+      role="tablist"
+    >
+      <button
+        aria-controls="react-aria-:r0:-tabpanel-1"
+        aria-selected="true"
+        class="z-0 px-3 py-1 flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-30 data-[hover-unselected=true]:opacity-disabled outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 h-8 text-small rounded-small w-full"
+        data-key="1"
+        data-selected="true"
+        data-slot="tab"
+        id="react-aria-:r0:-tab-1"
+        role="tab"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          class="absolute z-0 inset-0 rounded-small bg-background dark:bg-default shadow-small"
+          data-slot="cursor"
+        />
+        <div
+          class="relative z-10 whitespace-nowrap transition-colors text-default-500 group-data-[selected=true]:text-default-foreground"
+          data-slot="tabContent"
+        >
+          Review 1
+        </div>
+      </button>
+      <button
+        aria-selected="false"
+        class="z-0 px-3 py-1 flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-30 data-[hover-unselected=true]:opacity-disabled outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 h-8 text-small rounded-small w-full"
+        data-key="2"
+        data-slot="tab"
+        id="react-aria-:r0:-tab-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="relative z-10 whitespace-nowrap transition-colors text-default-500 group-data-[selected=true]:text-default-foreground"
+          data-slot="tabContent"
+        >
+          Review 2
+        </div>
+      </button>
+      <button
+        aria-selected="false"
+        class="z-0 px-3 py-1 flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-30 data-[hover-unselected=true]:opacity-disabled outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 h-8 text-small rounded-small w-full"
+        data-key="3"
+        data-slot="tab"
+        id="react-aria-:r0:-tab-3"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="relative z-10 whitespace-nowrap transition-colors text-default-500 group-data-[selected=true]:text-default-foreground"
+          data-slot="tabContent"
+        >
+          Review 3
+        </div>
+      </button>
+    </div>
+  </div>
+  <div
+    aria-labelledby="react-aria-:r0:-tab-1"
+    class="py-3 px-1 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 w-full"
+    data-focus="false"
+    data-focus-visible="false"
+    data-slot="panel"
+    id="react-aria-:r0:-tabpanel-1"
+    role="tabpanel"
+    tabindex="0"
+  >
+    <p>
+      First review
+    </p>
+  </div>
+</div>
+`;

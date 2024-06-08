@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BodyWithSidebar matches snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-row space-x-6 pt-8"
+  >
+    <div
+      class="w-10/12"
+    >
+      <p>
+        This will be to the left side, and much bigger
+      </p>
+       
+    </div>
+    <div
+      class="w-2/12"
+    >
+      <p>
+        This will be to the right side
+      </p>
+    </div>
+  </div>
+</div>
+`;

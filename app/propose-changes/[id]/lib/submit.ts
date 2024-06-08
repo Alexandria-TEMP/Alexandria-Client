@@ -1,4 +1,4 @@
-export type FormData = {
+export type FormType = {
   mrTitle: string; // hihi mister title
   contributors: string[];
   anonymous: boolean;
@@ -7,33 +7,43 @@ export type FormData = {
   updatedCompletionStatus: string;
   updatedFeedbackPreferences: string;
   updatedScientificFields: string[];
+  newFile: File | null;
 };
 
-// : SubmitHandler<FormData>
-export function onSubmit(formData: FormData) {
-  alert(
-    "Title: " +
-      formData.mrTitle +
-      "\n" +
-      "Contributors: " +
-      formData.contributors.map((a) => a.toString()).toString() +
-      "\n" +
-      "Is anonymous: " +
-      formData.anonymous +
-      "\n" +
-      "Original Post Id: " +
-      formData.originalPostId +
-      "\n" +
-      "Updated Title: " +
-      formData.updatedTitle +
-      "\n" +
-      "Fields: " +
-      formData.updatedScientificFields.map((a) => a.toString()).toString() +
-      "\n" +
-      "Updated Completion: " +
-      formData.updatedCompletionStatus +
-      "\n" +
-      "Updated Feedback: " +
-      formData.updatedFeedbackPreferences,
-  );
-}
+/**
+ * TODO jsdoc when properly implemented
+ */
+export const submitHandler = async (
+  data: FormType,
+  setIsLoading: (v: boolean) => void,
+  onError: () => void,
+) => {
+  try {
+    setIsLoading(true);
+    const jsonData = JSON.stringify({
+      anonymous: data.anonymous,
+      collaboratingMemberIDs: data.contributors,
+      projctPostID: data.originalPostId,
+      mergeRequestTitle: data.mrTitle,
+      updatedCompletionStatus: data.updatedCompletionStatus,
+      updatedFeedbackPreferences: data.updatedFeedbackPreferences,
+      updatedPostTitle: data.updatedTitle,
+      updatedScientificFields: data.updatedScientificFields,
+    });
+    const fileData = new FormData();
+    if (!data.newFile) throw new Error("Please submit a file");
+    fileData.append("file", data.newFile);
+
+    // TODO the actual sending of the files, should be two, potentially 3, fetches
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
+    // uncomment if you want to see the error
+    // throw new Error("Please submit a file");
+
+    setIsLoading(false);
+    alert(jsonData);
+  } catch (error) {
+    setIsLoading(false);
+    onError();
+  }
+};

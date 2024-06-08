@@ -7,10 +7,10 @@ import {
   act,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { Member } from "@/lib/types/api-types";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
-import { Member } from "@/lib/api-types";
 import { dummyMembers } from "~/__tests__/__utils__/dummys";
-import { useForm, FormProvider, UseFormReturn } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { expect, describe, it } from "@jest/globals";
 
 const dumTitle = "Dummy title";

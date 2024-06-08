@@ -1,6 +1,6 @@
 import { Button, Input } from "@nextui-org/react";
 import { Controller, FormState, Control, UseFormWatch } from "react-hook-form";
-import { FormType } from "../page";
+import { FormType } from "../lib/submit";
 import { emailRegex, passwordRegex } from "@/lib/validation-rules";
 
 /**
@@ -55,7 +55,7 @@ export default function AccountDataCard({
           required: "Please enter a password.",
           minLength: {
             value: 8,
-            message: "Password must contain at least 8 charcters.",
+            message: "Password must contain at least 8 characters.",
           },
           pattern: {
             value: passwordRegex,

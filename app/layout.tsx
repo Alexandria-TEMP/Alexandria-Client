@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import { ChildrenProp } from "./lib/children-prop";
+import { ChildrenProp } from "./lib/types/react-props/children-prop";
 import AlexandriaNavbar from "./components/navbar";
 import Footer from "./components/footer";
 
@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   description: "Collaborative and open access scientific publishing.",
 };
 
+/**
+ * Root layout. Required by NextJS.
+ */
 export default function RootLayout({ children }: ChildrenProp) {
   // Applied to everything (including header and footer)
   const rootClassName = "h-dvh flex flex-col";

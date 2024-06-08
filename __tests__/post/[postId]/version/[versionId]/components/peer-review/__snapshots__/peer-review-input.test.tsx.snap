@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PeerReviewInput matches snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-col overflow-hidden height-auto text-foreground box-border outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 shadow-medium rounded-large bg-background/80 dark:bg-background/20 backdrop-blur-md backdrop-saturate-150 transition-transform-background motion-reduce:transition-none sticky top-20 z-50"
+    tabindex="-1"
+  >
+    <div
+      class="relative flex w-full p-3 flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased"
+    >
+      <div
+        class="group flex flex-col w-full"
+        data-filled="true"
+        data-filled-within="true"
+        data-has-elements="true"
+        data-has-label="true"
+        data-slot="base"
+      >
+        <label
+          class="z-10 pointer-events-none origin-top-left rtl:origin-top-right subpixel-antialiased block text-foreground-500 relative will-change-auto !duration-200 !ease-out motion-reduce:transition-none transition-[transform,color,left,opacity] group-data-[filled-within=true]:text-foreground group-data-[filled-within=true]:pointer-events-auto pb-1.5 pe-2 max-w-full text-ellipsis overflow-hidden text-lg font-semibold"
+          data-slot="label"
+          for="react-aria-:r0:"
+          id="react-aria-:r1:"
+        >
+          Your review
+        </label>
+        <div
+          class="relative w-full inline-flex tap-highlight-transparent flex-row items-center shadow-sm px-3 gap-3 border-medium border-default-200 data-[hover=true]:border-default-400 group-data-[focus=true]:border-default-foreground h-10 min-h-10 rounded-medium !h-auto transition-background !duration-150 transition-colors motion-reduce:transition-none py-2"
+          data-has-multiple-rows="true"
+          data-slot="input-wrapper"
+          style="cursor: text;"
+        >
+          <div
+            class="inline-flex w-full h-full box-border items-start group-data-[has-label=true]:items-start"
+            data-slot="inner-wrapper"
+          >
+            <textarea
+              aria-label="Your review"
+              aria-labelledby="react-aria-:r0: react-aria-:r1:"
+              class="w-full font-normal bg-transparent !outline-none placeholder:text-foreground-500 focus-visible:outline-none data-[has-start-content=true]:ps-1.5 data-[has-end-content=true]:pe-1.5 text-small resize-none data-[hide-scroll=true]:scrollbar-hide h-full transition-height !duration-100 motion-reduce:transition-none"
+              data-hide-scroll="true"
+              data-slot="input"
+              id="react-aria-:r0:"
+              placeholder="Enter your feedback for this proposal..."
+              title=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="p-3 h-auto flex w-full items-center overflow-hidden color-inherit subpixel-antialiased rounded-b-large"
+    >
+      <div
+        aria-label=" "
+        aria-orientation="horizontal"
+        class="relative flex flex-col gap-2"
+        id="react-aria-:r5:"
+        role="radiogroup"
+      >
+        <div
+          class="flex flex-col flex-wrap gap-2 data-[orientation=horizontal]:flex-row"
+          data-orientation="horizontal"
+          role="presentation"
+        >
+          <label
+            class="group relative max-w-fit inline-flex items-center justify-start cursor-pointer tap-highlight-transparent p-2 -m-2"
+          >
+            <div
+              style="border: 0px; clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
+            >
+              <input
+                aria-describedby="react-aria-:r8:"
+                aria-label="Approve"
+                aria-labelledby=":rb:"
+                name="react-aria-:ra:"
+                tabindex="0"
+                title=""
+                type="radio"
+                value="approve"
+              />
+            </div>
+            <span
+              aria-hidden="true"
+              class="relative inline-flex items-center justify-center flex-shrink-0 overflow-hidden border-solid border-medium box-border border-default rounded-full group-data-[hover-unselected=true]:bg-default-100 outline-none group-data-[focus-visible=true]:z-10 group-data-[focus-visible=true]:ring-2 group-data-[focus-visible=true]:ring-focus group-data-[focus-visible=true]:ring-offset-2 group-data-[focus-visible=true]:ring-offset-background group-data-[selected=true]:border-success w-5 h-5 group-data-[pressed=true]:scale-95 transition-transform-colors motion-reduce:transition-none"
+            >
+              <span
+                class="z-10 opacity-0 scale-0 origin-center rounded-full group-data-[selected=true]:opacity-100 group-data-[selected=true]:scale-100 bg-success text-success-foreground w-2 h-2 transition-transform-opacity motion-reduce:transition-none"
+              />
+            </span>
+            <div
+              class="flex flex-col ml-2 rtl:mr-2 rtl:ml-[unset]"
+            >
+              <span
+                class="relative text-foreground select-none text-medium transition-colors motion-reduce:transition-none"
+                id=":rb:"
+              >
+                Approve
+              </span>
+            </div>
+          </label>
+          <label
+            class="group relative max-w-fit inline-flex items-center justify-start cursor-pointer tap-highlight-transparent p-2 -m-2"
+          >
+            <div
+              style="border: 0px; clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
+            >
+              <input
+                aria-describedby="react-aria-:r8:"
+                aria-label="Reject"
+                aria-labelledby=":rc:"
+                name="react-aria-:ra:"
+                tabindex="0"
+                title=""
+                type="radio"
+                value="reject"
+              />
+            </div>
+            <span
+              aria-hidden="true"
+              class="relative inline-flex items-center justify-center flex-shrink-0 overflow-hidden border-solid border-medium box-border border-default rounded-full group-data-[hover-unselected=true]:bg-default-100 outline-none group-data-[focus-visible=true]:z-10 group-data-[focus-visible=true]:ring-2 group-data-[focus-visible=true]:ring-focus group-data-[focus-visible=true]:ring-offset-2 group-data-[focus-visible=true]:ring-offset-background group-data-[selected=true]:border-danger w-5 h-5 group-data-[pressed=true]:scale-95 transition-transform-colors motion-reduce:transition-none"
+            >
+              <span
+                class="z-10 opacity-0 scale-0 origin-center rounded-full group-data-[selected=true]:opacity-100 group-data-[selected=true]:scale-100 bg-danger text-danger-foreground w-2 h-2 transition-transform-opacity motion-reduce:transition-none"
+              />
+            </span>
+            <div
+              class="flex flex-col ml-2 rtl:mr-2 rtl:ml-[unset]"
+            >
+              <span
+                class="relative text-foreground select-none text-medium transition-colors motion-reduce:transition-none"
+                id=":rc:"
+              >
+                Reject
+              </span>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div
+        class="grow"
+      />
+      <button
+        class="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium opacity-disabled pointer-events-none [&>svg]:max-w-[theme(spacing.8)] data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground data-[hover=true]:opacity-hover"
+        data-disabled="true"
+        disabled=""
+        type="button"
+      >
+        Submit review
+      </button>
+      <button
+        class="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground data-[hover=true]:opacity-hover ml-2"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+`;

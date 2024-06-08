@@ -33,6 +33,9 @@ export const navigationItems = [
   },
 ];
 
+/**
+ * Website navbar
+ */
 export default function AlexandriaNavbar() {
   const pathname = usePathname();
   // TODO get this from somewhere, get user data and test the conditional render

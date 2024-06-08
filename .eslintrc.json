@@ -4,7 +4,8 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended-type-checked",
-    "prettier"
+    "prettier",
+    "plugin:jsdoc/recommended-typescript"
   ],
   "overrides": [
     {
@@ -19,7 +20,7 @@
     "project": true,
     "tsconfigRootDir": "."
   },
-  "plugins": ["check-file", "@typescript-eslint"],
+  "plugins": ["check-file", "@typescript-eslint", "jsdoc"],
   "rules": {
     "check-file/filename-naming-convention": [
       "error",
@@ -29,6 +30,9 @@
     "check-file/folder-naming-convention": [
       "error",
       { "app/*/": "NEXT_JS_APP_ROUTER_CASE" }
-    ]
+    ],
+    "jsdoc/require-returns": 0,
+    "jsdoc/require-param": 0,
+    "jsdoc/check-param-names": 0
   }
 }

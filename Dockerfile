@@ -25,9 +25,6 @@ ENV NEXT_TELEMETRY_DISABLED 1
 # Expose port
 EXPOSE 3000
 
-# Run development server
-CMD npm run dev
-
 # TODO uncomment following lines to add back stages, and remove preceding line
 # reason for commenting out in development: `docker compose up dev` is inconsistent with
 # command for backend, which is just `docker compose up`, and this is causing confusion
@@ -39,8 +36,8 @@ CMD npm run dev
 #     npm run test
 
 # Development stage
-# FROM base AS dev
-# CMD npm run dev
+FROM base AS dev
+CMD npm run dev
 
 # Production stage
 # FROM base AS prod

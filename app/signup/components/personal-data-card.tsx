@@ -1,6 +1,6 @@
 import { Input } from "@nextui-org/react";
 import { Controller, FormState, Control } from "react-hook-form";
-import { FormType } from "../page";
+import { FormType } from "../lib/submit";
 import { getFields } from "@/lib/api-calls/fields-api";
 import { getFieldName } from "@/lib/get-format";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
@@ -31,7 +31,7 @@ export default function PersonalDataCard({
           maxLength: {
             value: maxName,
             message:
-              "There is a " + maxName + " charcter restriction on name input.",
+              "There is a " + maxName + " character restriction on name input.",
           },
         }}
         render={({ field }) => (
@@ -57,7 +57,7 @@ export default function PersonalDataCard({
           maxLength: {
             value: maxName,
             message:
-              "There is a " + maxName + " charcter restriction on name input.",
+              "There is a " + maxName + " character restriction on name input.",
           },
         }}
         render={({ field }) => (
@@ -84,7 +84,7 @@ export default function PersonalDataCard({
             message:
               "There is a " +
               maxInstitution +
-              " charcter restriction on institution name.",
+              " character restriction on institution name.",
           },
         }}
         render={({ field }) => (
