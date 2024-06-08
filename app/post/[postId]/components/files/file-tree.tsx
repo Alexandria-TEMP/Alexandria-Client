@@ -6,6 +6,7 @@ import { getNestedValue } from "@/lib/object-utils";
 import {
   BreadcrumbItem,
   Breadcrumbs,
+  Spinner,
   Table,
   TableBody,
   TableCell,
@@ -48,40 +49,51 @@ export default function FileTree() {
     }
   }, [path]);
 
+  const handleNavigation = (part: string) => {
+    if (part === "Root") {
+      setPath([]);
+      return;
+    }
+    setPath(path.slice(0, path.indexOf(part) + 1));
+  };
+
   return (
-    <div className="flex flex-col gap-1">
-      <Breadcrumbs
-        onAction={(part) => {
-          if (part === "Root") {
-            setPath([]);
-            return;
-          }
-          setPath(path.slice(0, path.indexOf(part as string) + 1));
-        }}
+    <Table
+      onRowAction={(name) => setPath([...path, name as string])}
+      removeWrapper
+      classNames={{
+        tbody: ["divide-y"],
+        tr: ["hover:bg-primary-50"],
+      }}
+      topContent={
+        <Breadcrumbs
+          onAction={(key) => handleNavigation(key as string)}
+          variant="solid"
+          className="-mb-2"
+        >
+          <BreadcrumbItem>Root</BreadcrumbItem>
+          {path.map((part) => (
+            <BreadcrumbItem key={part}>{part}</BreadcrumbItem>
+          ))}
+        </Breadcrumbs>
+      }
+    >
+      <TableHeader>
+        <TableColumn key={"name"}>Name</TableColumn>
+        <TableColumn key={"size"}>Size</TableColumn>
+      </TableHeader>
+      <TableBody
+        items={rows}
+        isLoading={false}
+        loadingContent={<Spinner />}
+        emptyContent="It looks like the project is empty."
       >
-        <BreadcrumbItem>Root</BreadcrumbItem>
-        {path.map((part) => (
-          <BreadcrumbItem key={part}>{part}</BreadcrumbItem>
-        ))}
-      </Breadcrumbs>
-      <Table
-        removeWrapper
-        onRowAction={(name) => setPath([...path, name as string])}
-      >
-        <TableHeader>
-          <TableColumn key={"name"} allowsSorting>
-            Name
-          </TableColumn>
-          <TableColumn key={"size"}>Size</TableColumn>
-        </TableHeader>
-        <TableBody items={rows}>
-          {(item) => (
-            <TableRow key={item.name}>
-              {(col) => <TableCell>{item[col as "name" | "size"]}</TableCell>}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
+        {(item) => (
+          <TableRow key={item.name}>
+            {(col) => <TableCell>{item[col as "name" | "size"]}</TableCell>}
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
   );
 }
