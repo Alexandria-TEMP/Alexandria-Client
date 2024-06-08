@@ -22,7 +22,7 @@ export default async function PostFiles({
       <Card>
         <PostCardHeader postId={params.postId} />
         <CardBody>
-          <FileTree />
+          <FileTree id={data.currentVersion.id} />
         </CardBody>
       </Card>
 

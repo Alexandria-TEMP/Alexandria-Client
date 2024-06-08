@@ -1,4 +1,4 @@
-type FileTreeT = { [key: string]: FileTreeT | number };
+export type FileTreeT = { [key: string]: FileTreeT | number };
 
 /**
  * Parses the file tree format given by the API into a nested object structure

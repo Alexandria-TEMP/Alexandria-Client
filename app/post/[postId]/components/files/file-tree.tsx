@@ -14,17 +14,16 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import FileView from "./file-view";
+import { IdProp } from "@/lib/types/react-props/id-prop";
+import { parseId } from "@/lib/string-utils";
+import { useFileTree } from "@/lib/api-hooks/version-hooks";
+import GenericLoadingPage from "@/loading";
 
-// TODO remove
-const data = {
-  a: { b: { "c.txt": 5 }, "file.txt": 41 },
-  "rootfile.txt": 86,
-  dir: { "f.txt": 52 },
-};
+export default function FileTree({ id }: IdProp) {
+  const { data, isLoading, error } = useFileTree(parseId(id));
 
-export default function FileTree() {
   const [path, setPath] = useState<string[]>([]);
   const [rows, setRows] = useState<{ name: string; size: number | string }[]>(
     [],
@@ -32,6 +31,8 @@ export default function FileTree() {
   const [openedFile, setOpenedFile] = useState(false);
 
   useEffect(() => {
+    if (!data) return;
+
     const opened = getNestedValue(data, path);
 
     if (!opened) {
@@ -50,15 +51,31 @@ export default function FileTree() {
         })),
       );
     }
-  }, [path]);
+  }, [path, data]);
 
-  const handleNavigation = (part: string) => {
-    if (part === "Root") {
-      setPath([]);
-      return;
-    }
-    setPath(path.slice(0, path.indexOf(part) + 1));
-  };
+  if (error) {
+    // TODO
+    return <div>Placeholder error</div>;
+  }
+
+  const breadcrumbs = (
+    <Breadcrumbs
+      onAction={(key) => {
+        const part = key as string;
+        if (part === "Root") {
+          setPath([]);
+          return;
+        }
+        setPath(path.slice(0, path.indexOf(part) + 1));
+      }}
+      variant="solid"
+    >
+      <BreadcrumbItem>Root</BreadcrumbItem>
+      {path.map((part) => (
+        <BreadcrumbItem key={part}>{part}</BreadcrumbItem>
+      ))}
+    </Breadcrumbs>
+  );
 
   const fileTable = (
     <Table
@@ -75,7 +92,7 @@ export default function FileTree() {
       </TableHeader>
       <TableBody
         items={rows}
-        isLoading={false}
+        isLoading={isLoading}
         loadingContent={<Spinner />}
         emptyContent="It looks like the project is empty."
       >
@@ -88,25 +105,19 @@ export default function FileTree() {
     </Table>
   );
 
+  const fileContents = (
+    <Suspense fallback={<GenericLoadingPage />}>
+      <FileView
+        id={id}
+        path={path.reduce((accum, item) => accum.concat(`/${item}`), "")}
+      />
+    </Suspense>
+  );
+
   return (
     <div className="flex flex-col gap-2">
-      <Breadcrumbs
-        onAction={(key) => handleNavigation(key as string)}
-        variant="solid"
-      >
-        <BreadcrumbItem>Root</BreadcrumbItem>
-        {path.map((part) => (
-          <BreadcrumbItem key={part}>{part}</BreadcrumbItem>
-        ))}
-      </Breadcrumbs>
-      {!openedFile ? (
-        fileTable
-      ) : (
-        <FileView
-          versionId={-1}
-          path={path.reduce((accum, item) => accum.concat(`/${item}`), "")}
-        />
-      )}
+      {breadcrumbs}
+      {!openedFile ? fileTable : fileContents}
     </div>
   );
 }
