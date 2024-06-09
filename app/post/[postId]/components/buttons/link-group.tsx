@@ -5,8 +5,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { Fragment } from "react";
 
 /**
- * Button group that links to different Post views.
- * @param postId ID of Post the links refer to
+ * Button group with arbitrary links and labels
+ * @param links list of href and their button's label
  */
 export default function LinkGroup({
   links,

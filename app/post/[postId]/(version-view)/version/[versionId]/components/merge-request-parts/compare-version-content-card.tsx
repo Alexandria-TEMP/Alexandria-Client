@@ -5,6 +5,7 @@ import { idType } from "@/lib/types/api-types";
 import VersionRender from "@/post/[postId]/components/version-render/component";
 import { useState } from "react";
 import MergeRequestCardHeader from "./merge-request-card-header";
+import FileTree from "@/post/[postId]/components/files/file-tree";
 
 /**
  * Displays a Card for a merge request, containing a
@@ -34,6 +35,7 @@ export default function CompareVersionContentCard({
   hideContribute?: boolean;
 }>) {
   const [compare, setCompare] = useState(false);
+  const [view, setView] = useState<"contents" | "files">("contents");
 
   return (
     <Card>
@@ -42,6 +44,18 @@ export default function CompareVersionContentCard({
         mergeRequestId={mergeRequestId}
         onCompare={setCompare}
         hideContribute={hideContribute}
+        actions={[
+          {
+            label: "Contents",
+            do: () => setView("contents"),
+            isDisabled: view === "contents",
+          },
+          {
+            label: "Files",
+            do: () => setView("files"),
+            isDisabled: view === "files",
+          },
+        ]}
       />
 
       {compare && (
@@ -54,11 +68,19 @@ export default function CompareVersionContentCard({
 
       <CardBody className="flex flex-row gap-3 w-full">
         <div className={compare ? "w-1/2" : "w-full"}>
-          <VersionRender id={newVersionId.toString()} />
+          {view === "files" ? (
+            <FileTree id={newVersionId.toString()} />
+          ) : (
+            <VersionRender id={newVersionId.toString()} />
+          )}
         </div>
 
         <div className={compare ? "w-1/2" : "hidden"}>
-          <VersionRender id={previousVersionId.toString()} />
+          {view === "files" ? (
+            <FileTree id={previousVersionId.toString()} />
+          ) : (
+            <VersionRender id={previousVersionId.toString()} />
+          )}
         </div>
       </CardBody>
 

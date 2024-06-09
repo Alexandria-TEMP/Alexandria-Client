@@ -35,8 +35,9 @@ export default async function PostCardHeader({
         <h1 className="font-semibold">{data.title}</h1>
       </CardHeader>
 
-      {/* (part of) Metadata */}
       <CardHeader className="-mt-4 flex gap-12">
+        {/* Buttons */}
+
         <LinkGroup
           links={[
             { label: "Contents", href: `/post/${postId}` },
@@ -48,6 +49,8 @@ export default async function PostCardHeader({
         {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
 
         <div className="grow" />
+
+        {/* Metadata */}
 
         <ChipWithTitle title="Post type">{data.postType}</ChipWithTitle>
         <ChipWithTitle title="Status">{data.status}</ChipWithTitle>
