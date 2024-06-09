@@ -11,6 +11,7 @@ import ChipWithTitle from "@/components/chip-with-title";
 import MergeRequestCardHeaderSkeleton from "./merge-request-card-header-skeleton";
 import { useEffect, useMemo, useState } from "react";
 import ActionGroup from "@/post/[postId]/components/buttons/action-group";
+import DownloadButton from "@/post/[postId]/components/buttons/download-button";
 
 /**
  * Header for merge request contents card. Uses CardHeader, so it must be child of a Card.
@@ -73,9 +74,10 @@ export default function MergeRequestCardHeader({
         <h1 className="font-semibold">{data.newPostTitle}</h1>
       </CardHeader>
 
-      <CardHeader className="-mt-4 flex gap-12">
+      <CardHeader className="-mt-4 flex gap-8">
         {/* Buttons */}
         <ActionGroup actions={actions} />
+        <DownloadButton id={data.newVersionID.toString()} />
         {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
         {!!onCompare && <Switch onValueChange={onCompare}>Compare</Switch>}
 
