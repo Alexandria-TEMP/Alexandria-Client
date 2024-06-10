@@ -8,7 +8,7 @@ import { getMemberName } from "@/lib/get-format";
 import { capitalizeFirstLetter, parseId } from "@/lib/string-utils";
 import { Member, ReviewT } from "@/lib/types/api-types";
 import { IdProp } from "@/lib/types/react-props/id-prop";
-import ReviewChip from "@/post/[postId]/components/review-chip";
+import ReviewChip from "@/components/review-chip";
 import {
   Card,
   CardBody,

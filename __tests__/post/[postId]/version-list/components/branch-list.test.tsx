@@ -1,14 +1,12 @@
 import { getBranchData } from "@/lib/api-calls/branch-api";
-import BranchList from "@/post/[postId]/(main-post-view)/version-list/components/branch-list";
+import BranchList from "@/post/[postId]/(post)/version-list/components/branch-list";
+import BranchCard from "@/post/[postId]/components/cards/branch-card";
 import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";
 import { dummyBranches } from "~/__tests__/__utils__/dummys";
-import BranchCard from "@/post/[postId]/(main-post-view)/version-list/components/branch-card";
 
 jest.mock("@/lib/api-calls/branch-api");
-jest.mock(
-  "@/post/[postId]/(main-post-view)/version-list/components/branch-card",
-);
+jest.mock("@/post/[postId]/components/cards/branch-card");
 
 describe("BranchList", () => {
   (getBranchData as jest.Mock).mockResolvedValue(dummyBranches["open"]);

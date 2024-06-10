@@ -1,5 +1,5 @@
 import { idType } from "@/lib/types/api-types";
-import BranchCard from "./branch-card";
+import BranchCard from "../../../components/cards/branch-card";
 
 /**
  * List of [BranchCards](./branch-card.tsx) with the given IDs.

@@ -2,8 +2,8 @@ import { Card } from "@nextui-org/react";
 import { getPostBranches } from "@/lib/api-calls/branch-api";
 import { parseId } from "@/lib/string-utils";
 import PostCardHeader from "../../components/post-parts/post-card-header";
-import BranchTabs from "./components/branch-tabs";
-import BranchList from "./components/branch-list";
+import BranchTabs from "../../(post)/version-list/components/branch-tabs";
+import BranchList from "../../(post)/version-list/components/branch-list";
 
 /**
  * Page that shows all branches of a Post.

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getRender } from "@/lib/api-calls/version-api";
 import { IdProp } from "@/lib/types/react-props/id-prop";
-import ErrorWithMessage from "./error-with-message";
+import ErrorWithMessage from "@/components/error-with-message";
 import { setupResize, changeColors } from "./lib/iframe-manipulator";
 import { useTheme } from "next-themes";
 import { semanticColors } from "@nextui-org/react";

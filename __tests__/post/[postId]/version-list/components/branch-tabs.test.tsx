@@ -1,4 +1,4 @@
-import BranchTabs from "@/post/[postId]/(main-post-view)/version-list/components/branch-tabs";
+import BranchTabs from "@/post/[postId]/(post)/version-list/components/branch-tabs";
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
