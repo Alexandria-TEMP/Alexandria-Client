@@ -1,11 +1,4 @@
-import {
-  render,
-  screen,
-  waitFor,
-  within,
-  fireEvent,
-  act,
-} from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { expect, describe, it } from "@jest/globals";
 import GenericLoadingPage from "@/loading";
 

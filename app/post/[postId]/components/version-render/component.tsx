@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Skeleton } from "@nextui-org/react";
 import { getRenderedVersion } from "@/lib/api-calls/version-api";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import Error from "./error";
@@ -9,6 +8,7 @@ import { setupResize, changeColors } from "./lib/iframe-manipulator";
 import { useTheme } from "next-themes";
 import { semanticColors } from "@nextui-org/react";
 import RenderPending from "./render-pending";
+import GenericLoadingPage from "@/loading";
 
 /**
  * Isolated iframe with a Version's rendered html.
@@ -102,15 +102,21 @@ export default function VersionRender({ id }: IdProp) {
     return <RenderPending refresh={reset} />;
   }
 
+  if (!isLoaded) {
+    return (
+      <div className="h-80">
+        <GenericLoadingPage />
+      </div>
+    );
+  }
+
   return (
-    <Skeleton isLoaded={isLoaded} className="rounded-lg">
-      <iframe
-        title={iframeTitle}
-        ref={iframeRef}
-        srcDoc={html}
-        style={{ width: "100%", height: `${iframeHeight}px`, border: "none" }}
-      />
-    </Skeleton>
+    <iframe
+      title={iframeTitle}
+      ref={iframeRef}
+      srcDoc={html}
+      style={{ width: "100%", height: `${iframeHeight}px`, border: "none" }}
+    />
   );
 }
 

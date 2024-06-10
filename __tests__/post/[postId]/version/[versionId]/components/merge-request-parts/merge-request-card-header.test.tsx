@@ -23,7 +23,14 @@ describe("MergeRequestCardHeaderTest", () => {
       (getBranchData as jest.Mock).mockResolvedValue(dummyBranches[status]);
       const { container } = render(
         <Card>
-          <MergeRequestCardHeader postId={0} mergeRequestId={0} />
+          <MergeRequestCardHeader
+            postId={0}
+            mergeRequestId={0}
+            actions={[
+              { label: "Contents", do: () => jest.fn(), isDisabled: true },
+              { label: "Files", do: () => jest.fn(), isDisabled: false },
+            ]}
+          />
         </Card>,
       );
       await waitFor(() => {

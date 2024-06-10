@@ -4,32 +4,34 @@ import { CardHeader, Switch } from "@nextui-org/react";
 import HeaderSubtle from "@/components/header-subtle";
 import { getBranchData } from "@/lib/api-calls/merge-request-api";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
-import LinkGroup from "@/post/[postId]/components/buttons/link-group";
 import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
 import { reviewStatusToTensedVerb } from "@/lib/get-format";
 import { BranchT, idType } from "@/lib/types/api-types";
 import ChipWithTitle from "@/components/chip-with-title";
 import MergeRequestCardHeaderSkeleton from "./merge-request-card-header-skeleton";
 import { useEffect, useMemo, useState } from "react";
-import { usePathname } from "next/navigation";
+import ActionGroup from "@/post/[postId]/components/buttons/action-group";
+import DownloadButton from "@/post/[postId]/components/buttons/download-button";
 
 /**
  * Header for merge request contents card. Uses CardHeader, so it must be child of a Card.
  * Includes title, main metadata, and action buttons.
  * @param postId post ID, used for routing only
  * @param mergeRequestId merge request ID
+ * @param actions list of actions performed when pressing buttons on left side of header
  * @param hideContribute hides button with contribution options
- * @param onCompare called when "Compare" switch is toggled,
- *                  if undefined the switch won't be rendered
+ * @param onCompare called when "Compare" switch is toggled, if undefined switch won't be rendered
  */
 export default function MergeRequestCardHeader({
   postId,
   mergeRequestId,
+  actions,
   hideContribute,
   onCompare,
 }: {
   postId: idType;
   mergeRequestId: idType;
+  actions: { do: () => void; label: string; isDisabled: boolean }[];
   hideContribute?: boolean;
   onCompare?: (value: boolean) => void;
 }) {
@@ -49,10 +51,6 @@ export default function MergeRequestCardHeader({
       })
       .finally(() => setIsLoading(false));
   }, [mergeRequestId]);
-
-  // Pathname is used to switch between "Content" and "File" views
-  const pathname = usePathname();
-  const basePath = useMemo(() => pathname.replace("/files", ""), [pathname]);
 
   const contributeRoutes = {
     // Enabled buttons per status:
@@ -76,21 +74,16 @@ export default function MergeRequestCardHeader({
         <h1 className="font-semibold">{data.newPostTitle}</h1>
       </CardHeader>
 
-      {/* (part of) Metadata */}
-      <CardHeader className="-mt-4 flex gap-12">
-        <LinkGroup
-          links={[
-            { href: basePath, label: "Contents" },
-            { href: `${basePath}/files`, label: "Files" },
-          ]}
-        />
-
+      <CardHeader className="-mt-4 flex gap-8">
+        {/* Buttons */}
+        <ActionGroup actions={actions} />
+        <DownloadButton id={data.newVersionID.toString()} />
         {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
-
         {!!onCompare && <Switch onValueChange={onCompare}>Compare</Switch>}
 
         <div className="grow" />
 
+        {/* Metadata */}
         <ChipWithTitle title="Completion">
           {capitalizeFirstLetter(data.updatedCompletionStatus)}
         </ChipWithTitle>
