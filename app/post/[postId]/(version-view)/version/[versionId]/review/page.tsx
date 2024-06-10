@@ -1,6 +1,6 @@
 import { parseId } from "@/lib/string-utils";
 import PeerReviewInput from "../components/peer-review/peer-review-input";
-import CompareVersionContentCard from "../components/branch-parts/compare-version-content-card";
+import BranchCard from "../components/branch-parts/branch-card";
 import { getBranchData } from "@/lib/api-calls/branch-api";
 
 /**
@@ -18,7 +18,7 @@ export default async function BranchReview({
   return (
     <div className="flex flex-col space-y-4 w-full">
       <PeerReviewInput />
-      <CompareVersionContentCard
+      <BranchCard
         newVersionId={data.newVersionID}
         previousVersionId={data.previousVersionID}
         postId={parseId(params.postId)}

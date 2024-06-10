@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getRenderedVersion } from "@/lib/api-calls/version-api";
+import { getRender } from "@/lib/api-calls/version-api";
 import { IdProp } from "@/lib/types/react-props/id-prop";
-import Error from "./error";
+import ErrorWithMessage from "./error-with-message";
 import { setupResize, changeColors } from "./lib/iframe-manipulator";
 import { useTheme } from "next-themes";
 import { semanticColors } from "@nextui-org/react";
@@ -11,11 +11,13 @@ import RenderPending from "./render-pending";
 import GenericLoadingPage from "@/loading";
 
 /**
- * Isolated iframe with a Version's rendered html.
+ * Isolated iframe with a project's rendered html.
  * Detects html's height and sets iframe's height to it.
- * @param id Version ID
+ * @param id TODO which id
  */
-export default function VersionRender({ id }: IdProp) {
+export default function RenderedProject({ id }: IdProp) {
+  // TODO which ID?
+
   // State to save data in after it's fetched
   const [html, setHtml] = useState<string | undefined>(undefined);
 
@@ -45,7 +47,7 @@ export default function VersionRender({ id }: IdProp) {
 
   // Fetch html when component renders
   useEffect(() => {
-    getRenderedVersion(id)
+    getRender(id)
       .then((res) => {
         if (res === "pending") {
           setPending(true);
@@ -55,7 +57,7 @@ export default function VersionRender({ id }: IdProp) {
       })
       .catch((reason) => {
         console.log(
-          `failed to fetch version ${id} render for reason ${reason}`,
+          `failed to fetch render with id ${id} for reason ${reason}`,
         );
         setFailed(true);
       })
@@ -95,7 +97,12 @@ export default function VersionRender({ id }: IdProp) {
   }, [html, iframeRef, rerender, systemTheme, theme]);
 
   if (failed) {
-    return <Error reset={reset} />;
+    return (
+      <ErrorWithMessage
+        reset={reset}
+        message="We failed to get the publication's contents."
+      />
+    );
   }
 
   if (pending) {

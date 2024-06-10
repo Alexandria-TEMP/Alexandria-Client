@@ -1,7 +1,7 @@
 import { getBranchData } from "@/lib/api-calls/branch-api";
-import CompareVersionContentCard from "@/post/[postId]/(version-view)/version/[versionId]/components/branch-parts/compare-version-content-card";
+import BranchCard from "@/post/[postId]/(version-view)/version/[versionId]/components/branch-parts/branch-card";
 import FileTree from "@/post/[postId]/components/files/file-tree";
-import VersionRender from "@/post/[postId]/components/version-render/component";
+import RenderedProject from "@/post/[postId]/components/project-render/rendered-project";
 import { expect, describe, it } from "@jest/globals";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -13,17 +13,17 @@ import { dummyBranches } from "~/__tests__/__utils__/dummys";
 jest.mock("@/lib/api-calls/branch-api");
 // Mock useRouter so it's mounted
 jest.mock("next/navigation");
-// Mock version render and file tree to reduce coupling
-jest.mock("@/post/[postId]/components/version-render/component");
+// Mock render and file tree to reduce coupling
+jest.mock("@/post/[postId]/components/project-render/rendered-project");
 jest.mock("@/post/[postId]/components/files/file-tree");
 
-describe("CompareVersionContentCard", () => {
+describe("BranchCard", () => {
   (usePathname as jest.Mock).mockReturnValue("");
   (useRouter as jest.Mock).mockReturnValue(createMockRouter());
   (getBranchData as jest.Mock).mockResolvedValue(dummyBranches["accepted"]);
 
   beforeEach(async () => {
-    (VersionRender as jest.Mock).mockImplementation(({ id }) =>
+    (RenderedProject as jest.Mock).mockImplementation(({ id }) =>
       id === "1" ? (
         <p data-testid="new-version">This is the new version</p>
       ) : (
@@ -40,7 +40,7 @@ describe("CompareVersionContentCard", () => {
     );
 
     render(
-      <CompareVersionContentCard
+      <BranchCard
         newVersionId={1}
         previousVersionId={2}
         postId={0}

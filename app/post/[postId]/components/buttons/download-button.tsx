@@ -4,7 +4,7 @@ import { Button } from "@nextui-org/react";
 
 /**
  * Small download button, that downloads projects files on click
- * @param id version ID to download project files
+ * @param id TODO which id
  */
 export default function DownloadButton({ id }: IdProp) {
   // TODO downloading functionality

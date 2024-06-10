@@ -3,7 +3,7 @@ import PostCardHeader from "../components/post-parts/post-card-header";
 import { parseId } from "@/lib/string-utils";
 import DiscussionSection from "../components/discussions/discussion-section";
 import { Card, CardBody } from "@nextui-org/react";
-import VersionRender from "../components/version-render/component";
+import RenderedProject from "../components/project-render/rendered-project";
 
 /**
  * Page that shows contents of a Post.
@@ -18,7 +18,7 @@ export default async function Post({ params }: { params: { postId: string } }) {
       <Card>
         <PostCardHeader postId={params.postId} />
         <CardBody>
-          <VersionRender id={data.currentVersion.id} />
+          <RenderedProject id={data.currentVersion.id} />
         </CardBody>
       </Card>
 

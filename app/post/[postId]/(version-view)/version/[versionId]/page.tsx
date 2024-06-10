@@ -2,7 +2,7 @@ import { parseId } from "@/lib/string-utils";
 import DiscussionSection from "@/post/[postId]/components/discussions/discussion-section";
 import PeerReviewSection from "./components/peer-review/peer-review-section";
 import { CardFooter, Divider } from "@nextui-org/react";
-import CompareVersionContentCard from "./components/branch-parts/compare-version-content-card";
+import BranchCard from "./components/branch-parts/branch-card";
 import { getBranchData } from "@/lib/api-calls/branch-api";
 
 /**
@@ -19,7 +19,7 @@ export default async function Branch({
 
   return (
     <div className="flex flex-col space-y-4 w-full">
-      <CompareVersionContentCard
+      <BranchCard
         newVersionId={data.newVersionID}
         previousVersionId={data.previousVersionID}
         postId={parseId(params.postId)}

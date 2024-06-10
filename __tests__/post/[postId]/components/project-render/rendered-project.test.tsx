@@ -1,21 +1,21 @@
 import { expect, describe, it } from "@jest/globals";
 import { act, render, screen } from "@testing-library/react";
-import { getRenderedVersion } from "@/lib/api-calls/version-api";
+import { getRender } from "@/lib/api-calls/version-api";
 import { dummyHtml } from "~/__tests__/__utils__/dummys";
-import VersionRender, {
+import RenderedProject, {
   iframeTitle,
-} from "@/post/[postId]/components/version-render/component";
+} from "@/post/[postId]/components/project-render/rendered-project";
 
 jest.mock("@/lib/api-calls/version-api");
 
-describe("VersionRender", () => {
+describe("RenderedProject", () => {
   const setupGoodWeather = async () => {
-    (getRenderedVersion as jest.Mock).mockResolvedValue(dummyHtml.html);
+    (getRender as jest.Mock).mockResolvedValue(dummyHtml.html);
 
     // Disable reason: Need the async keyword for act to work properly
     // but render is not awaitable so eslint complains
     // eslint-disable-next-line @typescript-eslint/require-await
-    const content = await act(async () => render(<VersionRender id="1" />));
+    const content = await act(async () => render(<RenderedProject id="1" />));
 
     const iframe = content.getByTitle(iframeTitle) as HTMLIFrameElement;
     return { content, iframe };
@@ -23,12 +23,12 @@ describe("VersionRender", () => {
 
   const setupBadWeather = async () => {
     const errorMessage = "this is a test failure!";
-    (getRenderedVersion as jest.Mock).mockRejectedValue(errorMessage);
+    (getRender as jest.Mock).mockRejectedValue(errorMessage);
 
     // Disable reason: Need the async keyword for act to work properly
     // but render is not awaitable so eslint complains
     // eslint-disable-next-line @typescript-eslint/require-await
-    const content = await act(async () => render(<VersionRender id="1" />));
+    const content = await act(async () => render(<RenderedProject id="1" />));
 
     const error = screen.getByTestId("render-error");
     return { errorMessage, content, error };

@@ -19,7 +19,7 @@ import ReviewChips from "../../../components/review-chips";
  * Card that represents some post branch
  * @param id branch ID
  * @param postId branch's post ID, used only for routing
- * @param short makes the card less wide version of the card
+ * @param short makes the card less wide
  */
 export default function BranchCard({
   id,

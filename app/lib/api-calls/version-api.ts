@@ -7,12 +7,13 @@ import { FileTreeT } from "../types/file-tree";
 import { baseUrl } from "./api-common";
 
 /**
- * Fetches HTML render of a version's Quarto project.
+ * Fetches HTML render of a Quarto project.
  * @async
- * @param id Version ID
+ * @param id TODO
  * @returns Text contents of the HTML render
  */
-export async function getRenderedVersion(id: string): Promise<string> {
+export async function getRender(id: string): Promise<string> {
+  // TODO update
   const res = await fetch(`${baseUrl}/versions/${id}/render`);
   if (res.status === 202) {
     return "pending";

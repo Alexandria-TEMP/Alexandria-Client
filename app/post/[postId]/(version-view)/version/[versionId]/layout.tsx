@@ -7,7 +7,7 @@ import BranchSidebar from "./components/branch-parts/branch-sidebar";
  * @param params.postId Post ID, taken from route's dynamic segment /[postId]
  * @param params.versionId Branch ID, taken from route's dynamic segment /[versionId]
  */
-export default function VersionViewLayout({
+export default function BranchLayout({
   children,
   params,
 }: ChildrenProp & {

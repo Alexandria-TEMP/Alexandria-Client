@@ -2,15 +2,15 @@
 
 import { Card, CardBody } from "@nextui-org/react";
 import { idType } from "@/lib/types/api-types";
-import VersionRender from "@/post/[postId]/components/version-render/component";
+import RenderedProject from "@/post/[postId]/components/project-render/rendered-project";
 import { useState } from "react";
 import BranchCardHeader from "./branch-card-header";
 import FileTree from "@/post/[postId]/components/files/file-tree";
 
 /**
  * Displays a Card for a branch, containing a [BranchCardHeader](./branch-card-header)
- * and two side-by-side [VersionRender](@/post/[postId]/components/version-render/component)
- * which can be turned into a single VersionRender by clicking a Switch.
+ * and two side-by-side [RenderedProject](@/post/[postId]/components/project-render/rendered-project)
+ * which can be turned into a single RenderedProject by clicking a Switch.
  * @param footer optional CardFooter component, gets placed at the end of the Card
  * @param hideContribute hides button with contribution options
  * @param newVersionID new version ID
@@ -18,7 +18,7 @@ import FileTree from "@/post/[postId]/components/files/file-tree";
  * @param postId post ID
  * @param branchId branch ID
  */
-export default function CompareVersionContentCard({
+export default function BranchCard({
   footer,
   newVersionId,
   previousVersionId,
@@ -70,7 +70,7 @@ export default function CompareVersionContentCard({
           {view === "files" ? (
             <FileTree id={newVersionId.toString()} />
           ) : (
-            <VersionRender id={newVersionId.toString()} />
+            <RenderedProject id={newVersionId.toString()} />
           )}
         </div>
 
@@ -78,7 +78,7 @@ export default function CompareVersionContentCard({
           {view === "files" ? (
             <FileTree id={previousVersionId.toString()} />
           ) : (
-            <VersionRender id={previousVersionId.toString()} />
+            <RenderedProject id={previousVersionId.toString()} />
           )}
         </div>
       </CardBody>
