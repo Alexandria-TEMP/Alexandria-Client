@@ -1,5 +1,6 @@
 import { getMergeRequestData } from "@/lib/api-calls/merge-request-api";
 import CompareVersionContentCard from "@/post/[postId]/(version-view)/version/[versionId]/components/merge-request-parts/compare-version-content-card";
+import FileTree from "@/post/[postId]/components/files/file-tree";
 import VersionRender from "@/post/[postId]/components/version-render/component";
 import { expect, describe, it } from "@jest/globals";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -12,8 +13,9 @@ import { dummyMergeRequests } from "~/__tests__/__utils__/dummys";
 jest.mock("@/lib/api-calls/merge-request-api");
 // Mock useRouter so it's mounted
 jest.mock("next/navigation");
-// Mock version render to reduce coupling
+// Mock version render and file tree to reduce coupling
 jest.mock("@/post/[postId]/components/version-render/component");
+jest.mock("@/post/[postId]/components/files/file-tree");
 
 describe("CompareVersionContentCard", () => {
   (usePathname as jest.Mock).mockReturnValue("");
@@ -28,6 +30,14 @@ describe("CompareVersionContentCard", () => {
         <p data-testid="new-version">This is the new version</p>
       ) : (
         <p data-testid="old-version">This version is being replaced</p>
+      ),
+    );
+
+    (FileTree as jest.Mock).mockImplementation(({ id }) =>
+      id === "1" ? (
+        <p data-testid="new-files">These are the new files</p>
+      ) : (
+        <p data-testid="old-files">These files are being replaced</p>
       ),
     );
 
@@ -48,24 +58,77 @@ describe("CompareVersionContentCard", () => {
     });
   });
 
-  it("shows one version when compare is off", () => {
-    const newVersion = screen.getByTestId("new-version");
-    const oldVersion = screen.getByTestId("old-version");
+  const getElements = (view: "files" | "versions") => {
+    const compareSwitch = screen.getByRole("switch", { name: "Compare" });
+    if (view === "versions") {
+      const newVersion = screen.getByTestId("new-version");
+      const oldVersion = screen.getByTestId("old-version");
+      return { compareSwitch, newVersion, oldVersion };
+    } else {
+      const newFiles = screen.getByTestId("new-files");
+      const oldFiles = screen.getByTestId("old-files");
+      return { compareSwitch, newFiles, oldFiles };
+    }
+  };
 
-    expect(newVersion).toBeInTheDocument();
-    expect(oldVersion).toBeInTheDocument();
+  it("shows one version when compare is off", () => {
+    const { compareSwitch, newVersion, oldVersion } = getElements("versions");
+
+    expect(compareSwitch).not.toBeChecked();
+    expect(newVersion).toBeVisible();
+    expect(oldVersion?.parentElement).toHaveClass("hidden");
   });
 
   it("shows both versions when compare is on", async () => {
+    const { compareSwitch, newVersion, oldVersion } = getElements("versions");
+
     const user = userEvent.setup();
+    await user.click(compareSwitch);
+
+    await waitFor(() => {
+      expect(compareSwitch).toBeChecked();
+
+      expect(newVersion).toBeVisible();
+      expect(oldVersion).toBeVisible();
+      expect(oldVersion?.parentElement).not.toHaveClass("hidden");
+    });
+  });
+
+  it("shows file tree after button is pressed", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Files" }));
+
+    const { newFiles } = getElements("files");
+    expect(newFiles).toBeVisible();
+  });
+
+  it("shows both file tree if user pressed compare then button", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("switch", { name: "Compare" }));
+    await user.click(screen.getByRole("button", { name: "Files" }));
+
+    await waitFor(() => {
+      const { compareSwitch, newFiles, oldFiles } = getElements("files");
+
+      expect(compareSwitch).toBeChecked();
+      expect(newFiles).toBeVisible();
+      expect(oldFiles).toBeVisible();
+      expect(oldFiles?.parentElement).not.toHaveClass("hidden");
+    });
+  });
+
+  it("shows both file tree if user pressed button then compare", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Files" }));
     await user.click(screen.getByRole("switch", { name: "Compare" }));
 
     await waitFor(() => {
-      const newVersion = screen.getByTestId("new-version");
-      const oldVersion = screen.getByTestId("old-version");
+      const { compareSwitch, newFiles, oldFiles } = getElements("files");
 
-      expect(newVersion).toBeInTheDocument();
-      expect(oldVersion).toBeInTheDocument();
+      expect(compareSwitch).toBeChecked();
+      expect(newFiles).toBeVisible();
+      expect(oldFiles).toBeVisible();
+      expect(oldFiles?.parentElement).not.toHaveClass("hidden");
     });
   });
 });

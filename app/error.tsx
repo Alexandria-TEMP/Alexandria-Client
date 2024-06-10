@@ -22,7 +22,10 @@ export default function DefaultError({
   }, [error]);
 
   return (
-    <div className="h-80 flex flex-col justify-center items-center bg-warning-100 rounded-lg">
+    <div
+      data-testid="default-error"
+      className="h-80 flex flex-col justify-center items-center bg-warning-100 rounded-lg"
+    >
       <h2>Something went wrong!</h2>
       <Button
         // Attempt to recover by trying to re-render the segment

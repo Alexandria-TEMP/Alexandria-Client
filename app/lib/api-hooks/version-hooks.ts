@@ -1,7 +1,7 @@
 import { idType } from "../types/api-types";
 import { getFileContents, getFileTree } from "../api-calls/version-api";
 import { useEffect, useState } from "react";
-import { FileTreeT } from "../file-tree-handler";
+import { FileTreeT } from "../types/file-tree";
 
 /**
  * React hook to get file tree data

@@ -2,9 +2,13 @@
  * Converts a number in bytes into a string representation
  * of its closest byte multiple (B, kB, MB or GB)
  * @param n number of bytes
- * @returns string with number and unit
+ * @returns string with number and unit or "invalid" on error
  */
 export function numberToByteMultiple(n: number) {
+  if (n < 0) {
+    return "invalid";
+  }
+
   const multiples: [string, number][] = [
     ["GB", 1_000_000_000],
     ["MB", 1_000_000],

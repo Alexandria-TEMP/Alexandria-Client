@@ -8,9 +8,9 @@ import { Button } from "@nextui-org/react";
  */
 export default function DownloadButton({ id }: IdProp) {
   // TODO downloading functionality
-  console.log("donwloading " + id);
+
   return (
-    <Button isIconOnly>
+    <Button isIconOnly onPress={() => console.log("donwloading " + id)}>
       <CloudArrowDownIcon className="size-6" />
     </Button>
   );

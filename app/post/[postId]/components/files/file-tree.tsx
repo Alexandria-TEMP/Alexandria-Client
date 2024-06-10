@@ -14,21 +14,28 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import FileView from "./file-view";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import { parseId } from "@/lib/string-utils";
 import { useFileTree } from "@/lib/api-hooks/version-hooks";
-import GenericLoadingPage from "@/loading";
 import { numberToByteMultiple } from "@/lib/file-size-utils";
 import { DocumentIcon, FolderIcon } from "@heroicons/react/20/solid";
+import DefaultError from "@/error";
 
+/**
+ * Displays a table with all files in the Quarto project, allowing one to
+ * click through them and open them
+ * @param id version ID
+ */
 export default function FileTree({ id }: IdProp) {
   const { data, isLoading, error } = useFileTree(parseId(id));
 
   const [path, setPath] = useState<string[]>([]);
   const [rows, setRows] = useState<{ name: string; size: number }[]>([]);
   const [openedFile, setOpenedFile] = useState(false);
+  // Used to trigger a rerender in case of an error
+  const [rerender, setRerender] = useState(false);
 
   useEffect(() => {
     if (!data) return;
@@ -54,8 +61,7 @@ export default function FileTree({ id }: IdProp) {
   }, [path, data]);
 
   if (error) {
-    // TODO
-    return <div>Placeholder error</div>;
+    return <DefaultError error={error} reset={() => setRerender(!rerender)} />;
   }
 
   const breadcrumbs = (
@@ -79,6 +85,7 @@ export default function FileTree({ id }: IdProp) {
 
   const fileTable = (
     <Table
+      aria-label="Quarto project's file tree"
       onRowAction={(name) => setPath([...path, name as string])}
       selectionMode="single" // highlights on hover
       removeWrapper
@@ -118,12 +125,10 @@ export default function FileTree({ id }: IdProp) {
   );
 
   const fileContents = (
-    <Suspense fallback={<GenericLoadingPage />}>
-      <FileView
-        id={id}
-        path={path.reduce((accum, item) => accum.concat(`/${item}`), "")}
-      />
-    </Suspense>
+    <FileView
+      id={id}
+      path={path.reduce((accum, item) => accum.concat(`/${item}`), "")}
+    />
   );
 
   return (
