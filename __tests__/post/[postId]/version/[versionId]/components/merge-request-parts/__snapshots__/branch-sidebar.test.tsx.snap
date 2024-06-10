@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MergeRequestSidebarTest matches snapshot 1`] = `
+exports[`BranchSidebarTest matches snapshot 1`] = `
 <div>
   <div
     class="sticky top-20"

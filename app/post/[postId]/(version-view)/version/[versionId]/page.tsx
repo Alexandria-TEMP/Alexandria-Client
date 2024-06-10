@@ -2,15 +2,15 @@ import { parseId } from "@/lib/string-utils";
 import DiscussionSection from "@/post/[postId]/components/discussions/discussion-section";
 import PeerReviewSection from "./components/peer-review/peer-review-section";
 import { CardFooter, Divider } from "@nextui-org/react";
-import CompareVersionContentCard from "./components/merge-request-parts/compare-version-content-card";
-import { getBranchData } from "@/lib/api-calls/merge-request-api";
+import CompareVersionContentCard from "./components/branch-parts/compare-version-content-card";
+import { getBranchData } from "@/lib/api-calls/branch-api";
 
 /**
- * Page with merge request version comparison, its reviews and discussion
+ * Page with branch version comparison, its reviews and discussion
  * @param params.postId Post ID, taken from route's dynamic segment /[postId]
  * @param params.versionId Version ID, taken from route's dynamic segment /[versionId]
  */
-export default async function PostVersion({
+export default async function Branch({
   params,
 }: {
   params: { postId: string; versionId: string };
@@ -23,7 +23,7 @@ export default async function PostVersion({
         newVersionId={data.newVersionID}
         previousVersionId={data.previousVersionID}
         postId={parseId(params.postId)}
-        mergeRequestId={parseId(params.versionId)}
+        branchId={parseId(params.versionId)}
         footer={
           <CardFooter>
             <div className="w-full">

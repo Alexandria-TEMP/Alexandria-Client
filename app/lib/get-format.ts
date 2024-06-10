@@ -19,7 +19,7 @@ export function getFieldName(i: Tag | undefined) {
 }
 
 /**
- * Maps type MergeRequestReviewStatus to a verb in past or present tense
+ * Maps type BranchReviewStatusT to a verb in past or present tense
  */
 export function reviewStatusToTensedVerb(status: BranchReviewStatusT) {
   switch (status) {

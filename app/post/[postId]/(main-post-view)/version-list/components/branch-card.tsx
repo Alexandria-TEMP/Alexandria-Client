@@ -4,22 +4,24 @@ import HeaderSubtle from "@/components/header-subtle";
 import {
   getBranchData,
   getBranchReviewStatuses,
-} from "@/lib/api-calls/merge-request-api";
+} from "@/lib/api-calls/branch-api";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { capitalizeFirstLetter, parseId } from "@/lib/string-utils";
-import MergeRequestCardSkeleton from "./merge-request-card-skeleton";
+import BranchCardSkeleton from "./branch-card-skeleton";
 import { BranchT, idType } from "@/lib/types/api-types";
 import { reviewStatusToTensedVerb } from "@/lib/get-format";
 import ReviewChips from "../../../components/review-chips";
 
 /**
- * Card that represents some merge request for a post.
- * @param id Merge request ID
+ * Card that represents some post branch
+ * @param id branch ID
+ * @param postId branch's post ID, used only for routing
+ * @param short makes the card less wide version of the card
  */
-export default function MergeRequestCard({
+export default function BranchCard({
   id,
   postId,
   short,
@@ -40,7 +42,7 @@ export default function MergeRequestCard({
   });
 
   if (data === undefined || reviews === undefined) {
-    return <MergeRequestCardSkeleton />;
+    return <BranchCardSkeleton />;
   }
 
   // We create variables for the separate parts of the card to avoid code duplication

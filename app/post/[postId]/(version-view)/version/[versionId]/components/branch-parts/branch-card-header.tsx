@@ -2,35 +2,35 @@
 
 import { CardHeader, Switch } from "@nextui-org/react";
 import HeaderSubtle from "@/components/header-subtle";
-import { getBranchData } from "@/lib/api-calls/merge-request-api";
+import { getBranchData } from "@/lib/api-calls/branch-api";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
 import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
 import { reviewStatusToTensedVerb } from "@/lib/get-format";
 import { BranchT, idType } from "@/lib/types/api-types";
 import ChipWithTitle from "@/components/chip-with-title";
-import MergeRequestCardHeaderSkeleton from "./merge-request-card-header-skeleton";
+import BranchCardHeaderSkeleton from "./branch-card-header-skeleton";
 import { useEffect, useMemo, useState } from "react";
 import ActionGroup from "@/post/[postId]/components/buttons/action-group";
 import DownloadButton from "@/post/[postId]/components/buttons/download-button";
 
 /**
- * Header for merge request contents card. Uses CardHeader, so it must be child of a Card.
- * Includes title, main metadata, and action buttons.
+ * Header for branch contents card. Uses CardHeader, so it must be child of a Card.
+ * Includes title, metadata, and action buttons.
  * @param postId post ID, used for routing only
- * @param mergeRequestId merge request ID
+ * @param branchId branch ID
  * @param actions list of actions performed when pressing buttons on left side of header
  * @param hideContribute hides button with contribution options
  * @param onCompare called when "Compare" switch is toggled, if undefined switch won't be rendered
  */
-export default function MergeRequestCardHeader({
+export default function BranchCardHeader({
   postId,
-  mergeRequestId,
+  branchId,
   actions,
   hideContribute,
   onCompare,
 }: {
   postId: idType;
-  mergeRequestId: idType;
+  branchId: idType;
   actions: { do: () => void; label: string; isDisabled: boolean }[];
   hideContribute?: boolean;
   onCompare?: (value: boolean) => void;
@@ -44,13 +44,13 @@ export default function MergeRequestCardHeader({
   );
 
   useEffect(() => {
-    getBranchData(mergeRequestId)
+    getBranchData(branchId)
       .then(setData)
       .catch((e) => {
         throw e;
       })
       .finally(() => setIsLoading(false));
-  }, [mergeRequestId]);
+  }, [branchId]);
 
   const contributeRoutes = {
     // Enabled buttons per status:
@@ -61,11 +61,11 @@ export default function MergeRequestCardHeader({
     contribute: status == "rejected" ? `/propose-changes/${postId}` : undefined,
     review:
       status == "open"
-        ? `/post/${postId}/version/${mergeRequestId}/review`
+        ? `/post/${postId}/version/${branchId}/review`
         : undefined,
   };
 
-  if (isLoading || !data) return <MergeRequestCardHeaderSkeleton />;
+  if (isLoading || !data) return <BranchCardHeaderSkeleton />;
 
   return (
     <>

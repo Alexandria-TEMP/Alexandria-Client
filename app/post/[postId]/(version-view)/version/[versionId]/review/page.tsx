@@ -1,14 +1,14 @@
 import { parseId } from "@/lib/string-utils";
 import PeerReviewInput from "../components/peer-review/peer-review-input";
-import CompareVersionContentCard from "../components/merge-request-parts/compare-version-content-card";
-import { getBranchData } from "@/lib/api-calls/merge-request-api";
+import CompareVersionContentCard from "../components/branch-parts/compare-version-content-card";
+import { getBranchData } from "@/lib/api-calls/branch-api";
 
 /**
- * Page with merge request version comparison and input for a new peer review
+ * Page with branch version comparison and input for a new peer review
  * @param params.postId Post ID, taken from route's dynamic segment /[postId]
- * @param params.versionId Version ID, taken from route's dynamic segment /[versionId]
+ * @param params.versionId Branch ID, taken from route's dynamic segment /[versionId]
  */
-export default async function PostVersionReview({
+export default async function BranchReview({
   params,
 }: {
   params: { postId: string; versionId: string };
@@ -22,7 +22,7 @@ export default async function PostVersionReview({
         newVersionId={data.newVersionID}
         previousVersionId={data.previousVersionID}
         postId={parseId(params.postId)}
-        mergeRequestId={parseId(params.versionId)}
+        branchId={parseId(params.versionId)}
         hideContribute
       />
     </div>

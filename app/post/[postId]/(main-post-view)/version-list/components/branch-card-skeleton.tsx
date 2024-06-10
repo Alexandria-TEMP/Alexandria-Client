@@ -3,10 +3,10 @@ import { Card, CardBody, CardFooter, Skeleton } from "@nextui-org/react";
 import ReviewChip from "../../../components/review-chip";
 
 /**
- * Placeholder card for [MergeRequestCard](./merge-request-card.tsx), which
+ * Placeholder card for [BranchCard](./branch-card.tsx), which
  * can be rendered while it loads.
  */
-export default function MergeRequestCardSkeleton() {
+export default function BranchCardSkeleton() {
   return (
     <Card className="w-full">
       <CardBody>

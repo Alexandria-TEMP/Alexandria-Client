@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MergeRequestList grid matches snapshot 1`] = `
+exports[`BranchList grid matches snapshot 1`] = `
 <div>
   <div
     class="gap-5 grid grid-cols-4"
@@ -24,7 +24,7 @@ exports[`MergeRequestList grid matches snapshot 1`] = `
 </div>
 `;
 
-exports[`MergeRequestList matches snapshot 1`] = `
+exports[`BranchList matches snapshot 1`] = `
 <div>
   <div
     class="gap-5 flex flex-col"

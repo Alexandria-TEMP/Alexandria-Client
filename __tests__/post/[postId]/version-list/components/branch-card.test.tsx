@@ -2,20 +2,20 @@ import { expect } from "@jest/globals";
 import {
   getBranchData,
   getBranchReviewStatuses,
-} from "@/lib/api-calls/merge-request-api";
-import MergeRequestCard from "@/post/[postId]/(main-post-view)/version-list/components/merge-request-card";
+} from "@/lib/api-calls/branch-api";
+import BranchCard from "@/post/[postId]/(main-post-view)/version-list/components/branch-card";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { dummyBranches } from "~/__tests__/__utils__/dummys";
 import { useRouter } from "next/navigation";
 import userEvent from "@testing-library/user-event";
 
-jest.mock("@/lib/api-calls/merge-request-api");
+jest.mock("@/lib/api-calls/branch-api");
 
 // Mock useRouter to spy on push
 const routerPushMock = jest.fn().mockName("router.push()");
 jest.mock("next/navigation");
 
-describe("MergeRequestCard", () => {
+describe("BranchCard", () => {
   (useRouter as jest.Mock).mockReturnValue({ push: routerPushMock });
   (getBranchData as jest.Mock).mockResolvedValue(dummyBranches["open"]);
   (getBranchReviewStatuses as jest.Mock).mockResolvedValue([
@@ -25,12 +25,12 @@ describe("MergeRequestCard", () => {
   ]);
 
   beforeEach(async () => {
-    // disable reason: we need this to wait for a change in MergeRequestCard
+    // disable reason: we need this to wait for a change in BranchCard
     // but since there's no explicit await in the block, eslint doesn't like it
     // eslint-disable-next-line @typescript-eslint/require-await
     await act(async () => {
       render(
-        <MergeRequestCard
+        <BranchCard
           id={dummyBranches["open"].id.toString()}
           postId={dummyBranches["open"].projectPostID}
         />,

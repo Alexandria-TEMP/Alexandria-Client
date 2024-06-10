@@ -5,17 +5,16 @@
 import { Tab, Tabs } from "@nextui-org/react";
 
 /**
- * Renders a tabbed list view of post merge requests.
+ * Renders a tabbed list view of post branches.
  * Includes the tabs "Version history", "Proposed changes" and "Rejected changes".
  * @param historyList Component that gets rendered on the "Version history" tab
  * @param openList Component that gets rendered on the "Proposed changes" tab
  * @param rejectedList Component that gets rendered on the "Rejected changes" tab
  */
-export default function MergeRequestTabs({
-  // Since this has to be a client component, including `MergeRequestList`s  or
-  // `MergeRequestCard`s here as children of <Tab> would force those component to
-  // also be client components. As a workaround, we take in `MergeRequestList`s
-  // as props here.
+export default function BranchTabs({
+  // Since this has to be a client component, including `BranchList`s  or `BranchCard`s
+  // here as children of <Tab> would force those component to also be client components
+  // As a workaround, we take in `BranchList`s as props here
   historyList,
   openList,
   rejectedList,

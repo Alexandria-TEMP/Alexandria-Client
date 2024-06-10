@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MergeRequestCardHeaderTest matches snapshot when status is accepted 1`] = `
+exports[`BranchCardHeaderTest matches snapshot when status is accepted 1`] = `
 <div>
   <div
     class="flex flex-col relative overflow-hidden height-auto text-foreground box-border bg-content1 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 shadow-medium rounded-large transition-transform-background motion-reduce:transition-none"
@@ -127,7 +127,7 @@ exports[`MergeRequestCardHeaderTest matches snapshot when status is accepted 1`]
 </div>
 `;
 
-exports[`MergeRequestCardHeaderTest matches snapshot when status is open 1`] = `
+exports[`BranchCardHeaderTest matches snapshot when status is open 1`] = `
 <div>
   <div
     class="flex flex-col relative overflow-hidden height-auto text-foreground box-border bg-content1 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 shadow-medium rounded-large transition-transform-background motion-reduce:transition-none"
@@ -280,7 +280,7 @@ exports[`MergeRequestCardHeaderTest matches snapshot when status is open 1`] = `
 </div>
 `;
 
-exports[`MergeRequestCardHeaderTest matches snapshot when status is rejected 1`] = `
+exports[`BranchCardHeaderTest matches snapshot when status is rejected 1`] = `
 <div>
   <div
     class="flex flex-col relative overflow-hidden height-auto text-foreground box-border bg-content1 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 shadow-medium rounded-large transition-transform-background motion-reduce:transition-none"

@@ -3,9 +3,9 @@ import HeaderSubtle from "@/components/header-subtle";
 import ChipWithTitle from "@/components/chip-with-title";
 
 /**
- * Skeleton for a MergeRequestCardHeader, to be displayed while it loads
+ * Skeleton for a BranchCardHeader, to be displayed while it loads
  */
-export default function MergeRequestCardHeaderSkeleton({
+export default function BranchCardHeaderSkeleton({
   hideContribute,
 }: {
   hideContribute?: boolean;

@@ -1,5 +1,5 @@
-import { getBranchData } from "@/lib/api-calls/merge-request-api";
-import CompareVersionContentCard from "@/post/[postId]/(version-view)/version/[versionId]/components/merge-request-parts/compare-version-content-card";
+import { getBranchData } from "@/lib/api-calls/branch-api";
+import CompareVersionContentCard from "@/post/[postId]/(version-view)/version/[versionId]/components/branch-parts/compare-version-content-card";
 import FileTree from "@/post/[postId]/components/files/file-tree";
 import VersionRender from "@/post/[postId]/components/version-render/component";
 import { expect, describe, it } from "@jest/globals";
@@ -9,8 +9,8 @@ import { usePathname, useRouter } from "next/navigation";
 import createMockRouter from "~/__tests__/__utils__/create-mock-router";
 import { dummyBranches } from "~/__tests__/__utils__/dummys";
 
-// Mock getMergeRequestData()
-jest.mock("@/lib/api-calls/merge-request-api");
+// Mock getBranchData()
+jest.mock("@/lib/api-calls/branch-api");
 // Mock useRouter so it's mounted
 jest.mock("next/navigation");
 // Mock version render and file tree to reduce coupling
@@ -44,7 +44,7 @@ describe("CompareVersionContentCard", () => {
         newVersionId={1}
         previousVersionId={2}
         postId={0}
-        mergeRequestId={0}
+        branchId={0}
       />,
     );
 

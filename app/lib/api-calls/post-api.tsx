@@ -13,7 +13,7 @@ export default async function getPostData(id: string): Promise<PostT> {
     status: "Open for review",
     authors: ["3"],
     contributors: ["1", "2"],
-    collaborators: ["1", "2"], /// i think these should be different, but mr and post are strutured differently so we need both
+    collaborators: ["1", "2"], /// i think these should be different, but branch and post are strutured differently so we need both
     anonymous: false,
     createdAt: "10 May 2024",
     currentVersion: {

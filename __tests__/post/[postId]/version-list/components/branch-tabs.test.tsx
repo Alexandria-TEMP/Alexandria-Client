@@ -1,16 +1,16 @@
-import MergeRequestTabs from "@/post/[postId]/(main-post-view)/version-list/components/merge-request-tabs";
+import BranchTabs from "@/post/[postId]/(main-post-view)/version-list/components/branch-tabs";
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-describe("MergeRequestTabs", () => {
+describe("BranchTabs", () => {
   it("switches between tabs", async () => {
     const user = userEvent.setup();
 
     const renderedViews = ["First view", "Second view", "Third view"];
 
     render(
-      <MergeRequestTabs
+      <BranchTabs
         historyList={<p>{renderedViews[0]}</p>}
         openList={<p>{renderedViews[1]}</p>}
         rejectedList={<p>{renderedViews[2]}</p>}

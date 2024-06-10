@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MergeRequestCardHeaderSkeletonTest matches snapshot 1`] = `
+exports[`BranchCardHeaderSkeleton matches snapshot 1`] = `
 <div>
   <div
     class="flex flex-col relative overflow-hidden height-auto text-foreground box-border bg-content1 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 shadow-medium rounded-large transition-transform-background motion-reduce:transition-none"
@@ -144,7 +144,7 @@ exports[`MergeRequestCardHeaderSkeletonTest matches snapshot 1`] = `
 </div>
 `;
 
-exports[`MergeRequestCardHeaderSkeletonTest matches snapshot when hiding contribute button 1`] = `
+exports[`BranchCardHeaderSkeleton matches snapshot when hiding contribute button 1`] = `
 <div>
   <div
     class="flex flex-col relative overflow-hidden height-auto text-foreground box-border bg-content1 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 shadow-medium rounded-large transition-transform-background motion-reduce:transition-none"

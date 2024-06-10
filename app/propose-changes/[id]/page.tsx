@@ -54,7 +54,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
     useForm<FormType>({
       mode: "onTouched",
       defaultValues: {
-        mrTitle: "",
+        branchTitle: "",
         contributors: [loggedIn.id],
         anonymous: false,
         originalPostId: params.id,
@@ -137,7 +137,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
           <Card className="p-7">
             <div className="flex flex-col space-y-5">
               <Controller
-                name="mrTitle"
+                name="branchTitle"
                 control={control}
                 rules={{
                   required: "Please enter a title for your contribution.",
@@ -156,8 +156,8 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                     description="Briefly describe the changes your proposal brings."
                     className="space-y-2"
                     isRequired
-                    errorMessage={formState.errors.mrTitle?.message?.toString()}
-                    isInvalid={!!formState.errors.mrTitle?.message}
+                    errorMessage={formState.errors.branchTitle?.message?.toString()}
+                    isInvalid={!!formState.errors.branchTitle?.message}
                   />
                 )}
               />
