@@ -9,12 +9,16 @@ import {
   RadioGroup,
   Textarea,
 } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 /**
  * Input box for a new peer review
  */
 export default function PeerReviewInput() {
+  // Needed to navigate back when cancelling a review
+  const router = useRouter();
+
   const [feedback, setFeedback] = useState<string | undefined>(undefined);
   const [approval, setApproval] = useState<string | undefined>(undefined); // TODO api typing
 
@@ -51,8 +55,14 @@ export default function PeerReviewInput() {
         </RadioGroup>
         {/* TODO submit functionality with forms */}
         <div className="grow" />
-        <Button isDisabled={!approval || !feedback || feedback === ""}>
+        <Button
+          isDisabled={!approval || !feedback || feedback === ""}
+          color="primary"
+        >
           Submit review
+        </Button>
+        <Button className="ml-2" onPress={() => router.back()}>
+          Cancel
         </Button>
       </CardFooter>
     </Card>

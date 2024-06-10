@@ -26,7 +26,7 @@ export default function ContributeDropdown({
 }>) {
   const router = useRouter();
 
-  // Currently selected opeion
+  // Currently selected option
   const [selectedOptionKey, setSelectedOptionKey] = useState(
     new Set(["contribute"]),
   );
@@ -91,11 +91,11 @@ export default function ContributeDropdown({
   // Get currently selected option from option array
   const selectedOption = useMemo(() => {
     // Find selected option
-    const ret = options.filter(
+    const ret = options.find(
       (option) => option.key === Array.from(selectedOptionKey)[0],
-    )[0];
+    );
     // Prefetch it's href to make navigation smoother
-    router.prefetch(ret.href);
+    if (ret && typeof window != "undefined") router.prefetch(ret.href);
 
     return ret;
   }, [selectedOptionKey, options, router]);
@@ -103,9 +103,9 @@ export default function ContributeDropdown({
   // If there's only one option, don't render dropdown
   if (options.length == 1) {
     return (
-      <Tooltip content={selectedOption.description}>
-        <Button onPress={() => router.push(selectedOption.href)}>
-          {selectedOption.label}
+      <Tooltip content={selectedOption!.description}>
+        <Button onPress={() => router.push(selectedOption!.href)}>
+          {selectedOption!.label}
         </Button>
       </Tooltip>
     );
@@ -113,8 +113,8 @@ export default function ContributeDropdown({
 
   return (
     <ButtonGroup>
-      <Button onPress={() => router.push(selectedOption.href)}>
-        {selectedOption.label}
+      <Button onPress={() => router.push(selectedOption!.href)}>
+        {selectedOption!.label}
       </Button>
       <Dropdown placement="bottom-end">
         <DropdownTrigger>

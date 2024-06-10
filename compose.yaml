@@ -13,18 +13,22 @@ services:
     ports:
       - 3000:3000
 
-  test:
-    build:
-      context: .
-      target: test
-      dockerfile: Dockerfile
+# TODO uncomment following lines to add back stages, and remove preceding line
+# reason for commenting out in development: `docker compose up dev` is inconsistent with
+# command for backend, which is just `docker compose up`, and this is causing confusion
+
+  # test:
+  #   build:
+  #     context: .
+  #     target: test
+  #     dockerfile: Dockerfile
     
-  e2e:
-    image: cypress/included:13.8.1 
-    entrypoint: npm
-    command: run e2e:headless
-    working_dir: /e2e
-    volumes:
-      - ./:/e2e
-    ports:
-      - 3000:3000
+  # e2e:
+  #   image: cypress/included:13.8.1 
+  #   entrypoint: npm
+  #   command: run e2e:headless
+  #   working_dir: /e2e
+  #   volumes:
+  #     - ./:/e2e
+  #   ports:
+  #     - 3000:3000

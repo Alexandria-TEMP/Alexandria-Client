@@ -38,6 +38,7 @@ export type PostT = {
 };
 
 export type BranchT = {
+  anonymous: boolean;
   branchReviewStatus: BranchReviewStatusT;
   branchTitle: string;
   collaboratorIDs: idType[];

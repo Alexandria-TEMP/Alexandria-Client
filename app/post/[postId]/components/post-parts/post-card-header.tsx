@@ -24,7 +24,7 @@ export default async function PostCardHeader({
   const contributeRoutes = {
     // TODO peer reviewed/rejected -> disable review & open -> disable contribute
     fork: `/todo`,
-    contribute: `/todo`,
+    contribute: `/propose-changes/${postId}`,
     review: `/todo`,
   };
 
