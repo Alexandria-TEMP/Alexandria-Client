@@ -5,16 +5,16 @@ import BranchSidebar from "./components/branch-parts/branch-sidebar";
 /**
  * Layout for branch pages, which inserts a [BranchSidebar](./components/branch-sidebar)
  * @param params.postId Post ID, taken from route's dynamic segment /[postId]
- * @param params.versionId Branch ID, taken from route's dynamic segment /[versionId]
+ * @param params.branchId Branch ID, taken from route's dynamic segment /[branchId]
  */
 export default function BranchLayout({
   children,
   params,
 }: ChildrenProp & {
-  params: { versionId: string; postId: string };
+  params: { branchId: string; postId: string };
 }) {
   return (
-    <BodyWithSidebar sidebar={<BranchSidebar id={params.versionId} />}>
+    <BodyWithSidebar sidebar={<BranchSidebar id={params.branchId} />}>
       {children}
     </BodyWithSidebar>
   );

@@ -1,10 +1,10 @@
-import PeerReviewSection from "@/post/[postId]/(version-view)/version/[versionId]/components/peer-review/peer-review-section";
+import PeerReviewSection from "@/post/[postId]/(branch)/version/[branchId]/components/peer-review/peer-review-section";
 import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";
-import PeerReview from "@/post/[postId]/(version-view)/version/[versionId]/components/peer-review/peer-review";
+import PeerReview from "@/post/[postId]/(branch)/version/[branchId]/components/peer-review/peer-review";
 
 jest.mock(
-  "@/post/[postId]/(version-view)/version/[versionId]/components/peer-review/peer-review",
+  "@/post/[postId]/(branch)/version/[branchId]/components/peer-review/peer-review",
 );
 
 describe("PeerReviewSection", () => {

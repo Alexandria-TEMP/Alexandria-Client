@@ -1,6 +1,6 @@
 import getMemberData from "@/lib/api-calls/member-api";
 import { getReviewData } from "@/lib/api-calls/review-api";
-import PeerReview from "@/post/[postId]/(version-view)/version/[versionId]/components/peer-review/peer-review";
+import PeerReview from "@/post/[postId]/(branch)/version/[branchId]/components/peer-review/peer-review";
 import { expect, describe, it } from "@jest/globals";
 import { render, waitFor, screen } from "@testing-library/react";
 import { dummyMembers, dummyReview } from "~/__tests__/__utils__/dummys";

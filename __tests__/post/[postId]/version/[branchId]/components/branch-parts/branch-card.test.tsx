@@ -1,5 +1,5 @@
 import { getBranchData } from "@/lib/api-calls/branch-api";
-import BranchCard from "@/post/[postId]/(version-view)/version/[versionId]/components/branch-parts/branch-card";
+import BranchCard from "@/post/[postId]/(branch)/version/[branchId]/components/branch-parts/branch-card";
 import FileTree from "@/post/[postId]/components/files/file-tree";
 import RenderedProject from "@/post/[postId]/components/project-render/rendered-project";
 import { expect, describe, it } from "@jest/globals";

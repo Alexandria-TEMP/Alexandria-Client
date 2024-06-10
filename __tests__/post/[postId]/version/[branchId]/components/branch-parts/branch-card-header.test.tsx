@@ -1,5 +1,5 @@
 import { getBranchData } from "@/lib/api-calls/branch-api";
-import BranchCardHeader from "@/post/[postId]/(version-view)/version/[versionId]/components/branch-parts/branch-card-header";
+import BranchCardHeader from "@/post/[postId]/(branch)/version/[branchId]/components/branch-parts/branch-card-header";
 import { expect, describe, it } from "@jest/globals";
 import { Card } from "@nextui-org/react";
 import { render, screen, waitFor } from "@testing-library/react";

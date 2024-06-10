@@ -1,4 +1,4 @@
-import PeerReviewInput from "@/post/[postId]/(version-view)/version/[versionId]/components/peer-review/peer-review-input";
+import PeerReviewInput from "@/post/[postId]/(branch)/version/[branchId]/components/peer-review/peer-review-input";
 import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";
 import { useRouter } from "next/navigation";

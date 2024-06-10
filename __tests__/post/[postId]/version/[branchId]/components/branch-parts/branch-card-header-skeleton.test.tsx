@@ -1,4 +1,4 @@
-import BranchCardHeaderSkeleton from "@/post/[postId]/(version-view)/version/[versionId]/components/branch-parts/branch-card-header-skeleton";
+import BranchCardHeaderSkeleton from "@/post/[postId]/(branch)/version/[branchId]/components/branch-parts/branch-card-header-skeleton";
 import { expect, describe, it } from "@jest/globals";
 import { Card } from "@nextui-org/react";
 import { render } from "@testing-library/react";

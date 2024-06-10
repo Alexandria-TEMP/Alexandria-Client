@@ -1,4 +1,4 @@
-import BranchSidebar from "@/post/[postId]/(version-view)/version/[versionId]/components/branch-parts/branch-sidebar";
+import BranchSidebar from "@/post/[postId]/(branch)/version/[branchId]/components/branch-parts/branch-sidebar";
 import ChipList from "@/components/chip-list";
 import AuthorCardList from "@/post/[postId]/components/cards/author-card-list";
 import PostCardMini from "@/post/[postId]/components/cards/post-card-mini";
