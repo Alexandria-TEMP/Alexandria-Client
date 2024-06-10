@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // TODO remove disable above once functions are properly implemented
 
-import { FileTreeT, parseFileTree } from "../file-tree-handler";
+import { parseFileTree } from "../file-tree-handler";
 import { idType } from "../types/api-types";
+import { FileTreeT } from "../types/file-tree";
 import { baseUrl } from "./api-common";
 
 /**
