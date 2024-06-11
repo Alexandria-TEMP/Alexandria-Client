@@ -1,4 +1,5 @@
 import { MergeRequest, PostT, Review } from "@/lib/types/api-types";
+import { FileTreeT } from "@/lib/types/file-tree";
 
 export const dummyDiscussion = {
   id: "4321",
@@ -156,5 +157,18 @@ export const dummyReview: { rejected: Review; accepted: Review } = {
     mergeRequestDecision: "approved",
     mergeRequestID: 0,
     createdAt: "02 June 2024",
+  },
+};
+
+export const dummyFileTree: FileTreeT = {
+  a: {
+    b: {
+      "c.txt": 5,
+    },
+    "file.txt": 8235000,
+  },
+  "rootfile.txt": 86,
+  dir: {
+    "f.txt": 2430,
   },
 };

@@ -5,6 +5,7 @@ import ContributeDropdown from "../buttons/contribute-dropdown";
 import getPostData from "@/lib/api-calls/post-api";
 import ChipWithTitle from "@/components/chip-with-title";
 import { PostT } from "@/lib/types/api-types";
+import DownloadButton from "../buttons/download-button";
 
 /**
  * Header for post contents card. Uses CardHeader, so it must be child of a Card.
@@ -35,8 +36,9 @@ export default async function PostCardHeader({
         <h1 className="font-semibold">{data.title}</h1>
       </CardHeader>
 
-      {/* (part of) Metadata */}
-      <CardHeader className="-mt-4 flex gap-12">
+      <CardHeader className="-mt-4 flex gap-8">
+        {/* Buttons */}
+
         <LinkGroup
           links={[
             { label: "Contents", href: `/post/${postId}` },
@@ -45,9 +47,13 @@ export default async function PostCardHeader({
           ]}
         />
 
+        <DownloadButton id={data.currentVersion.id} />
+
         {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
 
         <div className="grow" />
+
+        {/* Metadata */}
 
         <ChipWithTitle title="Post type">{data.postType}</ChipWithTitle>
         <ChipWithTitle title="Status">{data.status}</ChipWithTitle>

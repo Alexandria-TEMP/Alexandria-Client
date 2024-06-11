@@ -16,7 +16,7 @@ exports[`MergeRequestCardHeaderTest matches snapshot when status is accepted 1`]
       </h1>
     </div>
     <div
-      class="p-3 z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large -mt-4 flex gap-12"
+      class="p-3 z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large -mt-4 flex gap-8"
     >
       <div
         class="inline-flex items-center justify-center h-auto"
@@ -43,6 +43,25 @@ exports[`MergeRequestCardHeaderTest matches snapshot when status is accepted 1`]
           Files
         </button>
       </div>
+      <button
+        class="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-small gap-2 rounded-medium px-0 !gap-0 data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground min-w-10 w-10 h-10 data-[hover=true]:opacity-hover"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="size-6"
+          data-slot="icon"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M5.5 17a4.5 4.5 0 0 1-1.44-8.765 4.5 4.5 0 0 1 8.302-3.046 3.5 3.5 0 0 1 4.504 4.272A4 4 0 0 1 15 17H5.5Zm5.25-9.25a.75.75 0 0 0-1.5 0v4.59l-1.95-2.1a.75.75 0 1 0-1.1 1.02l3.25 3.5a.75.75 0 0 0 1.1 0l3.25-3.5a.75.75 0 1 0-1.1-1.02l-1.95 2.1V7.75Z"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </button>
       <button
         class="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground data-[hover=true]:opacity-hover"
         type="button"
@@ -124,7 +143,7 @@ exports[`MergeRequestCardHeaderTest matches snapshot when status is open 1`] = `
       </h1>
     </div>
     <div
-      class="p-3 z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large -mt-4 flex gap-12"
+      class="p-3 z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large -mt-4 flex gap-8"
     >
       <div
         class="inline-flex items-center justify-center h-auto"
@@ -151,6 +170,25 @@ exports[`MergeRequestCardHeaderTest matches snapshot when status is open 1`] = `
           Files
         </button>
       </div>
+      <button
+        class="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-small gap-2 rounded-medium px-0 !gap-0 data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground min-w-10 w-10 h-10 data-[hover=true]:opacity-hover"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="size-6"
+          data-slot="icon"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M5.5 17a4.5 4.5 0 0 1-1.44-8.765 4.5 4.5 0 0 1 8.302-3.046 3.5 3.5 0 0 1 4.504 4.272A4 4 0 0 1 15 17H5.5Zm5.25-9.25a.75.75 0 0 0-1.5 0v4.59l-1.95-2.1a.75.75 0 1 0-1.1 1.02l3.25 3.5a.75.75 0 0 0 1.1 0l3.25-3.5a.75.75 0 1 0-1.1-1.02l-1.95 2.1V7.75Z"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </button>
       <div
         class="inline-flex items-center justify-center h-auto"
         role="group"
@@ -258,7 +296,7 @@ exports[`MergeRequestCardHeaderTest matches snapshot when status is rejected 1`]
       </h1>
     </div>
     <div
-      class="p-3 z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large -mt-4 flex gap-12"
+      class="p-3 z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large -mt-4 flex gap-8"
     >
       <div
         class="inline-flex items-center justify-center h-auto"
@@ -285,6 +323,25 @@ exports[`MergeRequestCardHeaderTest matches snapshot when status is rejected 1`]
           Files
         </button>
       </div>
+      <button
+        class="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-small gap-2 rounded-medium px-0 !gap-0 data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground min-w-10 w-10 h-10 data-[hover=true]:opacity-hover"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="size-6"
+          data-slot="icon"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M5.5 17a4.5 4.5 0 0 1-1.44-8.765 4.5 4.5 0 0 1 8.302-3.046 3.5 3.5 0 0 1 4.504 4.272A4 4 0 0 1 15 17H5.5Zm5.25-9.25a.75.75 0 0 0-1.5 0v4.59l-1.95-2.1a.75.75 0 1 0-1.1 1.02l3.25 3.5a.75.75 0 0 0 1.1 0l3.25-3.5a.75.75 0 1 0-1.1-1.02l-1.95 2.1V7.75Z"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </button>
       <div
         class="inline-flex items-center justify-center h-auto"
         role="group"
