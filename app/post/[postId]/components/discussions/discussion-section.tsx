@@ -5,11 +5,12 @@ import { getVersionData } from "@/lib/api-calls/version-api";
 
 /**
  * Displays a title, all discussions of a version, and a discussion input component.
- * @param versionId version ID
+ * @param versionId TODO which ID
  */
 export default async function DiscussionSection({
   versionId,
 }: Readonly<{ versionId: idType }>) {
+  // TODO which ID
   const data = await getVersionData(versionId);
 
   return (

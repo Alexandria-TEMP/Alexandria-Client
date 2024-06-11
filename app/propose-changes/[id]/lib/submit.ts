@@ -1,5 +1,5 @@
 export type FormType = {
-  mrTitle: string; // hihi mister title
+  branchTitle: string; // hihi mister title
   contributors: string[];
   anonymous: boolean;
   originalPostId: string;
@@ -24,7 +24,7 @@ export const submitHandler = async (
       anonymous: data.anonymous,
       collaboratingMemberIDs: data.contributors,
       projctPostID: data.originalPostId,
-      mergeRequestTitle: data.mrTitle,
+      branchTitle: data.branchTitle,
       updatedCompletionStatus: data.updatedCompletionStatus,
       updatedFeedbackPreferences: data.updatedFeedbackPreferences,
       updatedPostTitle: data.updatedTitle,

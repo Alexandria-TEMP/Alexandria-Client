@@ -1,4 +1,4 @@
-import HeaderSubtle from "@/components/header-subtle";
+import HeaderSubtle from "@/components/common/header-subtle";
 import { getDiscussionData } from "@/lib/api-calls/discussion-api";
 import DiscussionReplyButton from "./discussion-reply-button";
 import { Card, CardBody } from "@nextui-org/react";

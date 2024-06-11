@@ -1,0 +1,30 @@
+import { parseId } from "@/lib/string-utils";
+import PeerReviewInput from "../../../../(branch)/version/[branchId]/components/peer-review/peer-review-input";
+import BranchCard from "../../../../(branch)/version/[branchId]/components/branch-parts/branch-card";
+import { getBranchData } from "@/lib/api-calls/branch-api";
+
+/**
+ * Page with branch version comparison and input for a new peer review
+ * @param params.postId Post ID, taken from route's dynamic segment /[postId]
+ * @param params.branchId Branch ID, taken from route's dynamic segment /[branchId]
+ */
+export default async function BranchReview({
+  params,
+}: {
+  params: { postId: string; branchId: string };
+}) {
+  const data = await getBranchData(parseId(params.branchId));
+
+  return (
+    <div className="flex flex-col space-y-4 w-full">
+      <PeerReviewInput />
+      <BranchCard
+        newVersionId={data.newVersionID}
+        previousVersionId={data.previousVersionID}
+        postId={parseId(params.postId)}
+        branchId={parseId(params.branchId)}
+        hideContribute
+      />
+    </div>
+  );
+}

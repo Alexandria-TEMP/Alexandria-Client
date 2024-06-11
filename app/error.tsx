@@ -3,24 +3,17 @@
 "use client"; // Error components must be Client Components
 
 import { Button } from "@nextui-org/react";
-import { useEffect } from "react";
 
 /**
  * Fallback UI for component error.
  * Allows resetting component with error without refreshing page.
  */
 export default function DefaultError({
-  error,
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error);
-  }, [error]);
-
   return (
     <div
       data-testid="default-error"

@@ -17,7 +17,7 @@ import {
 } from "@nextui-org/react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { submitHandler, FormType } from "./lib/submit";
-import Logo from "@/components/logo";
+import Logo from "@/components/theme/logo";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { emailRegex } from "@/lib/validation-rules";

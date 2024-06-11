@@ -37,13 +37,13 @@ export type PostT = {
   completionStatus: string;
 };
 
-export type MergeRequest = {
+export type BranchT = {
   anonymous: boolean;
+  branchReviewStatus: BranchReviewStatusT;
+  branchTitle: string;
   collaboratorIDs: idType[];
-  createdAt: string;
   id: idType;
-  mergeRequestDecision: MergeRequestReviewStatus;
-  mergeRequestTitle: string;
+  createdAt: string;
   newPostTitle: string;
   newVersionID: idType;
   previousVersionID: idType;
@@ -54,18 +54,18 @@ export type MergeRequest = {
   updatedScientificFields: string[];
 };
 
-export type Review = {
+export type ReviewT = {
+  branchID: idType;
+  branchReviewDecision: BranchReviewDecisionT;
+  createdAt: string;
   feedback: string;
   id: idType;
   memberID: idType;
-  mergeRequestDecision: ReviewDecision;
-  mergeRequestID: idType;
-  createdAt: string;
 };
 
-export type ReviewDecision = "rejected" | "approved";
+export type BranchReviewDecisionT = "rejected" | "approved";
 
-export type MergeRequestReviewStatus =
+export type BranchReviewStatusT =
   | "open for review"
   | "peer reviewed"
   | "rejected";
