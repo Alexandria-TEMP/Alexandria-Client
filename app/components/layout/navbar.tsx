@@ -9,9 +9,9 @@ import {
   NavbarItem,
 } from "@nextui-org/react";
 import Link from "next/link";
-import ThemeSwitcher from "./theme-switcher";
+import ThemeSwitcher from "@/components/theme/theme-switcher";
 import { usePathname } from "next/navigation";
-import Logo from "./logo";
+import Logo from "@/components/theme/logo";
 
 /**
  * Each item in this array becomes an available path in the navbar

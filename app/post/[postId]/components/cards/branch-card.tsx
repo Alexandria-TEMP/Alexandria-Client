@@ -1,6 +1,6 @@
 "use client";
 
-import HeaderSubtle from "@/components/header-subtle";
+import HeaderSubtle from "@/components/common/header-subtle";
 import {
   getBranchData,
   getBranchReviewStatuses,
@@ -13,7 +13,7 @@ import { capitalizeFirstLetter, parseId } from "@/lib/string-utils";
 import BranchCardSkeleton from "./branch-card-skeleton";
 import { BranchT, idType } from "@/lib/types/api-types";
 import { reviewStatusToTensedVerb } from "@/lib/get-format";
-import ReviewChips from "@/components/review-chips";
+import ReviewChips from "@/components/common/review-chips";
 
 /**
  * Card that represents some post branch

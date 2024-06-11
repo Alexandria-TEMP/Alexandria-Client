@@ -2,9 +2,9 @@ import { expect, describe, it, beforeEach } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import ThemeSwitcher from "@/components/theme-switcher";
+import ThemeSwitcher from "@/components/theme/theme-switcher";
 import { ThemeProvider } from "next-themes";
-import themeProviderSetup from "../__utils__/theme-provider-setup";
+import themeProviderSetup from "../../__utils__/theme-provider-setup";
 
 describe("Theme switcher", () => {
   beforeEach(themeProviderSetup);

@@ -1,14 +1,14 @@
 // Needs to be client component because so is PeerReviewSection
 "use client";
 
-import HeaderSubtle from "@/components/header-subtle";
+import HeaderSubtle from "@/components/common/header-subtle";
 import getMemberData from "@/lib/api-calls/member-api";
 import { getReviewData } from "@/lib/api-calls/review-api";
 import { getMemberName } from "@/lib/get-format";
 import { capitalizeFirstLetter, parseId } from "@/lib/string-utils";
 import { Member, ReviewT } from "@/lib/types/api-types";
 import { IdProp } from "@/lib/types/react-props/id-prop";
-import ReviewChip from "@/components/review-chip";
+import ReviewChip from "@/components/common/review-chip";
 import {
   Card,
   CardBody,

@@ -1,5 +1,5 @@
 import { expect, describe, it } from "@jest/globals";
-import HeaderSubtle from "@/components/header-subtle";
+import HeaderSubtle from "@/components/common/header-subtle";
 import { render, screen } from "@testing-library/react";
 
 describe("HeaderSubtle", () => {

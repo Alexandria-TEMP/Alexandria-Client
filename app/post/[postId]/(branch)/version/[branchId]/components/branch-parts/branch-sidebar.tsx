@@ -1,5 +1,5 @@
-import ChipList from "@/components/chip-list";
-import Sidebar from "@/components/sidebar";
+import ChipList from "@/components/common/chip-list";
+import Sidebar from "@/components/layout/sidebar";
 import { getBranchData } from "@/lib/api-calls/branch-api";
 import { parseId } from "@/lib/string-utils";
 import { IdProp } from "@/lib/types/react-props/id-prop";

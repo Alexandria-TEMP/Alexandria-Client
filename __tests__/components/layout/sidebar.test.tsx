@@ -1,4 +1,4 @@
-import Sidebar from "@/components/sidebar";
+import Sidebar from "@/components/layout/sidebar";
 import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";
 

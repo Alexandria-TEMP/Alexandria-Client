@@ -1,4 +1,4 @@
-import ChipList from "@/components/chip-list";
+import ChipList from "@/components/common/chip-list";
 import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";
 

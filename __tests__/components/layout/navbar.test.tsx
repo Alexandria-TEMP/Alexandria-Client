@@ -1,9 +1,9 @@
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import AlexandriaNavbar, { navigationItems } from "@/components/navbar";
+import AlexandriaNavbar, { navigationItems } from "@/components/layout/navbar";
 import userEvent from "@testing-library/user-event";
 import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtime";
-import createMockRouter from "../__utils__/create-mock-router";
+import createMockRouter from "../../__utils__/create-mock-router";
 
 describe("Navbar", () => {
   it("includes the theme switcher", () => {

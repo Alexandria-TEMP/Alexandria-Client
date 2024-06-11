@@ -1,6 +1,6 @@
-import HeaderSubtle from "@/components/header-subtle";
+import HeaderSubtle from "@/components/common/header-subtle";
 import { Card, CardBody, CardFooter, Skeleton } from "@nextui-org/react";
-import ReviewChip from "@/components/review-chip";
+import ReviewChip from "@/components/common/review-chip";
 
 /**
  * Placeholder card for [BranchCard](./branch-card.tsx), which

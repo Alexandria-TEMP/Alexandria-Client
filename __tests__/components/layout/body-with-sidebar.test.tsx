@@ -1,4 +1,4 @@
-import BodyWithSidebar from "@/components/body-with-sidebar";
+import BodyWithSidebar from "@/components/layout/body-with-sidebar";
 import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";
 

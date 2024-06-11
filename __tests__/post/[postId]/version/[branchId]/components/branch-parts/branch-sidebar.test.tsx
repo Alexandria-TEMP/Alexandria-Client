@@ -1,5 +1,5 @@
 import BranchSidebar from "@/post/[postId]/(branch)/version/[branchId]/components/branch-parts/branch-sidebar";
-import ChipList from "@/components/chip-list";
+import ChipList from "@/components/common/chip-list";
 import AuthorCardList from "@/post/[postId]/components/cards/author-card-list";
 import PostCardMini from "@/post/[postId]/components/cards/post-card-mini";
 import { expect, describe, it } from "@jest/globals";
@@ -8,7 +8,7 @@ import { getBranchData } from "@/lib/api-calls/branch-api";
 import { dummyBranches } from "~/__tests__/__utils__/dummys";
 
 jest.mock("@/lib/api-calls/branch-api");
-jest.mock("@/components/chip-list");
+jest.mock("@/components/common/chip-list");
 jest.mock("@/post/[postId]/components/cards/author-card-list");
 jest.mock("@/post/[postId]/components/cards/post-card-mini");
 

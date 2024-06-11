@@ -1,7 +1,7 @@
 import getPostData from "@/lib/api-calls/post-api";
-import ChipList from "@/components/chip-list";
+import ChipList from "@/components/common/chip-list";
 import AuthorCardList from "../cards/author-card-list";
-import Sidebar from "@/components/sidebar";
+import Sidebar from "@/components/layout/sidebar";
 import { parseId } from "@/lib/string-utils";
 // import PostCardMini from "../cards/post-card-mini";
 

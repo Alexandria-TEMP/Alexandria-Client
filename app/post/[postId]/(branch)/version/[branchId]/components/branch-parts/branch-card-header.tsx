@@ -1,13 +1,13 @@
 "use client";
 
 import { CardHeader, Switch } from "@nextui-org/react";
-import HeaderSubtle from "@/components/header-subtle";
+import HeaderSubtle from "@/components/common/header-subtle";
 import { getBranchData } from "@/lib/api-calls/branch-api";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
 import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
 import { reviewStatusToTensedVerb } from "@/lib/get-format";
 import { BranchT, idType } from "@/lib/types/api-types";
-import ChipWithTitle from "@/components/chip-with-title";
+import ChipWithTitle from "@/components/common/chip-with-title";
 import BranchCardHeaderSkeleton from "./branch-card-header-skeleton";
 import { useEffect, useMemo, useState } from "react";
 import ActionGroup from "@/post/[postId]/components/buttons/action-group";

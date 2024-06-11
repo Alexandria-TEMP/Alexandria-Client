@@ -1,6 +1,6 @@
 import { Button, CardHeader, Skeleton } from "@nextui-org/react";
-import HeaderSubtle from "@/components/header-subtle";
-import ChipWithTitle from "@/components/chip-with-title";
+import HeaderSubtle from "@/components/common/header-subtle";
+import ChipWithTitle from "@/components/common/chip-with-title";
 
 /**
  * Skeleton for a BranchCardHeader, to be displayed while it loads
