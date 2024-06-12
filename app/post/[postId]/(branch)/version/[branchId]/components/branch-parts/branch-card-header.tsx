@@ -39,7 +39,9 @@ export default function BranchCardHeader({
   const [isLoading, setIsLoading] = useState(true);
   const status = useMemo(
     () =>
-      data ? reviewStatusToTensedVerb(data.branchReviewStatus) : undefined,
+      data
+        ? reviewStatusToTensedVerb(data.branchOverallReviewStatus)
+        : undefined,
     [data],
   );
 
@@ -71,7 +73,7 @@ export default function BranchCardHeader({
     <>
       {/* Title */}
       <CardHeader>
-        <h1 className="font-semibold">{data.newPostTitle}</h1>
+        <h1 className="font-semibold">{data.updatedPostTitle}</h1>
       </CardHeader>
 
       <CardHeader className="-mt-4 flex gap-8">

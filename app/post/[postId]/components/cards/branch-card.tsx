@@ -57,8 +57,8 @@ export default function BranchCard({
 
   const updateDate = (
     <p className="text-sm">
-      {data.branchReviewStatus != "open for review" &&
-        `${capitalizeFirstLetter(reviewStatusToTensedVerb(data.branchReviewStatus))} on ${data.updatedAt}`}
+      {data.branchOverallReviewStatus != "open for review" &&
+        `${capitalizeFirstLetter(reviewStatusToTensedVerb(data.branchOverallReviewStatus))} on ${data.updatedAt}`}
     </p>
   );
 

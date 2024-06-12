@@ -1,11 +1,11 @@
-import { Member, BranchReviewStatusT, Tag } from "./types/api-types";
+import { MemberT, BranchOverallReviewStatusT, Tag } from "./types/api-types";
 
 /**
  * Parses member data to return some full name for them
  * @param i member, may be undefined
  * @returns member's "FirstName LastName" or "Not found"
  */
-export function getMemberName(i: Member | undefined) {
+export function getMemberName(i: MemberT | undefined) {
   return i === undefined ? "Not found" : i.firstName + " " + i.lastName;
 }
 
@@ -21,7 +21,7 @@ export function getFieldName(i: Tag | undefined) {
 /**
  * Maps type BranchReviewStatusT to a verb in past or present tense
  */
-export function reviewStatusToTensedVerb(status: BranchReviewStatusT) {
+export function reviewStatusToTensedVerb(status: BranchOverallReviewStatusT) {
   switch (status) {
     case "open for review":
       return "open";

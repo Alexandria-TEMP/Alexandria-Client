@@ -29,11 +29,11 @@ export default async function PostSidebar({
         // TODO distinguish between authors and collaborators
         {
           title: "Authors",
-          node: <AuthorCardList ids={data.collaborators.map(parseId)} />,
+          node: <AuthorCardList ids={data.collaboratorIDs.map(parseId)} />,
         },
         {
           title: "Collaborators",
-          node: <AuthorCardList ids={data.collaborators.map(parseId)} />,
+          node: <AuthorCardList ids={data.collaboratorIDs.map(parseId)} />,
         },
       ]}
     />

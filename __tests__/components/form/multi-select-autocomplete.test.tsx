@@ -7,7 +7,7 @@ import {
   act,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Member } from "@/lib/types/api-types";
+import { MemberT } from "@/lib/types/api-types";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
 import { dummyMembers } from "~/__tests__/__utils__/dummys";
 import { useForm, FormProvider } from "react-hook-form";
@@ -16,7 +16,7 @@ import { expect, describe, it } from "@jest/globals";
 const dumTitle = "Dummy title";
 const dumDesc = "Dummy description";
 const dumItems = dummyMembers;
-const dumGetItemLabel = jest.fn((item: Member | undefined) => "Dummy name");
+const dumGetItemLabel = jest.fn((item: MemberT | undefined) => "Dummy name");
 
 const Wrapper = ({
   children,

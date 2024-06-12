@@ -50,7 +50,7 @@ describe("BranchCard", () => {
 
     await waitFor(() => {
       const title = screen.getByRole("heading", {
-        name: dummyBranches["accepted"].newPostTitle,
+        name: dummyBranches["accepted"].updatedPostTitle,
       });
       expect(title).toBeInTheDocument();
     });

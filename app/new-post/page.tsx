@@ -25,13 +25,13 @@ import {
   getFeedbackTypes,
   getPostTypes,
 } from "@/lib/api-calls/tags-api";
-import { Member } from "@/lib/types/api-types";
+import { MemberT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
 import { useState } from "react";
 import GenericLoadingPage from "@/loading";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
-const loggedIn: Member = {
+const loggedIn: MemberT = {
   id: "3",
   email: "kopernicus@tudelft.nl",
   firstName: "Metal Bar",

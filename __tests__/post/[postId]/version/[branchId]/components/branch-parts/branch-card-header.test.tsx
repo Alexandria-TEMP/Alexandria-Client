@@ -35,7 +35,7 @@ describe("BranchCardHeaderTest", () => {
       );
       await waitFor(() => {
         const title = screen.getByRole("heading", {
-          name: dummyBranches[status].newPostTitle,
+          name: dummyBranches[status].updatedPostTitle,
         });
         expect(title).toBeInTheDocument();
       });

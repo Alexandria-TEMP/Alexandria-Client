@@ -11,7 +11,7 @@ export async function getBranchData(id: idType): Promise<BranchT> {
   if (id == 1)
     return {
       id: id,
-      newPostTitle: "Post title",
+      updatedPostTitle: "Post title",
       projectPostID: 1,
       branchTitle: "Remove contents section",
       newVersionID: 1,
@@ -22,13 +22,13 @@ export async function getBranchData(id: idType): Promise<BranchT> {
       updatedAt: "20 May 2024",
       updatedCompletionStatus: "ideation",
       updatedScientificFields: ["Mathematics"],
-      branchReviewStatus: "rejected",
+      branchOverallReviewStatus: "rejected",
       previousVersionID: 2,
     };
   else if (id == 2)
     return {
       id: id,
-      newPostTitle: "Post title",
+      updatedPostTitle: "Post title",
       projectPostID: 1,
       branchTitle: "Do some stuff",
       newVersionID: 1,
@@ -39,13 +39,13 @@ export async function getBranchData(id: idType): Promise<BranchT> {
       updatedAt: "20 May 2024",
       updatedCompletionStatus: "ideation",
       updatedScientificFields: ["Mathematics"],
-      branchReviewStatus: "open for review",
+      branchOverallReviewStatus: "open for review",
       previousVersionID: 2,
     };
   else
     return {
       id: id,
-      newPostTitle: "Post title",
+      updatedPostTitle: "Post title",
       projectPostID: 1,
       branchTitle: "Grammar fixes",
       newVersionID: 1,
@@ -56,7 +56,7 @@ export async function getBranchData(id: idType): Promise<BranchT> {
       updatedAt: "20 May 2024",
       updatedCompletionStatus: "ideation",
       updatedScientificFields: ["Mathematics"],
-      branchReviewStatus: "peer reviewed",
+      branchOverallReviewStatus: "peer reviewed",
       previousVersionID: 2,
     };
 }
