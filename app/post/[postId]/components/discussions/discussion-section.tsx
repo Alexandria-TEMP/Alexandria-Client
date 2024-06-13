@@ -1,25 +1,23 @@
 import { idT } from "@/lib/types/api-types";
 import Discussion from "./discussion";
 import InputDiscussion from "./input-discussion";
-import { getVersionData } from "@/lib/api-calls/quarto-api";
+import { IdProp } from "@/lib/types/react-props/id-prop";
+import { fetchDiscussionContainer } from "@/lib/api-calls/discussion-api";
 
 /**
- * Displays a title, all discussions of a version, and a discussion input component.
- * @param versionId TODO which ID
+ * Displays a title, all discussions, and a discussion input component
+ * @param id discussion container ID
  */
-export default async function DiscussionSection({
-  versionId,
-}: Readonly<{ versionId: idT }>) {
-  // TODO which ID
-  const data = await getVersionData(versionId);
+export default async function DiscussionSection({ id }: IdProp) {
+  const { discussionIDs } = await fetchDiscussionContainer(id as idT);
 
   return (
     <>
-      <h2>{data.discussionIDs.length} Replies</h2>
-      {data.discussionIDs.map((id) => (
+      <h2>{discussionIDs.length} Replies</h2>
+      {discussionIDs.map((id) => (
         <Discussion id={id.toString()} key={id} />
       ))}
-      <InputDiscussion versionId={versionId.toString()} />
+      <InputDiscussion id={id as idT} />
     </>
   );
 }

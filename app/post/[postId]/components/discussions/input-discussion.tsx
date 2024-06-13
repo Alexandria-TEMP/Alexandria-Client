@@ -3,15 +3,17 @@
 import { useState } from "react";
 import { Button, Textarea } from "@nextui-org/react";
 import { uploadDiscussion } from "@/lib/api-calls/discussion-api";
+import { IdProp } from "@/lib/types/react-props/id-prop";
+import { idT } from "@/lib/types/api-types";
 
 /**
  * TextArea to create a new discussion for some Version.
- * Includes: header, and submit button.
- * @param versionId ID of version the discussion refers to
+ * Includes header, and submit button.
+ * @param id discussion container ID
  */
-export default function InputDiscussion({
-  versionId,
-}: Readonly<{ versionId: string }>) {
+export default function InputDiscussion({ id }: IdProp) {
+  // TODO
+
   const [input, setInput] = useState("");
 
   return (
@@ -26,7 +28,7 @@ export default function InputDiscussion({
       <Button
         className="mt-4"
         onClick={() => {
-          uploadDiscussion(input, versionId).catch(() =>
+          uploadDiscussion(input, id as idT).catch(() =>
             alert("Failed to submit discussion."),
           );
         }}
