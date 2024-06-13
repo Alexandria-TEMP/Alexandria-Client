@@ -7,7 +7,7 @@ import { FileTreeT } from "./types/file-tree";
  */
 export function parseFileTree(items: { [key: string]: number }): FileTreeT {
   const root: FileTreeT = {};
-  const paths = Object.keys(items);
+  const paths = Object.keys(items).filter((k) => k !== ".");
 
   paths.forEach((path) => {
     const parts = path.split("/");

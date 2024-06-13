@@ -17,12 +17,12 @@ import {
 import { useEffect, useState } from "react";
 import FileView from "./file-view";
 import { IdProp } from "@/lib/types/react-props/id-prop";
-import { useFileTree } from "@/lib/api-hooks/quarto-hooks";
 import { getByteMultiple } from "@/lib/get-format";
 import { DocumentIcon, FolderIcon } from "@heroicons/react/20/solid";
 import DefaultError from "@/error";
 import { idT } from "@/lib/types/api-types";
 import { QuartoContainerTypeT } from "@/lib/types/quarto-container";
+import { useFileTree } from "@/lib/api-calls/quarto-api";
 
 /**
  * Displays a table with all files in the Quarto project, allowing one to

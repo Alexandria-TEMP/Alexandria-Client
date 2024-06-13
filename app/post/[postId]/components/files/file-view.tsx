@@ -1,7 +1,7 @@
 "use client";
 
 import DefaultError from "@/error";
-import { useFileContents } from "@/lib/api-hooks/quarto-hooks";
+import { useFileContents } from "@/lib/api-calls/quarto-api";
 import { idT } from "@/lib/types/api-types";
 import { QuartoContainerTypeT } from "@/lib/types/quarto-container";
 import { IdProp } from "@/lib/types/react-props/id-prop";
@@ -42,7 +42,7 @@ export default function FileView({
   }
 
   return (
-    <div className="px-2 border-2 bg-default-100 rounded-md font-mono">
+    <div className="px-2 border-2 bg-default-100 rounded-md font-mono whitespace-pre-line">
       {data}
     </div>
   );

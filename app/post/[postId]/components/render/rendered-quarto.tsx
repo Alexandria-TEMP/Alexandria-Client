@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getRender } from "@/lib/api-calls/quarto-api";
+import { fetchRender } from "@/lib/api-calls/quarto-api";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import ErrorWithMessage from "@/components/error-with-message";
 import { setupResize, changeColors } from "./lib/iframe-manipulator";
@@ -51,7 +51,7 @@ export default function RenderedQuarto({
 
   // Fetch html when component renders
   useEffect(() => {
-    getRender({ id: id as idT, type: container })
+    fetchRender({ id: id as idT, type: container })
       .then((res) => {
         if (res === "pending") {
           setPending(true);

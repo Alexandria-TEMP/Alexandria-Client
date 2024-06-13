@@ -1,6 +1,6 @@
 import { expect, describe, it } from "@jest/globals";
 import { act, render, screen } from "@testing-library/react";
-import { getRender } from "@/lib/api-calls/quarto-api";
+import { fetchRender } from "@/lib/api-calls/quarto-api";
 import { dummyHtml } from "~/__tests__/__utils__/dummys";
 import RenderedQuarto, {
   iframeTitle,
@@ -10,7 +10,7 @@ jest.mock("@/lib/api-calls/quarto-api");
 
 describe("RenderedQuarto", () => {
   const setupGoodWeather = async () => {
-    (getRender as jest.Mock).mockResolvedValue(dummyHtml.html);
+    (fetchRender as jest.Mock).mockResolvedValue(dummyHtml.html);
 
     // Disable reason: Need the async keyword for act to work properly
     // but render is not awaitable so eslint complains
@@ -23,7 +23,7 @@ describe("RenderedQuarto", () => {
 
   const setupBadWeather = async () => {
     const errorMessage = "this is a test failure!";
-    (getRender as jest.Mock).mockRejectedValue(errorMessage);
+    (fetchRender as jest.Mock).mockRejectedValue(errorMessage);
 
     // Disable reason: Need the async keyword for act to work properly
     // but render is not awaitable so eslint complains

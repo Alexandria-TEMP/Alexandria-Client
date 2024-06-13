@@ -1,7 +1,7 @@
 import getPostData from "@/lib/api-calls/post-api";
 import { Card, CardBody } from "@nextui-org/react";
 import PostCardHeader from "../../components/post-parts/post-card-header";
-import DiscussionSection from "../../components/discussions/discussion-section";
+//import DiscussionSection from "../../components/discussions/discussion-section";
 import FileTree from "../../components/files/file-tree";
 import { parseId } from "@/lib/string-utils";
 
@@ -24,15 +24,13 @@ export default async function PostFiles({
       <Card>
         <PostCardHeader id={parseId(params.postId)} />
         <CardBody>
-          <FileTree
-            id={0} // TODO {data.currentVersion.id}
-          />
+          <FileTree id={parseId(params.postId)} container="post" />
         </CardBody>
       </Card>
 
-      <DiscussionSection
+      {/* <DiscussionSection
         versionId={0} // TODO {parseId(data.currentVersion.id)}
-      />
+      /> */}
     </div>
   );
 }
