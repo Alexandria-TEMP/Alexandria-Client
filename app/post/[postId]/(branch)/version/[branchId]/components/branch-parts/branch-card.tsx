@@ -2,15 +2,15 @@
 
 import { Card, CardBody } from "@nextui-org/react";
 import { idT } from "@/lib/types/api-types";
-import RenderedProject from "@/post/[postId]/components/project-render/rendered-project";
+import RenderedQuarto from "@/post/[postId]/components/render/rendered-quarto";
 import { useState } from "react";
 import BranchCardHeader from "./branch-card-header";
 import FileTree from "@/post/[postId]/components/files/file-tree";
 
 /**
  * Displays a Card for a branch, containing a [BranchCardHeader](./branch-card-header)
- * and two side-by-side [RenderedProject](@/post/[postId]/components/project-render/rendered-project)
- * which can be turned into a single RenderedProject by clicking a Switch.
+ * and two side-by-side [RenderedQuarto](@/post/[postId]/components/render/rendered-quarto)
+ * which can be turned into a single RenderedQuarto by clicking a Switch.
  * @param footer optional CardFooter component, gets placed at the end of the Card
  * @param hideContribute hides button with contribution options
  * @param newVersionID new version ID
@@ -70,7 +70,7 @@ export default function BranchCard({
           {view === "files" ? (
             <FileTree id={newVersionId.toString()} />
           ) : (
-            <RenderedProject id={newVersionId.toString()} />
+            <RenderedQuarto id={newVersionId.toString()} container="branch" />
           )}
         </div>
 
@@ -78,7 +78,10 @@ export default function BranchCard({
           {view === "files" ? (
             <FileTree id={previousVersionId.toString()} />
           ) : (
-            <RenderedProject id={previousVersionId.toString()} />
+            <RenderedQuarto
+              id={previousVersionId.toString()}
+              container="branch"
+            />
           )}
         </div>
       </CardBody>

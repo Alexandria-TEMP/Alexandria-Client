@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getRender } from "@/lib/api-calls/version-api";
+import { getRender } from "@/lib/api-calls/quarto-api";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import ErrorWithMessage from "@/components/error-with-message";
 import { setupResize, changeColors } from "./lib/iframe-manipulator";
@@ -10,15 +10,18 @@ import { semanticColors } from "@nextui-org/react";
 import RenderPending from "./render-pending";
 import GenericLoadingPage from "@/loading";
 import { idT } from "@/lib/types/api-types";
+import { QuartoContainerTypeT } from "@/lib/types/quarto-container";
 
 /**
- * Isolated iframe with a project's rendered html.
+ * Isolated iframe with a quarto project's rendered html.
  * Detects html's height and sets iframe's height to it.
- * @param id TODO which id
+ * @param id post or branch ID
+ * @param container quarto project's container: "post" or "branch"
  */
-export default function RenderedProject({ id }: IdProp) {
-  // TODO which ID?
-
+export default function RenderedQuarto({
+  id,
+  container,
+}: IdProp & Readonly<{ container: QuartoContainerTypeT }>) {
   // State to save data in after it's fetched
   const [html, setHtml] = useState<string | undefined>(undefined);
 
@@ -48,7 +51,7 @@ export default function RenderedProject({ id }: IdProp) {
 
   // Fetch html when component renders
   useEffect(() => {
-    getRender(id as idT)
+    getRender({ id: id as idT, type: container })
       .then((res) => {
         if (res === "pending") {
           setPending(true);
@@ -63,7 +66,7 @@ export default function RenderedProject({ id }: IdProp) {
         setFailed(true);
       })
       .finally(() => setLoaded(true));
-  }, [id, rerender]);
+  }, [id, rerender, container]);
 
   // Setup to get html height once it first renders
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { idT } from "@/lib/types/api-types";
 import Discussion from "./discussion";
 import InputDiscussion from "./input-discussion";
-import { getVersionData } from "@/lib/api-calls/version-api";
+import { getVersionData } from "@/lib/api-calls/quarto-api";
 
 /**
  * Displays a title, all discussions of a version, and a discussion input component.

@@ -1,8 +1,8 @@
 import getPostData from "../../../lib/api-calls/post-api";
 import PostCardHeader from "../components/post-parts/post-card-header";
-import DiscussionSection from "../components/discussions/discussion-section";
+// import DiscussionSection from "../components/discussions/discussion-section";
 import { Card, CardBody } from "@nextui-org/react";
-import RenderedProject from "../components/project-render/rendered-project";
+import RenderedQuarto from "../components/render/rendered-quarto";
 import { parseId } from "@/lib/string-utils";
 
 /**
@@ -20,15 +20,13 @@ export default async function Post({ params }: { params: { postId: string } }) {
       <Card>
         <PostCardHeader id={parseId(params.postId)} />
         <CardBody>
-          <RenderedProject
-            id={0} // TODO {data.currentVersion.id}
-          />
+          <RenderedQuarto id={parseId(params.postId)} container="post" />
         </CardBody>
       </Card>
 
-      <DiscussionSection
+      {/* <DiscussionSection
         versionId={0} // TODO {parseId(data.currentVersion.id)}
-      />
+      /> */}
     </div>
   );
 }

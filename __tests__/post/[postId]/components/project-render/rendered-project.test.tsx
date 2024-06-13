@@ -1,21 +1,21 @@
 import { expect, describe, it } from "@jest/globals";
 import { act, render, screen } from "@testing-library/react";
-import { getRender } from "@/lib/api-calls/version-api";
+import { getRender } from "@/lib/api-calls/quarto-api";
 import { dummyHtml } from "~/__tests__/__utils__/dummys";
-import RenderedProject, {
+import RenderedQuarto, {
   iframeTitle,
 } from "@/post/[postId]/components/project-render/rendered-project";
 
-jest.mock("@/lib/api-calls/version-api");
+jest.mock("@/lib/api-calls/quarto-api");
 
-describe("RenderedProject", () => {
+describe("RenderedQuarto", () => {
   const setupGoodWeather = async () => {
     (getRender as jest.Mock).mockResolvedValue(dummyHtml.html);
 
     // Disable reason: Need the async keyword for act to work properly
     // but render is not awaitable so eslint complains
     // eslint-disable-next-line @typescript-eslint/require-await
-    const content = await act(async () => render(<RenderedProject id="1" />));
+    const content = await act(async () => render(<RenderedQuarto id="1" />));
 
     const iframe = content.getByTitle(iframeTitle) as HTMLIFrameElement;
     return { content, iframe };
@@ -28,7 +28,7 @@ describe("RenderedProject", () => {
     // Disable reason: Need the async keyword for act to work properly
     // but render is not awaitable so eslint complains
     // eslint-disable-next-line @typescript-eslint/require-await
-    const content = await act(async () => render(<RenderedProject id="1" />));
+    const content = await act(async () => render(<RenderedQuarto id="1" />));
 
     const error = screen.getByTestId("render-error");
     return { errorMessage, content, error };

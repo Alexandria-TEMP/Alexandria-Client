@@ -17,19 +17,27 @@ import {
 import { useEffect, useState } from "react";
 import FileView from "./file-view";
 import { IdProp } from "@/lib/types/react-props/id-prop";
-import { useFileTree } from "@/lib/api-hooks/version-hooks";
+import { useFileTree } from "@/lib/api-hooks/quarto-hooks";
 import { getByteMultiple } from "@/lib/get-format";
 import { DocumentIcon, FolderIcon } from "@heroicons/react/20/solid";
 import DefaultError from "@/error";
 import { idT } from "@/lib/types/api-types";
+import { QuartoContainerTypeT } from "@/lib/types/quarto-container";
 
 /**
  * Displays a table with all files in the Quarto project, allowing one to
  * click through them and open them
- * @param id version ID
+ * @param id post or branch ID
+ * @param container quarto project's container: "post" or "branch"
  */
-export default function FileTree({ id }: IdProp) {
-  const { data, isLoading, error } = useFileTree(id as idT);
+export default function FileTree({
+  id,
+  container,
+}: IdProp & Readonly<{ container: QuartoContainerTypeT }>) {
+  const { data, isLoading, error } = useFileTree({
+    id: id as idT,
+    type: container,
+  });
 
   const [path, setPath] = useState<string[]>([]);
   const [rows, setRows] = useState<{ name: string; size: number }[]>([]);
@@ -127,6 +135,7 @@ export default function FileTree({ id }: IdProp) {
   const fileContents = (
     <FileView
       id={id as idT}
+      container={container}
       path={path.reduce((accum, item) => accum.concat(`/${item}`), "")}
     />
   );
