@@ -19,6 +19,7 @@ export function capitalizeFirstLetter(str: string) {
  * @returns ID in idType format
  */
 export function parseId(idStr: string): idT {
+  // TODO change to consider more information in URL
   const id = Number(idStr);
   if (isNaN(id)) throw Error(`id ${idStr} is NaN`);
   return id;

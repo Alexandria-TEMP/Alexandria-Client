@@ -21,9 +21,9 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { submitHandler, FormType } from "./lib/submit";
-import { getMemberName, getFieldName } from "@/lib/get-format";
+// TODO import { getMemberName, getFieldName } from "@/lib/get-format";
 import useSWR from "swr";
-import getPostData from "@/lib/api-calls/post-api";
+// TODO import getPostData from "@/lib/api-calls/post-api";
 import { useEffect, useState } from "react";
 import { getCompletionTypes, getFeedbackTypes } from "@/lib/api-calls/tags-api";
 import GenericLoadingPage from "@/loading";
@@ -32,12 +32,12 @@ import { maxTitle } from "@/lib/validation-rules";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
 const loggedIn: MemberT = {
-  id: "3",
+  id: 3,
   email: "kopernicus@tudelft.nl",
   firstName: "Metal Bar",
   institution: "TU Delft",
-  picture: "/placeholders/Nikolaus_Kopernikus.jpg",
   lastName: "Clanging",
+  scientificFields: [],
 };
 
 /**
@@ -46,7 +46,16 @@ const loggedIn: MemberT = {
 export default function ProposeChanges({ params }: { params: { id: string } }) {
   const postReq: { data: PostT | undefined; isLoading: boolean } = useSWR(
     "/fake/api",
-    getPostData,
+    () => ({
+      title: "Post title",
+      discussionIDs: [],
+      renderStatus: "failure",
+      collaboratorIDs: [1, 2],
+      id: 1,
+      postType: "reflection",
+      scientificFields: ["1", "2", "3"],
+    }), // TODO
+    // getPostData,
   );
 
   /* create form state */
@@ -55,16 +64,20 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
       mode: "onTouched",
       defaultValues: {
         branchTitle: "",
-        contributors: [loggedIn.id],
+        contributors: [loggedIn.id.toString()], // TODO change type to accept idT [loggedIn.id],
         anonymous: false,
         originalPostId: params.id,
         updatedTitle: postReq.data ? postReq.data.title : "[Loading...]",
-        updatedCompletionStatus: postReq.data
-          ? postReq.data.completionStatus
-          : "[Loading...]",
-        updatedFeedbackPreferences: postReq.data
-          ? postReq.data.feedbackPreferences
-          : "[Loading...]",
+        updatedCompletionStatus: "",
+        // TODO
+        // postReq.data
+        //   ? postReq.data.completionStatus
+        //   : "[Loading...]",
+        updatedFeedbackPreferences: "",
+        // TODO
+        // postReq.data
+        //   ? postReq.data.feedbackPreferences
+        //   : "[Loading...]",
         updatedScientificFields: postReq.data
           ? postReq.data.scientificFields
           : [],
@@ -77,8 +90,8 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
     if (!!postReq.data && !postReq.isLoading) {
       setValue("updatedTitle", postReq.data.title);
       setValue("updatedScientificFields", postReq.data.scientificFields);
-      setValue("updatedCompletionStatus", postReq.data.completionStatus);
-      setValue("updatedFeedbackPreferences", postReq.data.feedbackPreferences);
+      setValue("updatedCompletionStatus", ""); // TODO postReq.data.completionStatus);
+      setValue("updatedFeedbackPreferences", ""); // TODO postReq.data.feedbackPreferences);
     }
   }, [postReq, setValue]);
 
@@ -180,7 +193,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
               <MultiSelectAutocomplete
                 label={<h2>Contributors</h2>}
                 description="Select the people who worked on these changes."
-                getItemLabel={getMemberName}
+                getItemLabel={() => ""} // TODO{getMemberName}
                 control={control}
                 trigger={trigger}
                 name="contributors"
@@ -194,7 +207,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                 disableFieldName="anonymous"
                 disableMessage="Suggest these changes anonymously"
                 optionsGetter={getMembers}
-                nonRemovables={[loggedIn.id]}
+                nonRemovables={[""]} // TODO {[loggedIn.id]}
                 nonRemoveReason="You must be in the contributor list, or make this contribution anonymously."
               />
 
@@ -243,7 +256,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                     <MultiSelectAutocomplete
                       label={<h2>Scientific Fields</h2>}
                       description="Modify the list of scientific fields to match the changes you made."
-                      getItemLabel={getFieldName}
+                      getItemLabel={() => ""} // TODO {getFieldName}
                       control={control}
                       name="updatedScientificFields"
                       optionsGetter={getFields}

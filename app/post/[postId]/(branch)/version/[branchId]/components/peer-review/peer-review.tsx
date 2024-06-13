@@ -5,8 +5,8 @@ import HeaderSubtle from "@/components/common/header-subtle";
 import getMemberData from "@/lib/api-calls/member-api";
 import { getReviewData } from "@/lib/api-calls/review-api";
 import { getMemberName } from "@/lib/get-format";
-import { capitalizeFirstLetter, parseId } from "@/lib/string-utils";
-import { MemberT, BranchReviewT } from "@/lib/types/api-types";
+import { capitalizeFirstLetter } from "@/lib/string-utils";
+import { MemberT, BranchReviewT, idT } from "@/lib/types/api-types";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import ReviewChip from "@/components/common/review-chip";
 import {
@@ -28,9 +28,9 @@ export default function PeerReview({ id }: IdProp) {
 
   useEffect(() => {
     const getData = async () => {
-      const reviewData = await getReviewData(parseId(id));
+      const reviewData = await getReviewData(id as idT);
       setData(reviewData);
-      setAuthor(await getMemberData(reviewData.memberID.toString()));
+      setAuthor(await getMemberData(reviewData.memberID));
     };
     getData().catch(() => {});
   });

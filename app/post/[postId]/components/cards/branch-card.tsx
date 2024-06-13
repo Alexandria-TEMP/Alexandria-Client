@@ -9,7 +9,7 @@ import { IdProp } from "@/lib/types/react-props/id-prop";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { capitalizeFirstLetter, parseId } from "@/lib/string-utils";
+import { capitalizeFirstLetter } from "@/lib/string-utils";
 import BranchCardSkeleton from "./branch-card-skeleton";
 import { BranchT, idT } from "@/lib/types/api-types";
 import { getStandardReviewStatus } from "@/lib/get-format";
@@ -32,8 +32,8 @@ export default function BranchCard({
 
   useEffect(() => {
     const getData = async () => {
-      setData(await getBranchData(parseId(id)));
-      setReviews(await getBranchReviewStatuses(parseId(id)));
+      setData(await getBranchData(id as idT));
+      setReviews(await getBranchReviewStatuses(id as idT));
     };
     getData().catch(() => {
       setData(undefined);
@@ -51,14 +51,21 @@ export default function BranchCard({
   const titleAndCreateDate = (
     <>
       <h3 className="font-semibold">{data.branchTitle}</h3>
-      <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
+      <HeaderSubtle>
+        Created on
+        {/* TODO */}
+        {0}
+        {/* {data.createdAt} */}
+      </HeaderSubtle>
     </>
   );
 
   const updateDate = (
     <p className="text-sm">
       {data.branchOverallReviewStatus != "open for review" &&
-        `${capitalizeFirstLetter(getStandardReviewStatus(data.branchOverallReviewStatus))} on ${data.updatedAt}`}
+        // TODO
+        `${capitalizeFirstLetter(getStandardReviewStatus(data.branchOverallReviewStatus))} on ${0}`}
+      {/* `${capitalizeFirstLetter(getStandardReviewStatus(data.branchOverallReviewStatus))} on ${data.updatedAt}`} */}
     </p>
   );
 

@@ -13,14 +13,16 @@ export default async function BranchReview({
 }: {
   params: { postId: string; branchId: string };
 }) {
+  // TODO remove disable
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const data = await getBranchData(parseId(params.branchId));
 
   return (
     <div className="flex flex-col space-y-4 w-full">
       <PeerReviewInput />
       <BranchCard
-        newVersionId={data.newVersionID}
-        previousVersionId={data.previousVersionID}
+        newVersionId={0} // TODO {data.newVersionID}
+        previousVersionId={0} // TODO {data.newVersionID}
         postId={parseId(params.postId)}
         branchId={parseId(params.branchId)}
         hideContribute

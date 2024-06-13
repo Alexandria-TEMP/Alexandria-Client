@@ -47,7 +47,9 @@ export default async function PostCardHeader({
           ]}
         />
 
-        <DownloadButton id={data.currentVersion.id} />
+        <DownloadButton
+          id={0} // TODO {data.currentVersion.id}
+        />
 
         {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
 
@@ -56,11 +58,25 @@ export default async function PostCardHeader({
         {/* Metadata */}
 
         <ChipWithTitle title="Post type">{data.postType}</ChipWithTitle>
-        <ChipWithTitle title="Status">{data.status}</ChipWithTitle>
+        <ChipWithTitle title="Status">
+          {/* TODO */}
+          {0}
+          {/* {data.status} */}
+        </ChipWithTitle>
 
         <div className="flex-col">
-          <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
-          <HeaderSubtle>Last update on {data.updatedAt}</HeaderSubtle>
+          <HeaderSubtle>
+            Created on
+            {/* TODO */}
+            {0}
+            {/* {data.createdAt} */}
+          </HeaderSubtle>
+          <HeaderSubtle>
+            Last update on
+            {/* TODO */}
+            {0}
+            {/* {data.updatedAt} */}
+          </HeaderSubtle>
         </div>
       </CardHeader>
     </>

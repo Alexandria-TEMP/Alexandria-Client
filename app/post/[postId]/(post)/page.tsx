@@ -1,6 +1,5 @@
 import getPostData from "../../../lib/api-calls/post-api";
 import PostCardHeader from "../components/post-parts/post-card-header";
-import { parseId } from "@/lib/string-utils";
 import DiscussionSection from "../components/discussions/discussion-section";
 import { Card, CardBody } from "@nextui-org/react";
 import RenderedProject from "../components/project-render/rendered-project";
@@ -11,6 +10,8 @@ import RenderedProject from "../components/project-render/rendered-project";
  * Read more: https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
  */
 export default async function Post({ params }: { params: { postId: string } }) {
+  // TODO remove disable
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const data = await getPostData(params.postId);
 
   return (
@@ -18,11 +19,15 @@ export default async function Post({ params }: { params: { postId: string } }) {
       <Card>
         <PostCardHeader postId={params.postId} />
         <CardBody>
-          <RenderedProject id={data.currentVersion.id} />
+          <RenderedProject
+            id={0} // TODO {data.currentVersion.id}
+          />
         </CardBody>
       </Card>
 
-      <DiscussionSection versionId={parseId(data.currentVersion.id)} />
+      <DiscussionSection
+        versionId={0} // TODO {parseId(data.currentVersion.id)}
+      />
     </div>
   );
 }

@@ -79,7 +79,9 @@ export default function BranchCardHeader({
       <CardHeader className="-mt-4 flex gap-8">
         {/* Buttons */}
         <ActionGroup actions={actions} />
-        <DownloadButton id={data.newVersionID.toString()} />
+        {/* <DownloadButton id={data.newVersionID.toString()} /> */}
+        {/* TODO */}
+        <DownloadButton id={"PLACEHOLDER"} />
         {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
         {!!onCompare && <Switch onValueChange={onCompare}>Compare</Switch>}
 
@@ -100,14 +102,25 @@ export default function BranchCardHeader({
           {status === "open" ? (
             <>
               <HeaderSubtle>Created on</HeaderSubtle>
-              <HeaderSubtle>{data.createdAt}</HeaderSubtle>
+              <HeaderSubtle>
+                {/* TODO */}
+                {0}
+                {/* {data.createdAt} */}
+              </HeaderSubtle>
             </>
           ) : (
             status && (
               <>
-                <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
                 <HeaderSubtle>
-                  {`${capitalizeFirstLetter(status)} on ${data.updatedAt}`}
+                  Created on
+                  {/* TODO */}
+                  {0}
+                  {/* {data.createdAt} */}
+                </HeaderSubtle>
+                <HeaderSubtle>
+                  {/* TODO */}
+                  {`${capitalizeFirstLetter(status)} on ${0}`}
+                  {/* {`${capitalizeFirstLetter(status)} on ${data.updatedAt}`} */}
                 </HeaderSubtle>
               </>
             )

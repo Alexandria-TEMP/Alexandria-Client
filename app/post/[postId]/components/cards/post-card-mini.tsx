@@ -5,25 +5,20 @@ import { Card, CardBody, CardFooter, Chip, Skeleton } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IdProp } from "@/lib/types/react-props/id-prop";
+import { PostT, idT } from "@/lib/types/api-types";
 
 /**
  * Mini card that represents a post. Clicking it redirects to the post page.
  * @param id ID of post in card
  */
 export default function PostCardMini({ id }: IdProp) {
+  // TODO project post vs post
   const router = useRouter();
-  const [data, setData] = useState<
-    | {
-        id: string;
-        title: string;
-        status: string;
-      }
-    | undefined
-  >(undefined); // TODO use the proper type
+  const [data, setData] = useState<PostT | undefined>(undefined); // TODO use the proper type
   const [isLoaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    getPostData(id)
+    getPostData(id as idT)
       .then((data) => {
         setData(data);
       })
@@ -48,7 +43,7 @@ export default function PostCardMini({ id }: IdProp) {
       </CardBody>
       <CardFooter>
         <Skeleton isLoaded={isLoaded}>
-          <Chip>{data !== undefined ? data.status : "No status"}</Chip>
+          <Chip>{data !== undefined ? data.renderStatus : "No status"}</Chip>
         </Skeleton>
       </CardFooter>
     </Card>

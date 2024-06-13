@@ -20,8 +20,8 @@ export default async function Branch({
   return (
     <div className="flex flex-col space-y-4 w-full">
       <BranchCard
-        newVersionId={data.newVersionID}
-        previousVersionId={data.previousVersionID}
+        newVersionId={0} // TODO{data.newVersionID}
+        previousVersionId={0} // TODO{data.previousVersionID}
         postId={parseId(params.postId)}
         branchId={parseId(params.branchId)}
         footer={
@@ -33,7 +33,9 @@ export default async function Branch({
           </CardFooter>
         }
       />
-      <DiscussionSection versionId={data.newVersionID} />
+      <DiscussionSection
+        versionId={0} // TODO {data.newVersionID}
+      />
     </div>
   );
 }

@@ -12,7 +12,7 @@ import { baseUrl } from "./api-common";
  * @param id TODO
  * @returns Text contents of the HTML render
  */
-export async function getRender(id: string): Promise<string> {
+export async function getRender(id: idT): Promise<string> {
   // TODO update
   const res = await fetch(`${baseUrl}/versions/${id}/render`);
   if (res.status === 202) {
