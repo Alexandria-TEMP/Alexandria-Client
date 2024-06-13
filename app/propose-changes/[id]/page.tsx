@@ -66,7 +66,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
           ? postReq.data.feedbackPreferences
           : "[Loading...]",
         updatedScientificFields: postReq.data
-          ? postReq.data.scientificFieldTags
+          ? postReq.data.scientificFields
           : [],
         newFile: null,
       },
@@ -76,7 +76,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
   useEffect(() => {
     if (!!postReq.data && !postReq.isLoading) {
       setValue("updatedTitle", postReq.data.title);
-      setValue("updatedScientificFields", postReq.data.scientificFieldTags);
+      setValue("updatedScientificFields", postReq.data.scientificFields);
       setValue("updatedCompletionStatus", postReq.data.completionStatus);
       setValue("updatedFeedbackPreferences", postReq.data.feedbackPreferences);
     }

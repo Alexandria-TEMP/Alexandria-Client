@@ -53,7 +53,7 @@ export const dummyPost: PostT = {
   },
   id: "43125",
   postType: "Reflection",
-  scientificFieldTags: [
+  scientificFields: [
     "Computer Science",
     "Mathematics",
     "Theory of computation",

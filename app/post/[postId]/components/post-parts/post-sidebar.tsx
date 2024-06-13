@@ -19,7 +19,7 @@ export default async function PostSidebar({
       items={[
         {
           title: "Scientific fields",
-          node: <ChipList labels={data.scientificFieldTags} />,
+          node: <ChipList labels={data.scientificFields} />,
         },
         // TODO render this conditionally
         // {

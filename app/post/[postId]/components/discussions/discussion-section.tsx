@@ -1,4 +1,4 @@
-import { idType } from "@/lib/types/api-types";
+import { idT } from "@/lib/types/api-types";
 import Discussion from "./discussion";
 import InputDiscussion from "./input-discussion";
 import { getVersionData } from "@/lib/api-calls/version-api";
@@ -9,7 +9,7 @@ import { getVersionData } from "@/lib/api-calls/version-api";
  */
 export default async function DiscussionSection({
   versionId,
-}: Readonly<{ versionId: idType }>) {
+}: Readonly<{ versionId: idT }>) {
   // TODO which ID
   const data = await getVersionData(versionId);
 

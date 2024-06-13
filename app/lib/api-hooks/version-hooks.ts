@@ -1,4 +1,4 @@
-import { idType } from "../types/api-types";
+import { idT } from "../types/api-types";
 import { getFileContents, getFileTree } from "../api-calls/version-api";
 import { useEffect, useState } from "react";
 import { FileTreeT } from "../types/file-tree";
@@ -11,7 +11,7 @@ import { FileTreeT } from "../types/file-tree";
  *    error: error thrown by fetcher (or undefined),
  *    isLoading: if there's an ongoing request and no "loaded data"
  */
-export function useFileTree(id: idType) {
+export function useFileTree(id: idT) {
   const [data, setData] = useState<FileTreeT>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
@@ -33,7 +33,7 @@ export function useFileTree(id: idType) {
  *    error: error thrown by fetcher (or undefined),
  *    isLoading: if there's an ongoing request and no "loaded data"
  */
-export function useFileContents(id: idType, path: string) {
+export function useFileContents(id: idT, path: string) {
   const [data, setData] = useState<string>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();

@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardBody } from "@nextui-org/react";
-import { idType } from "@/lib/types/api-types";
+import { idT } from "@/lib/types/api-types";
 import RenderedProject from "@/post/[postId]/components/project-render/rendered-project";
 import { useState } from "react";
 import BranchCardHeader from "./branch-card-header";
@@ -27,10 +27,10 @@ export default function BranchCard({
   hideContribute,
 }: Readonly<{
   footer?: React.ReactNode;
-  newVersionId: idType;
-  previousVersionId: idType;
-  postId: idType;
-  branchId: idType;
+  newVersionId: idT;
+  previousVersionId: idT;
+  postId: idT;
+  branchId: idT;
   hideContribute?: boolean;
 }>) {
   const [compare, setCompare] = useState(false);

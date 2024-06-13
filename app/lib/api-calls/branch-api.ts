@@ -1,11 +1,11 @@
-import { BranchT, idType } from "../types/api-types";
+import { BranchT, idT } from "../types/api-types";
 
 /**
  * Gets data for a branch given their ID.
  * @async
  * @param id branch ID
  */
-export async function getBranchData(id: idType): Promise<BranchT> {
+export async function getBranchData(id: idT): Promise<BranchT> {
   // TODO
   await new Promise((resolve) => setTimeout(resolve, 800));
   if (id == 1)
@@ -68,7 +68,7 @@ export async function getBranchData(id: idType): Promise<BranchT> {
  */
 // TODO remove next line
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function getPostBranches(id: idType) {
+export async function getPostBranches(id: idT) {
   await new Promise((resolve) => setTimeout(resolve, 100));
   return {
     rejected: ["1", "1", "1", "1"],
@@ -99,7 +99,7 @@ export async function getPostBranches(id: idType) {
 /**
  * TODO jsdoc when properly implemented
  */
-export async function getBranchReviewStatuses(id: idType) {
+export async function getBranchReviewStatuses(id: idT) {
   await new Promise((resolve) => setTimeout(resolve, 70));
   if (id == 1) return ["accept", "reject", "accept"];
   else if (id == 2) return ["accept", "open", "open"];

@@ -2,7 +2,7 @@
 // TODO remove disable above once functions are properly implemented
 
 import { parseFileTree } from "../file-tree-handler";
-import { idType } from "../types/api-types";
+import { idT } from "../types/api-types";
 import { FileTreeT } from "../types/file-tree";
 import { baseUrl } from "./api-common";
 
@@ -29,7 +29,7 @@ export async function getRender(id: string): Promise<string> {
 /**
  * TODO jsdoc when properly implemented
  */
-export async function getVersionData(id: idType) {
+export async function getVersionData(id: idT) {
   // TODO
   await new Promise((resolve) => setTimeout(resolve, 100));
   return {
@@ -42,7 +42,7 @@ export async function getVersionData(id: idType) {
 /**
  * TODO jsdoc when properly implemented
  */
-export async function getFileTree(id: idType): Promise<FileTreeT> {
+export async function getFileTree(id: idT): Promise<FileTreeT> {
   await new Promise((resolve) => setTimeout(resolve, 100));
   return parseFileTree({
     "a/b/c.txt": 5,
@@ -58,7 +58,7 @@ export async function getFileTree(id: idType): Promise<FileTreeT> {
 /**
  * TODO jsdoc when properly implemented
  */
-export async function getFileContents(id: idType, path: string) {
+export async function getFileContents(id: idT, path: string) {
   await new Promise((resolve) => setTimeout(resolve, 100));
   return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut imperdiet mi eget velit pulvinar aliquet. Duis molestie, nunc eget varius vestibulum, magna libero interdum tortor, vitae egestas dolor libero eget libero. Aliquam congue nec nisi vel luctus. Proin tortor dolor, tempor malesuada maximus id, lacinia eu neque. Maecenas elementum quis magna eget suscipit. Duis id mauris est. Cras varius hendrerit elit, ac commodo metus sollicitudin id. Suspendisse quis eros sit amet dui ultricies volutpat et at ex. Fusce eu neque in purus maximus pretium. Cras efficitur fermentum enim, eu imperdiet arcu condimentum eu. In a ultrices odio. Maecenas in maximus erat.";
 }

@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { capitalizeFirstLetter, parseId } from "@/lib/string-utils";
 import BranchCardSkeleton from "./branch-card-skeleton";
-import { BranchT, idType } from "@/lib/types/api-types";
+import { BranchT, idT } from "@/lib/types/api-types";
 import { reviewStatusToTensedVerb } from "@/lib/get-format";
 import ReviewChips from "@/components/common/review-chips";
 
@@ -25,7 +25,7 @@ export default function BranchCard({
   id,
   postId,
   short,
-}: IdProp & { postId: idType; short?: boolean }) {
+}: IdProp & { postId: idT; short?: boolean }) {
   const router = useRouter();
   const [data, setData] = useState<BranchT | undefined>(undefined);
   const [reviews, setReviews] = useState<string[] | undefined>(undefined);

@@ -1,4 +1,4 @@
-import { idType } from "./types/api-types";
+import { idT } from "./types/api-types";
 
 /**
  * Capitalizes the first letter of a string, keeping the rest of
@@ -18,7 +18,7 @@ export function capitalizeFirstLetter(str: string) {
  * @param idStr ID in string format
  * @returns ID in idType format
  */
-export function parseId(idStr: string): idType {
+export function parseId(idStr: string): idT {
   const id = Number(idStr);
   if (isNaN(id)) throw Error(`id ${idStr} is NaN`);
   return id;

@@ -1,4 +1,4 @@
-import { idType } from "@/lib/types/api-types";
+import { idT } from "@/lib/types/api-types";
 import BranchCard from "../../../components/cards/branch-card";
 
 /**
@@ -11,7 +11,7 @@ export default function BranchList({
   ids,
   postId,
   grid,
-}: Readonly<{ ids: string[]; postId: idType; grid?: boolean }>) {
+}: Readonly<{ ids: string[]; postId: idT; grid?: boolean }>) {
   return (
     <div className={"gap-5 " + (grid ? "grid grid-cols-4" : "flex flex-col")}>
       {ids.map((id) => (

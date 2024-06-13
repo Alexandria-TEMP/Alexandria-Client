@@ -22,7 +22,7 @@ export default async function getPostData(id: string): Promise<PostT> {
     },
     id: id,
     postType: "Reflection",
-    scientificFieldTags: ["1", "2", "3"],
+    scientificFields: ["1", "2", "3"],
     updatedAt: "11 May 2024",
     feedbackPreferences: "Community Discussion",
     completionStatus: "Ongoing",

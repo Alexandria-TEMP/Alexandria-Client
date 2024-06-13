@@ -1,23 +1,23 @@
-export type idType = number;
+export type idT = number;
 
 export type BranchCollaboratorT = {
-  id: idType;
-  branchID: idType;
-  memberID: idType;
+  id: idT;
+  branchID: idT;
+  memberID: idT;
 };
 
 export type BranchT = {
-  id: idType;
+  id: idT;
   updatedPostTitle: string;
   branchOverallReviewStatus: BranchOverallReviewStatusT;
   branchTitle: string;
-  collaboratorIDs: idType[];
-  discussionIDs: idType[];
-  projectPostID: idType;
+  collaboratorIDs: idT[];
+  discussionIDs: idT[];
+  projectPostID: idT;
   renderStatus: RenderStatusT;
-  reviewIDs: idType[];
+  reviewIDs: idT[];
   updatedCompletionStatus: ProjectCompletionStatusT;
-  updatedScientificFields: idType[];
+  updatedScientificFields: idT[];
 };
 
 export type BranchOverallReviewStatusT =
@@ -26,86 +26,88 @@ export type BranchOverallReviewStatusT =
   | "rejected";
 
 export type BranchReviewT = {
-  branchID: idType;
+  branchID: idT;
   branchReviewDecision: BranchReviewDecisionT;
   createdAt: string;
   feedback: string;
-  id: idType;
-  memberID: idType;
+  id: idT;
+  memberID: idT;
 };
 
 export type BranchReviewDecisionT = "rejected" | "approved";
 
 export type ClosedBranchtT = {
-  branchID: idType;
+  branchID: idT;
   branchReviewDecision: BranchReviewDecisionT;
-  id: idType;
-  projectPostID: idType;
-  supercededBranchID: idType;
+  id: idT;
+  projectPostID: idT;
+  supercededBranchID: idT;
 };
 
 export type CollaborationTypeT = "author" | "contributor" | "reviewer";
 
 export type DiscussionContainerT = {
-  discussionIDs: idType[];
-  id: idType;
+  discussionIDs: idT[];
+  id: idT;
 };
 
 export type DiscussionT = {
-  id: idType;
-  memberID: idType;
-  replyIDs: idType[];
+  id: idT;
+  memberID: idT;
+  replyIDs: idT[];
   text: string;
 };
 
 export type MemberT = {
-  ScientificFields: string[]; //TODO this will have to change to ids
-  id: idType;
+  scientificFields: string[]; // TODO change to IDs
   email: string;
   firstName: string;
-  picture: string; //TODO this should be gone
+  id: idT;
   institution: string;
   lastName: string;
-  password: string;
 };
 
 export type PostCollaboratorT = {
-  collaborationType: string;
-  id: idType;
-  memberID: idType;
-  postID: idType;
+  collaborationType: CollaborationTypeT;
+  id: idT;
+  memberID: idT;
+  postID: idT;
 };
 
 export type PostT = {
-  id: idType;
-  collaboratorIDs: idType[]; // TODO duplicates will be fixed in issue #27
-  discussionIDs: idType[];
+  id: idT;
+  collaboratorIDs: idT[];
+  discussionIDs: idT[];
+  postType: PostTypeT;
+  renderStatus: RenderStatusT;
+  scientificFields: string[]; // TODO change to IDs
   title: string;
-  status: string;
-  authors: string[];
-  contributors: string[];
-  anonymous: boolean;
-  createdAt: string;
-  currentVersion: VersionT;
-  postType: string;
-  scientificFieldTags: string[];
-  updatedAt: string;
-  feedbackPreferences: string;
-  completionStatus: string;
 };
 
-export type Tag = {
-  id: string;
-  tag: string;
-  tagType: string;
+export type PostTypeT = "reflection" | "question" | "project";
+
+export type ProjectCompletionStatusT = "idea" | "ongoing" | "completed";
+
+export type ProjectFeedbackPreferenceT =
+  | "discussion feedback"
+  | "formal feedback";
+
+export type ProjectPostT = {
+  closedBranchIDs: idT[];
+  id: idT;
+  openBranchIDs: idT[];
+  postID: idT;
+  postReviewStatus: ProjectReviewStatusT;
+  projectCompletionStatus: ProjectCompletionStatusT;
+  projectFeedbackPreference: ProjectFeedbackPreferenceT;
 };
 
-export type VersionT = {
-  id: string;
-  discussions: string[];
+export type ProjectReviewStatusT = "open" | "revision needed" | "reviewed";
+
+export type RenderStatusT = "success" | "pending" | "failure"; //TODO
+
+export type ScientificFieldT = {
+  // TODO
+  id: idT;
+  label: string;
 };
-
-// TODO decide on if keep this
-export type PostType = "Reflection" | "Question" | "Project";
-
-export type RenderStatusT = ""; //TODO

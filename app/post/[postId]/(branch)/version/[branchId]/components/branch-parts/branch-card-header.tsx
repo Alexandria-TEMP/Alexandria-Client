@@ -6,7 +6,7 @@ import { getBranchData } from "@/lib/api-calls/branch-api";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
 import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
 import { reviewStatusToTensedVerb } from "@/lib/get-format";
-import { BranchT, idType } from "@/lib/types/api-types";
+import { BranchT, idT } from "@/lib/types/api-types";
 import ChipWithTitle from "@/components/common/chip-with-title";
 import BranchCardHeaderSkeleton from "./branch-card-header-skeleton";
 import { useEffect, useMemo, useState } from "react";
@@ -29,8 +29,8 @@ export default function BranchCardHeader({
   hideContribute,
   onCompare,
 }: {
-  postId: idType;
-  branchId: idType;
+  postId: idT;
+  branchId: idT;
   actions: { do: () => void; label: string; isDisabled: boolean }[];
   hideContribute?: boolean;
   onCompare?: (value: boolean) => void;
