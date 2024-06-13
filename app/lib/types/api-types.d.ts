@@ -1,74 +1,111 @@
-export type idType = number;
+// Globals
 
-export type Member = {
-  id: string;
-  email: string;
-  firstName: string;
-  picture: string;
-  institution: string;
-  lastName: string;
-};
+export type idT = number;
 
-export type Tag = {
-  id: string;
-  tag: string;
-  tagType: string;
-};
+// Enums
 
-export type VersionT = {
-  id: string;
-  discussions: string[];
-};
-
-export type PostT = {
-  id: string;
-  title: string;
-  status: string;
-  authors: string[];
-  contributors: string[];
-  collaborators: string[]; // TODO duplicates will be fixed in issue #27
-  anonymous: boolean;
-  createdAt: string;
-  currentVersion: VersionT;
-  postType: string;
-  scientificFieldTags: string[];
-  updatedAt: string;
-  feedbackPreferences: string;
-  completionStatus: string;
-};
-
-export type BranchT = {
-  anonymous: boolean;
-  branchReviewStatus: BranchReviewStatusT;
-  branchTitle: string;
-  collaboratorIDs: idType[];
-  id: idType;
-  createdAt: string;
-  newPostTitle: string;
-  newVersionID: idType;
-  previousVersionID: idType;
-  projectPostID: idType;
-  reviewIDs: idType[];
-  updatedAt: string;
-  updatedCompletionStatus: string;
-  updatedScientificFields: string[];
-};
-
-export type ReviewT = {
-  branchID: idType;
-  branchReviewDecision: BranchReviewDecisionT;
-  createdAt: string;
-  feedback: string;
-  id: idType;
-  memberID: idType;
-};
-
-export type BranchReviewDecisionT = "rejected" | "approved";
-
-export type BranchReviewStatusT =
+export type BranchOverallReviewStatusT =
   | "open for review"
   | "peer reviewed"
   | "rejected";
 
-// TODO decide on if keep this
-export type PostType = "Reflection" | "Question" | "Project";
+export type BranchReviewDecisionT = "rejected" | "approved";
+
+export type CollaborationTypeT = "author" | "contributor" | "reviewer";
+
+export type PostTypeT = "reflection" | "question" | "project";
+
+export type ProjectCompletionStatusT = "idea" | "ongoing" | "completed";
+
+export type ProjectFeedbackPreferenceT =
+  | "discussion feedback"
+  | "formal feedback";
+
+export type ProjectReviewStatusT = "open" | "revision needed" | "reviewed";
+
+export type RenderStatusT = "success" | "pending" | "failure";
+
+// Entities
+
+export type EntityT = { id: idT };
+
+export type BranchCollaboratorT = EntityT & {
+  branchID: idT;
+  memberID: idT;
+};
+
+export type BranchT = EntityT & {
+  updatedPostTitle: string;
+  branchOverallReviewStatus: BranchOverallReviewStatusT;
+  branchTitle: string;
+  collaboratorIDs: idT[];
+  discussionIDs: idT[];
+  projectPostID: idT;
+  renderStatus: RenderStatusT;
+  reviewIDs: idT[];
+  updatedCompletionStatus: ProjectCompletionStatusT;
+  updatedScientificFields: idT[];
+};
+
+export type BranchReviewT = EntityT & {
+  branchID: idT;
+  branchReviewDecision: BranchReviewDecisionT;
+  createdAt: string;
+  feedback: string;
+  memberID: idT;
+};
+
+export type ClosedBranchtT = EntityT & {
+  branchID: idT;
+  branchReviewDecision: BranchReviewDecisionT;
+
+  projectPostID: idT;
+  supercededBranchID: idT;
+};
+
+export type DiscussionContainerT = EntityT & {
+  discussionIDs: idT[];
+};
+
+export type DiscussionT = EntityT & {
+  memberID: idT;
+  replyIDs: idT[];
+  text: string;
+};
+
+export type MemberT = EntityT & {
+  scientificFields: string[]; // TODO change to IDs
+  email: string;
+  firstName: string;
+  institution: string;
+  lastName: string;
+};
+
+export type PostCollaboratorT = EntityT & {
+  collaborationType: CollaborationTypeT;
+  memberID: idT;
+  postID: idT;
+};
+
+export type PostT = EntityT & {
+  collaboratorIDs: idT[];
+  discussionIDs: idT[];
+  postType: PostTypeT;
+  renderStatus: RenderStatusT;
+  scientificFields: string[]; // TODO change to IDs
+  title: string;
+};
+
+export type ProjectPostT = EntityT & {
+  closedBranchIDs: idT[];
+  openBranchIDs: idT[];
+  postID: idT;
+  postReviewStatus: ProjectReviewStatusT;
+  projectCompletionStatus: ProjectCompletionStatusT;
+  projectFeedbackPreference: ProjectFeedbackPreferenceT;
+};
+
+export type ScientificFieldT = EntityT & {
+  // TODO
+  label: string;
+};

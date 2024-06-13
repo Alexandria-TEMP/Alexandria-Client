@@ -4,28 +4,28 @@ import LinkGroup from "../buttons/link-group";
 import ContributeDropdown from "../buttons/contribute-dropdown";
 import getPostData from "@/lib/api-calls/post-api";
 import ChipWithTitle from "@/components/common/chip-with-title";
-import { PostT } from "@/lib/types/api-types";
+import { PostT, idT } from "@/lib/types/api-types";
 import DownloadButton from "../buttons/download-button";
+import { IdProp } from "@/lib/types/react-props/id-prop";
 
 /**
  * Header for post contents card. Uses CardHeader, so it must be child of a Card.
  * Includes title, main metadata, and action buttons.
- * @param postId Post ID
+ * @param id Post ID
  * @param hideContribute Hides contribute button and dropdown
  */
 export default async function PostCardHeader({
-  postId,
+  id,
   hideContribute,
-}: {
-  postId: string;
+}: IdProp & {
   hideContribute?: boolean;
 }) {
-  const data: PostT = await getPostData(postId);
+  const data: PostT = await getPostData(id as idT);
 
   const contributeRoutes = {
     // TODO peer reviewed/rejected -> disable review & open -> disable contribute
     fork: `/todo`,
-    contribute: `/propose-changes/${postId}`,
+    contribute: `/propose-changes/${id}`,
     review: `/todo`,
   };
 
@@ -41,13 +41,15 @@ export default async function PostCardHeader({
 
         <LinkGroup
           links={[
-            { label: "Contents", href: `/post/${postId}` },
-            { label: "Versions", href: `/post/${postId}/version-list` },
-            { label: "Files", href: `/post/${postId}/files` },
+            { label: "Contents", href: `/post/${id}` },
+            { label: "Versions", href: `/post/${id}/version-list` },
+            { label: "Files", href: `/post/${id}/files` },
           ]}
         />
 
-        <DownloadButton id={data.currentVersion.id} />
+        <DownloadButton
+          id={0} // TODO {data.currentVersion.id}
+        />
 
         {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
 
@@ -56,11 +58,25 @@ export default async function PostCardHeader({
         {/* Metadata */}
 
         <ChipWithTitle title="Post type">{data.postType}</ChipWithTitle>
-        <ChipWithTitle title="Status">{data.status}</ChipWithTitle>
+        <ChipWithTitle title="Status">
+          {/* TODO */}
+          {0}
+          {/* {data.status} */}
+        </ChipWithTitle>
 
         <div className="flex-col">
-          <HeaderSubtle>Created on {data.createdAt}</HeaderSubtle>
-          <HeaderSubtle>Last update on {data.updatedAt}</HeaderSubtle>
+          <HeaderSubtle>
+            Created on
+            {/* TODO */}
+            {0}
+            {/* {data.createdAt} */}
+          </HeaderSubtle>
+          <HeaderSubtle>
+            Last update on
+            {/* TODO */}
+            {0}
+            {/* {data.updatedAt} */}
+          </HeaderSubtle>
         </div>
       </CardHeader>
     </>

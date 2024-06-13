@@ -17,11 +17,11 @@ import {
 import { useEffect, useState } from "react";
 import FileView from "./file-view";
 import { IdProp } from "@/lib/types/react-props/id-prop";
-import { parseId } from "@/lib/string-utils";
 import { useFileTree } from "@/lib/api-hooks/version-hooks";
-import { numberToByteMultiple } from "@/lib/file-size-utils";
+import { getByteMultiple } from "@/lib/get-format";
 import { DocumentIcon, FolderIcon } from "@heroicons/react/20/solid";
 import DefaultError from "@/error";
+import { idT } from "@/lib/types/api-types";
 
 /**
  * Displays a table with all files in the Quarto project, allowing one to
@@ -29,7 +29,7 @@ import DefaultError from "@/error";
  * @param id version ID
  */
 export default function FileTree({ id }: IdProp) {
-  const { data, isLoading, error } = useFileTree(parseId(id));
+  const { data, isLoading, error } = useFileTree(id as idT);
 
   const [path, setPath] = useState<string[]>([]);
   const [rows, setRows] = useState<{ name: string; size: number }[]>([]);
@@ -116,7 +116,7 @@ export default function FileTree({ id }: IdProp) {
               </div>
             </TableCell>
             <TableCell className="w-56">
-              {item.size < 0 ? "-" : numberToByteMultiple(item.size)}
+              {item.size < 0 ? "-" : getByteMultiple(item.size)}
             </TableCell>
           </TableRow>
         )}
@@ -126,7 +126,7 @@ export default function FileTree({ id }: IdProp) {
 
   const fileContents = (
     <FileView
-      id={id}
+      id={id as idT}
       path={path.reduce((accum, item) => accum.concat(`/${item}`), "")}
     />
   );

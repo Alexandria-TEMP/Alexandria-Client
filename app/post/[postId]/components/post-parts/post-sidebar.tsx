@@ -2,24 +2,23 @@ import getPostData from "@/lib/api-calls/post-api";
 import ChipList from "@/components/common/chip-list";
 import AuthorCardList from "../cards/author-card-list";
 import Sidebar from "@/components/layout/sidebar";
-import { parseId } from "@/lib/string-utils";
+import { IdProp } from "@/lib/types/react-props/id-prop";
+import { idT } from "@/lib/types/api-types";
 // import PostCardMini from "../cards/post-card-mini";
 
 /**
  * Sidebar that is shown in a Post's page. Includes most of post's metadata.
- * @param postId Post ID
+ * @param id Post ID
  */
-export default async function PostSidebar({
-  postId,
-}: Readonly<{ postId: string }>) {
-  const data = await getPostData(postId);
+export default async function PostSidebar({ id }: IdProp) {
+  const data = await getPostData(id as idT);
 
   return (
     <Sidebar
       items={[
         {
           title: "Scientific fields",
-          node: <ChipList labels={data.scientificFieldTags} />,
+          node: <ChipList labels={data.scientificFields} />,
         },
         // TODO render this conditionally
         // {
@@ -29,11 +28,11 @@ export default async function PostSidebar({
         // TODO distinguish between authors and collaborators
         {
           title: "Authors",
-          node: <AuthorCardList ids={data.collaborators.map(parseId)} />,
+          node: <AuthorCardList ids={data.collaboratorIDs} />,
         },
         {
           title: "Collaborators",
-          node: <AuthorCardList ids={data.collaborators.map(parseId)} />,
+          node: <AuthorCardList ids={data.collaboratorIDs} />,
         },
       ]}
     />

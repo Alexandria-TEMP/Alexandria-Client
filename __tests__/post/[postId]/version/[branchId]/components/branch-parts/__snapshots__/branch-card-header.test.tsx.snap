@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BranchCardHeaderTest matches snapshot when status is accepted 1`] = `
+exports[`BranchCardHeader matches snapshot when status is accepted 1`] = `
 <div>
   <div
     class="flex flex-col relative overflow-hidden height-auto text-foreground box-border bg-content1 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 shadow-medium rounded-large transition-transform-background motion-reduce:transition-none"
@@ -85,7 +85,7 @@ exports[`BranchCardHeaderTest matches snapshot when status is accepted 1`] = `
           <span
             class="flex-1 text-inherit font-normal px-2"
           >
-            Ideation
+            Idea
           </span>
         </div>
       </div>
@@ -113,13 +113,13 @@ exports[`BranchCardHeaderTest matches snapshot when status is accepted 1`] = `
         <h6
           class="text-neutral-400"
         >
-          Created on 
-          19 May 2024
+          Created on
+          0
         </h6>
         <h6
           class="text-neutral-400"
         >
-          Accepted on 20 May 2024
+          Accepted on 0
         </h6>
       </div>
     </div>
@@ -127,7 +127,7 @@ exports[`BranchCardHeaderTest matches snapshot when status is accepted 1`] = `
 </div>
 `;
 
-exports[`BranchCardHeaderTest matches snapshot when status is open 1`] = `
+exports[`BranchCardHeader matches snapshot when status is open 1`] = `
 <div>
   <div
     class="flex flex-col relative overflow-hidden height-auto text-foreground box-border bg-content1 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 shadow-medium rounded-large transition-transform-background motion-reduce:transition-none"
@@ -239,7 +239,7 @@ exports[`BranchCardHeaderTest matches snapshot when status is open 1`] = `
           <span
             class="flex-1 text-inherit font-normal px-2"
           >
-            Ideation
+            Idea
           </span>
         </div>
       </div>
@@ -272,7 +272,7 @@ exports[`BranchCardHeaderTest matches snapshot when status is open 1`] = `
         <h6
           class="text-neutral-400"
         >
-          19 May 2024
+          0
         </h6>
       </div>
     </div>
@@ -280,7 +280,7 @@ exports[`BranchCardHeaderTest matches snapshot when status is open 1`] = `
 </div>
 `;
 
-exports[`BranchCardHeaderTest matches snapshot when status is rejected 1`] = `
+exports[`BranchCardHeader matches snapshot when status is rejected 1`] = `
 <div>
   <div
     class="flex flex-col relative overflow-hidden height-auto text-foreground box-border bg-content1 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 shadow-medium rounded-large transition-transform-background motion-reduce:transition-none"
@@ -392,7 +392,7 @@ exports[`BranchCardHeaderTest matches snapshot when status is rejected 1`] = `
           <span
             class="flex-1 text-inherit font-normal px-2"
           >
-            Ideation
+            Idea
           </span>
         </div>
       </div>
@@ -420,13 +420,13 @@ exports[`BranchCardHeaderTest matches snapshot when status is rejected 1`] = `
         <h6
           class="text-neutral-400"
         >
-          Created on 
-          19 May 2024
+          Created on
+          0
         </h6>
         <h6
           class="text-neutral-400"
         >
-          Rejected on 20 May 2024
+          Rejected on 0
         </h6>
       </div>
     </div>

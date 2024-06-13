@@ -22,7 +22,7 @@ export default async function PostBranchList({
   return (
     <div>
       <Card className="pb-4 mb-12">
-        <PostCardHeader postId={params.postId} hideContribute />
+        <PostCardHeader id={parseId(params.postId)} hideContribute />
       </Card>
       <BranchTabs
         historyList={<BranchList ids={branches.accepted} postId={id} />}

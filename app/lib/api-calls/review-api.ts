@@ -1,9 +1,9 @@
-import { ReviewT, idType } from "../types/api-types";
+import { BranchReviewT, idT } from "../types/api-types";
 
 /**
  * TODO jsdoc when properly implemented
  */
-export async function getReviewData(id: idType): Promise<ReviewT> {
+export async function getReviewData(id: idT): Promise<BranchReviewT> {
   await new Promise((resolve) => setTimeout(resolve, 150));
   if (id == 1)
     return {

@@ -9,6 +9,7 @@ import { useTheme } from "next-themes";
 import { semanticColors } from "@nextui-org/react";
 import RenderPending from "./render-pending";
 import GenericLoadingPage from "@/loading";
+import { idT } from "@/lib/types/api-types";
 
 /**
  * Isolated iframe with a project's rendered html.
@@ -47,7 +48,7 @@ export default function RenderedProject({ id }: IdProp) {
 
   // Fetch html when component renders
   useEffect(() => {
-    getRender(id)
+    getRender(id as idT)
       .then((res) => {
         if (res === "pending") {
           setPending(true);

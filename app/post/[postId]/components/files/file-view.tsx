@@ -2,7 +2,7 @@
 
 import DefaultError from "@/error";
 import { useFileContents } from "@/lib/api-hooks/version-hooks";
-import { parseId } from "@/lib/string-utils";
+import { idT } from "@/lib/types/api-types";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import GenericLoadingPage from "@/loading";
 import { useState } from "react";
@@ -19,7 +19,7 @@ export default function FileView({
   Readonly<{
     path: string;
   }>) {
-  const { data, error, isLoading } = useFileContents(parseId(id), path);
+  const { data, error, isLoading } = useFileContents(id as idT, path);
   // Used to trigger a rerender in case of an error
   const [rerender, setRerender] = useState(false);
 

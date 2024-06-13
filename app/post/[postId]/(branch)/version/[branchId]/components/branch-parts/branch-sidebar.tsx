@@ -1,7 +1,7 @@
 import ChipList from "@/components/common/chip-list";
 import Sidebar from "@/components/layout/sidebar";
 import { getBranchData } from "@/lib/api-calls/branch-api";
-import { parseId } from "@/lib/string-utils";
+import { idT } from "@/lib/types/api-types";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import AuthorCardList from "@/post/[postId]/components/cards/author-card-list";
 import PostCardMini from "@/post/[postId]/components/cards/post-card-mini";
@@ -12,7 +12,7 @@ import PostCardMini from "@/post/[postId]/components/cards/post-card-mini";
  * @param id branch ID
  */
 export default async function BranchSidebar({ id }: IdProp) {
-  const data = await getBranchData(parseId(id));
+  const data = await getBranchData(id as idT);
 
   return (
     <Sidebar
@@ -23,7 +23,9 @@ export default async function BranchSidebar({ id }: IdProp) {
         },
         {
           title: "Scientific fields",
-          node: <ChipList labels={data.updatedScientificFields} />,
+          node: (
+            <ChipList labels={data.updatedScientificFields.map(toString)} />
+          ),
         },
         {
           title: "Contributors",
