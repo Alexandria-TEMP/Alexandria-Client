@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { capitalizeFirstLetter, parseId } from "@/lib/string-utils";
 import BranchCardSkeleton from "./branch-card-skeleton";
 import { BranchT, idT } from "@/lib/types/api-types";
-import { reviewStatusToTensedVerb } from "@/lib/get-format";
+import { getStandardReviewStatus } from "@/lib/get-format";
 import ReviewChips from "@/components/common/review-chips";
 
 /**
@@ -58,7 +58,7 @@ export default function BranchCard({
   const updateDate = (
     <p className="text-sm">
       {data.branchOverallReviewStatus != "open for review" &&
-        `${capitalizeFirstLetter(reviewStatusToTensedVerb(data.branchOverallReviewStatus))} on ${data.updatedAt}`}
+        `${capitalizeFirstLetter(getStandardReviewStatus(data.branchOverallReviewStatus))} on ${data.updatedAt}`}
     </p>
   );
 

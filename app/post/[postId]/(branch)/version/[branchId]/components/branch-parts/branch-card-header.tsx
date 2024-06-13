@@ -5,7 +5,7 @@ import HeaderSubtle from "@/components/common/header-subtle";
 import { getBranchData } from "@/lib/api-calls/branch-api";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
 import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
-import { reviewStatusToTensedVerb } from "@/lib/get-format";
+import { getStandardReviewStatus } from "@/lib/get-format";
 import { BranchT, idT } from "@/lib/types/api-types";
 import ChipWithTitle from "@/components/common/chip-with-title";
 import BranchCardHeaderSkeleton from "./branch-card-header-skeleton";
@@ -40,7 +40,7 @@ export default function BranchCardHeader({
   const status = useMemo(
     () =>
       data
-        ? reviewStatusToTensedVerb(data.branchOverallReviewStatus)
+        ? getStandardReviewStatus(data.branchOverallReviewStatus)
         : undefined,
     [data],
   );
