@@ -11,7 +11,7 @@ export default function BranchList({
   ids,
   postId,
   grid,
-}: Readonly<{ ids: string[]; postId: idT; grid?: boolean }>) {
+}: Readonly<{ ids: idT[]; postId: idT; grid?: boolean }>) {
   return (
     <div className={"gap-5 " + (grid ? "grid grid-cols-4" : "flex flex-col")}>
       {ids.map((id) => (

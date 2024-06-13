@@ -3,6 +3,7 @@ import { Card, CardBody } from "@nextui-org/react";
 import PostCardHeader from "../../components/post-parts/post-card-header";
 import DiscussionSection from "../../components/discussions/discussion-section";
 import FileTree from "../../components/files/file-tree";
+import { parseId } from "@/lib/string-utils";
 
 /**
  * Page that shows files of a Post.
@@ -16,12 +17,12 @@ export default async function PostFiles({
 }) {
   // TODO remove disable
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const data = await getPostData(params.postId);
+  const data = await getPostData(parseId(params.postId));
 
   return (
     <div className="flex flex-col space-y-4 w-full">
       <Card>
-        <PostCardHeader postId={params.postId} />
+        <PostCardHeader id={parseId(params.postId)} />
         <CardBody>
           <FileTree
             id={0} // TODO {data.currentVersion.id}

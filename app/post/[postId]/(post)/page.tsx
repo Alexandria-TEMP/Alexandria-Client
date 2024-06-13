@@ -3,6 +3,7 @@ import PostCardHeader from "../components/post-parts/post-card-header";
 import DiscussionSection from "../components/discussions/discussion-section";
 import { Card, CardBody } from "@nextui-org/react";
 import RenderedProject from "../components/project-render/rendered-project";
+import { parseId } from "@/lib/string-utils";
 
 /**
  * Page that shows contents of a Post.
@@ -12,12 +13,12 @@ import RenderedProject from "../components/project-render/rendered-project";
 export default async function Post({ params }: { params: { postId: string } }) {
   // TODO remove disable
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const data = await getPostData(params.postId);
+  const data = await getPostData(parseId(params.postId));
 
   return (
     <div className="flex flex-col space-y-4 w-full">
       <Card>
-        <PostCardHeader postId={params.postId} />
+        <PostCardHeader id={parseId(params.postId)} />
         <CardBody>
           <RenderedProject
             id={0} // TODO {data.currentVersion.id}

@@ -7,7 +7,7 @@ import { getFields } from "../lib/api-calls/fields-api";
 import { MultiSelectAutocomplete } from "../components/form/multi-select-autocomplete";
 import { SingleSelectAutocomplete } from "../components/form/single-select-autocomplete";
 import UploadContentCard from "../components/form/upload-content-card";
-import { getMemberName, getFieldName } from "@/lib/get-format";
+// TODO import { getMemberName, getFieldName } from "@/lib/get-format";
 import {
   Card,
   Input,
@@ -25,20 +25,21 @@ import {
   getFeedbackTypes,
   getPostTypes,
 } from "@/lib/api-calls/tags-api";
-import { MemberT } from "@/lib/types/api-types";
+// TODO import { MemberT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
 import { useState } from "react";
 import GenericLoadingPage from "@/loading";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
-const loggedIn: MemberT = {
-  id: "3",
-  email: "kopernicus@tudelft.nl",
-  firstName: "Metal Bar",
-  institution: "TU Delft",
-  picture: "/placeholders/Nikolaus_Kopernikus.jpg",
-  lastName: "Clanging",
-};
+// TODO
+// const loggedIn: MemberT = {
+//   id: 3,
+//   email: "kopernicus@tudelft.nl",
+//   firstName: "Metal Bar",
+//   institution: "TU Delft",
+//   lastName: "Clanging",
+//   scientificFields: [],
+// };
 
 /**
  * TODO jsdoc @miruna
@@ -51,7 +52,7 @@ export default function NewPost() {
       defaultValues: {
         title: "",
         anonymous: false,
-        authors: [loggedIn.id],
+        authors: ["3"], // TODO [loggedIn.id],
         contributors: [] as string[],
         fields: [] as string[],
         type: "Ideation (to begin)",
@@ -156,7 +157,7 @@ export default function NewPost() {
               <MultiSelectAutocomplete
                 label={<h2>Authors</h2>}
                 description="Select the people who worked on this post."
-                getItemLabel={getMemberName}
+                getItemLabel={() => ""} // TODO {getMemberName}
                 control={control}
                 trigger={trigger}
                 name="authors"
@@ -170,7 +171,7 @@ export default function NewPost() {
                 disableFieldName="anonymous"
                 disableMessage="Post this anonymously."
                 optionsGetter={getMembers}
-                nonRemovables={[loggedIn.id]}
+                nonRemovables={[]} // TODO {[loggedIn.id]}
                 nonRemoveReason="You must be in the author list, or make this post anonymous."
               />
 
@@ -179,11 +180,11 @@ export default function NewPost() {
               <MultiSelectAutocomplete
                 label={<h2>Scientific Fields</h2>}
                 description="Select the scientific fields your post is about."
-                getItemLabel={getFieldName}
+                getItemLabel={() => ""} // TODO {getFieldName}
                 control={control}
                 name="fields"
                 optionsGetter={getFields}
-                nonRemovables={[loggedIn.id]}
+                nonRemovables={[]} // TODO {[loggedIn.id]}
                 nonRemoveReason="You must be in the author list, or make this post anonymous."
               />
 
