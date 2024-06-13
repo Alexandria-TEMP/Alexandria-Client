@@ -106,6 +106,8 @@ export type ProjectPostT = EntityT & {
 };
 
 export type ScientificFieldT = EntityT & {
-  // TODO
-  label: string;
+  id: idT;
+  parentID: idT;
+  scientificField: string;
+  subtagIDs: idT[];
 };

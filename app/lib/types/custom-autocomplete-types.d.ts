@@ -1,4 +1,5 @@
 import { FieldValues, Control, Path, UseFormTrigger } from "react-hook-form";
+import { idT } from "./api-types";
 
 /**
  * Possible props for the custom Multi and Single select Autcomplete components
@@ -61,14 +62,14 @@ export type SingleSelectAutocompleteT<FormType extends FieldValues> =
  * @param nonRemoveReason the reason why an item in non removables cannot be removed
  */
 export type MultiSelectAutocompleteT<
-  Type extends { id: string },
+  Type extends { id: idT },
   FormType extends FieldValues,
 > = CustomAutocompletePropsT<Type, FormType> & {
   trigger?: UseFormTrigger<FormType>;
   disableFieldName?: Path<FormType>;
   disableMessage?: string;
   getItemLabel: (i: Type | undefined) => string;
-  nonRemovables?: string[];
+  nonRemovables?: idT[];
   nonRemoveReason?: string;
 };
 

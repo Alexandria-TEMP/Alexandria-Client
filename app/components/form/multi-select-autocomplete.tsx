@@ -14,6 +14,7 @@ import { Chip } from "@nextui-org/chip";
 import { FieldValues, useController } from "react-hook-form";
 import { MultiSelectAutocompleteT } from "@/lib/types/custom-autocomplete-types";
 import { Switch, Tooltip } from "@nextui-org/react";
+import { idT } from "@/lib/types/api-types";
 
 /**
  * Searchable dropdown which mimics multi select by adding the selected items to a list of removable tags.
@@ -23,7 +24,7 @@ import { Switch, Tooltip } from "@nextui-org/react";
  * @returns a div containing the title, list of selected items, the dropdown and add button
  */
 export function MultiSelectAutocomplete<
-  Type extends { id: string },
+  Type extends { id: idT },
   FormType extends FieldValues,
 >({
   label: title,
@@ -37,7 +38,7 @@ export function MultiSelectAutocomplete<
   disableMessage,
   getItemLabel,
   optionsGetter,
-  nonRemovables = [] as string[],
+  nonRemovables = [] as idT[],
   nonRemoveReason,
 }: MultiSelectAutocompleteT<Type, FormType>) {
   /* Register the field as part of the parent form using appropriate name and rules  */
@@ -65,9 +66,9 @@ export function MultiSelectAutocomplete<
   // if used component is correctly, it should correspond to the type of the keys aka string by default
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const [items, setItems] = useState<string[]>(fieldMethods.field.value);
+  const [items, setItems] = useState<idT[]>(fieldMethods.field.value);
 
-  /* Update the value when post request finishes */
+  /* Update the value when get request finishes */
   useEffect(() => {
     setItems(fieldMethods.field.value);
   }, [fieldMethods.field.value]);
@@ -76,7 +77,7 @@ export function MultiSelectAutocomplete<
    * The list of options that the user can select from,
    * This has to be a map because of how this component is structured, though its not mega robust
    */
-  const [options, setOptions] = useState<Map<string, Type>>(new Map());
+  const [options, setOptions] = useState<Map<idT, Type>>(new Map());
 
   /**
    * Update the options list when request for them finishes
@@ -96,7 +97,7 @@ export function MultiSelectAutocomplete<
    * Uses set functionality to ensure there are no duplicates
    * @param removed the key of the item to be removed
    */
-  const handleRemoveItem = (removed: string) => {
+  const handleRemoveItem = (removed: idT) => {
     const newItems = Array.from(new Set(items.filter((e) => e !== removed)));
     setItems(newItems);
     fieldMethods.field.onChange(newItems);
@@ -108,7 +109,7 @@ export function MultiSelectAutocomplete<
    * updates both the items array used for displaying, and the field.value which stores the answer to the form
    * Uses set functionality to ensure there are no duplicates
    */
-  const handleAddItem = (added: string) => {
+  const handleAddItem = (added: idT) => {
     if (newItem !== "") {
       const newItems = Array.from(new Set([...items, added]));
       setItems(newItems);
@@ -208,7 +209,7 @@ export function MultiSelectAutocomplete<
         <Button
           variant="ghost"
           style={{ display: "inline-block" }}
-          onClick={() => handleAddItem(newItem.toString())}
+          onClick={() => handleAddItem(Number(newItem.toString()))}
         >
           Add
         </Button>

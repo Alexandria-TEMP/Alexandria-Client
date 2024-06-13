@@ -72,7 +72,9 @@ export const dummyPost: PostT = {
 // TODO improve
 export const dummyScientificField: ScientificFieldT = {
   id: 1,
-  label: "Computer Science",
+  scientificField: "Computer Science",
+  parentID: 1,
+  subtagIDs: [],
 };
 
 // TODO improve

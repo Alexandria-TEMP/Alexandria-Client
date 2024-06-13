@@ -22,7 +22,7 @@ export function getMemberName(i: MemberT | undefined) {
  * @returns tag's name/label or "Not found"
  */
 export function getFieldName(i: ScientificFieldT | undefined) {
-  return i === undefined ? "Not found" : i.label;
+  return i === undefined ? "Not found" : i.scientificField;
 }
 
 /**

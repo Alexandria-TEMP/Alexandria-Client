@@ -1,6 +1,6 @@
 "use client";
 
-import { getFields } from "@/lib/api-calls/fields-api";
+import { getScientificFields } from "@/lib/api-calls/fields-api";
 import { getMembers } from "@/lib/api-calls/member-api";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
@@ -259,7 +259,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                       getItemLabel={() => ""} // TODO {getFieldName}
                       control={control}
                       name="updatedScientificFields"
-                      optionsGetter={getFields}
+                      optionsGetter={getScientificFields}
                     />
 
                     <Divider />

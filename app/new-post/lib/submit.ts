@@ -1,12 +1,13 @@
+import { idT } from "@/lib/types/api-types";
+
 export type FormType = {
   title: string;
   anonymous: boolean;
-  authors: string[];
-  contributors: string[];
-  fields: string[];
-  type: string;
-  completionStatus: string;
-  feedbackPreference: string;
+  authorMemberIDs: idT[];
+  scientificFieldTagIDs: idT[];
+  postType: string;
+  projectCompletionStatus: string;
+  projectFeedbackPreference: string;
   file: File | null;
 };
 
@@ -21,13 +22,13 @@ export const submitHandler = async (
   try {
     setIsLoading(true);
     const jsonData = JSON.stringify({
-      completionStatus: data.completionStatus,
-      feedbackPreference: data.feedbackPreference,
+      completionStatus: data.projectCompletionStatus,
+      feedbackPreference: data.projectFeedbackPreference,
       postCreationForm: {
         anonymous: data.anonymous,
-        authorMemberIDs: data.authors,
-        postType: data.type,
-        scientificFieldTags: data.fields,
+        authorMemberIDs: data.authorMemberIDs,
+        postType: data.postType,
+        scientificFieldTags: data.scientificFieldTagIDs,
         title: data.title,
       },
     });

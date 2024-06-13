@@ -1,7 +1,7 @@
 import { Input } from "@nextui-org/react";
 import { Controller, FormState, Control } from "react-hook-form";
 import { FormType } from "../lib/submit";
-import { getFields } from "@/lib/api-calls/fields-api";
+import { getScientificFields } from "@/lib/api-calls/fields-api";
 // TODO import { getFieldName } from "@/lib/get-format";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
 import { maxInstitution, maxName } from "@/lib/validation-rules";
@@ -109,7 +109,7 @@ export default function PersonalDataCard({
           getItemLabel={() => ""} // TODO {getFieldName}
           control={control}
           name="fields"
-          optionsGetter={getFields}
+          optionsGetter={getScientificFields}
         />
       </div>
     </div>

@@ -1,34 +1,15 @@
-// methods in this file will be heavily changed once integration with back end it done
-// just retrieve some dummy data for now
+import { ScientificFieldT } from "../types/api-types";
+import { baseUrl } from "./api-common";
 
 /**
  * TODO jsdoc when properly implemented
  */
-export async function getFields() {
-  // TODO
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  const data = [
-    {
-      id: "1",
-      tag: "Computer Science",
-      tagType: "ScientificField",
-    },
-    {
-      id: "2",
-      tag: "Mathematics",
-      tagType: "ScientificField",
-    },
-    {
-      id: "3",
-      tag: "Psychology & Psychiatry",
-      tagType: "ScientificField",
-    },
-    {
-      id: "4",
-      tag: "Medicine",
-      tagType: "ScientificField",
-    },
-  ];
-
-  return data;
+export async function getScientificFields() {
+  // TODO some kind of erro management?
+  const response = await fetch(baseUrl + "/tags/scientific");
+  //disable reason: idk how to fix this and still get the correct type cause typescript
+  // i have to look into this
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const scientificFieldTags: ScientificFieldT[] = await response.json();
+  return scientificFieldTags;
 }

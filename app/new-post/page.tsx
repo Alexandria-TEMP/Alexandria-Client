@@ -3,11 +3,11 @@
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
 import { getMembers } from "../lib/api-calls/member-api";
-import { getFields } from "../lib/api-calls/fields-api";
+import { getScientificFields } from "../lib/api-calls/fields-api";
 import { MultiSelectAutocomplete } from "../components/form/multi-select-autocomplete";
 import { SingleSelectAutocomplete } from "../components/form/single-select-autocomplete";
 import UploadContentCard from "../components/form/upload-content-card";
-// TODO import { getMemberName, getFieldName } from "@/lib/get-format";
+import { getMemberName, getFieldName } from "@/lib/get-format";
 import {
   Card,
   Input,
@@ -25,21 +25,21 @@ import {
   getFeedbackTypes,
   getPostTypes,
 } from "@/lib/api-calls/tags-api";
-// TODO import { MemberT } from "@/lib/types/api-types";
+import { MemberT, idT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
 import { useState } from "react";
 import GenericLoadingPage from "@/loading";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
 // TODO
-// const loggedIn: MemberT = {
-//   id: 3,
-//   email: "kopernicus@tudelft.nl",
-//   firstName: "Metal Bar",
-//   institution: "TU Delft",
-//   lastName: "Clanging",
-//   scientificFields: [],
-// };
+const loggedIn: MemberT = {
+  id: 1,
+  email: "kopernicus@tudelft.nl",
+  firstName: "Metal Bar",
+  institution: "TU Delft",
+  lastName: "Clanging",
+  scientificFields: [],
+};
 
 /**
  * TODO jsdoc @miruna
@@ -52,12 +52,11 @@ export default function NewPost() {
       defaultValues: {
         title: "",
         anonymous: false,
-        authors: ["3"], // TODO [loggedIn.id],
-        contributors: [] as string[],
-        fields: [] as string[],
-        type: "Ideation (to begin)",
-        completionStatus: "Project",
-        feedbackPreference: "Community Discussion", // TODO these are hardcoded, could just make them empty
+        authorMemberIDs: [loggedIn.id],
+        scientificFieldTagIDs: [] as idT[],
+        postType: "Ideation (to begin)",
+        projectCompletionStatus: "Project",
+        projectFeedbackPreference: "Community Discussion", // TODO these are hardcoded, could just make them empty
         file: null,
       },
     });
@@ -157,10 +156,10 @@ export default function NewPost() {
               <MultiSelectAutocomplete
                 label={<h2>Authors</h2>}
                 description="Select the people who worked on this post."
-                getItemLabel={() => ""} // TODO {getMemberName}
+                getItemLabel={getMemberName}
                 control={control}
                 trigger={trigger}
-                name="authors"
+                name="authorMemberIDs"
                 rules={{
                   validate: (v: string[]) => {
                     if (!getValues("anonymous") && v.length <= 0)
@@ -171,7 +170,7 @@ export default function NewPost() {
                 disableFieldName="anonymous"
                 disableMessage="Post this anonymously."
                 optionsGetter={getMembers}
-                nonRemovables={[]} // TODO {[loggedIn.id]}
+                nonRemovables={[loggedIn.id]}
                 nonRemoveReason="You must be in the author list, or make this post anonymous."
               />
 
@@ -180,12 +179,10 @@ export default function NewPost() {
               <MultiSelectAutocomplete
                 label={<h2>Scientific Fields</h2>}
                 description="Select the scientific fields your post is about."
-                getItemLabel={() => ""} // TODO {getFieldName}
+                getItemLabel={getFieldName}
                 control={control}
-                name="fields"
-                optionsGetter={getFields}
-                nonRemovables={[]} // TODO {[loggedIn.id]}
-                nonRemoveReason="You must be in the author list, or make this post anonymous."
+                name="scientificFieldTagIDs"
+                optionsGetter={getScientificFields}
               />
 
               <Divider />
@@ -195,7 +192,7 @@ export default function NewPost() {
                 description="The type of post represents what kind of content you are sharing."
                 placeholder="Select a type for your post..."
                 control={control}
-                name="type"
+                name="postType"
                 rules={{
                   required: {
                     value: true,
@@ -211,7 +208,7 @@ export default function NewPost() {
                 label={<h2>What are your feedback preferences?</h2>}
                 description="The type of replies you want to encourage under your post."
                 placeholder="Select the type of feedback preferences you want..."
-                name="feedbackPreference"
+                name="projectFeedbackPreference"
                 control={control}
                 rules={{
                   required: {
@@ -229,7 +226,7 @@ export default function NewPost() {
                 label={<h2>What is the completion of your project?</h2>}
                 description="This helps other users understand your work and give advice."
                 placeholder="Select the completion status for your post..."
-                name="completionStatus"
+                name="projectCompletionStatus"
                 control={control}
                 rules={{
                   required: {
