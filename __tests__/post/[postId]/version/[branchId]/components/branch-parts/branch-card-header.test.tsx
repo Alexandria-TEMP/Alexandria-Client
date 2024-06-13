@@ -12,7 +12,7 @@ jest.mock("@/lib/api-calls/branch-api");
 // Mock useRouter so it's mounted
 jest.mock("next/navigation");
 
-describe("BranchCardHeaderTest", () => {
+describe("BranchCardHeader", () => {
   (usePathname as jest.Mock).mockReturnValue("");
   (useRouter as jest.Mock).mockReturnValue(createMockRouter());
 

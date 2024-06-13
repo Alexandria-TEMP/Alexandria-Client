@@ -1,4 +1,10 @@
-import { BranchT, PostT, BranchReviewT } from "@/lib/types/api-types";
+import {
+  BranchT,
+  PostT,
+  BranchReviewT,
+  MemberT,
+  ScientificFieldT,
+} from "@/lib/types/api-types";
 import { FileTreeT } from "@/lib/types/file-tree";
 
 export const dummyDiscussion = {
@@ -18,107 +24,113 @@ export const dummyDiscussion = {
   updatedAt: "11 May 2024",
 };
 
-export const dummyMembers = [
+export const dummyMembers: MemberT[] = [
   {
-    id: "413256",
+    id: 413256,
     email: "mariecurie@tudelft.nl",
     firstName: "Marie",
-    picture: "/placeholders/Marie_Curie.jpg",
     institution: "TU Delft",
     lastName: "Curie",
+    scientificFields: [],
   },
   {
-    id: "2",
+    id: 2,
     email: "kopernicus@tudelft.nl",
     firstName: "Nicolaus",
     institution: "TU Delft",
-    picture: "/placeholders/Nikolaus_Kopernikus.jpg",
     lastName: "Copernicus",
+    scientificFields: [],
   },
 ];
 
+// TODO improve
 export const dummyPost: PostT = {
   title: "Post title",
-  status: "Open for review",
-  collaboratorIDs: ["1", "2"],
-  authors: ["1", "2"],
-  contributors: ["1", "2"],
-  anonymous: false,
-  feedbackPreferences: "Formal feedback",
-  completionStatus: "Ideation",
-  createdAt: "10 May 2024",
-  currentVersion: {
-    id: "1",
-    discussions: ["1", "1", "1", "1"],
-  },
-  id: "43125",
-  postType: "Reflection",
+  renderStatus: "success",
+  // status: "Open for review",
+  collaboratorIDs: [1, 2],
+  // authors: ["1", "2"],
+  // contributors: ["1", "2"],
+  // anonymous: false,
+  // feedbackPreferences: "Formal feedback",
+  // completionStatus: "Ideation",
+  // createdAt: "10 May 2024",
+  // currentVersion: {
+  //   id: "1",
+  discussionIDs: [1],
+  // },
+  id: 43125,
+  postType: "reflection",
   scientificFields: [
     "Computer Science",
     "Mathematics",
     "Theory of computation",
   ],
-  updatedAt: "04 June 2024",
+  // updatedAt: "04 June 2024",
 };
 
-export const dummyTag = {
-  id: "1",
-  tag: "Computer Science",
-  tagType: "ScientificField",
+// TODO improve
+export const dummyScientificField: ScientificFieldT = {
+  id: 1,
+  label: "Computer Science",
 };
 
+// TODO improve
 export const dummyBranches: {
   rejected: BranchT;
   accepted: BranchT;
   open: BranchT;
 } = {
   rejected: {
-    anonymous: false,
     id: 547964732,
     updatedPostTitle: "Post title",
     projectPostID: 1,
+    discussionIDs: [1],
+    renderStatus: "success",
     branchTitle: "Remove contents section",
-    newVersionID: 1,
+    // newVersionID: 1,
     reviewIDs: [0, 1, 2],
-    createdAt: "19 May 2024",
+    // createdAt: "19 May 2024",
     collaboratorIDs: [0, 1],
-    updatedAt: "20 May 2024",
-    updatedCompletionStatus: "ideation",
-    updatedScientificFields: ["Mathematics"],
+    // updatedAt: "20 May 2024",
+    updatedCompletionStatus: "idea",
+    updatedScientificFields: [],
     branchOverallReviewStatus: "rejected",
-    previousVersionID: 2,
+    // previousVersionID: 2,
   },
   open: {
     id: 547964732,
     updatedPostTitle: "Post title",
     projectPostID: 1,
-    branchTitle: "Do some stuff",
-    newVersionID: 1,
+    discussionIDs: [1],
+    renderStatus: "success",
+    branchTitle: "Remove contents section",
+    // newVersionID: 1,
     reviewIDs: [0, 1, 2],
-    anonymous: false,
-    createdAt: "19 May 2024",
+    // createdAt: "19 May 2024",
     collaboratorIDs: [0, 1],
-    updatedAt: "20 May 2024",
-    updatedCompletionStatus: "ideation",
-    updatedScientificFields: ["Mathematics"],
+    // updatedAt: "20 May 2024",
+    updatedCompletionStatus: "idea",
+    updatedScientificFields: [],
     branchOverallReviewStatus: "open for review",
-    previousVersionID: 2,
+    // previousVersionID: 2,
   },
   accepted: {
     id: 547964732,
     updatedPostTitle: "Post title",
     projectPostID: 1,
-    branchTitle: "Grammar fixes",
-    newVersionID: 1,
+    discussionIDs: [1],
+    renderStatus: "success",
+    branchTitle: "Remove contents section",
+    // newVersionID: 1,
     reviewIDs: [0, 1, 2],
-    anonymous: false,
-    createdAt: "19 May 2024",
+    // createdAt: "19 May 2024",
     collaboratorIDs: [0, 1],
-    updatedAt: "20 May 2024",
-    updatedCompletionStatus: "ideation",
-    updatedScientificFields: ["Mathematics"],
+    // updatedAt: "20 May 2024",
+    updatedCompletionStatus: "idea",
+    updatedScientificFields: [],
     branchOverallReviewStatus: "peer reviewed",
-    previousVersionID: 2,
+    // previousVersionID: 2,
   },
 };
 
