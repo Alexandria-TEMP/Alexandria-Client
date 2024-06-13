@@ -38,7 +38,7 @@ const loggedIn: MemberT = {
  */
 export default function NewPost() {
   /* create the form state */
-  const { handleSubmit, formState, control, trigger, getValues } =
+  const { handleSubmit, formState, control, trigger, getValues, watch } =
     useForm<FormType>({
       mode: "onTouched",
       defaultValues: {
@@ -46,12 +46,15 @@ export default function NewPost() {
         anonymous: false,
         authorMemberIDs: [loggedIn.id],
         scientificFieldTagIDs: [] as idT[],
-        postType: "Ideation (to begin)",
-        projectCompletionStatus: "Project",
-        projectFeedbackPreference: "Community Discussion", // TODO these are hardcoded, could just make them empty
+        postType: "project",
+        projectCompletionStatus: "idea",
+        projectFeedbackPreference: "discussion feedback",
         file: null,
       },
     });
+
+  /* listen to changes to post type field, so as to conditionally display completion and feedback options */
+  const watchPostType = watch("postType");
 
   /* is loading set to true, if the form is submitting */
   const [isLoading, setIsLoading] = useState(false);
@@ -182,41 +185,45 @@ export default function NewPost() {
 
               <Divider />
 
-              <SingleSelectAutocomplete
-                label={<h2>What are your feedback preferences?</h2>}
-                description="The type of replies you want to encourage under your post."
-                placeholder="Select the type of feedback preferences you want..."
-                name="projectFeedbackPreference"
-                control={control}
-                rules={{
-                  required: {
-                    value: true,
-                    message:
-                      "Please select feedback preferences for your post.",
-                  },
-                }}
-                optionsGetter={getFeedbackTypes}
-              />
+              {watchPostType === "project" && (
+                <>
+                  <SingleSelectAutocomplete
+                    label={<h2>What are your feedback preferences?</h2>}
+                    description="The type of replies you want to encourage under your post."
+                    placeholder="Select the type of feedback preferences you want..."
+                    name="projectFeedbackPreference"
+                    control={control}
+                    rules={{
+                      required: {
+                        value: true,
+                        message:
+                          "Please select feedback preferences for your post.",
+                      },
+                    }}
+                    optionsGetter={getFeedbackTypes}
+                  />
 
-              <Divider />
+                  <Divider />
 
-              <SingleSelectAutocomplete
-                label={<h2>What is the completion of your project?</h2>}
-                description="This helps other users understand your work and give advice."
-                placeholder="Select the completion status for your post..."
-                name="projectCompletionStatus"
-                control={control}
-                rules={{
-                  required: {
-                    value: true,
-                    message:
-                      "Please select the completion status of your post.",
-                  },
-                }}
-                optionsGetter={getCompletionTypes}
-              />
+                  <SingleSelectAutocomplete
+                    label={<h2>What is the completion of your project?</h2>}
+                    description="This helps other users understand your work and give advice."
+                    placeholder="Select the completion status for your post..."
+                    name="projectCompletionStatus"
+                    control={control}
+                    rules={{
+                      required: {
+                        value: true,
+                        message:
+                          "Please select the completion status of your post.",
+                      },
+                    }}
+                    optionsGetter={getCompletionTypes}
+                  />
 
-              <Divider />
+                  <Divider />
+                </>
+              )}
             </div>
           </Card>
         </div>
