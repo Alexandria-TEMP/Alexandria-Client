@@ -29,6 +29,7 @@ import { getCompletionTypes, getFeedbackTypes } from "@/lib/api-calls/tags-api";
 import GenericLoadingPage from "@/loading";
 import { MemberT, PostT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
+import { getFieldName, getMemberName } from "@/lib/get-format";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
 const loggedIn: MemberT = {
@@ -193,7 +194,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
               <MultiSelectAutocomplete
                 label={<h2>Contributors</h2>}
                 description="Select the people who worked on these changes."
-                getItemLabel={() => ""} // TODO{getMemberName}
+                getItemLabel={getMemberName}
                 control={control}
                 trigger={trigger}
                 name="contributors"
@@ -207,7 +208,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                 disableFieldName="anonymous"
                 disableMessage="Suggest these changes anonymously"
                 optionsGetter={getMembers}
-                nonRemovables={[""]} // TODO {[loggedIn.id]}
+                nonRemovables={[loggedIn.id]}
                 nonRemoveReason="You must be in the contributor list, or make this contribution anonymously."
               />
 
@@ -256,7 +257,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                     <MultiSelectAutocomplete
                       label={<h2>Scientific Fields</h2>}
                       description="Modify the list of scientific fields to match the changes you made."
-                      getItemLabel={() => ""} // TODO {getFieldName}
+                      getItemLabel={getFieldName}
                       control={control}
                       name="updatedScientificFields"
                       optionsGetter={getScientificFields}
