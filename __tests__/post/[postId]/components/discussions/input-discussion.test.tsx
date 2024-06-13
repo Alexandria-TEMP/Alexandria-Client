@@ -7,12 +7,12 @@ import InputDiscussion from "@/post/[postId]/components/discussions/input-discus
 jest.mock("@/lib/api-calls/discussion-api");
 
 describe("InputDiscussion", () => {
-  const versionId = "51235312";
+  const discussionContainerID = 51235312;
   const mockedApi = uploadDiscussion as jest.Mock;
   mockedApi.mockResolvedValue({});
 
   it("renders a textbox", () => {
-    render(<InputDiscussion versionId={versionId} />);
+    render(<InputDiscussion id={discussionContainerID} />);
     expect(screen.getByRole("textbox")).toBeInTheDocument();
   });
 
@@ -20,11 +20,11 @@ describe("InputDiscussion", () => {
     const user = userEvent.setup();
     const inputText = "Alexandria is pretty cool";
 
-    render(<InputDiscussion versionId={versionId} />);
+    render(<InputDiscussion id={discussionContainerID} />);
 
     await user.type(screen.getByRole("textbox"), inputText);
     await user.click(screen.getByRole("button"));
 
-    expect(mockedApi).toHaveBeenCalledWith(inputText, versionId);
+    expect(mockedApi).toHaveBeenCalledWith(inputText, discussionContainerID);
   });
 });

@@ -4,7 +4,7 @@ import { fetchRender } from "@/lib/api-calls/quarto-api";
 import { dummyHtml } from "~/__tests__/__utils__/dummys";
 import RenderedQuarto, {
   iframeTitle,
-} from "@/post/[postId]/components/project-render/rendered-project";
+} from "@/post/[postId]/components/render/rendered-quarto";
 
 jest.mock("@/lib/api-calls/quarto-api");
 
@@ -15,7 +15,9 @@ describe("RenderedQuarto", () => {
     // Disable reason: Need the async keyword for act to work properly
     // but render is not awaitable so eslint complains
     // eslint-disable-next-line @typescript-eslint/require-await
-    const content = await act(async () => render(<RenderedQuarto id="1" />));
+    const content = await act(async () =>
+      render(<RenderedQuarto id={1} container="branch" />),
+    );
 
     const iframe = content.getByTitle(iframeTitle) as HTMLIFrameElement;
     return { content, iframe };
@@ -28,7 +30,9 @@ describe("RenderedQuarto", () => {
     // Disable reason: Need the async keyword for act to work properly
     // but render is not awaitable so eslint complains
     // eslint-disable-next-line @typescript-eslint/require-await
-    const content = await act(async () => render(<RenderedQuarto id="1" />));
+    const content = await act(async () =>
+      render(<RenderedQuarto id={1} container="branch" />),
+    );
 
     const error = screen.getByTestId("render-error");
     return { errorMessage, content, error };

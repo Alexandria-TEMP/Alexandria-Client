@@ -1,11 +1,11 @@
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import { useFileTree } from "@/lib/api-hooks/version-hooks";
 import FileView from "@/post/[postId]/components/files/file-view";
 import FileTree from "@/post/[postId]/components/files/file-tree";
 import userEvent from "@testing-library/user-event";
+import { useFileTree } from "@/lib/api-calls/quarto-api";
 
-jest.mock("@/lib/api-hooks/version-hooks");
+jest.mock("@/lib/api-calls/quarto-api");
 jest.mock("@/post/[postId]/components/files/file-view");
 
 describe("FileTree", () => {
@@ -19,7 +19,7 @@ describe("FileTree", () => {
       isLoading: false,
       error: false,
     });
-    render(<FileTree id="1" />);
+    render(<FileTree id="1" container="branch" />);
     return userEvent.setup();
   };
 
@@ -29,7 +29,7 @@ describe("FileTree", () => {
       isLoading: false,
       error: new Error("test error"),
     });
-    render(<FileTree id="1" />);
+    render(<FileTree id="1" container="branch" />);
     expect(screen.getByTestId("default-error")).toBeVisible();
   });
 

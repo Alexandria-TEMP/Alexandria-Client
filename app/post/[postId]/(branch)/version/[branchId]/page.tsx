@@ -33,9 +33,7 @@ export default async function Branch({
           </CardFooter>
         }
       />
-      <DiscussionSection
-        versionId={0} // TODO {data.newVersionID}
-      />
+      <DiscussionSection id={1} /> {/* TODO get proper ID */}
     </div>
   );
 }

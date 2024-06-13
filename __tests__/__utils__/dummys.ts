@@ -4,6 +4,7 @@ import {
   BranchReviewT,
   MemberT,
   ScientificFieldT,
+  DiscussionContainerT,
 } from "@/lib/types/api-types";
 import { FileTreeT } from "@/lib/types/file-tree";
 
@@ -146,7 +147,7 @@ export const dummyHtml = {
   `,
 };
 
-export const dummyVersion = {
+export const dummyDiscussionContainer: DiscussionContainerT = {
   id: 1,
   discussionIDs: [1, 2, 3, 4],
 };

@@ -68,20 +68,17 @@ export default function BranchCard({
       <CardBody className="flex flex-row gap-3 w-full">
         <div className={compare ? "w-1/2" : "w-full"}>
           {view === "files" ? (
-            <FileTree id={newVersionId.toString()} />
+            <FileTree id={newVersionId} container="branch" />
           ) : (
-            <RenderedQuarto id={newVersionId.toString()} container="branch" />
+            <RenderedQuarto id={newVersionId} container="branch" />
           )}
         </div>
 
         <div className={compare ? "w-1/2" : "hidden"}>
           {view === "files" ? (
-            <FileTree id={previousVersionId.toString()} />
+            <FileTree id={previousVersionId} container="branch" />
           ) : (
-            <RenderedQuarto
-              id={previousVersionId.toString()}
-              container="branch"
-            />
+            <RenderedQuarto id={previousVersionId} container="branch" />
           )}
         </div>
       </CardBody>
