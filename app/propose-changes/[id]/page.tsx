@@ -13,11 +13,6 @@ import {
   Button,
   Accordion,
   AccordionItem,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   useDisclosure,
 } from "@nextui-org/react";
 import { submitHandler, FormType } from "./lib/submit";
@@ -30,6 +25,7 @@ import GenericLoadingPage from "@/loading";
 import { MemberT, PostT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
 import { getFieldName, getMemberName } from "@/lib/get-format";
+import ErrorModal from "@/components/form/error-modal";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
 const loggedIn: MemberT = {
@@ -114,24 +110,10 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
 
   return (
     <>
-      {/* error alert, only visible if there is an error */}
-      <Modal isOpen={errorModal.isOpen} onOpenChange={errorModal.onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader>Error</ModalHeader>
-              <ModalBody>
-                There was an error when submitting your post. Please try again.
-              </ModalBody>
-              <ModalFooter>
-                <Button color="primary" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      <ErrorModal
+        modal={errorModal}
+        errorMsg="There was an error submitting your form. Please try again."
+      />
       <form
         // disable reason: this is the intended usage for handleSubmit
         // linter complains about it being a promise, but if i fix it then `submit` function does not get called

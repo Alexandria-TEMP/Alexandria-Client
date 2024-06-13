@@ -2,7 +2,7 @@
 // just retrieve some dummy data for now
 
 import { MemberT, idT } from "../types/api-types";
-import { baseUrl } from "./api-common";
+import { baseUrl, validateResponse } from "./api-common";
 
 /**
  * Gets data for a Member given their ID.
@@ -52,11 +52,14 @@ export default async function getMemberData(id: idT): Promise<MemberT> {
 }
 
 /**
- * Method that gets all members from the database, should be deprecated?
+ * Method that gets all members from the database
+ * This is quite inefficient at the moment, it is used for MultiSelectAutocomplete
+ * The component should be improved with lazy loading
  * @returns A map of all members with their database id as key, and the whole member object as value
  */
 export async function getMembers(): Promise<MemberT[]> {
   const response = await fetch(baseUrl + "/members"); //by default a get request
+  await validateResponse(response);
   //disable reason: idk how to fix this and still get the correct type cause typescript
   // i have to look into this
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

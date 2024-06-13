@@ -88,7 +88,9 @@ export function MultiSelectAutocomplete<
       setOptions(new Map(opts.map((o: Type) => [o.id, o])));
     };
 
-    getOptions().catch(() => console.log("error fetching data")); // TODO maybe make it refetch the data if it fails
+    // TODO i have the ErrorModal component, should I make it return that instead of a simple alert?
+    // it would require an extra state
+    getOptions().catch((e) => alert(e));
   }, [optionsGetter]);
 
   /**

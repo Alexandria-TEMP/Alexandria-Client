@@ -8,16 +8,7 @@ import { MultiSelectAutocomplete } from "../components/form/multi-select-autocom
 import { SingleSelectAutocomplete } from "../components/form/single-select-autocomplete";
 import UploadContentCard from "../components/form/upload-content-card";
 import { getMemberName, getFieldName } from "@/lib/get-format";
-import {
-  Card,
-  Input,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
-} from "@nextui-org/react";
+import { Card, Input, useDisclosure } from "@nextui-org/react";
 import { FormType, submitHandler } from "./lib/submit";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import {
@@ -29,6 +20,7 @@ import { MemberT, idT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
 import { useState } from "react";
 import GenericLoadingPage from "@/loading";
+import ErrorModal from "@/components/form/error-modal";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
 // TODO
@@ -76,24 +68,10 @@ export default function NewPost() {
 
   return (
     <>
-      {/* error alert, only visible if there is an error */}
-      <Modal isOpen={errorModal.isOpen} onOpenChange={errorModal.onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader>Error</ModalHeader>
-              <ModalBody>
-                There was an error when submitting your post. Please try again.
-              </ModalBody>
-              <ModalFooter>
-                <Button color="primary" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      <ErrorModal
+        modal={errorModal}
+        errorMsg="There was an error when submitting your post. Please try again."
+      />
       <form
         // disable reason: this is the intended usage for handleSubmit
         // eslint-disable-next-line @typescript-eslint/no-misused-promises

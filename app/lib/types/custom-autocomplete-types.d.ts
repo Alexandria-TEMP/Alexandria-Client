@@ -17,6 +17,7 @@ import { idT } from "./api-types";
  *              see NextUI page for more rules that can be added: https://www.react-hook-form.com/api/useform/register/#options
  *              optional, because there might be no rules
  * @param optionsGetter funciton that handles providing the options; should be async function that fetches possible values from the server
+ *                      although for single select the values are currently not fetched from server, they are hardcoded, so they could also be just a normal function, not async
  */
 export type CustomAutocompletePropsT<Type, FormType extends FieldValues> = {
   label: React.ReactNode;
@@ -35,7 +36,7 @@ export type CustomAutocompletePropsT<Type, FormType extends FieldValues> = {
     // can be extended with multiple types
     validate?: (value: string[]) => boolean | string;
   };
-  optionsGetter: () => Promise<Type[]>;
+  optionsGetter: () => Promise<Type[]> | Type[];
 };
 
 /**
