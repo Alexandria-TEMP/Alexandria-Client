@@ -3,7 +3,7 @@
 import { CardHeader, Switch } from "@nextui-org/react";
 import HeaderSubtle from "@/components/common/header-subtle";
 import { getBranchData } from "@/lib/api-calls/branch-api";
-import { capitalizeFirstLetter } from "@/lib/string-utils";
+import { capitalizeFirstLetter as cap } from "@/lib/string-utils";
 import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
 import { getStandardReviewStatus } from "@/lib/get-format";
 import { BranchT, idT } from "@/lib/types/api-types";
@@ -60,9 +60,10 @@ export default function BranchCardHeader({
     // Rejected -> Fork, Contribute
     // Open     -> Fork, Review
     fork: `/todo`,
-    contribute: status == "rejected" ? `/propose-changes/${postId}` : undefined,
+    contribute:
+      status?.short == "rejected" ? `/propose-changes/${postId}` : undefined,
     review:
-      status == "open"
+      status?.short == "open"
         ? `/post/${postId}/version/${branchId}/review`
         : undefined,
   };
@@ -89,17 +90,17 @@ export default function BranchCardHeader({
 
         {/* Metadata */}
         <ChipWithTitle title="Completion">
-          {capitalizeFirstLetter(data.updatedCompletionStatus)}
+          {cap(data.updatedCompletionStatus)}
         </ChipWithTitle>
 
         {status && (
           <ChipWithTitle title="Status">
-            {capitalizeFirstLetter(status)}
+            {cap(status.descriptive)}
           </ChipWithTitle>
         )}
 
         <div className="flex-col">
-          {status === "open" ? (
+          {status?.short === "open" ? (
             <>
               <HeaderSubtle>Created on</HeaderSubtle>
               <HeaderSubtle>
@@ -119,7 +120,7 @@ export default function BranchCardHeader({
                 </HeaderSubtle>
                 <HeaderSubtle>
                   {/* TODO */}
-                  {`${capitalizeFirstLetter(status)} on ${0}`}
+                  {`${cap(status.descriptive)} on ${0}`}
                   {/* {`${capitalizeFirstLetter(status)} on ${data.updatedAt}`} */}
                 </HeaderSubtle>
               </>

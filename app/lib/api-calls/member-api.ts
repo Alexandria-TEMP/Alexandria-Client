@@ -18,7 +18,7 @@ export default async function getMemberData(id: idT): Promise<MemberT> {
       firstName: "Marie",
       institution: "TU Delft",
       lastName: "Curie",
-      scientificFields: [],
+      scientificFieldTagIDs: [],
     };
   } else if (id == 2) {
     return {
@@ -27,7 +27,7 @@ export default async function getMemberData(id: idT): Promise<MemberT> {
       firstName: "Nicolaus",
       institution: "TU Delft",
       lastName: "Copernicus",
-      scientificFields: [],
+      scientificFieldTagIDs: [],
     };
   } else if (id == 3) {
     return {
@@ -36,7 +36,7 @@ export default async function getMemberData(id: idT): Promise<MemberT> {
       firstName: "Metal Bar",
       institution: "TU Delft",
       lastName: "Clanging",
-      scientificFields: [],
+      scientificFieldTagIDs: [],
     };
   } else {
     return {
@@ -45,7 +45,7 @@ export default async function getMemberData(id: idT): Promise<MemberT> {
       firstName: "Michael",
       institution: "TU Delft",
       lastName: "Yippie",
-      scientificFields: [],
+      scientificFieldTagIDs: [],
     };
   }
 }

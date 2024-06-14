@@ -26,7 +26,7 @@ exports[`PostSidebar matches snapshot 1`] = `
         <span
           class="flex-1 text-inherit font-normal px-2"
         >
-          Mathematics
+          Computer Science
         </span>
       </div>
       <div
@@ -35,28 +35,10 @@ exports[`PostSidebar matches snapshot 1`] = `
         <span
           class="flex-1 text-inherit font-normal px-2"
         >
-          Theory of computation
+          Computer Science
         </span>
       </div>
     </div>
-    <div
-      class="h-4"
-    />
-    <h3>
-      Authors
-    </h3>
-    <p>
-      List of members
-    </p>
-    <div
-      class="h-4"
-    />
-    <h3>
-      Collaborators
-    </h3>
-    <p>
-      List of members
-    </p>
     <div
       class="h-4"
     />

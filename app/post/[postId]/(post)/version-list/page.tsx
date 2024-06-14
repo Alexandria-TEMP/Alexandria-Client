@@ -4,6 +4,8 @@ import { idStringToIDT } from "@/lib/string-utils";
 import PostCardHeader from "../../components/post-parts/post-card-header";
 import BranchTabs from "../../(post)/version-list/components/branch-tabs";
 import BranchList from "../../(post)/version-list/components/branch-list";
+import { pathIDToPostUnionID } from "@/lib/id-parser";
+import { idT } from "@/lib/types/api-types";
 
 /**
  * Page that shows all branches of a Post.
@@ -18,16 +20,20 @@ export default async function PostBranchList({
   params: { postId: string };
 }) {
   const branches = await getPostBranches(idStringToIDT(params.postId));
-  const id = idStringToIDT(params.postId);
+  const postUnionID = pathIDToPostUnionID(params.postId);
   return (
     <div>
       <Card className="pb-4 mb-12">
-        <PostCardHeader id={idStringToIDT(params.postId)} hideContribute />
+        <PostCardHeader
+          id={postUnionID.id as idT}
+          isProject={postUnionID.isProject}
+          hideContribute
+        />
       </Card>
       <BranchTabs
-        historyList={<BranchList ids={branches.accepted} postId={id} />}
-        openList={<BranchList grid ids={branches.open} postId={id} />}
-        rejectedList={<BranchList grid ids={branches.rejected} postId={id} />}
+        historyList={<BranchList ids={branches.accepted} postId={0} />}
+        openList={<BranchList grid ids={branches.open} postId={0} />}
+        rejectedList={<BranchList grid ids={branches.rejected} postId={0} />}
       />
     </div>
   );

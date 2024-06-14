@@ -9,10 +9,8 @@ import { IdProp } from "@/lib/types/react-props/id-prop";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { capitalizeFirstLetter } from "@/lib/string-utils";
 import BranchCardSkeleton from "./branch-card-skeleton";
 import { BranchT, idT } from "@/lib/types/api-types";
-import { getStandardReviewStatus } from "@/lib/get-format";
 import ReviewChips from "@/components/common/review-chips";
 
 /**
@@ -64,7 +62,7 @@ export default function BranchCard({
     <p className="text-sm">
       {data.branchOverallReviewStatus != "open for review" &&
         // TODO
-        `${capitalizeFirstLetter(getStandardReviewStatus(data.branchOverallReviewStatus))} on ${0}`}
+        `a`}
       {/* `${capitalizeFirstLetter(getStandardReviewStatus(data.branchOverallReviewStatus))} on ${data.updatedAt}`} */}
     </p>
   );

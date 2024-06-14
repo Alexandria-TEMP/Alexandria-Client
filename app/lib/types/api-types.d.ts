@@ -106,7 +106,7 @@ export type ProjectPostT = EntityT & {
 };
 
 export type ScientificFieldTagT = EntityT & {
-  parentID: idT;
+  parentID?: idT;
   scientificField: string;
   subtagIDs: idT[];
 };

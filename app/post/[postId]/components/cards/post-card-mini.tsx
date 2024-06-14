@@ -1,11 +1,11 @@
 "use client";
 
-import fetchPostData from "@/lib/api-calls/post-api";
+// import fetchPostData from "@/lib/api-calls/post-api";
 import { Card, CardBody, CardFooter, Chip, Skeleton } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IdProp } from "@/lib/types/react-props/id-prop";
-import { PostT, idT } from "@/lib/types/api-types";
+import { PostT /*, idT*/ } from "@/lib/types/api-types";
 
 /**
  * Mini card that represents a post. Clicking it redirects to the post page.
@@ -14,20 +14,21 @@ import { PostT, idT } from "@/lib/types/api-types";
 export default function PostCardMini({ id }: IdProp) {
   // TODO project post vs post
   const router = useRouter();
-  const [data, setData] = useState<PostT | undefined>(undefined); // TODO use the proper type
-  const [isLoaded, setLoaded] = useState(false);
+  const [data /*, setData*/] = useState<PostT | undefined>(undefined); // TODO use the proper type
+  const [isLoaded /*, setLoaded*/] = useState(false);
 
   useEffect(() => {
-    fetchPostData(id as idT)
-      .then((data) => {
-        setData(data);
-      })
-      .catch(() => {
-        setData(undefined);
-      })
-      .finally(() => {
-        setLoaded(true);
-      });
+    // TODO convert to custom hook
+    // fetchPostData(id as idT)
+    //   .then((data) => {
+    //     setData(data);
+    //   })
+    //   .catch(() => {
+    //     setData(undefined);
+    //   })
+    //   .finally(() => {
+    //     setLoaded(true);
+    //   });
   }, [id]);
 
   return (
