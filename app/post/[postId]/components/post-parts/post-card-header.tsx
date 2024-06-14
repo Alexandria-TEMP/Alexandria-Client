@@ -2,11 +2,11 @@ import { CardHeader } from "@nextui-org/react";
 import HeaderSubtle from "@/components/common/header-subtle";
 import LinkGroup from "../buttons/link-group";
 import ContributeDropdown from "../buttons/contribute-dropdown";
-import getPostData from "@/lib/api-calls/post-api";
+import fetchPostData from "@/lib/api-calls/post-api";
 import ChipWithTitle from "@/components/common/chip-with-title";
-import { PostT, idT } from "@/lib/types/api-types";
+import { idT } from "@/lib/types/api-types";
 import DownloadButton from "../buttons/download-button";
-import { IdProp } from "@/lib/types/react-props/id-prop";
+import { idPostUnionT } from "@/lib/types/post-union";
 
 /**
  * Header for post contents card. Uses CardHeader, so it must be child of a Card.
@@ -16,11 +16,14 @@ import { IdProp } from "@/lib/types/react-props/id-prop";
  */
 export default async function PostCardHeader({
   id,
+  isProject,
   hideContribute,
-}: IdProp & {
-  hideContribute?: boolean;
-}) {
-  const data: PostT = await getPostData(id as idT);
+}: Readonly<
+  idPostUnionT & {
+    hideContribute?: boolean;
+  }
+>) {
+  const data = await fetchPostData({ id: id as idT, isProject });
 
   const contributeRoutes = {
     // TODO peer reviewed/rejected -> disable review & open -> disable contribute
@@ -29,11 +32,13 @@ export default async function PostCardHeader({
     review: `/todo`,
   };
 
+  // TODO disable versions for non project post
+
   return (
     <>
       {/* Title */}
       <CardHeader>
-        <h1 className="font-semibold">{data.title}</h1>
+        <h1 className="font-semibold">{data.post.title}</h1>
       </CardHeader>
 
       <CardHeader className="-mt-4 flex gap-8">
@@ -57,7 +62,7 @@ export default async function PostCardHeader({
 
         {/* Metadata */}
 
-        <ChipWithTitle title="Post type">{data.postType}</ChipWithTitle>
+        <ChipWithTitle title="Post type">{data.post.postType}</ChipWithTitle>
         <ChipWithTitle title="Status">
           {/* TODO */}
           {0}

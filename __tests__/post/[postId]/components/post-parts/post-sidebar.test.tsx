@@ -1,4 +1,4 @@
-import getPostData from "@/lib/api-calls/post-api";
+import fetchPostData from "@/lib/api-calls/post-api";
 import PostSidebar from "@/post/[postId]/components/post-parts/post-sidebar";
 import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";
@@ -9,7 +9,7 @@ jest.mock("@/lib/api-calls/post-api");
 jest.mock("@/post/[postId]/components/cards/author-card-list");
 
 describe("PostSidebar", () => {
-  (getPostData as jest.Mock).mockResolvedValue(dummyPost);
+  (fetchPostData as jest.Mock).mockResolvedValue(dummyPost);
   (AuthorCardList as jest.Mock).mockReturnValue(<p>List of members</p>);
 
   it("matches snapshot", async () => {

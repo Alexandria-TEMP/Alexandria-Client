@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// TODO remove disable above once functions are properly implemented
-
 import useSWR, { SWRResponse } from "swr";
 import { parseFileTree } from "../file-tree-handler";
 import { FileTreeT } from "../types/file-tree";

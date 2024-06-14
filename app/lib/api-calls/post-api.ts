@@ -1,21 +1,30 @@
-import { PostT, idT } from "../types/api-types";
+import { PostT, ProjectPostT, idT } from "../types/api-types";
+import { PostUnionT, idPostUnionT } from "../types/post-union";
+import { baseUrl, validateResponse } from "./api-common";
 
 /**
- * Gets data for a Post given their ID.
- * @async
- * @param id Post ID
+ * Fetches post or project post data in a unified object
+ * @param id post or project post id
+ * @returns post and optionally project post data
  */
-export default async function getPostData(id: idT): Promise<PostT> {
-  // TODO
-  await new Promise((resolve) => setTimeout(resolve, 100));
+export default async function fetchPostData(
+  id: idPostUnionT,
+): Promise<PostUnionT> {
+  let projectPost = undefined;
 
-  return {
-    title: "Post title",
-    discussionIDs: [],
-    renderStatus: "failure",
-    collaboratorIDs: [1, 2], /// i think these should be different, but branch and post are strutured differently so we need both
-    id: id,
-    postType: "reflection",
-    scientificFields: ["1", "2", "3"],
-  };
+  if (id.isProject) {
+    const projectPostResponse = await fetch(
+      `${baseUrl}/project-posts/${id.id}`,
+    );
+    await validateResponse(projectPostResponse);
+    projectPost = (await projectPostResponse.json()) as ProjectPostT;
+  }
+
+  const postId = (id.isProject ? projectPost?.postID : id.id) as idT;
+  const postResponse = await fetch(`${baseUrl}/posts/${postId}`);
+  await validateResponse(postResponse);
+
+  const post = (await postResponse.json()) as PostT;
+
+  return { post, projectPost };
 }

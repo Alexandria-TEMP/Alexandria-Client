@@ -1,6 +1,6 @@
 "use client";
 
-import getPostData from "@/lib/api-calls/post-api";
+import fetchPostData from "@/lib/api-calls/post-api";
 import { Card, CardBody, CardFooter, Chip, Skeleton } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -18,7 +18,7 @@ export default function PostCardMini({ id }: IdProp) {
   const [isLoaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    getPostData(id as idT)
+    fetchPostData(id as idT)
       .then((data) => {
         setData(data);
       })

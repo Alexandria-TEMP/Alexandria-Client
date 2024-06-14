@@ -1,7 +1,7 @@
 import PostCardHeader from "@/post/[postId]/components/post-parts/post-card-header";
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import getPostData from "@/lib/api-calls/post-api";
+import fetchPostData from "@/lib/api-calls/post-api";
 import { dummyPost } from "~/__tests__/__utils__/dummys";
 import { Card } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
@@ -14,7 +14,7 @@ jest.mock("next/navigation");
 
 describe("PostCardHeader", () => {
   (useRouter as jest.Mock).mockReturnValue(createMockRouter());
-  (getPostData as jest.Mock).mockResolvedValue(dummyPost);
+  (fetchPostData as jest.Mock).mockResolvedValue(dummyPost);
 
   it("renders title", async () => {
     render(<Card>{await PostCardHeader({ id: dummyPost.id })}</Card>);

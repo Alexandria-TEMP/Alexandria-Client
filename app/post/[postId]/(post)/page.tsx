@@ -2,7 +2,8 @@ import PostCardHeader from "../components/post-parts/post-card-header";
 import DiscussionSection from "../components/discussions/discussion-section";
 import { Card, CardBody } from "@nextui-org/react";
 import RenderedQuarto from "../components/render/rendered-quarto";
-import { parseId } from "@/lib/string-utils";
+import { pathIDToPostUnionID } from "@/lib/id-parser";
+import { idT } from "@/lib/types/api-types";
 
 /**
  * Page that shows contents of a Post.
@@ -10,12 +11,17 @@ import { parseId } from "@/lib/string-utils";
  * Read more: https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
  */
 export default function Post({ params }: { params: { postId: string } }) {
+  const postID = pathIDToPostUnionID(params.postId);
   return (
     <div className="flex flex-col space-y-4 w-full">
       <Card>
-        <PostCardHeader id={parseId(params.postId)} />
+        <PostCardHeader
+          id={postID.id as idT}
+          isProject={postID.isProject}
+          hideContribute={!postID.isProject}
+        />
         <CardBody>
-          <RenderedQuarto id={parseId(params.postId)} container="post" />
+          <RenderedQuarto id={postID.id as idT} container="post" />
         </CardBody>
       </Card>
       <DiscussionSection id={1} /> {/* TODO get proper ID */}
