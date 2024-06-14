@@ -74,7 +74,7 @@ export type DiscussionT = EntityT & {
 };
 
 export type MemberT = EntityT & {
-  scientificFields: string[]; // TODO change to IDs
+  scientificFieldTagIDs: idT[];
   email: string;
   firstName: string;
   institution: string;
@@ -92,7 +92,7 @@ export type PostT = EntityT & {
   discussionIDs: idT[];
   postType: PostTypeT;
   renderStatus: RenderStatusT;
-  scientificFields: string[]; // TODO change to IDs
+  scientificFieldTagIDs: idT[];
   title: string;
 };
 
@@ -105,7 +105,8 @@ export type ProjectPostT = EntityT & {
   projectFeedbackPreference: ProjectFeedbackPreferenceT;
 };
 
-export type ScientificFieldT = EntityT & {
-  // TODO
-  label: string;
+export type ScientificFieldTagT = EntityT & {
+  parentID: idT;
+  scientificField: string;
+  subtagIDs: idT[];
 };

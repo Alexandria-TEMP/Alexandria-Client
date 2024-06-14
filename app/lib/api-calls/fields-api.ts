@@ -1,6 +1,8 @@
 // methods in this file will be heavily changed once integration with back end it done
 // just retrieve some dummy data for now
 
+import { ScientificFieldTagT, idT } from "../types/api-types";
+
 /**
  * TODO jsdoc when properly implemented
  */
@@ -31,4 +33,16 @@ export async function getFields() {
   ];
 
   return data;
+}
+
+/**
+ * TODO
+ */
+// eslint-disable-next-line @typescript-eslint/require-await
+export async function fetchScientificFields(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  ids: idT[],
+): Promise<ScientificFieldTagT[]> {
+  // TODO
+  return [];
 }

@@ -3,7 +3,7 @@ import {
   PostT,
   BranchReviewT,
   MemberT,
-  ScientificFieldT,
+  ScientificFieldTagT,
   DiscussionContainerT,
 } from "@/lib/types/api-types";
 import { FileTreeT } from "@/lib/types/file-tree";
@@ -71,9 +71,9 @@ export const dummyPost: PostT = {
 };
 
 // TODO improve
-export const dummyScientificField: ScientificFieldT = {
+export const dummyScientificField: ScientificFieldTagT = {
   id: 1,
-  label: "Computer Science",
+  scientificField: "Computer Science",
 };
 
 // TODO improve
