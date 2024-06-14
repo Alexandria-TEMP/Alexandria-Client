@@ -21,6 +21,7 @@ import { maxTitle } from "@/lib/validation-rules";
 import { useState } from "react";
 import GenericLoadingPage from "@/loading";
 import ErrorModal from "@/components/form/error-modal";
+import { useRouter } from "next/navigation";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
 const loggedIn: MemberT = {
@@ -38,6 +39,9 @@ const loggedIn: MemberT = {
  * @returns the post creation form
  */
 export default function NewPost() {
+  /* router for redirect on (successful) submit */
+  const router = useRouter();
+
   /* create the form state */
   const { handleSubmit, formState, control, trigger, getValues, watch } =
     useForm<FormType>({
@@ -65,7 +69,7 @@ export default function NewPost() {
 
   /* submit function that also passes the loading and error states */
   const onSubmit: SubmitHandler<FormType> = (data: FormType) =>
-    submitHandler(data, setIsLoading, errorModal.onOpen);
+    submitHandler(data, setIsLoading, errorModal.onOpen, router);
 
   /* if the form is being submitted, return the loading page, i could make something fancier in the future */
   if (isLoading) return <GenericLoadingPage />;

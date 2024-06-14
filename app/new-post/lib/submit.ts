@@ -8,6 +8,7 @@ import {
   ProjectPostT,
   idT,
 } from "@/lib/types/api-types";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 /**
  * Type of all form fields
@@ -30,11 +31,13 @@ export type FormType = {
  * @param data form data, as per react-hook-form
  * @param setIsLoading setter for a boolean, representing if the form is submitting
  * @param onError on error passed down from an ErrorModal component, used to open the error modal
+ * @param NextRouter for redirecting on successful submit
  */
 export const submitHandler = async (
   data: FormType,
   setIsLoading: (v: boolean) => void,
   onError: () => void,
+  router: AppRouterInstance,
 ) => {
   try {
     setIsLoading(true);
@@ -60,6 +63,7 @@ export const submitHandler = async (
       );
       // TODO the fact that i kinda have to blindly trust that there is a branch and that the first one is the corret one is kindaaaaa not cool
       await postBranchesIdUpload(newProjectPost.openBranchIDs[0], data.file);
+      router.push("/post/" + newProjectPost.postID); // TODO project post id or post id?
       // } catch (e) {
       // TODO delete post if error uploading files, without that this try catch block is not necessary
       // setIsLoading(false);
@@ -69,6 +73,7 @@ export const submitHandler = async (
       // try {
       const newPost = await postPosts(postCreationForm);
       await postPostsIdUpload(newPost.id, data.file);
+      router.push("/post/" + newPost.id);
       // } catch (e) {
       // TODO delete post if error uploading files, without that this try catch block is not necessary
       // setIsLoading(false);
