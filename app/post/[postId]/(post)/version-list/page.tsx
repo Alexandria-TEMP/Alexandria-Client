@@ -1,6 +1,6 @@
 import { Card } from "@nextui-org/react";
 import { getPostBranches } from "@/lib/api-calls/branch-api";
-import { parseId } from "@/lib/string-utils";
+import { idStringToIDT } from "@/lib/string-utils";
 import PostCardHeader from "../../components/post-parts/post-card-header";
 import BranchTabs from "../../(post)/version-list/components/branch-tabs";
 import BranchList from "../../(post)/version-list/components/branch-list";
@@ -17,12 +17,12 @@ export default async function PostBranchList({
 }: {
   params: { postId: string };
 }) {
-  const branches = await getPostBranches(parseId(params.postId));
-  const id = parseId(params.postId);
+  const branches = await getPostBranches(idStringToIDT(params.postId));
+  const id = idStringToIDT(params.postId);
   return (
     <div>
       <Card className="pb-4 mb-12">
-        <PostCardHeader id={parseId(params.postId)} hideContribute />
+        <PostCardHeader id={idStringToIDT(params.postId)} hideContribute />
       </Card>
       <BranchTabs
         historyList={<BranchList ids={branches.accepted} postId={id} />}

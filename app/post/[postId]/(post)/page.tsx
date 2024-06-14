@@ -11,17 +11,17 @@ import { idT } from "@/lib/types/api-types";
  * Read more: https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
  */
 export default function Post({ params }: { params: { postId: string } }) {
-  const postID = pathIDToPostUnionID(params.postId);
+  const postUnionID = pathIDToPostUnionID(params.postId);
   return (
     <div className="flex flex-col space-y-4 w-full">
       <Card>
         <PostCardHeader
-          id={postID.id as idT}
-          isProject={postID.isProject}
-          hideContribute={!postID.isProject}
+          id={postUnionID.id as idT}
+          isProject={postUnionID.isProject}
+          hideContribute={!postUnionID.isProject}
         />
         <CardBody>
-          <RenderedQuarto id={postID.id as idT} container="post" />
+          <RenderedQuarto id={postUnionID.id as idT} container="post" />
         </CardBody>
       </Card>
       <DiscussionSection id={1} /> {/* TODO get proper ID */}

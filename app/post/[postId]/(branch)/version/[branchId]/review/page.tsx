@@ -1,4 +1,4 @@
-import { parseId } from "@/lib/string-utils";
+import { idStringToIDT } from "@/lib/string-utils";
 import PeerReviewInput from "../../../../(branch)/version/[branchId]/components/peer-review/peer-review-input";
 import BranchCard from "../../../../(branch)/version/[branchId]/components/branch-parts/branch-card";
 import { getBranchData } from "@/lib/api-calls/branch-api";
@@ -15,7 +15,7 @@ export default async function BranchReview({
 }) {
   // TODO remove disable
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const data = await getBranchData(parseId(params.branchId));
+  const data = await getBranchData(idStringToIDT(params.branchId));
 
   return (
     <div className="flex flex-col space-y-4 w-full">
@@ -23,8 +23,8 @@ export default async function BranchReview({
       <BranchCard
         newVersionId={0} // TODO {data.newVersionID}
         previousVersionId={0} // TODO {data.newVersionID}
-        postId={parseId(params.postId)}
-        branchId={parseId(params.branchId)}
+        postId={idStringToIDT(params.postId)}
+        branchId={idStringToIDT(params.branchId)}
         hideContribute
       />
     </div>
