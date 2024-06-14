@@ -23,7 +23,6 @@ import GenericLoadingPage from "@/loading";
 import ErrorModal from "@/components/form/error-modal";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
-// TODO
 const loggedIn: MemberT = {
   id: 1,
   email: "kopernicus@tudelft.nl",
@@ -46,7 +45,7 @@ export default function NewPost() {
         anonymous: false,
         authorMemberIDs: [loggedIn.id],
         scientificFieldTagIDs: [] as idT[],
-        postType: "project",
+        postType: "question",
         projectCompletionStatus: "idea",
         projectFeedbackPreference: "discussion feedback",
         file: null,

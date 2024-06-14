@@ -111,3 +111,19 @@ export type ScientificFieldT = EntityT & {
   scientificField: string;
   subtagIDs: idT[];
 };
+
+// Forms
+
+export type PostCreationFormT = {
+  anonymous: boolean;
+  authorMemberIDs: idT[];
+  postType: PostTypeT;
+  scientificFieldTags: idT[];
+  title: string;
+};
+
+export type ProjectPostCreationFormT = {
+  postCreationForm: PostCreationFormT;
+  projectCompletionStatus: ProjectCompletionStatusT;
+  projectFeedbackPreference: ProjectFeedbackPreferenceT;
+};

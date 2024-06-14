@@ -1,4 +1,6 @@
 import { BranchT, idT } from "../types/api-types";
+import { baseUrl } from "./api-common";
+import { validateResponse } from "./api-common";
 
 /**
  * Gets data for a branch given their ID.
@@ -98,4 +100,22 @@ export async function getBranchReviewStatuses(id: idT) {
   // if (id == 1) return ["accept", "reject", "accept"];
   // else if (id == 2) return ["accept", "open", "open"];
   // else return ["accept", "accept", "accept"];
+}
+
+/**
+ * Method that sends a POST request to the server to upload a file to an existing branch
+ * @param branchId the branch we want to upload the file to
+ * @param file the file we want to upload
+ * @returns whether the request retuned a 200OK response
+ */
+export async function postBranchesIdUpload(branchId: idT, file: File) {
+  const fileData = new FormData();
+  fileData.append("file", file);
+
+  const response = await fetch(baseUrl + "/branches/" + branchId + "/upload", {
+    method: "POST",
+    body: fileData,
+  });
+  await validateResponse(response);
+  return response.ok;
 }

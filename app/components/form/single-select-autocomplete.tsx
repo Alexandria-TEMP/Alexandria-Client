@@ -61,8 +61,8 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
   /** idk why this doesnt work cause the value does load correctly but the default value doesnt get set */
   useEffect(() => {
     setDefaultKey(options.indexOf(field.value));
-    field.onChange(field.value);
-    field.onBlur();
+    // field.onChange(field.value);
+    // field.onBlur();
     // alert("setting default key to " + options.indexOf(field.value));
   }, [field, options]);
 

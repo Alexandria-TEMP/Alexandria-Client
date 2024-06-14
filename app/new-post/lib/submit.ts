@@ -1,9 +1,11 @@
-import { baseUrl, validateResponse } from "@/lib/api-calls/api-common";
+import { postBranchesIdUpload } from "@/lib/api-calls/branch-api";
+import { postPosts, postPostsIdUpload } from "@/lib/api-calls/post-api";
+import { postProjectPost } from "@/lib/api-calls/project-post-api";
 import {
-  PostT,
   PostTypeT,
   ProjectCompletionStatusT,
   ProjectFeedbackPreferenceT,
+  ProjectPostT,
   idT,
 } from "@/lib/types/api-types";
 
@@ -18,66 +20,11 @@ export type FormType = {
   file: File | null;
 };
 
-type PostCreationFormT = {
-  anonymous: boolean;
-  authorMemberIDs: idT[];
-  postType: PostTypeT;
-  scientificFieldTags: idT[];
-  title: string;
-};
-
-type ProjectPostCreationFormT = {
-  postCreationForm: PostCreationFormT;
-  projectCompletionStatus: ProjectCompletionStatusT;
-  projectFeedbackPreference: ProjectFeedbackPreferenceT;
-};
-
 /**
- * Method that sends a POST request to the server to create a new post, currently only metadata
- * @param postCreationForm object containing post creation form data
- */
-async function postPost(postCreationForm: PostCreationFormT) {
-  const jsonPost = JSON.stringify(postCreationForm);
-  const response = await fetch(baseUrl + "/posts", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: jsonPost,
-  });
-  await validateResponse(response);
-  //disable reason: idk how to fix this and still get the correct type cause typescript
-  // i have to look into this
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const newPost: PostT = await response.json();
-  alert("New post created: " + newPost.id);
-}
-
-/**
- * Method that sends a POST request to the server to create a new project post, currently only metadata
- * @param postCreationForm object containing project post creation form data
- */
-async function postProjectPost(
-  projectPostCreationForm: ProjectPostCreationFormT,
-) {
-  const jsonProjectPost = JSON.stringify(projectPostCreationForm);
-  const response = await fetch(baseUrl + "/project-posts", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: jsonProjectPost,
-  });
-  await validateResponse(response);
-  //disable reason: idk how to fix this and still get the correct type cause typescript
-  // i have to look into this
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const newProjectPost: PostT = await response.json();
-  alert("New project post created: " + newProjectPost.id);
-}
-
-/**
- * TODO jsdoc when properly implemented
+ * Method that constructs form creation objects, and calls the correct API methods for creating posts and project posts
+ * @param data form data, as per react-hook-form
+ * @param setIsLoading setter for a boolean, representing if the form is submitting
+ * @param onError on error passed down from an ErrorModal component, used to open the error modal
  */
 export const submitHandler = async (
   data: FormType,
@@ -86,6 +33,8 @@ export const submitHandler = async (
 ) => {
   try {
     setIsLoading(true);
+    if (!data.file) throw new Error("No file provided.");
+
     const postCreationForm = {
       anonymous: data.anonymous,
       authorMemberIDs: data.authorMemberIDs,
@@ -99,13 +48,26 @@ export const submitHandler = async (
       postCreationForm: postCreationForm,
     };
 
-    const fileData = new FormData();
-    if (!data.file) throw new Error("Please submit a file");
-    fileData.append("file", data.file);
-
     if (data.postType == "project")
-      await postProjectPost(projectPostCreationForm);
-    else await postPost(postCreationForm);
+      try {
+        const newProjectPost: ProjectPostT = await postProjectPost(
+          projectPostCreationForm,
+        );
+        // TODO the fact that i kinda have to blindly trust that there is a branch and that the first one is the corret one is kindaaaaa not cool
+        await postBranchesIdUpload(newProjectPost.openBranchIDs[0], data.file);
+      } catch (e) {
+        // TODO delete post if error uploading files
+        alert(e);
+      }
+    else {
+      try {
+        const newPost = await postPosts(postCreationForm);
+        await postPostsIdUpload(newPost.id, data.file);
+      } catch (e) {
+        // TODO delete post if error uploading files
+        alert(e);
+      }
+    }
 
     setIsLoading(false);
   } catch (error) {
