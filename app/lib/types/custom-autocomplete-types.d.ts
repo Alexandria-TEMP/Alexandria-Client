@@ -1,5 +1,6 @@
 import { FieldValues, Control, Path, UseFormTrigger } from "react-hook-form";
 import { idT } from "./api-types";
+import { SWRResponse } from "swr";
 
 /**
  * Possible props for the custom Multi and Single select Autcomplete components
@@ -16,10 +17,8 @@ import { idT } from "./api-types";
  * @param rules client side validation rules, this component only accepts "required" and "validate" rules for now
  *              see NextUI page for more rules that can be added: https://www.react-hook-form.com/api/useform/register/#options
  *              optional, because there might be no rules
- * @param optionsGetter funciton that handles providing the options; should be async function that fetches possible values from the server
- *                      although for single select the values are currently not fetched from server, they are hardcoded, so they could also be just a normal function, not async
  */
-export type CustomAutocompletePropsT<Type, FormType extends FieldValues> = {
+export type CustomAutocompletePropsT<FormType extends FieldValues> = {
   label: React.ReactNode;
   description?: string;
   placeholder?: string;
@@ -36,16 +35,19 @@ export type CustomAutocompletePropsT<Type, FormType extends FieldValues> = {
     // can be extended with multiple types
     validate?: (value: string[]) => boolean | string;
   };
-  optionsGetter: () => Promise<Type[]> | Type[];
 };
 
 /**
  * Same as the props for CustomeAutocompelteProps, except the SingleSelectAutocomplete component
  * is specifically designed to work with an array of strings as the options
  * see SingleSelectAutocomplete for more info
+ * @param optionsGetter funciton that handles providing the options;  for single select the values are currently not fetched from server,
+ *                      they are hardcoded, so they could also be just a normal function, not async
  */
 export type SingleSelectAutocompleteT<FormType extends FieldValues> =
-  CustomAutocompletePropsT<string, FormType>;
+  CustomAutocompletePropsT<FormType> & {
+    optionsGetter: () => string[];
+  };
 
 /**
  * Type specifically made for the MultiSelectAutocomplete component
@@ -61,17 +63,19 @@ export type SingleSelectAutocompleteT<FormType extends FieldValues> =
  * @param optionsGetter funciton that fetches the list of items in the dropdown from the server, return and array of the items (these need to have ids)
  * @param nonRemovables a list of the id's of options that cannot be removed from the list of selected items
  * @param nonRemoveReason the reason why an item in non removables cannot be removed
+ * @param optionsHook SWR hook funciton that handles providing the options, loading, and potential error states
  */
 export type MultiSelectAutocompleteT<
   Type extends { id: idT },
   FormType extends FieldValues,
-> = CustomAutocompletePropsT<Type, FormType> & {
+> = CustomAutocompletePropsT<FormType> & {
   trigger?: UseFormTrigger<FormType>;
   disableFieldName?: Path<FormType>;
   disableMessage?: string;
   getItemLabel: (i: Type | undefined) => string;
   nonRemovables?: idT[];
   nonRemoveReason?: string;
+  optionsHook: () => SWRResponse<Type[], Error>;
 };
 
 /**

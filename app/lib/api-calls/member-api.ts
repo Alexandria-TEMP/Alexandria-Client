@@ -1,6 +1,7 @@
 // methods in this file will be heavily changed once integration with back end it done
 // just retrieve some dummy data for now
 
+import useSWR, { SWRResponse } from "swr";
 import { MemberT, idT } from "../types/api-types";
 import { baseUrl, validateResponse } from "./api-common";
 
@@ -52,17 +53,20 @@ export default async function getMemberData(id: idT): Promise<MemberT> {
 }
 
 /**
- * Method that gets all members from the database
- * This is quite inefficient at the moment, it is used for MultiSelectAutocomplete
- * The component should be improved with lazy loading
- * @returns A map of all members with their database id as key, and the whole member object as value
+ * Hook that fetches all members from the database, using SWR for caching, loading and error states
+ * Fetching all members from the database sounds like a very bad idea, but we would need some kind of lazy loading for MultiSelectAutocomplete otherwise
+ * that is currently in todo
+ * NOTE: currently the endpoint actually only returns id, first and last names as that is all that is needed
+ * @returns the member objects as array, as well as other SWR states (loading, error)
  */
-export async function getMembers(): Promise<MemberT[]> {
-  const response = await fetch(baseUrl + "/members"); //by default a get request
-  await validateResponse(response);
-  //disable reason: idk how to fix this and still get the correct type cause typescript
-  // i have to look into this
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const members: MemberT[] = await response.json();
-  return members;
+export function useFetchMembers(): SWRResponse<MemberT[], Error> {
+  return useSWR(baseUrl + "/members", async (...args) => {
+    const response = await fetch(...args); //by default a get request
+    await validateResponse(response);
+    //disable reason: idk how to fix this and still get the correct type cause typescript
+    // i have to look into this
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const members: MemberT[] = await response.json();
+    return members;
+  });
 }

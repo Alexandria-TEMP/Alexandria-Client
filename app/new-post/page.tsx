@@ -2,8 +2,8 @@
 
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
-import { getMembers } from "../lib/api-calls/member-api";
-import { getScientificFields } from "../lib/api-calls/fields-api";
+import { useFetchMembers } from "../lib/api-calls/member-api";
+import { useScientificFields } from "../lib/api-calls/fields-api";
 import { MultiSelectAutocomplete } from "../components/form/multi-select-autocomplete";
 import { SingleSelectAutocomplete } from "../components/form/single-select-autocomplete";
 import UploadContentCard from "../components/form/upload-content-card";
@@ -149,7 +149,7 @@ export default function NewPost() {
                 }}
                 disableFieldName="anonymous"
                 disableMessage="Post this anonymously."
-                optionsGetter={getMembers}
+                optionsHook={useFetchMembers}
                 nonRemovables={[loggedIn.id]}
                 nonRemoveReason="You must be in the author list, or make this post anonymous."
               />
@@ -162,7 +162,7 @@ export default function NewPost() {
                 getItemLabel={getFieldName}
                 control={control}
                 name="scientificFieldTagIDs"
-                optionsGetter={getScientificFields}
+                optionsHook={useScientificFields}
               />
 
               <Divider />

@@ -1,8 +1,8 @@
 import { Input } from "@nextui-org/react";
 import { Controller, FormState, Control } from "react-hook-form";
 import { FormType } from "../lib/submit";
-import { getScientificFields } from "@/lib/api-calls/fields-api";
-// TODO import { getFieldName } from "@/lib/get-format";
+import { useScientificFields } from "@/lib/api-calls/fields-api";
+import { getFieldName } from "@/lib/get-format";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
 import { maxInstitution, maxName } from "@/lib/validation-rules";
 
@@ -106,10 +106,10 @@ export default function PersonalDataCard({
         <MultiSelectAutocomplete
           label={<span className="text-small">Fields of Expertise</span>}
           description="Select the scientific fields that you study."
-          getItemLabel={() => ""} // TODO {getFieldName}
+          getItemLabel={getFieldName}
           control={control}
           name="fields"
-          optionsGetter={getScientificFields}
+          optionsHook={useScientificFields}
         />
       </div>
     </div>

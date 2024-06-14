@@ -7,7 +7,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
@@ -37,7 +37,7 @@ export function MultiSelectAutocomplete<
   disableFieldName,
   disableMessage,
   getItemLabel,
-  optionsGetter,
+  optionsHook,
   nonRemovables = [] as idT[],
   nonRemoveReason,
 }: MultiSelectAutocompleteT<Type, FormType>) {
@@ -73,25 +73,24 @@ export function MultiSelectAutocomplete<
     setItems(fieldMethods.field.value);
   }, [fieldMethods.field.value]);
 
+  const optionsReq = optionsHook();
+
   /**
    * The list of options that the user can select from,
    * This has to be a map because of how this component is structured, though its not mega robust
+   * I am also not using directly optionsReq.data because it is not returned as a map
    */
   const [options, setOptions] = useState<Map<idT, Type>>(new Map());
 
   /**
    * Update the options list when request for them finishes
    */
-  useEffect(() => {
-    const getOptions = async () => {
-      const opts: Type[] = await optionsGetter();
+  useMemo(() => {
+    if (!optionsReq.isLoading && optionsReq.data) {
+      const opts: Type[] = optionsReq.data;
       setOptions(new Map(opts.map((o: Type) => [o.id, o])));
-    };
-
-    // TODO i have the ErrorModal component, should I make it return that instead of a simple alert?
-    // it would require an extra state
-    getOptions().catch((e) => alert(e));
-  }, [optionsGetter]);
+    }
+  }, [optionsReq.data, optionsReq.isLoading]);
 
   /**
    * Method for removing an item from the item list,
@@ -195,11 +194,15 @@ export function MultiSelectAutocomplete<
           style={{ display: "inline-block" }}
           onSelectionChange={(k) => k !== null && k != "" && setNewItem(k)}
           data-testid="select-element-test-id"
-          isInvalid={!!fieldMethods.fieldState.error?.message}
-          errorMessage={fieldMethods.fieldState.error?.message?.toString()}
+          isInvalid={!!fieldMethods.fieldState.error || !!optionsReq.error}
+          errorMessage={
+            optionsReq.error?.message ||
+            fieldMethods.fieldState.error?.message?.toString()
+          }
           onInputChange={(s) => s == "" && setNewItem("")}
           aria-labelledby={name}
           isDisabled={disableFieldMethods && disableFieldMethods.field.value}
+          isLoading={optionsReq.isLoading}
         >
           {(item) => (
             <AutocompleteItem key={item[0]} data-testid="select-item-test-id">

@@ -104,6 +104,7 @@ export async function getBranchReviewStatuses(id: idT) {
 
 /**
  * Method that sends a POST request to the server to upload a file to an existing branch
+ * @async
  * @param branchId the branch we want to upload the file to
  * @param file the file we want to upload
  * @returns whether the request retuned a 200OK response

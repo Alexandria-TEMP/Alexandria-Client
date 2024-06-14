@@ -1,7 +1,7 @@
 "use client";
 
-import { getScientificFields } from "@/lib/api-calls/fields-api";
-import { getMembers } from "@/lib/api-calls/member-api";
+import { useScientificFields } from "@/lib/api-calls/fields-api";
+import { useFetchMembers } from "@/lib/api-calls/member-api";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
 import { SingleSelectAutocomplete } from "@/components/form/single-select-autocomplete";
@@ -189,7 +189,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                 }}
                 disableFieldName="anonymous"
                 disableMessage="Suggest these changes anonymously"
-                optionsGetter={getMembers}
+                optionsHook={useFetchMembers}
                 nonRemovables={[loggedIn.id]}
                 nonRemoveReason="You must be in the contributor list, or make this contribution anonymously."
               />
@@ -242,7 +242,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                       getItemLabel={getFieldName}
                       control={control}
                       name="updatedScientificFields"
-                      optionsGetter={getScientificFields}
+                      optionsHook={useScientificFields}
                     />
 
                     <Divider />

@@ -24,7 +24,9 @@ export default async function getPostData(id: idT): Promise<PostT> {
 
 /**
  * Method that sends a POST request to the server to create a new post, currently only metadata
+ * @async
  * @param postCreationForm object containing post creation form data
+ * @returns the newly created post
  */
 export async function postPosts(
   postCreationForm: PostCreationFormT,
@@ -48,6 +50,7 @@ export async function postPosts(
 /**
  * Method that sends a POST request to the server to upload a new file to an existing (non project) post
  * File technically gets sent as multipart form data
+ * @async
  * @param postId the id of the post we want to upload files to
  * @param file the file object
  * @returns whether the request retuned a 200OK response
