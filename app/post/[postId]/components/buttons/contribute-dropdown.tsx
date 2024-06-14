@@ -17,7 +17,8 @@ export type ContributeOptions = "contribute" | "review" | "fork";
 
 /**
  * Dropdown style button group for post contribution options.
- * @param routes Defines route to redirect to when each button is pressed. If a route is not included, the button is disabled.
+ * @param routes Defines route to redirect to when each button is pressed.
+ *               If a route is not included, the button is disabled.
  */
 export default function ContributeDropdown({
   routes,
@@ -100,22 +101,26 @@ export default function ContributeDropdown({
     return ret;
   }, [selectedOptionKey, options, router]);
 
+  // Main button defined here since it is reused twice
+  const mainButton = (
+    <Button
+      onPress={() => router.push(selectedOption!.href)}
+      isDisabled={selectedOption!.key === "fork"} // Forking is not currently implemented
+    >
+      {selectedOption!.label}
+    </Button>
+  );
+
   // If there's only one option, don't render dropdown
   if (options.length == 1) {
     return (
-      <Tooltip content={selectedOption!.description}>
-        <Button onPress={() => router.push(selectedOption!.href)}>
-          {selectedOption!.label}
-        </Button>
-      </Tooltip>
+      <Tooltip content={selectedOption!.description}>{mainButton}</Tooltip>
     );
   }
 
   return (
     <ButtonGroup>
-      <Button onPress={() => router.push(selectedOption!.href)}>
-        {selectedOption!.label}
-      </Button>
+      {mainButton}
       <Dropdown placement="bottom-end">
         <DropdownTrigger>
           <Button isIconOnly>
