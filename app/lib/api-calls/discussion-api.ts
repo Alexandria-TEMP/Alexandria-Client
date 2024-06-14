@@ -10,7 +10,7 @@ export async function fetchDiscussionContainer(
 ): Promise<DiscussionContainerT> {
   const res = await fetch(`${baseUrl}/discussion-containers/${id}`);
   await validateResponse(res);
-  return res.json() as unknown as DiscussionContainerT;
+  return (await res.json()) as DiscussionContainerT;
 }
 
 /**

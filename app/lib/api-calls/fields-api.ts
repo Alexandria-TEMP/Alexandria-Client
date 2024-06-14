@@ -1,7 +1,5 @@
-// methods in this file will be heavily changed once integration with back end it done
-// just retrieve some dummy data for now
-
 import { ScientificFieldTagT, idT } from "../types/api-types";
+import { baseUrl } from "./api-common";
 
 /**
  * TODO jsdoc when properly implemented
@@ -36,13 +34,20 @@ export async function getFields() {
 }
 
 /**
- * TODO
+ * Fetches all scientific fields based on their IDs
+ * @param ids scientific field IDs
  */
-// eslint-disable-next-line @typescript-eslint/require-await
 export async function fetchScientificFields(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ids: idT[],
 ): Promise<ScientificFieldTagT[]> {
-  // TODO
-  return [];
+  let tags: ScientificFieldTagT[] = [];
+
+  for (const id of ids) {
+    const res = await fetch(`${baseUrl}/tags/scientific/${id}`);
+    if (!res.ok) continue;
+    const scientificField = (await res.json()) as ScientificFieldTagT;
+    tags = [...tags, scientificField];
+  }
+
+  return tags;
 }
