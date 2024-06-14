@@ -69,13 +69,26 @@ export const dummyPost: PostT = {
   // updatedAt: "04 June 2024",
 };
 
-// TODO improve
-export const dummyScientificField: ScientificFieldT = {
-  id: 1,
-  scientificField: "Computer Science",
-  parentID: 1,
-  subtagIDs: [],
-};
+export const dummyScientificFields: ScientificFieldT[] = [
+  {
+    id: 1,
+    scientificField: "Computer Science",
+    parentID: 1,
+    subtagIDs: [],
+  },
+  {
+    id: 2,
+    scientificField: "Computer Science",
+    parentID: 1,
+    subtagIDs: [],
+  },
+  {
+    id: 3,
+    scientificField: "Computer Science",
+    parentID: 1,
+    subtagIDs: [],
+  },
+];
 
 // TODO improve
 export const dummyBranches: {
@@ -187,3 +200,5 @@ export const dummyFileTree: FileTreeT = {
     "f.txt": 2430,
   },
 };
+
+export const dummyFile: File = new File([], "filename");
