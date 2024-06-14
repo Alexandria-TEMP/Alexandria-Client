@@ -66,12 +66,15 @@ export const dummyProjectPost: ProjectPostT = {
   projectFeedbackPreference: "formal feedback",
 };
 
-export const dummyPostUnion: { project: PostUnionT; regular: PostUnionT } = {
-  project: {
-    post: dummyPost,
+export const dummyPostUnion: {
+  withProject: PostUnionT;
+  noProject: PostUnionT;
+} = {
+  withProject: {
+    post: { ...dummyPost, postType: "project" },
     projectPost: dummyProjectPost,
   },
-  regular: { post: dummyPost },
+  noProject: { post: dummyPost },
 };
 
 // TODO improve

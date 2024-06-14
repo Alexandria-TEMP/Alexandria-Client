@@ -12,6 +12,8 @@ jest.mock("next/navigation");
 describe("PostCardMini", () => {
   (fetchPostData as jest.Mock).mockResolvedValue(dummyPost);
 
+  it("PLACEHOLDER TEST, REMOVE ME", () => {});
+
   // TODO
   // it("shows the post title after load", async () => {
   //   render(<PostCardMini id={dummyPost.id} />);

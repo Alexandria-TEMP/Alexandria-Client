@@ -14,7 +14,7 @@ jest.mock("@/lib/api-calls/fields-api");
 jest.mock("@/post/[postId]/components/cards/author-card-list");
 
 describe("PostSidebar", () => {
-  (fetchPostData as jest.Mock).mockResolvedValue(dummyPostUnion.project);
+  (fetchPostData as jest.Mock).mockResolvedValue(dummyPostUnion.withProject);
   (fetchScientificFields as jest.Mock).mockResolvedValue([
     dummyScientificField,
     dummyScientificField,

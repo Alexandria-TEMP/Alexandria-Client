@@ -120,7 +120,7 @@ export default function BranchCardHeader({
                 </HeaderSubtle>
                 <HeaderSubtle>
                   {/* TODO */}
-                  {`${cap(status.descriptive)} on ${0}`}
+                  {`${cap(status.short)} on ${0}`}
                   {/* {`${capitalizeFirstLetter(status)} on ${data.updatedAt}`} */}
                 </HeaderSubtle>
               </>

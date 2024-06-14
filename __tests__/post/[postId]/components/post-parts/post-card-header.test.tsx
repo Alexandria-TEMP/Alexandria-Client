@@ -2,7 +2,7 @@ import PostCardHeader from "@/post/[postId]/components/post-parts/post-card-head
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import fetchPostData from "@/lib/api-calls/post-api";
-import { dummyPost } from "~/__tests__/__utils__/dummys";
+import { dummyPost, dummyPostUnion } from "~/__tests__/__utils__/dummys";
 import { Card } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import createMockRouter from "~/__tests__/__utils__/create-mock-router";
@@ -14,19 +14,37 @@ jest.mock("next/navigation");
 
 describe("PostCardHeader", () => {
   (useRouter as jest.Mock).mockReturnValue(createMockRouter());
-  (fetchPostData as jest.Mock).mockResolvedValue(dummyPost);
+  (fetchPostData as jest.Mock).mockResolvedValue(dummyPostUnion.withProject);
 
   it("renders title", async () => {
-    render(<Card>{await PostCardHeader({ id: dummyPost.id })}</Card>);
+    render(
+      <Card>
+        {await PostCardHeader({
+          id: dummyPostUnion.withProject.projectPost?.id,
+          isProject: true,
+        })}
+      </Card>,
+    );
 
     const title = screen.getByText(dummyPost.title);
     expect(title).toBeInTheDocument();
   });
 
   it("renders metadata", async () => {
-    render(<Card>{await PostCardHeader({ id: dummyPost.id })}</Card>);
+    render(
+      <Card>
+        {await PostCardHeader({
+          id: dummyPostUnion.withProject.projectPost?.id,
+          isProject: true,
+        })}
+      </Card>,
+    );
 
-    expect(screen.getByText(dummyPost.postType)).toBeInTheDocument();
+    expect(
+      screen.getByText(dummyPostUnion.withProject.post.postType, {
+        exact: false,
+      }),
+    ).toBeInTheDocument();
     // TODO
     // expect(screen.getByText(dummyPost.status)).toBeInTheDocument();
     // expect(
@@ -44,7 +62,11 @@ describe("PostCardHeader", () => {
   it("hides contribute button", async () => {
     render(
       <Card>
-        {await PostCardHeader({ id: dummyPost.id, hideContribute: true })}
+        {await PostCardHeader({
+          id: dummyPostUnion.withProject.projectPost?.id,
+          isProject: true,
+          hideContribute: true,
+        })}
       </Card>,
     );
 
@@ -56,7 +78,11 @@ describe("PostCardHeader", () => {
   it("shows contribute button", async () => {
     render(
       <Card>
-        {await PostCardHeader({ id: dummyPost.id, hideContribute: false })}
+        {await PostCardHeader({
+          id: dummyPostUnion.withProject.projectPost?.id,
+          isProject: true,
+          hideContribute: false,
+        })}
       </Card>,
     );
 
