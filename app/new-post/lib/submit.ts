@@ -9,6 +9,11 @@ import {
   idT,
 } from "@/lib/types/api-types";
 
+/**
+ * Type of all form fields
+ * Similar datatypes to possible submit values of PostCreationForm and ProjectPostCreation form
+ * but integrated into one
+ */
 export type FormType = {
   title: string;
   anonymous: boolean;
@@ -48,25 +53,27 @@ export const submitHandler = async (
       postCreationForm: postCreationForm,
     };
 
-    if (data.postType == "project")
-      try {
-        const newProjectPost: ProjectPostT = await postProjectPost(
-          projectPostCreationForm,
-        );
-        // TODO the fact that i kinda have to blindly trust that there is a branch and that the first one is the corret one is kindaaaaa not cool
-        await postBranchesIdUpload(newProjectPost.openBranchIDs[0], data.file);
-      } catch (e) {
-        // TODO delete post if error uploading files
-        alert(e);
-      }
-    else {
-      try {
-        const newPost = await postPosts(postCreationForm);
-        await postPostsIdUpload(newPost.id, data.file);
-      } catch (e) {
-        // TODO delete post if error uploading files
-        alert(e);
-      }
+    if (data.postType == "project") {
+      // try {
+      const newProjectPost: ProjectPostT = await postProjectPost(
+        projectPostCreationForm,
+      );
+      // TODO the fact that i kinda have to blindly trust that there is a branch and that the first one is the corret one is kindaaaaa not cool
+      await postBranchesIdUpload(newProjectPost.openBranchIDs[0], data.file);
+      // } catch (e) {
+      // TODO delete post if error uploading files, without that this try catch block is not necessary
+      // setIsLoading(false);
+      // onError();
+      // }
+    } else {
+      // try {
+      const newPost = await postPosts(postCreationForm);
+      await postPostsIdUpload(newPost.id, data.file);
+      // } catch (e) {
+      // TODO delete post if error uploading files, without that this try catch block is not necessary
+      // setIsLoading(false);
+      // onError();
+      // }
     }
 
     setIsLoading(false);

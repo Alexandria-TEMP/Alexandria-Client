@@ -1,3 +1,5 @@
+"use client";
+
 import { Input } from "@nextui-org/react";
 import { Controller, FormState, Control } from "react-hook-form";
 import { FormType } from "../lib/submit";

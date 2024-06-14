@@ -33,7 +33,9 @@ const loggedIn: MemberT = {
 };
 
 /**
- * TODO jsdoc @miruna
+ * New post form
+ * creates the form state and submit handler
+ * @returns the post creation form
  */
 export default function NewPost() {
   /* create the form state */
@@ -194,7 +196,7 @@ export default function NewPost() {
                     control={control}
                     rules={{
                       required: {
-                        value: true,
+                        value: watchPostType == "project",
                         message:
                           "Please select feedback preferences for your post.",
                       },
@@ -212,7 +214,7 @@ export default function NewPost() {
                     control={control}
                     rules={{
                       required: {
-                        value: true,
+                        value: watchPostType == "project",
                         message:
                           "Please select the completion status of your post.",
                       },

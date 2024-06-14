@@ -25,20 +25,7 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
   rules,
   optionsGetter,
 }: SingleSelectAutocompleteT<FormType>) {
-  const [options, setOptions] = useState<string[]>([]);
-  /**
-   * Update the options list when request for them finishes
-   */
-  useEffect(() => {
-    const getOptions = async () => {
-      const opts: string[] = await optionsGetter();
-      setOptions(opts);
-    };
-
-    // TODO i have the ErrorModal component, should I make it return that instead of a simple alert?
-    // it would require an extra state
-    getOptions().catch((e) => alert(e));
-  }, [optionsGetter]);
+  const options = optionsGetter();
 
   /* Register the field as part of the parent form using appropriate name and rules  */
   const { field } = useController({
@@ -97,7 +84,7 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
         value={field.value}
         defaultSelectedKey={defaultKey}
         isRequired={
-          !!rules?.required
+          !!rules?.required?.value
         } /* using build in NextUI isRequired option to display error */
         aria-labelledby={name}
       >

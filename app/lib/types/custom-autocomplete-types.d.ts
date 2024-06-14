@@ -25,12 +25,10 @@ export type CustomAutocompletePropsT<FormType extends FieldValues> = {
   name: Path<FormType>;
   control?: Control<FormType>;
   rules?: {
-    required?:
-      | string
-      | {
-          value: boolean;
-          message: string;
-        };
+    required?: {
+      value: boolean;
+      message: string;
+    };
     // This is the only type of validation function i have used so far,
     // can be extended with multiple types
     validate?: (value: string[]) => boolean | string;

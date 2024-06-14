@@ -132,7 +132,7 @@ export function MultiSelectAutocomplete<
           {title}
         </span>
         {/* if the input the component is required, display required asterisk */}
-        {rules?.required && (
+        {rules?.required?.value && (
           <span className="inline-block text-danger text-small">*</span>
         )}
       </span>
