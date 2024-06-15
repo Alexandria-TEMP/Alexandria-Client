@@ -1,4 +1,4 @@
-import { getBranchData } from "@/lib/api-calls/branch-api";
+import { getBranchData } from "@/lib/api/services/branch-api";
 import BranchCard from "@/post/[postId]/(branch)/version/[branchId]/components/branch-parts/branch-card";
 import FileTree from "@/post/[postId]/components/files/file-tree";
 import RenderedQuarto from "@/post/[postId]/components/render/rendered-quarto";
@@ -10,7 +10,7 @@ import createMockRouter from "~/__tests__/__utils__/create-mock-router";
 import { dummyBranches } from "~/__tests__/__utils__/dummys";
 
 // Mock getBranchData()
-jest.mock("@/lib/api-calls/branch-api");
+jest.mock("@/lib/api/services/branch-api");
 // Mock useRouter so it's mounted
 jest.mock("next/navigation");
 // Mock render and file tree to reduce coupling

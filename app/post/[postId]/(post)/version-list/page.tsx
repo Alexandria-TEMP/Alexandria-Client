@@ -1,5 +1,5 @@
 import { Card } from "@nextui-org/react";
-import { getPostBranches } from "@/lib/api-calls/branch-api";
+import { getPostBranches } from "@/lib/api/services/branch-api";
 import { idStringToIDT } from "@/lib/string-utils";
 import PostCardHeader from "../../components/post-parts/post-card-header";
 import BranchTabs from "../../(post)/version-list/components/branch-tabs";

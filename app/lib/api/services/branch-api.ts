@@ -1,4 +1,4 @@
-import { BranchT, idT } from "../types/api-types";
+import { BranchT, idT } from "../../types/api-types";
 
 /**
  * Gets data for a branch given their ID.

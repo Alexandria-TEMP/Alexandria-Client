@@ -1,12 +1,12 @@
 import { expect, describe, it } from "@jest/globals";
 import { act, render, screen } from "@testing-library/react";
-import { useRender } from "@/lib/api-calls/quarto-api";
+import { useRender } from "@/lib/api/hooks/quarto-hooks";
 import { dummyHtml } from "~/__tests__/__utils__/dummys";
 import RenderedQuarto, {
   iframeTitle,
 } from "@/post/[postId]/components/render/rendered-quarto";
 
-jest.mock("@/lib/api-calls/quarto-api");
+jest.mock("@/lib/api/hooks/quarto-hooks");
 
 describe("RenderedQuarto", () => {
   const setupGoodWeather = async () => {

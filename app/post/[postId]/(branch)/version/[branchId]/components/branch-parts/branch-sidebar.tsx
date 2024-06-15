@@ -1,6 +1,6 @@
 import ChipList from "@/components/common/chip-list";
 import Sidebar from "@/components/layout/sidebar";
-import { getBranchData } from "@/lib/api-calls/branch-api";
+import { getBranchData } from "@/lib/api/services/branch-api";
 import { idT } from "@/lib/types/api-types";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import AuthorCardList from "@/post/[postId]/components/cards/author-card-list";

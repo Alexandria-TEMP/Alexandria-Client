@@ -1,6 +1,6 @@
-import { PostT, ProjectPostT, idT } from "../types/api-types";
-import { PostUnionT, idPostUnionT } from "../types/post-union";
-import { baseUrl, validateResponse } from "./api-common";
+import { PostT, ProjectPostT, idT } from "../../types/api-types";
+import { PostUnionT, idPostUnionT } from "../../types/post-union";
+import { baseUrl, validateResponse } from "../api-common";
 
 /**
  * Fetches post or project post data in a unified object

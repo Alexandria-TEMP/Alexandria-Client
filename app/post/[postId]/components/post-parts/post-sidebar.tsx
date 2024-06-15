@@ -1,10 +1,10 @@
-import fetchPostData from "@/lib/api-calls/post-api";
+import fetchPostData from "@/lib/api/services/post-api";
 import ChipList from "@/components/common/chip-list";
 // import AuthorCardList from "../cards/author-card-list";
 import Sidebar from "@/components/layout/sidebar";
 import { idT } from "@/lib/types/api-types";
 import { idPostUnionT } from "@/lib/types/post-union";
-import { fetchScientificFields } from "@/lib/api-calls/fields-api";
+import { fetchScientificFields } from "@/lib/api/services/fields-api";
 
 /**
  * Sidebar that is shown in a Post's page. Includes most of post's metadata.

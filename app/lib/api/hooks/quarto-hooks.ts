@@ -1,8 +1,10 @@
+"use client";
+
 import useSWR, { SWRResponse } from "swr";
-import { parseFileTree } from "../file-tree-handler";
-import { FileTreeT } from "../types/file-tree";
-import { QuartoContainerT } from "../types/quarto-container";
-import { baseUrl, validateResponse } from "./api-common";
+import { parseFileTree } from "../../file-tree-handler";
+import { FileTreeT } from "../../types/file-tree";
+import { QuartoContainerT } from "../../types/quarto-container";
+import { baseUrl, validateResponse } from "../api-common";
 import { useMemo } from "react";
 import { toKebabCase } from "../string-utils";
 

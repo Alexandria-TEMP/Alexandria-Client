@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { useRender } from "@/lib/api-calls/quarto-api";
+import { useRender } from "@/lib/api/hooks/quarto-hooks";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import ErrorWithMessage from "@/components/error-with-message";
 import RenderPending from "./render-pending";

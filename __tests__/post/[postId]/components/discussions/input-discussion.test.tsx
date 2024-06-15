@@ -1,10 +1,10 @@
 import { expect, describe, it } from "@jest/globals";
 import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
-import { uploadDiscussion } from "@/lib/api-calls/discussion-api";
+import { uploadDiscussion } from "@/lib/api/services/discussion-api";
 import InputDiscussion from "@/post/[postId]/components/discussions/input-discussion";
 
-jest.mock("@/lib/api-calls/discussion-api");
+jest.mock("@/lib/api/services/discussion-api");
 
 describe("InputDiscussion", () => {
   const discussionContainerID = 51235312;

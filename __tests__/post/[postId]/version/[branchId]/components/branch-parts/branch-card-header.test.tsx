@@ -1,4 +1,4 @@
-import { getBranchData } from "@/lib/api-calls/branch-api";
+import { getBranchData } from "@/lib/api/services/branch-api";
 import BranchCardHeader from "@/post/[postId]/(branch)/version/[branchId]/components/branch-parts/branch-card-header";
 import { expect, describe, it } from "@jest/globals";
 import { Card } from "@nextui-org/react";
@@ -8,7 +8,7 @@ import createMockRouter from "~/__tests__/__utils__/create-mock-router";
 import { dummyBranches } from "~/__tests__/__utils__/dummys";
 
 // Mock getBranchData()
-jest.mock("@/lib/api-calls/branch-api");
+jest.mock("@/lib/api/services/branch-api");
 // Mock useRouter so it's mounted
 jest.mock("next/navigation");
 

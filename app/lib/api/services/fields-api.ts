@@ -1,5 +1,5 @@
-import { ScientificFieldTagT, idT } from "../types/api-types";
-import { baseUrl } from "./api-common";
+import { ScientificFieldTagT, idT } from "../../types/api-types";
+import { baseUrl } from "../api-common";
 
 /**
  * TODO jsdoc when properly implemented

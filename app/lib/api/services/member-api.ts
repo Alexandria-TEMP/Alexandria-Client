@@ -1,7 +1,7 @@
 // methods in this file will be heavily changed once integration with back end it done
 // just retrieve some dummy data for now
 
-import { MemberT, idT } from "../types/api-types";
+import { MemberT, idT } from "../../types/api-types";
 
 /**
  * Gets data for a Member given their ID.

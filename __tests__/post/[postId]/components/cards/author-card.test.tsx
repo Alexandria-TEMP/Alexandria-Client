@@ -1,10 +1,10 @@
 import { expect, describe, it } from "@jest/globals";
 import AuthorCard from "@/post/[postId]/components/cards/author-card";
 import { render, screen } from "@testing-library/react";
-import getMemberData from "@/lib/api-calls/member-api";
+import getMemberData from "@/lib/api/services/member-api";
 import { dummyMembers } from "~/__tests__/__utils__/dummys";
 
-jest.mock("@/lib/api-calls/member-api");
+jest.mock("@/lib/api/services/member-api");
 
 describe("AuthorCard", () => {
   const dummyMember = dummyMembers[0];

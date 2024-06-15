@@ -1,7 +1,7 @@
 "use client";
 
 import DefaultError from "@/error";
-import { useFileContents } from "@/lib/api-calls/quarto-api";
+import { useFileContents } from "@/lib/api/hooks/quarto-hooks";
 import { idT } from "@/lib/types/api-types";
 import { QuartoContainerTypeT } from "@/lib/types/quarto-container";
 import { IdProp } from "@/lib/types/react-props/id-prop";

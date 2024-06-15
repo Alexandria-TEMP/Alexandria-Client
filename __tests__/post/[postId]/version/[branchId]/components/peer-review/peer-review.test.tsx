@@ -1,12 +1,12 @@
-import getMemberData from "@/lib/api-calls/member-api";
-import { getReviewData } from "@/lib/api-calls/review-api";
+import getMemberData from "@/lib/api/services/member-api";
+import { getReviewData } from "@/lib/api/services/review-api";
 import PeerReview from "@/post/[postId]/(branch)/version/[branchId]/components/peer-review/peer-review";
 import { expect, describe, it } from "@jest/globals";
 import { render, waitFor, screen } from "@testing-library/react";
 import { dummyMembers, dummyReview } from "~/__tests__/__utils__/dummys";
 
-jest.mock("@/lib/api-calls/review-api");
-jest.mock("@/lib/api-calls/member-api");
+jest.mock("@/lib/api/services/review-api");
+jest.mock("@/lib/api/services/member-api");
 
 describe("PeerReview", () => {
   (getMemberData as jest.Mock).mockResolvedValue(dummyMembers[0]);

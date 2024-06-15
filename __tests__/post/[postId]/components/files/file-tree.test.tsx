@@ -3,9 +3,9 @@ import { render, screen } from "@testing-library/react";
 import FileView from "@/post/[postId]/components/files/file-view";
 import FileTree from "@/post/[postId]/components/files/file-tree";
 import userEvent from "@testing-library/user-event";
-import { useFileTree } from "@/lib/api-calls/quarto-api";
+import { useFileTree } from "@/lib/api/hooks/quarto-hooks";
 
-jest.mock("@/lib/api-calls/quarto-api");
+jest.mock("@/lib/api/hooks/quarto-hooks");
 jest.mock("@/post/[postId]/components/files/file-view");
 
 describe("FileTree", () => {

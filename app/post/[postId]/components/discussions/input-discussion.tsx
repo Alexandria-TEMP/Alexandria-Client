@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button, Textarea } from "@nextui-org/react";
-import { uploadDiscussion } from "@/lib/api-calls/discussion-api";
+import { uploadDiscussion } from "@/lib/api/services/discussion-api";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import { idT } from "@/lib/types/api-types";
 

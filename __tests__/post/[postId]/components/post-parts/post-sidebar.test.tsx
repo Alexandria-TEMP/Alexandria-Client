@@ -1,4 +1,4 @@
-import fetchPostData from "@/lib/api-calls/post-api";
+import fetchPostData from "@/lib/api/services/post-api";
 import PostSidebar from "@/post/[postId]/components/post-parts/post-sidebar";
 import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";
@@ -7,10 +7,10 @@ import {
   dummyScientificField,
 } from "~/__tests__/__utils__/dummys";
 import AuthorCardList from "@/post/[postId]/components/cards/author-card-list";
-import { fetchScientificFields } from "@/lib/api-calls/fields-api";
+import { fetchScientificFields } from "@/lib/api/services/fields-api";
 
-jest.mock("@/lib/api-calls/post-api");
-jest.mock("@/lib/api-calls/fields-api");
+jest.mock("@/lib/api/services/post-api");
+jest.mock("@/lib/api/services/fields-api");
 jest.mock("@/post/[postId]/components/cards/author-card-list");
 
 describe("PostSidebar", () => {

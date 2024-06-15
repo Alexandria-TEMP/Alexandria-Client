@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // TODO remove previous line once implemented
 
-import { idT } from "../types/api-types";
-import { QuartoContainerTypeT } from "../types/quarto-container";
-import { baseUrl } from "./api-common";
+import { idT } from "../../types/api-types";
+import { QuartoContainerTypeT } from "../../types/quarto-container";
+import { baseUrl } from "../api-common";
 
 /**
  * Builds URL path for collaborator API calls
