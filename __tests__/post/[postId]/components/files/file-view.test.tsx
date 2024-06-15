@@ -1,9 +1,9 @@
-import { useFileContents } from "@/lib/api-calls/quarto-api";
+import { useFileContents } from "@/lib/api/hooks/quarto-hooks";
 import FileView from "@/post/[postId]/components/files/file-view";
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 
-jest.mock("@/lib/api-calls/quarto-api");
+jest.mock("@/lib/api/hooks/quarto-hooks");
 
 describe("FileView", () => {
   it("shows loading screen while loading", () => {

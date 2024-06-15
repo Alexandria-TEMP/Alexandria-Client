@@ -3,7 +3,7 @@ import DiscussionSection from "@/post/[postId]/components/discussions/discussion
 import PeerReviewSection from "./components/peer-review/peer-review-section";
 import { CardFooter, Divider } from "@nextui-org/react";
 import BranchCard from "./components/branch-parts/branch-card";
-import { getBranchData } from "@/lib/api-calls/branch-api";
+import { getBranchData } from "@/lib/api/services/branch-api";
 
 /**
  * Page with branch version comparison, its reviews and discussion

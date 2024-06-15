@@ -1,4 +1,4 @@
-import getMemberData from "@/lib/api-calls/member-api";
+import getMemberData from "@/lib/api/services/member-api";
 import { getMemberName } from "@/lib/get-format";
 import { idT } from "@/lib/types/api-types";
 import { IdProp } from "@/lib/types/react-props/id-prop";

@@ -22,7 +22,7 @@ import { DocumentIcon, FolderIcon } from "@heroicons/react/20/solid";
 import DefaultError from "@/error";
 import { idT } from "@/lib/types/api-types";
 import { QuartoContainerTypeT } from "@/lib/types/quarto-container";
-import { useFileTree } from "@/lib/api-calls/quarto-api";
+import { useFileTree } from "@/lib/api/hooks/quarto-hooks";
 
 /**
  * Displays a table with all files in the Quarto project, allowing one to

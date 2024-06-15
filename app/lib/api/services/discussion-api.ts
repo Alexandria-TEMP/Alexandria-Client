@@ -1,5 +1,5 @@
-import { DiscussionContainerT, idT } from "../types/api-types";
-import { baseUrl, validateResponse } from "./api-common";
+import { DiscussionContainerT, idT } from "@/lib/types/api-types";
+import { baseUrl, validateResponse } from "../api-common";
 
 /**
  * Get a discussion container by its ID, to access its discussions

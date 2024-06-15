@@ -1,3 +1,5 @@
+"use client";
+
 import { DependencyList, RefObject, useEffect, useState } from "react";
 import { changeColors, setupResize } from "./iframe-manipulator";
 import { useTheme } from "next-themes";

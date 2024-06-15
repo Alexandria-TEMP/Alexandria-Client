@@ -1,4 +1,4 @@
-import { BranchReviewT, idT } from "../types/api-types";
+import { BranchReviewT, idT } from "../../types/api-types";
 
 /**
  * TODO jsdoc when properly implemented
