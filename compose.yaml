@@ -1,34 +1,31 @@
 services:
   dev:
+    container_name: alexandria_frontend
     build:
       context: .
       target: dev
       dockerfile: Dockerfile
     stdin_open: true
     tty: true
+    env_file:
+      - .env.docker
     volumes:
       - ./:/app
       - /app/node_modules
       - /app/.next
     ports:
       - 3000:3000
+    networks:
+      - alexandria_network
 
-# TODO uncomment following lines to add back stages, and remove preceding line
-# reason for commenting out in development: `docker compose up dev` is inconsistent with
-# command for backend, which is just `docker compose up`, and this is causing confusion
+# TODO production
 
-  # test:
-  #   build:
-  #     context: .
-  #     target: test
-  #     dockerfile: Dockerfile
-    
-  # e2e:
-  #   image: cypress/included:13.8.1 
-  #   entrypoint: npm
-  #   command: run e2e:headless
-  #   working_dir: /e2e
-  #   volumes:
-  #     - ./:/e2e
-  #   ports:
-  #     - 3000:3000
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  alexandria_network:
+    # name must be specified to ensure it's the same in both frontend an backend
+    name: alexandria_network 
+    # tells compose to use the network created by the backend
+    external: true 
+
