@@ -12,7 +12,8 @@ export function useScientificFields(): SWRResponse<ScientificFieldT[], Error> {
   return useSWR(baseUrl + "/tags/scientific", async (...args) => {
     const response = await fetch(...args);
     await validateResponse(response);
-    const scientificFieldTags: ScientificFieldT[] = (await response.json()) as ScientificFieldT[];
+    const scientificFieldTags: ScientificFieldT[] =
+      (await response.json()) as ScientificFieldT[];
     return scientificFieldTags;
   });
 }

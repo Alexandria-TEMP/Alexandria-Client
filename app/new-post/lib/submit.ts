@@ -62,6 +62,8 @@ export const submitHandler = async (
         projectPostCreationForm,
       );
       // TODO the fact that i kinda have to blindly trust that there is a branch and that the first one is the corret one is kindaaaaa not cool
+      if (newProjectPost.openBranchIDs.length <= 0)
+        throw Error("No initial branch created.");
       await postBranchesIdUpload(newProjectPost.openBranchIDs[0], data.file);
       router.push("/post/" + newProjectPost.postID); // TODO project post id or post id?
       // } catch (e) {
