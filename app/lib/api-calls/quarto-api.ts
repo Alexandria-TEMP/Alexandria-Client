@@ -3,6 +3,7 @@ import { parseFileTree } from "../file-tree-handler";
 import { FileTreeT } from "../types/file-tree";
 import { QuartoContainerT } from "../types/quarto-container";
 import { baseUrl, validateResponse } from "./api-common";
+import { useMemo } from "react";
 
 /**
  * Builds URL path for quarto project API calls
@@ -14,23 +15,40 @@ const buildResourcePath = ({ id, type }: QuartoContainerT) =>
 
 /**
  * Fetches HTML render of a Quarto project.
- * @async
  * @param container.id post or branch ID
  * @param container.type container type, ie if Quarto project is in a post or branch
- * @returns Text contents of the HTML render
+ * @returns
+ *    data: text contents of the HTML render (or undefined if not loaded),
+ *    isPending: true if render is not finalized (or undefined if not loaded),
+ *    error: error thrown by fetcher (or undefined),
+ *    isLoading: if there's an ongoing request and no "loaded data"
  */
-export async function fetchRender(
+export function useRender(
   container: QuartoContainerT,
-): Promise<string> {
-  const res = await fetch(`${buildResourcePath(container)}/render`);
-  if (res.status === 202) return "pending";
-  await validateResponse(res);
-  return res.text();
+): SWRResponse<string, Error> & { isPending: boolean } {
+  const swrResponse: SWRResponse<string, Error> = useSWR(
+    `${buildResourcePath(container)}/render`,
+    async (...args) => {
+      const res = await fetch(...args);
+      if (res.status === 202) return "pending";
+      await validateResponse(res);
+      return res.text();
+    },
+  );
+
+  const isPending = useMemo(
+    () => swrResponse.data === "pending",
+    [swrResponse.data],
+  );
+
+  return {
+    isPending,
+    ...swrResponse,
+  };
 }
 
 /**
  * Fetches file tree of a Quarto project and converts it to nested object format
- * @async
  * @param container.id post or branch ID
  * @param container.type container type, ie if Quarto project is in a post or branch
  * @returns
@@ -51,7 +69,6 @@ export function useFileTree(
 
 /**
  * Fetches file contents of a given file in Quarto project
- * @async
  * @param container.id post or branch ID
  * @param container.type container type, ie if Quarto project is in a post or branch
  * @param path path of the file within the project
