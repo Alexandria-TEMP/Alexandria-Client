@@ -1,6 +1,6 @@
 "use client";
 
-import { downloadProject } from "@/lib/api-calls/quarto-api";
+import { downloadProject } from "@/lib/api/services/quarto-api";
 import { idT } from "@/lib/types/api-types";
 import { QuartoContainerTypeT } from "@/lib/types/quarto-container";
 import { IdProp } from "@/lib/types/react-props/id-prop";
