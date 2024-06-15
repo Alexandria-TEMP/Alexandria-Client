@@ -4,6 +4,7 @@ import { FileTreeT } from "../types/file-tree";
 import { QuartoContainerT } from "../types/quarto-container";
 import { baseUrl, validateResponse } from "./api-common";
 import { useMemo } from "react";
+import { toKebabCase } from "../string-utils";
 
 /**
  * Builds URL path for quarto project API calls
@@ -89,4 +90,36 @@ export function useFileContents(
       return res.text();
     },
   );
+}
+
+/**
+ * Downloads quarto project to client computer
+ * @param container.id post or branch ID
+ * @param container.type container type, ie if Quarto project is in a post or branch
+ * @param filename name of the downloaded file, will be random if undefined
+ */
+export function downloadProject(
+  container: QuartoContainerT,
+  filename?: string,
+) {
+  fetch(`${buildResourcePath(container)}/repository`)
+    .then(async (res) => {
+      await validateResponse(res);
+      return res.blob();
+    })
+    .then((blob) => {
+      // Creates a link object to download file
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+
+      // Set name for download
+      if (filename) link.download = toKebabCase(filename);
+
+      // Download file
+      link.click();
+    })
+    .catch((reason: Error) => {
+      // Let user know if anything went wrong
+      alert(`Failed to download files. \n[${reason.message}]`);
+    });
 }

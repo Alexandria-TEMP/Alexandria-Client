@@ -23,3 +23,10 @@ export function idStringToIDT(idStr: string): idT {
   if (isNaN(id)) throw Error(`id ${idStr} is NaN`);
   return id;
 }
+
+/**
+ * Converts a string to kebab-case
+ */
+export function toKebabCase(str: string): string {
+  return str.toLowerCase().replaceAll(" ", "-");
+}

@@ -86,7 +86,11 @@ export default async function PostCardHeader({
         {/* Buttons */}
 
         <LinkGroup links={links} />
-        <DownloadButton id={0} /* TODO */ />
+        <DownloadButton
+          id={id as idT}
+          container="post"
+          projectTitle={data.post.title}
+        />
         {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
 
         <div className="grow" />
