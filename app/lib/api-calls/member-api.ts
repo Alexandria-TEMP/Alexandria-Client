@@ -63,10 +63,7 @@ export function useFetchMembers(): SWRResponse<MemberT[], Error> {
   return useSWR(baseUrl + "/members", async (...args) => {
     const response = await fetch(...args); //by default a get request
     await validateResponse(response);
-    //disable reason: idk how to fix this and still get the correct type cause typescript
-    // i have to look into this
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const members: MemberT[] = await response.json();
+    const members: MemberT[] = (await response.json()) as MemberT[];
     return members;
   });
 }

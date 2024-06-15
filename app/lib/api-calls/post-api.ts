@@ -40,10 +40,7 @@ export async function postPosts(
     body: jsonPost,
   });
   await validateResponse(response);
-  //disable reason: idk how to fix this and still get the correct type cause typescript
-  // i have to look into this
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const post: PostT = await response.json();
+  const post: PostT = (await response.json()) as PostT;
   return post;
 }
 

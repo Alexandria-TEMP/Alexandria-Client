@@ -18,9 +18,6 @@ export async function postProjectPost(
     body: jsonProjectPost,
   });
   await validateResponse(response);
-  //disable reason: idk how to fix this and still get the correct type cause typescript
-  // i have to look into this
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const projectPost: ProjectPostT = await response.json();
+  const projectPost: ProjectPostT = (await response.json()) as ProjectPostT;
   return projectPost;
 }

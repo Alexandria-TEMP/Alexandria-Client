@@ -12,10 +12,7 @@ export function useScientificFields(): SWRResponse<ScientificFieldT[], Error> {
   return useSWR(baseUrl + "/tags/scientific", async (...args) => {
     const response = await fetch(...args);
     await validateResponse(response);
-    //disable reason: idk how to fix this and still get the correct type cause typescript
-    // i have to look into this
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const scientificFieldTags: ScientificFieldT[] = await response.json();
+    const scientificFieldTags: ScientificFieldT[] = (await response.json()) as ScientificFieldT[];
     return scientificFieldTags;
   });
 }
