@@ -3,9 +3,10 @@ import { BranchT, ClosedBranchtT, idT } from "../../types/api-types";
 import { baseUrl, validateResponse } from "../api-common";
 
 /**
- * Gets data for a branch given their ID.
+ * Fetches branch or closed branch data in a unified object
  * @async
- * @param id branch ID
+ * @param id branch or closed branch ID
+ * @returns branch and optionally closed branch data
  */
 export async function fetchBranchData(
   id: idBranchUnionT,
