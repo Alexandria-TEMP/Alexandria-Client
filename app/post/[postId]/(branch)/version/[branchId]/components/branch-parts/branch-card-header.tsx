@@ -2,7 +2,7 @@
 
 import { CardHeader, Switch } from "@nextui-org/react";
 import HeaderSubtle from "@/components/common/header-subtle";
-import { getBranchData } from "@/lib/api-calls/branch-api";
+import { getBranchData } from "@/lib/api/services/branch-api";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
 import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
 import { getStandardReviewStatus } from "@/lib/get-format";

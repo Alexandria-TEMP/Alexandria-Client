@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // TODO remove disable above once functions are properly implemented
 
-import { parseFileTree } from "../file-tree-handler";
-import { idT } from "../types/api-types";
-import { FileTreeT } from "../types/file-tree";
-import { baseUrl } from "./api-common";
+import { parseFileTree } from "../../file-tree-handler";
+import { idT } from "../../types/api-types";
+import { FileTreeT } from "../../types/file-tree";
+import { baseUrl } from "../api-common";
 
 /**
  * Fetches HTML render of a Quarto project.

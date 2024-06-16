@@ -1,6 +1,6 @@
-import { baseUrl } from "./api-common";
-import { ProjectPostCreationFormT, ProjectPostT } from "../types/api-types";
-import { validateResponse } from "./api-common";
+import { baseUrl } from "../api-common";
+import { ProjectPostCreationFormT, ProjectPostT } from "../../types/api-types";
+import { validateResponse } from "../api-common";
 
 /**
  * Method that sends a POST request to the server to create a new project post, currently only metadata

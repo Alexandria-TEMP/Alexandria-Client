@@ -1,9 +1,9 @@
 import FileView from "@/post/[postId]/components/files/file-view";
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import { useFileContents } from "@/lib/api-hooks/version-hooks";
+import { useFileContents } from "@/lib/api/hooks/version-hooks";
 
-jest.mock("@/lib/api-hooks/version-hooks");
+jest.mock("@/lib/api/hooks/version-hooks");
 
 describe("FileView", () => {
   it("shows loading screen while loading", () => {

@@ -4,7 +4,7 @@ import HeaderSubtle from "@/components/common/header-subtle";
 import {
   getBranchData,
   getBranchReviewStatuses,
-} from "@/lib/api-calls/branch-api";
+} from "@/lib/api/services/branch-api";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
 import { useRouter } from "next/navigation";

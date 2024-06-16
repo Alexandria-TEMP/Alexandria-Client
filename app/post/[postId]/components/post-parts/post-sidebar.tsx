@@ -1,4 +1,4 @@
-import getPostData from "@/lib/api-calls/post-api";
+import getPostData from "@/lib/api/services/post-api";
 import ChipList from "@/components/common/chip-list";
 import AuthorCardList from "../cards/author-card-list";
 import Sidebar from "@/components/layout/sidebar";

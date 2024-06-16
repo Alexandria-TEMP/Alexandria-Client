@@ -1,4 +1,4 @@
-import getPostData from "../../../lib/api-calls/post-api";
+import getPostData from "../../../lib/api/services/post-api";
 import PostCardHeader from "../components/post-parts/post-card-header";
 import DiscussionSection from "../components/discussions/discussion-section";
 import { Card, CardBody } from "@nextui-org/react";

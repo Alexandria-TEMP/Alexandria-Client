@@ -1,6 +1,6 @@
-import { PostT, PostCreationFormT, idT } from "../types/api-types";
-import { validateResponse } from "./api-common";
-import { baseUrl } from "./api-common";
+import { PostT, PostCreationFormT, idT } from "../../types/api-types";
+import { validateResponse } from "../api-common";
+import { baseUrl } from "../api-common";
 
 /**
  * Gets data for a Post given their ID.

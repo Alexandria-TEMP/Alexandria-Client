@@ -1,11 +1,11 @@
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import { useFileTree } from "@/lib/api-hooks/version-hooks";
+import { useFileTree } from "@/lib/api/hooks/version-hooks";
 import FileView from "@/post/[postId]/components/files/file-view";
 import FileTree from "@/post/[postId]/components/files/file-tree";
 import userEvent from "@testing-library/user-event";
 
-jest.mock("@/lib/api-hooks/version-hooks");
+jest.mock("@/lib/api/hooks/version-hooks");
 jest.mock("@/post/[postId]/components/files/file-view");
 
 describe("FileTree", () => {

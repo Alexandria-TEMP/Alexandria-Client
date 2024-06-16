@@ -11,7 +11,7 @@ import {
   PostTypeT,
   ProjectCompletionStatusT,
   ProjectFeedbackPreferenceT,
-} from "../types/api-types";
+} from "../../types/api-types";
 
 /**
  * OLD: Function that fetches all possible completion types for a post from the back-end

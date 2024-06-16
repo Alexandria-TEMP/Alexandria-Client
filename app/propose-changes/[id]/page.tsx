@@ -1,7 +1,7 @@
 "use client";
 
-import { useScientificFields } from "@/lib/api-calls/fields-api";
-import { useFetchMembers } from "@/lib/api-calls/member-api";
+import { useScientificFields } from "@/lib/api/hooks/scientific-fields-hooks";
+import { useFetchMembers } from "@/lib/api/hooks/member-hooks";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomplete";
 import { SingleSelectAutocomplete } from "@/components/form/single-select-autocomplete";
@@ -20,7 +20,10 @@ import { submitHandler, FormType } from "./lib/submit";
 import useSWR from "swr";
 // TODO import getPostData from "@/lib/api-calls/post-api";
 import { useEffect, useState } from "react";
-import { getCompletionTypes, getFeedbackTypes } from "@/lib/api-calls/tags-api";
+import {
+  getCompletionTypes,
+  getFeedbackTypes,
+} from "@/lib/api/services/tags-api";
 import GenericLoadingPage from "@/loading";
 import { MemberT, PostT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";

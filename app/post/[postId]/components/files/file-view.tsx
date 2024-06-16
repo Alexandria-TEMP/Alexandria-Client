@@ -1,7 +1,7 @@
 "use client";
 
 import DefaultError from "@/error";
-import { useFileContents } from "@/lib/api-hooks/version-hooks";
+import { useFileContents } from "@/lib/api/hooks/version-hooks";
 import { idT } from "@/lib/types/api-types";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import GenericLoadingPage from "@/loading";

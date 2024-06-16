@@ -1,6 +1,6 @@
-import { postBranchesIdUpload } from "@/lib/api-calls/branch-api";
-import { postPosts, postPostsIdUpload } from "@/lib/api-calls/post-api";
-import { postProjectPost } from "@/lib/api-calls/project-post-api";
+import { postBranchesIdUpload } from "@/lib/api/services/branch-api";
+import { postPosts, postPostsIdUpload } from "@/lib/api/services/post-api";
+import { postProjectPost } from "@/lib/api/services/project-post-api";
 import {
   PostTypeT,
   ProjectCompletionStatusT,

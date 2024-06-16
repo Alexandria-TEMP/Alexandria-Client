@@ -1,6 +1,8 @@
+"use client";
+
 import useSWR, { SWRResponse } from "swr";
-import { ScientificFieldT } from "../types/api-types";
-import { baseUrl, validateResponse } from "./api-common";
+import { ScientificFieldT } from "../../types/api-types";
+import { baseUrl, validateResponse } from "../api-common";
 
 /**
  * Hook that fetches all scientific fields from the database, using SWR for caching, loading and error states

@@ -2,8 +2,8 @@
 
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
-import { useFetchMembers } from "../lib/api-calls/member-api";
-import { useScientificFields } from "../lib/api-calls/fields-api";
+import { useFetchMembers } from "@/lib/api/hooks/member-hooks";
+import { useScientificFields } from "../lib/api/hooks/scientific-fields-hooks";
 import { MultiSelectAutocomplete } from "../components/form/multi-select-autocomplete";
 import { SingleSelectAutocomplete } from "../components/form/single-select-autocomplete";
 import UploadContentCard from "../components/form/upload-content-card";
@@ -15,7 +15,7 @@ import {
   getCompletionTypes,
   getFeedbackTypes,
   getPostTypes,
-} from "@/lib/api-calls/tags-api";
+} from "@/lib/api/services/tags-api";
 import { MemberT, idT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
 import { useState } from "react";

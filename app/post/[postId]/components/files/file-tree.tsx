@@ -17,7 +17,7 @@ import {
 import { useEffect, useState } from "react";
 import FileView from "./file-view";
 import { IdProp } from "@/lib/types/react-props/id-prop";
-import { useFileTree } from "@/lib/api-hooks/version-hooks";
+import { useFileTree } from "@/lib/api/hooks/version-hooks";
 import { getByteMultiple } from "@/lib/get-format";
 import { DocumentIcon, FolderIcon } from "@heroicons/react/20/solid";
 import DefaultError from "@/error";

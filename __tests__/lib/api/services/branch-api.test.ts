@@ -1,9 +1,9 @@
-import { validateResponse } from "@/lib/api-calls/api-common";
-import { postBranchesIdUpload } from "@/lib/api-calls/branch-api";
+import { validateResponse } from "@/lib/api/api-common";
+import { postBranchesIdUpload } from "@/lib/api/services/branch-api";
 import { expect, describe, it } from "@jest/globals";
 import { dummyFile } from "~/__tests__/__utils__/dummys";
 
-jest.mock("@/lib/api-calls/api-common");
+jest.mock("@/lib/api/api-common");
 
 describe("Upload files to Branch", () => {
   it("gives back ok", async () => {

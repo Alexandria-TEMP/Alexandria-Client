@@ -1,7 +1,7 @@
 import { parseId } from "@/lib/string-utils";
 import PeerReviewInput from "../../../../(branch)/version/[branchId]/components/peer-review/peer-review-input";
 import BranchCard from "../../../../(branch)/version/[branchId]/components/branch-parts/branch-card";
-import { getBranchData } from "@/lib/api-calls/branch-api";
+import { getBranchData } from "@/lib/api/services/branch-api";
 
 /**
  * Page with branch version comparison and input for a new peer review

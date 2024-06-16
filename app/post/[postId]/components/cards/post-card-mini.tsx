@@ -1,6 +1,6 @@
 "use client";
 
-import getPostData from "@/lib/api-calls/post-api";
+import getPostData from "@/lib/api/services/post-api";
 import { Card, CardBody, CardFooter, Chip, Skeleton } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";

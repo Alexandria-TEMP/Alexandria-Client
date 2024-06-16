@@ -1,6 +1,6 @@
-import { BranchT, idT } from "../types/api-types";
-import { baseUrl } from "./api-common";
-import { validateResponse } from "./api-common";
+import { BranchT, idT } from "../../types/api-types";
+import { baseUrl } from "../api-common";
+import { validateResponse } from "../api-common";
 
 /**
  * Gets data for a branch given their ID.

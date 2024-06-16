@@ -2,7 +2,7 @@ import { CardHeader } from "@nextui-org/react";
 import HeaderSubtle from "@/components/common/header-subtle";
 import LinkGroup from "../buttons/link-group";
 import ContributeDropdown from "../buttons/contribute-dropdown";
-import getPostData from "@/lib/api-calls/post-api";
+import getPostData from "@/lib/api/services/post-api";
 import ChipWithTitle from "@/components/common/chip-with-title";
 import { PostT, idT } from "@/lib/types/api-types";
 import DownloadButton from "../buttons/download-button";

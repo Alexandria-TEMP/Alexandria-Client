@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getRender } from "@/lib/api-calls/version-api";
+import { getRender } from "@/lib/api/services/version-api";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import ErrorWithMessage from "@/components/error-with-message";
 import { setupResize, changeColors } from "./lib/iframe-manipulator";

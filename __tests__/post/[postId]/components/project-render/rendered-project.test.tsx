@@ -1,12 +1,12 @@
 import { expect, describe, it } from "@jest/globals";
 import { act, render, screen } from "@testing-library/react";
-import { getRender } from "@/lib/api-calls/version-api";
+import { getRender } from "@/lib/api/services/version-api";
 import { dummyHtml } from "~/__tests__/__utils__/dummys";
 import RenderedProject, {
   iframeTitle,
 } from "@/post/[postId]/components/project-render/rendered-project";
 
-jest.mock("@/lib/api-calls/version-api");
+jest.mock("@/lib/api/services/version-api");
 
 describe("RenderedProject", () => {
   const setupGoodWeather = async () => {

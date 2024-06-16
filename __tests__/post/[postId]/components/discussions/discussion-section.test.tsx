@@ -4,11 +4,11 @@ import Discussion from "@/post/[postId]/components/discussions/discussion";
 import InputDiscussion from "@/post/[postId]/components/discussions/input-discussion";
 import DiscussionSection from "@/post/[postId]/components/discussions/discussion-section";
 import { dummyVersion } from "~/__tests__/__utils__/dummys";
-import { getVersionData } from "@/lib/api-calls/version-api";
+import { getVersionData } from "@/lib/api/services/version-api";
 
 jest.mock("@/post/[postId]/components/discussions/discussion");
 jest.mock("@/post/[postId]/components/discussions/input-discussion");
-jest.mock("@/lib/api-calls/version-api");
+jest.mock("@/lib/api/services/version-api");
 
 describe("DiscussionSection", () => {
   (Discussion as jest.Mock).mockReturnValue(<p>Discussion</p>);
