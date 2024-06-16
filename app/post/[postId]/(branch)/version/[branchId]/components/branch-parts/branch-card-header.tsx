@@ -2,57 +2,56 @@
 
 import { CardHeader, Switch } from "@nextui-org/react";
 import HeaderSubtle from "@/components/common/header-subtle";
-import { fetchBranchData } from "@/lib/api/services/branch-api";
 import { capitalizeFirstLetter as cap } from "@/lib/string-utils";
 import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
 import { getStandardReviewStatus } from "@/lib/get-format";
-import { BranchT, idT } from "@/lib/types/api-types";
+import { idT } from "@/lib/types/api-types";
 import ChipWithTitle from "@/components/common/chip-with-title";
 import BranchCardHeaderSkeleton from "./branch-card-header-skeleton";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import ActionGroup from "@/post/[postId]/components/buttons/action-group";
 import DownloadButton from "@/post/[postId]/components/buttons/download-button";
+import { idBranchUnionT } from "@/lib/types/branch-union";
+import { useBranchData } from "@/lib/api/hooks/branch-hooks";
+import { branchUnionIDToPathID } from "@/lib/id-parser";
+import DefaultError from "@/error";
 
 /**
  * Header for branch contents card. Uses CardHeader, so it must be child of a Card.
  * Includes title, metadata, and action buttons.
- * @param postId post ID, used for routing only
- * @param branchId branch ID
+ * @param id branch ID
+ * @param isClosed indicates if branch is closed
+ * @param postPathID post path ID, used for routing only
  * @param actions list of actions performed when pressing buttons on left side of header
  * @param hideContribute hides button with contribution options
  * @param onCompare called when "Compare" switch is toggled, if undefined switch won't be rendered
  */
 export default function BranchCardHeader({
-  postId,
-  branchId,
+  id,
+  isClosed,
+  postPathID,
   actions,
   hideContribute,
   onCompare,
-}: {
-  postId: idT;
-  branchId: idT;
-  actions: { do: () => void; label: string; isDisabled: boolean }[];
-  hideContribute?: boolean;
-  onCompare?: (value: boolean) => void;
-}) {
-  const [data, setData] = useState<BranchT>();
-  const [isLoading, setIsLoading] = useState(true);
+}: Readonly<
+  idBranchUnionT & {
+    postPathID: string;
+    actions: { do: () => void; label: string; isDisabled: boolean }[];
+    hideContribute?: boolean;
+    onCompare?: (value: boolean) => void;
+  }
+>) {
+  const { data, isLoading, error } = useBranchData({ id: id as idT, isClosed });
+  // Used to force a rerender on error
+  const [rerender, setRerender] = useState(false);
+
   const status = useMemo(
     () =>
       data
-        ? getStandardReviewStatus(data.branchOverallReviewStatus)
+        ? getStandardReviewStatus(data.branch.branchOverallReviewStatus)
         : undefined,
     [data],
   );
-
-  useEffect(() => {
-    fetchBranchData(branchId)
-      .then(setData)
-      .catch((e) => {
-        throw e;
-      })
-      .finally(() => setIsLoading(false));
-  }, [branchId]);
 
   const contributeRoutes = {
     // Enabled buttons per status:
@@ -61,31 +60,34 @@ export default function BranchCardHeader({
     // Open     -> Fork, Review
     fork: `/todo`,
     contribute:
-      status?.short == "rejected" ? `/propose-changes/${postId}` : undefined,
+      status?.short == "rejected"
+        ? `/propose-changes/${postPathID}`
+        : undefined,
     review:
       status?.short == "open"
-        ? `/post/${postId}/version/${branchId}/review`
+        ? `/post/${postPathID}/version/${branchUnionIDToPathID({ id: id as idT, isClosed })}/review`
         : undefined,
   };
 
   if (isLoading || !data) return <BranchCardHeaderSkeleton />;
 
+  if (error)
+    return <DefaultError error={error} reset={() => setRerender(!rerender)} />;
+
   return (
     <>
       {/* Title */}
       <CardHeader>
-        <h1 className="font-semibold">{data.updatedPostTitle}</h1>
+        <h1 className="font-semibold">{data.branch.updatedPostTitle}</h1>
       </CardHeader>
 
       <CardHeader className="-mt-4 flex gap-8">
         {/* Buttons */}
         <ActionGroup actions={actions} />
-        {/* <DownloadButton id={data.newVersionID.toString()} /> */}
-        {/* TODO */}
         <DownloadButton
-          id={branchId}
+          id={id as idT}
           container="branch"
-          // TODO optionally: title
+          projectTitle={`${data.branch.updatedPostTitle}-v-${id}`}
         />
         {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
         {!!onCompare && <Switch onValueChange={onCompare}>Compare</Switch>}
@@ -94,7 +96,7 @@ export default function BranchCardHeader({
 
         {/* Metadata */}
         <ChipWithTitle title="Completion">
-          {cap(data.updatedCompletionStatus)}
+          {cap(data.branch.updatedCompletionStatus)}
         </ChipWithTitle>
 
         {status && (
@@ -109,23 +111,19 @@ export default function BranchCardHeader({
               <HeaderSubtle>Created on</HeaderSubtle>
               <HeaderSubtle>
                 {/* TODO */}
-                {0}
-                {/* {data.createdAt} */}
+                {0 /* {data.createdAt} */}
               </HeaderSubtle>
             </>
           ) : (
             status && (
               <>
                 <HeaderSubtle>
-                  Created on
                   {/* TODO */}
-                  {0}
-                  {/* {data.createdAt} */}
+                  Created on {0 /* {data.createdAt} */}
                 </HeaderSubtle>
                 <HeaderSubtle>
                   {/* TODO */}
-                  {`${cap(status.short)} on ${0}`}
-                  {/* {`${capitalizeFirstLetter(status)} on ${data.updatedAt}`} */}
+                  {`${cap(status.short)} on ${0}` /* ${data.updatedAt} */}
                 </HeaderSubtle>
               </>
             )
