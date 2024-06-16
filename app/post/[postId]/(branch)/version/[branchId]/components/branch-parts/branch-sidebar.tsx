@@ -23,7 +23,7 @@ export default async function BranchSidebar({
       items={[
         {
           title: "Version of",
-          node: <PostCardMini id={data.projectPostID.toString()} />,
+          node: <PostCardMini id={data.branch.projectPostID} isProject />,
         },
         {
           title: "Scientific fields",
