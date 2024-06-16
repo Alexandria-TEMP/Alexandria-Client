@@ -1,14 +1,18 @@
-import { idT } from "@/lib/types/api-types";
+import {
+  ProjectCompletionStatusT,
+  ProjectFeedbackPreferenceT,
+  idT,
+} from "@/lib/types/api-types";
 
 export type FormType = {
-  branchTitle: string; // hihi mister title
-  contributors: string[];
   anonymous: boolean;
-  originalPostId: string;
-  updatedTitle: string;
-  updatedCompletionStatus: string;
-  updatedFeedbackPreferences: string;
-  updatedScientificFields: idT[];
+  branchTitle: string;
+  collaboratingMemberIDs: idT[];
+  projectPostID: idT;
+  updatedCompletionStatus: ProjectCompletionStatusT;
+  updatedFeedbackPreferences: ProjectFeedbackPreferenceT;
+  updatedPostTitle: string;
+  updatedScientificFieldIDs: idT[];
   newFile: File | null;
 };
 
@@ -24,13 +28,13 @@ export const submitHandler = async (
     setIsLoading(true);
     const jsonData = JSON.stringify({
       anonymous: data.anonymous,
-      collaboratingMemberIDs: data.contributors,
-      projctPostID: data.originalPostId,
+      collaboratingMemberIDs: data.collaboratingMemberIDs,
+      projctPostID: data.projectPostID,
       branchTitle: data.branchTitle,
       updatedCompletionStatus: data.updatedCompletionStatus,
       updatedFeedbackPreferences: data.updatedFeedbackPreferences,
-      updatedPostTitle: data.updatedTitle,
-      updatedScientificFields: data.updatedScientificFields,
+      updatedPostTitle: data.updatedPostTitle,
+      updatedScientificFieldIDs: data.updatedScientificFieldIDs,
     });
     const fileData = new FormData();
     if (!data.newFile) throw new Error("Please submit a file");
