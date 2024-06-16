@@ -1,5 +1,6 @@
 import { BranchUnionT, idBranchUnionT } from "@/lib/types/branch-union";
-import { BranchT, idT } from "../../types/api-types";
+import { BranchT, ClosedBranchtT, idT } from "../../types/api-types";
+import { baseUrl, validateResponse } from "../api-common";
 
 /**
  * Gets data for a branch given their ID.
@@ -9,22 +10,36 @@ import { BranchT, idT } from "../../types/api-types";
 export async function fetchBranchData(
   id: idBranchUnionT,
 ): Promise<BranchUnionT> {
-  // TODO handle UpdatedPostTitle (note wrong case) by throwing error etc
+  let closedBranch = undefined;
 
-  await new Promise((resolve) => setTimeout(resolve, 800));
-  return {
-    id,
-    updatedPostTitle: "",
-    branchOverallReviewStatus: "open for review",
-    branchTitle: "",
-    collaboratorIDs: [],
-    discussionIDs: [],
-    renderStatus: "failure",
-    projectPostID: 1,
-    reviewIDs: [],
-    updatedCompletionStatus: "idea",
-    updatedScientificFields: [],
+  if (id.isClosed) {
+    const closedBranchResponse = await fetch(
+      `${baseUrl}/branches/closed/${id.id}`,
+    );
+    await validateResponse(closedBranchResponse);
+    closedBranch = (await closedBranchResponse.json()) as ClosedBranchtT;
+  }
+
+  const branchID = closedBranch?.branchID ?? (id.id as idT);
+  const branchResponse = await fetch(`${baseUrl}/branches/${branchID}`);
+  await validateResponse(branchResponse);
+
+  // This additional variable and following check is needed due to a bug in
+  // the backend that returns a property in PascalCase instead of camelCase
+  // if that bug is fixed, change the lines up to the return statement to
+  // const branch = (await branchResponse.json()) as BranchT;
+
+  const branchResponseJson = (await branchResponse.json()) as BranchT & {
+    UpdatedPostTitle: string | undefined;
   };
+  const branch: BranchT = {
+    ...branchResponseJson,
+    updatedPostTitle:
+      branchResponseJson.updatedPostTitle ??
+      branchResponseJson.UpdatedPostTitle,
+  };
+
+  return { branch, closedBranch };
 }
 
 /**
