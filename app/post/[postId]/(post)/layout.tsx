@@ -1,7 +1,8 @@
 import PostSidebar from "../components/post-parts/post-sidebar";
 import { ChildrenProp } from "@/lib/types/react-props/children-prop";
 import BodyWithSidebar from "@/components/layout/body-with-sidebar";
-import { parseId } from "@/lib/string-utils";
+import { pathIDToPostUnionID } from "@/lib/id-parser";
+import { idT } from "@/lib/types/api-types";
 
 /**
  * Layout for post pages, which inserts a [PostSidebar](../components/post-parts/post-sidebar)
@@ -13,8 +14,13 @@ export default function MainPostViewLayout({
 }: ChildrenProp & {
   params: { postId: string };
 }) {
+  const postID = pathIDToPostUnionID(params.postId);
   return (
-    <BodyWithSidebar sidebar={<PostSidebar id={parseId(params.postId)} />}>
+    <BodyWithSidebar
+      sidebar={
+        <PostSidebar id={postID.id as idT} isProject={postID.isProject} />
+      }
+    >
       {children}
     </BodyWithSidebar>
   );

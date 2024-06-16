@@ -1,9 +1,9 @@
+import { useFileContents } from "@/lib/api/hooks/quarto-hooks";
 import FileView from "@/post/[postId]/components/files/file-view";
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import { useFileContents } from "@/lib/api/hooks/version-hooks";
 
-jest.mock("@/lib/api/hooks/version-hooks");
+jest.mock("@/lib/api/hooks/quarto-hooks");
 
 describe("FileView", () => {
   it("shows loading screen while loading", () => {
@@ -12,7 +12,7 @@ describe("FileView", () => {
       isLoading: true,
       error: undefined,
     });
-    render(<FileView id="1" path="some/path.tsx" />);
+    render(<FileView id="1" container="branch" path="some/path.tsx" />);
 
     expect(screen.getByTestId("default-loading")).toBeVisible();
   });
@@ -23,7 +23,7 @@ describe("FileView", () => {
       isLoading: false,
       error: new Error("test error"),
     });
-    render(<FileView id="1" path="some/path.tsx" />);
+    render(<FileView id="1" container="branch" path="some/path.tsx" />);
 
     expect(screen.getByTestId("default-error")).toBeVisible();
   });
@@ -36,7 +36,7 @@ describe("FileView", () => {
       isLoading: false,
       error: undefined,
     });
-    render(<FileView id="1" path="some/path.tsx" />);
+    render(<FileView id="1" container="branch" path="some/path.tsx" />);
 
     expect(screen.getByText(data)).toBeVisible();
   });

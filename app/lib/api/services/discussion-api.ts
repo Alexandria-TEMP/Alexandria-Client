@@ -1,3 +1,18 @@
+import { DiscussionContainerT, idT } from "@/lib/types/api-types";
+import { baseUrl, validateResponse } from "../api-common";
+
+/**
+ * Get a discussion container by its ID, to access its discussions
+ * @param id discussion container ID
+ */
+export async function fetchDiscussionContainer(
+  id: idT,
+): Promise<DiscussionContainerT> {
+  const res = await fetch(`${baseUrl}/discussion-containers/${id}`);
+  await validateResponse(res);
+  return (await res.json()) as DiscussionContainerT;
+}
+
 /**
  * Gets data for a discussion given its ID.
  * @async
@@ -31,9 +46,9 @@ export async function getDiscussionData(id: string) {
  * Creates a new Discussion for a given Version.
  * @async
  * @param text Discussion contents
- * @param id ID of the Version the Discussion references
+ * @param id discussion container ID
  */
-export async function uploadDiscussion(text: string, id: string) {
+export async function uploadDiscussion(text: string, id: idT) {
   // TODO
   // should include author, possible different discussion to reply to (and anything else that I'm forgetting)
   await new Promise((resolve) => setTimeout(resolve, 100));

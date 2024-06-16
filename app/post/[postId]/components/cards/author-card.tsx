@@ -11,5 +11,10 @@ import { User } from "@nextui-org/react";
 export default async function AuthorCard({ id }: IdProp) {
   const data = await getMemberData(id as idT);
 
-  return <User name={getMemberName(data)} description={data.institution} />;
+  return (
+    // div wrapper is needed for proper centering
+    <div>
+      <User name={getMemberName(data)} description={data.institution} />
+    </div>
+  );
 }

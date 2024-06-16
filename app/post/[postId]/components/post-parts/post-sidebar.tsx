@@ -1,39 +1,46 @@
-import getPostData from "@/lib/api/services/post-api";
+import fetchPostData from "@/lib/api/services/post-api";
 import ChipList from "@/components/common/chip-list";
-import AuthorCardList from "../cards/author-card-list";
+// import AuthorCardList from "../cards/author-card-list";
 import Sidebar from "@/components/layout/sidebar";
-import { IdProp } from "@/lib/types/react-props/id-prop";
 import { idT } from "@/lib/types/api-types";
-// import PostCardMini from "../cards/post-card-mini";
+import { idPostUnionT } from "@/lib/types/post-union";
+import { fetchScientificFields } from "@/lib/api/services/fields-api";
 
 /**
  * Sidebar that is shown in a Post's page. Includes most of post's metadata.
  * @param id Post ID
  */
-export default async function PostSidebar({ id }: IdProp) {
-  const data = await getPostData(id as idT);
+export default async function PostSidebar({
+  id,
+  isProject,
+}: Readonly<idPostUnionT>) {
+  const data = await fetchPostData({ id: id as idT, isProject });
+  const scientificFields = await fetchScientificFields(
+    data.post.scientificFieldTagIDs,
+  );
 
   return (
     <Sidebar
       items={[
         {
           title: "Scientific fields",
-          node: <ChipList labels={data.scientificFields} />,
+          node: (
+            <ChipList labels={scientificFields.map((f) => f.scientificField)} />
+          ),
         },
-        // TODO render this conditionally
+        // TODO
         // {
-        //   title: "Forked from",
-        //   node: <PostCardMini id="2" />,
+        //   title: "Authors",
+        //   node: <AuthorCardList ids={data.post.collaboratorIDs} />,
         // },
-        // TODO distinguish between authors and collaborators
-        {
-          title: "Authors",
-          node: <AuthorCardList ids={data.collaboratorIDs} />,
-        },
-        {
-          title: "Collaborators",
-          node: <AuthorCardList ids={data.collaboratorIDs} />,
-        },
+        // {
+        //   title: "Contributors",
+        //   node: <AuthorCardList ids={data.post.collaboratorIDs} />,
+        // },
+        // {
+        //   title: "Reviewers",
+        //   node: <AuthorCardList ids={data.post.collaboratorIDs} />
+        // }
       ]}
     />
   );

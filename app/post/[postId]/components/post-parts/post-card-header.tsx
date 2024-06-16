@@ -2,11 +2,14 @@ import { CardHeader } from "@nextui-org/react";
 import HeaderSubtle from "@/components/common/header-subtle";
 import LinkGroup from "../buttons/link-group";
 import ContributeDropdown from "../buttons/contribute-dropdown";
-import getPostData from "@/lib/api/services/post-api";
+import fetchPostData from "@/lib/api/services/post-api";
 import ChipWithTitle from "@/components/common/chip-with-title";
-import { PostT, idT } from "@/lib/types/api-types";
+import { idT } from "@/lib/types/api-types";
 import DownloadButton from "../buttons/download-button";
-import { IdProp } from "@/lib/types/react-props/id-prop";
+import { idPostUnionT } from "@/lib/types/post-union";
+import { branchUnionIDToPathID, postUnionIDToPathID } from "@/lib/id-parser";
+import { capitalizeFirstLetter as cap } from "@/lib/string-utils";
+import { getStandardReviewStatus } from "@/lib/get-format";
 
 /**
  * Header for post contents card. Uses CardHeader, so it must be child of a Card.
@@ -16,53 +19,99 @@ import { IdProp } from "@/lib/types/react-props/id-prop";
  */
 export default async function PostCardHeader({
   id,
+  isProject,
   hideContribute,
-}: IdProp & {
-  hideContribute?: boolean;
-}) {
-  const data: PostT = await getPostData(id as idT);
+}: Readonly<
+  idPostUnionT & {
+    hideContribute?: boolean;
+  }
+>) {
+  const data = await fetchPostData({ id: id as idT, isProject });
 
-  const contributeRoutes = {
-    // TODO peer reviewed/rejected -> disable review & open -> disable contribute
-    fork: `/todo`,
-    contribute: `/propose-changes/${id}`,
-    review: `/todo`,
-  };
+  // Parsed data for conciser naming
+  const reviewStatus = data.projectPost
+    ? getStandardReviewStatus(data.projectPost.postReviewStatus)
+    : undefined;
+
+  const pathID = postUnionIDToPathID({ id: id as idT, isProject });
+
+  const openBranchPathID =
+    data.projectPost && data.projectPost.openBranchIDs.length > 0
+      ? branchUnionIDToPathID({
+          id: data.projectPost.openBranchIDs[0],
+          isClosed: false,
+        })
+      : undefined;
+
+  // Set up which routes will be in contribute button (if present)
+  const contributeRoutes =
+    !data.projectPost || hideContribute
+      ? {}
+      : {
+          // Enabled buttons per status:
+          // Accepted -> Fork, Contribute
+          // Rejected -> Fork, Contribute
+          // Open     -> Fork, Review
+          fork: `/fork/${pathID}`,
+          contribute:
+            reviewStatus!.short === "open"
+              ? undefined
+              : `/propose-changes/${pathID}`,
+          review:
+            openBranchPathID === undefined ||
+            reviewStatus!.short === "rejected" ||
+            reviewStatus!.short === "accepted"
+              ? undefined
+              : `/post/${pathID}/version/${openBranchPathID}/review`,
+        };
+
+  // Set up which links will be in header's link group
+  const links = [
+    { label: "Contents", href: `/post/${pathID}` },
+    // Only project posts have version list page
+    ...(data.projectPost
+      ? [{ label: "Versions", href: `/post/${pathID}/version-list` }]
+      : []),
+    { label: "Files", href: `/post/${pathID}/files` },
+  ];
 
   return (
     <>
       {/* Title */}
       <CardHeader>
-        <h1 className="font-semibold">{data.title}</h1>
+        <h1 className="font-semibold">{data.post.title}</h1>
       </CardHeader>
 
       <CardHeader className="-mt-4 flex gap-8">
         {/* Buttons */}
 
-        <LinkGroup
-          links={[
-            { label: "Contents", href: `/post/${id}` },
-            { label: "Versions", href: `/post/${id}/version-list` },
-            { label: "Files", href: `/post/${id}/files` },
-          ]}
-        />
-
-        <DownloadButton
-          id={0} // TODO {data.currentVersion.id}
-        />
-
+        <LinkGroup links={links} />
+        <DownloadButton id={0} /* TODO */ />
         {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
 
         <div className="grow" />
 
         {/* Metadata */}
 
-        <ChipWithTitle title="Post type">{data.postType}</ChipWithTitle>
-        <ChipWithTitle title="Status">
-          {/* TODO */}
-          {0}
-          {/* {data.status} */}
+        <ChipWithTitle title="Post type">
+          {cap(data.post.postType)}
         </ChipWithTitle>
+
+        {data.projectPost && (
+          <>
+            <ChipWithTitle title="Status">
+              {cap(reviewStatus!.descriptive)}
+            </ChipWithTitle>
+
+            <ChipWithTitle title="Completion">
+              {cap(data.projectPost.projectCompletionStatus)}
+            </ChipWithTitle>
+
+            <ChipWithTitle title="Feedback">
+              {cap(data.projectPost.projectFeedbackPreference)}
+            </ChipWithTitle>
+          </>
+        )}
 
         <div className="flex-col">
           <HeaderSubtle>

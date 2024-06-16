@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter, parseId } from "@/lib/string-utils";
+import { capitalizeFirstLetter, idStringToIDT } from "@/lib/string-utils";
 import { idT } from "@/lib/types/api-types";
 import { expect } from "@jest/globals";
 
@@ -24,10 +24,10 @@ describe("StringUtils parseId", () => {
   it("converts strings", () => {
     const test: string = "19432";
     const expected: idT = 19432;
-    expect(parseId(test)).toBe(expected);
+    expect(idStringToIDT(test)).toBe(expected);
   });
 
   it("throws error on NaN", () => {
-    expect(() => parseId("this is not a number")).toThrow();
+    expect(() => idStringToIDT("this is not a number")).toThrow();
   });
 });

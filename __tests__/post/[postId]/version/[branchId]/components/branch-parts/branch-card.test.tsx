@@ -1,7 +1,7 @@
 import { getBranchData } from "@/lib/api/services/branch-api";
 import BranchCard from "@/post/[postId]/(branch)/version/[branchId]/components/branch-parts/branch-card";
 import FileTree from "@/post/[postId]/components/files/file-tree";
-import RenderedProject from "@/post/[postId]/components/project-render/rendered-project";
+import RenderedQuarto from "@/post/[postId]/components/render/rendered-quarto";
 import { expect, describe, it } from "@jest/globals";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -14,7 +14,7 @@ jest.mock("@/lib/api/services/branch-api");
 // Mock useRouter so it's mounted
 jest.mock("next/navigation");
 // Mock render and file tree to reduce coupling
-jest.mock("@/post/[postId]/components/project-render/rendered-project");
+jest.mock("@/post/[postId]/components/render/rendered-quarto");
 jest.mock("@/post/[postId]/components/files/file-tree");
 
 describe("BranchCard", () => {
@@ -23,8 +23,8 @@ describe("BranchCard", () => {
   (getBranchData as jest.Mock).mockResolvedValue(dummyBranches["accepted"]);
 
   beforeEach(async () => {
-    (RenderedProject as jest.Mock).mockImplementation(({ id }) =>
-      id === "1" ? (
+    (RenderedQuarto as jest.Mock).mockImplementation(({ id }) =>
+      id === 1 ? (
         <p data-testid="new-version">This is the new version</p>
       ) : (
         <p data-testid="old-version">This version is being replaced</p>
@@ -32,7 +32,7 @@ describe("BranchCard", () => {
     );
 
     (FileTree as jest.Mock).mockImplementation(({ id }) =>
-      id === "1" ? (
+      id === 1 ? (
         <p data-testid="new-files">These are the new files</p>
       ) : (
         <p data-testid="old-files">These files are being replaced</p>

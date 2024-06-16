@@ -16,9 +16,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { submitHandler, FormType } from "./lib/submit";
-// TODO import { getMemberName, getFieldName } from "@/lib/get-format";
 import useSWR from "swr";
-// TODO import getPostData from "@/lib/api-calls/post-api";
 import { useEffect, useState } from "react";
 import {
   getCompletionTypes,
@@ -37,7 +35,7 @@ const loggedIn: MemberT = {
   firstName: "Metal Bar",
   institution: "TU Delft",
   lastName: "Clanging",
-  scientificFields: [],
+  scientificFieldTagIDs: [],
 };
 
 /**
@@ -53,9 +51,8 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
       collaboratorIDs: [1, 2],
       id: 1,
       postType: "reflection",
-      scientificFields: ["1", "2", "3"],
-    }), // TODO
-    // getPostData,
+      scientificFieldTagIDs: [1, 2, 3],
+    }),
   );
 
   /* create form state */
@@ -79,7 +76,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
         //   ? postReq.data.feedbackPreferences
         //   : "[Loading...]",
         updatedScientificFields: postReq.data
-          ? postReq.data.scientificFields
+          ? postReq.data.scientificFieldTagIDs
           : [],
         newFile: null,
       },
@@ -89,7 +86,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
   useEffect(() => {
     if (!!postReq.data && !postReq.isLoading) {
       setValue("updatedTitle", postReq.data.title);
-      setValue("updatedScientificFields", postReq.data.scientificFields);
+      setValue("updatedScientificFields", postReq.data.scientificFieldTagIDs);
       setValue("updatedCompletionStatus", ""); // TODO postReq.data.completionStatus);
       setValue("updatedFeedbackPreferences", ""); // TODO postReq.data.feedbackPreferences);
     }

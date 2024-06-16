@@ -1,7 +1,7 @@
 "use client";
 
 import useSWR, { SWRResponse } from "swr";
-import { ScientificFieldT } from "../../types/api-types";
+import { ScientificFieldTagT } from "../../types/api-types";
 import { baseUrl, validateResponse } from "../api-common";
 
 /**
@@ -10,12 +10,15 @@ import { baseUrl, validateResponse } from "../api-common";
  * that is currently in todo
  * @returns the scientific field objects as array, as well as other SWR states (loading, error)
  */
-export function useScientificFields(): SWRResponse<ScientificFieldT[], Error> {
+export function useScientificFields(): SWRResponse<
+  ScientificFieldTagT[],
+  Error
+> {
   return useSWR(baseUrl + "/tags/scientific", async (...args) => {
     const response = await fetch(...args);
     await validateResponse(response);
-    const scientificFieldTags: ScientificFieldT[] =
-      (await response.json()) as ScientificFieldT[];
+    const scientificFieldTags: ScientificFieldTagT[] =
+      (await response.json()) as ScientificFieldTagT[];
     return scientificFieldTags;
   });
 }
