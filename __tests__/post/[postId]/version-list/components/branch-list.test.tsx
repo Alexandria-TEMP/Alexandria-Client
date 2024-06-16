@@ -1,4 +1,4 @@
-import { getBranchData } from "@/lib/api/services/branch-api";
+import { fetchBranchData } from "@/lib/api/services/branch-api";
 import BranchList from "@/post/[postId]/(post)/version-list/components/branch-list";
 import BranchCard from "@/post/[postId]/components/cards/branch-card";
 import { expect, describe, it } from "@jest/globals";
@@ -9,7 +9,7 @@ jest.mock("@/lib/api/services/branch-api");
 jest.mock("@/post/[postId]/components/cards/branch-card");
 
 describe("BranchList", () => {
-  (getBranchData as jest.Mock).mockResolvedValue(dummyBranches["open"]);
+  (fetchBranchData as jest.Mock).mockResolvedValue(dummyBranches["open"]);
   (BranchCard as jest.Mock).mockReturnValue(<p>Card</p>);
 
   it("matches snapshot", () => {

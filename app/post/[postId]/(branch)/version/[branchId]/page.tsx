@@ -3,7 +3,7 @@ import DiscussionSection from "@/post/[postId]/components/discussions/discussion
 import PeerReviewSection from "./components/peer-review/peer-review-section";
 import { CardFooter, Divider } from "@nextui-org/react";
 import BranchCard from "./components/branch-parts/branch-card";
-import { getBranchData } from "@/lib/api/services/branch-api";
+import { fetchBranchData } from "@/lib/api/services/branch-api";
 
 /**
  * Page with branch version comparison, its reviews and discussion
@@ -15,7 +15,7 @@ export default async function Branch({
 }: {
   params: { postId: string; branchId: string };
 }) {
-  const data = await getBranchData(idStringToIDT(params.branchId));
+  const data = await fetchBranchData(idStringToIDT(params.branchId));
 
   return (
     <div className="flex flex-col space-y-4 w-full">

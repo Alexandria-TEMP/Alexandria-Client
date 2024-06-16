@@ -2,7 +2,7 @@
 
 import { CardHeader, Switch } from "@nextui-org/react";
 import HeaderSubtle from "@/components/common/header-subtle";
-import { getBranchData } from "@/lib/api/services/branch-api";
+import { fetchBranchData } from "@/lib/api/services/branch-api";
 import { capitalizeFirstLetter as cap } from "@/lib/string-utils";
 import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
 import { getStandardReviewStatus } from "@/lib/get-format";
@@ -46,7 +46,7 @@ export default function BranchCardHeader({
   );
 
   useEffect(() => {
-    getBranchData(branchId)
+    fetchBranchData(branchId)
       .then(setData)
       .catch((e) => {
         throw e;

@@ -1,4 +1,4 @@
-import { getBranchData } from "@/lib/api/services/branch-api";
+import { fetchBranchData } from "@/lib/api/services/branch-api";
 import BranchCard from "@/post/[postId]/(branch)/version/[branchId]/components/branch-parts/branch-card";
 import FileTree from "@/post/[postId]/components/files/file-tree";
 import RenderedQuarto from "@/post/[postId]/components/render/rendered-quarto";
@@ -20,7 +20,7 @@ jest.mock("@/post/[postId]/components/files/file-tree");
 describe("BranchCard", () => {
   (usePathname as jest.Mock).mockReturnValue("");
   (useRouter as jest.Mock).mockReturnValue(createMockRouter());
-  (getBranchData as jest.Mock).mockResolvedValue(dummyBranches["accepted"]);
+  (fetchBranchData as jest.Mock).mockResolvedValue(dummyBranches["accepted"]);
 
   beforeEach(async () => {
     (RenderedQuarto as jest.Mock).mockImplementation(({ id }) =>

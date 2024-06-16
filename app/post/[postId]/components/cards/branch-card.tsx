@@ -2,7 +2,7 @@
 
 import HeaderSubtle from "@/components/common/header-subtle";
 import {
-  getBranchData,
+  fetchBranchData,
   getBranchReviewStatuses,
 } from "@/lib/api/services/branch-api";
 import { IdProp } from "@/lib/types/react-props/id-prop";
@@ -30,7 +30,7 @@ export default function BranchCard({
 
   useEffect(() => {
     const getData = async () => {
-      setData(await getBranchData(id as idT));
+      setData(await fetchBranchData(id as idT));
       setReviews(await getBranchReviewStatuses(id as idT));
     };
     getData().catch(() => {

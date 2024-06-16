@@ -1,3 +1,4 @@
+import { BranchUnionT, idBranchUnionT } from "@/lib/types/branch-union";
 import { BranchT, idT } from "../../types/api-types";
 
 /**
@@ -5,8 +6,11 @@ import { BranchT, idT } from "../../types/api-types";
  * @async
  * @param id branch ID
  */
-export async function getBranchData(id: idT): Promise<BranchT> {
-  // TODO
+export async function fetchBranchData(
+  id: idBranchUnionT,
+): Promise<BranchUnionT> {
+  // TODO handle UpdatedPostTitle (note wrong case) by throwing error etc
+
   await new Promise((resolve) => setTimeout(resolve, 800));
   return {
     id,
@@ -21,52 +25,6 @@ export async function getBranchData(id: idT): Promise<BranchT> {
     updatedCompletionStatus: "idea",
     updatedScientificFields: [],
   };
-  // if (id == 1)
-  //   return {
-  //     id: id,
-  //     updatedPostTitle: "Post title",
-  //     projectPostID: 1,
-  //     branchTitle: "Remove contents section",
-  //     reviewIDs: [3, 1, 2],
-  //     collaboratorIDs: [0, 1],
-  //     updatedCompletionStatus: "idea",
-  //     updatedScientificFields: [1],
-  //     branchOverallReviewStatus: "rejected",
-  //   };
-  // else if (id == 2)
-  //   return {
-  //     id: id,
-  //     updatedPostTitle: "Post title",
-  //     projectPostID: 1,
-  //     branchTitle: "Do some stuff",
-  //     newVersionID: 1,
-  //     reviewIDs: [3, 2],
-  //     anonymous: false,
-  //     createdAt: "19 May 2024",
-  //     collaboratorIDs: [0, 1],
-  //     updatedAt: "20 May 2024",
-  //     updatedCompletionStatus: "idea",
-  //     updatedScientificFields: [1],
-  //     branchOverallReviewStatus: "open for review",
-  //     previousVersionID: 2,
-  //   };
-  // else
-  //   return {
-  //     id: id,
-  //     updatedPostTitle: "Post title",
-  //     projectPostID: 1,
-  //     branchTitle: "Grammar fixes",
-  //     newVersionID: 1,
-  //     reviewIDs: [2, 4, 3],
-  //     anonymous: false,
-  //     createdAt: "19 May 2024",
-  //     collaboratorIDs: [0, 1],
-  //     updatedAt: "20 May 2024",
-  //     updatedCompletionStatus: "idea",
-  //     updatedScientificFields: [1],
-  //     branchOverallReviewStatus: "peer reviewed",
-  //     previousVersionID: 2,
-  //   };
 }
 
 /**

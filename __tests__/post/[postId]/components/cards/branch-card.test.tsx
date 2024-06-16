@@ -1,6 +1,6 @@
 import { expect } from "@jest/globals";
 import {
-  getBranchData,
+  fetchBranchData,
   getBranchReviewStatuses,
 } from "@/lib/api/services/branch-api";
 import { act, render, screen, waitFor } from "@testing-library/react";
@@ -17,7 +17,7 @@ jest.mock("next/navigation");
 
 describe("BranchCard", () => {
   (useRouter as jest.Mock).mockReturnValue({ push: routerPushMock });
-  (getBranchData as jest.Mock).mockResolvedValue(dummyBranches["open"]);
+  (fetchBranchData as jest.Mock).mockResolvedValue(dummyBranches["open"]);
   (getBranchReviewStatuses as jest.Mock).mockResolvedValue([
     "open",
     "open",

@@ -39,12 +39,12 @@ export type BranchT = EntityT & {
   branchOverallReviewStatus: BranchOverallReviewStatusT;
   branchTitle: string;
   collaboratorIDs: idT[];
-  discussionIDs: idT[];
+  discussionContainerID: idT;
   projectPostID: idT;
   renderStatus: RenderStatusT;
   reviewIDs: idT[];
   updatedCompletionStatus: ProjectCompletionStatusT;
-  updatedScientificFields: idT[];
+  updatedScientificFieldTagIDs: idT[];
 };
 
 export type BranchReviewT = EntityT & {
@@ -89,7 +89,7 @@ export type PostCollaboratorT = EntityT & {
 
 export type PostT = EntityT & {
   collaboratorIDs: idT[];
-  discussionIDs: idT[];
+  discussionContainerID: idT;
   postType: PostTypeT;
   renderStatus: RenderStatusT;
   scientificFieldTagIDs: idT[];

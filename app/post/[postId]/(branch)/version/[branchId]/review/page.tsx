@@ -1,7 +1,7 @@
 import { idStringToIDT } from "@/lib/string-utils";
 import PeerReviewInput from "../../../../(branch)/version/[branchId]/components/peer-review/peer-review-input";
 import BranchCard from "../../../../(branch)/version/[branchId]/components/branch-parts/branch-card";
-import { getBranchData } from "@/lib/api/services/branch-api";
+import { fetchBranchData } from "@/lib/api/services/branch-api";
 
 /**
  * Page with branch version comparison and input for a new peer review
@@ -15,7 +15,7 @@ export default async function BranchReview({
 }) {
   // TODO remove disable
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const data = await getBranchData(idStringToIDT(params.branchId));
+  const data = await fetchBranchData(idStringToIDT(params.branchId));
 
   return (
     <div className="flex flex-col space-y-4 w-full">

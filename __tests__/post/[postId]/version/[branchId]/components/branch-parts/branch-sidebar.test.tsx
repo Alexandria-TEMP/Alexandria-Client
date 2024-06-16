@@ -4,7 +4,7 @@ import AuthorCardList from "@/post/[postId]/components/cards/author-card-list";
 import PostCardMini from "@/post/[postId]/components/cards/post-card-mini";
 import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";
-import { getBranchData } from "@/lib/api/services/branch-api";
+import { fetchBranchData } from "@/lib/api/services/branch-api";
 import { dummyBranches } from "~/__tests__/__utils__/dummys";
 
 jest.mock("@/lib/api/services/branch-api");
@@ -13,7 +13,7 @@ jest.mock("@/post/[postId]/components/cards/author-card-list");
 jest.mock("@/post/[postId]/components/cards/post-card-mini");
 
 describe("BranchSidebarTest", () => {
-  (getBranchData as jest.Mock).mockReturnValue(dummyBranches["accepted"]);
+  (fetchBranchData as jest.Mock).mockReturnValue(dummyBranches["accepted"]);
   (ChipList as jest.Mock).mockReturnValue(<p>ChipList</p>);
   (AuthorCardList as jest.Mock).mockReturnValue(<p>AuthorCardList</p>);
   (PostCardMini as jest.Mock).mockReturnValue(<p>PostCardMini</p>);

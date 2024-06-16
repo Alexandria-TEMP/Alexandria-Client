@@ -1,4 +1,4 @@
-import { getBranchData } from "@/lib/api/services/branch-api";
+import { fetchBranchData } from "@/lib/api/services/branch-api";
 import BranchCardHeader from "@/post/[postId]/(branch)/version/[branchId]/components/branch-parts/branch-card-header";
 import { expect, describe, it } from "@jest/globals";
 import { Card } from "@nextui-org/react";
@@ -20,7 +20,7 @@ describe("BranchCardHeader", () => {
     status: "accepted" | "rejected" | "open",
   ) => {
     return async () => {
-      (getBranchData as jest.Mock).mockResolvedValue(dummyBranches[status]);
+      (fetchBranchData as jest.Mock).mockResolvedValue(dummyBranches[status]);
       const { container } = render(
         <Card>
           <BranchCardHeader
