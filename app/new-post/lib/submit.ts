@@ -65,7 +65,7 @@ export const submitHandler = async (
       if (newProjectPost.openBranchIDs.length <= 0)
         throw Error("No initial branch created.");
       await postBranchesIdUpload(newProjectPost.openBranchIDs[0], data.file);
-      router.push("/post/" + newProjectPost.postID); // TODO project post id or post id?
+      router.push("/post/p-" + newProjectPost.id);
       // } catch (e) {
       // TODO delete post if error uploading files, without that this try catch block is not necessary
       // setIsLoading(false);
@@ -75,7 +75,7 @@ export const submitHandler = async (
       // try {
       const newPost = await postPosts(postCreationForm);
       await postPostsIdUpload(newPost.id, data.file);
-      router.push("/post/" + newPost.id);
+      router.push("/post/r-" + newPost.id);
       // } catch (e) {
       // TODO delete post if error uploading files, without that this try catch block is not necessary
       // setIsLoading(false);
