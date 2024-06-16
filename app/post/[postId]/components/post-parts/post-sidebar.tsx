@@ -1,6 +1,5 @@
 import fetchPostData from "@/lib/api/services/post-api";
 import ChipList from "@/components/common/chip-list";
-// import AuthorCardList from "../cards/author-card-list";
 import Sidebar from "@/components/layout/sidebar";
 import { idT } from "@/lib/types/api-types";
 import { idPostUnionT } from "@/lib/types/post-union";

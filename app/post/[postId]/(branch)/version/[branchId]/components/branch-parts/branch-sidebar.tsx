@@ -1,9 +1,9 @@
 import ChipList from "@/components/common/chip-list";
 import Sidebar from "@/components/layout/sidebar";
 import { fetchBranchData } from "@/lib/api/services/branch-api";
+import { fetchScientificFields } from "@/lib/api/services/fields-api";
 import { idT } from "@/lib/types/api-types";
 import { idBranchUnionT } from "@/lib/types/branch-union";
-import AuthorCardList from "@/post/[postId]/components/cards/author-card-list";
 import PostCardMini from "@/post/[postId]/components/cards/post-card-mini";
 
 /**
@@ -17,6 +17,9 @@ export default async function BranchSidebar({
   isClosed,
 }: Readonly<idBranchUnionT>) {
   const data = await fetchBranchData({ id: id as idT, isClosed });
+  const scientificFields = await fetchScientificFields(
+    data.branch.updatedScientificFieldTagIDs,
+  );
 
   return (
     <Sidebar
@@ -26,15 +29,16 @@ export default async function BranchSidebar({
           node: <PostCardMini id={data.branch.projectPostID} isProject />,
         },
         {
-          title: "Scientific fields",
+          title: "Updated scientific fields",
           node: (
-            <ChipList labels={data.updatedScientificFields.map(toString)} />
+            <ChipList labels={scientificFields.map((f) => f.scientificField)} />
           ),
         },
-        {
-          title: "Contributors",
-          node: <AuthorCardList ids={data.collaboratorIDs} />,
-        },
+        // TODO
+        // {
+        //   title: "Contributors",
+        //   node: <AuthorCardList ids={data.collaboratorIDs} />,
+        // },
       ]}
     />
   );
