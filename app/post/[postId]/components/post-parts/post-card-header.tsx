@@ -15,6 +15,7 @@ import { getStandardReviewStatus } from "@/lib/get-format";
  * Header for post contents card. Uses CardHeader, so it must be child of a Card.
  * Includes title, main metadata, and action buttons.
  * @param id Post ID
+ * @param isProject indicates if post is a project post
  * @param hideContribute Hides contribute button and dropdown
  */
 export default async function PostCardHeader({

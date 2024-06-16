@@ -9,6 +9,7 @@ import { fetchScientificFields } from "@/lib/api/services/fields-api";
 /**
  * Sidebar that is shown in a Post's page. Includes most of post's metadata.
  * @param id Post ID
+ * @param isProject indicates if post is a project post
  */
 export default async function PostSidebar({
   id,
