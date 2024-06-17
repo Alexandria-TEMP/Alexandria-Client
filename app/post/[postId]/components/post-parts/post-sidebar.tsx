@@ -4,7 +4,7 @@ import ChipList from "@/components/common/chip-list";
 import Sidebar from "@/components/layout/sidebar";
 import { idT } from "@/lib/types/api-types";
 import { idPostUnionT } from "@/lib/types/post-union";
-import { fetchScientificFields } from "@/lib/api/services/fields-api";
+import { fetchScientificFieldsFromContainer } from "@/lib/api/services/fields-api";
 
 /**
  * Sidebar that is shown in a Post's page. Includes most of post's metadata.
@@ -15,8 +15,13 @@ export default async function PostSidebar({
   isProject,
 }: Readonly<idPostUnionT>) {
   const data = await fetchPostData({ id: id as idT, isProject });
-  const scientificFields = await fetchScientificFields(
-    data.post.scientificFieldTagIDs,
+  console.log(
+    "scientificFieldTagContainerID in post sidebar" +
+      data.post.scientificFieldTagContainerID,
+  );
+
+  const scientificFields = await fetchScientificFieldsFromContainer(
+    data.post.scientificFieldTagContainerID,
   );
 
   return (

@@ -47,7 +47,7 @@ export const submitHandler = async (
       anonymous: data.anonymous,
       authorMemberIDs: data.authorMemberIDs,
       postType: data.postType,
-      scientificFieldTags: data.scientificFieldTagIDs,
+      scientificFieldTagIDs: data.scientificFieldTagIDs,
       title: data.title,
     };
     const projectPostCreationForm = {

@@ -1,8 +1,9 @@
 "use client";
 
 import useSWR, { SWRResponse } from "swr";
-import { ScientificFieldTagT } from "../../types/api-types";
+import { ScientificFieldTagT, idT } from "../../types/api-types";
 import { baseUrl, validateResponse } from "../api-common";
+import { fetchScientificFieldsFromContainer } from "../services/fields-api";
 
 /**
  * Hook that fetches all scientific fields from the database, using SWR for caching, loading and error states
@@ -21,4 +22,17 @@ export function useScientificFields(): SWRResponse<
       (await response.json()) as ScientificFieldTagT[];
     return scientificFieldTags;
   });
+}
+
+/**
+ * Hook that gets all the scientifici field tag objects in a container, by id
+ * @param id of the container
+ * @returns an SWR response containing an array of scientific field tag id, loading and erorr states
+ */
+export function useScientificFieldsByContainer(
+  id: idT,
+): SWRResponse<ScientificFieldTagT[], Error> {
+  return useSWR({ cid: id }, (key) =>
+    fetchScientificFieldsFromContainer(key.cid),
+  );
 }

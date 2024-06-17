@@ -26,7 +26,7 @@ import { MemberT, idT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
 import { getFieldName, getMemberName } from "@/lib/get-format";
 import ErrorModal from "@/components/form/error-modal";
-import { useFetchPost } from "@/lib/api/hooks/post-hooks";
+import { useFetchPostWithTags } from "@/lib/api/hooks/post-hooks";
 import { pathIDToPostUnionID } from "@/lib/id-parser";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
@@ -36,7 +36,7 @@ const loggedIn: MemberT = {
   firstName: "Metal Bar",
   institution: "TU Delft",
   lastName: "Clanging",
-  scientificFieldTagIDs: [],
+  scientificFieldTagContainerID: 1,
 };
 
 /**
@@ -48,7 +48,7 @@ export default function ProposeChanges({
   params: { postId: string };
 }) {
   const projectPostId = pathIDToPostUnionID(params.postId);
-  const postReq = useFetchPost(projectPostId);
+  const postReq = useFetchPostWithTags(projectPostId);
 
   /* create form state */
   const { handleSubmit, formState, control, getValues, trigger, setValue } =
@@ -73,10 +73,7 @@ export default function ProposeChanges({
   useEffect(() => {
     if (!!postReq.data && !postReq.isLoading && !!postReq.data.projectPost) {
       setValue("updatedPostTitle", postReq.data.post.title);
-      setValue(
-        "updatedScientificFieldIDs",
-        postReq.data.post.scientificFieldTagIDs,
-      );
+      setValue("updatedScientificFieldIDs", postReq.data.scientificFieldTagIDs);
       setValue(
         "updatedCompletionStatus",
         postReq.data.projectPost?.projectCompletionStatus,

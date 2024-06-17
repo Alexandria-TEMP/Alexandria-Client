@@ -39,12 +39,14 @@ export type BranchT = EntityT & {
   branchOverallReviewStatus: BranchOverallReviewStatusT;
   branchTitle: string;
   collaboratorIDs: idT[];
-  discussionIDs: idT[];
+  discussionContainerID: idT;
   projectPostID: idT;
   renderStatus: RenderStatusT;
   reviewIDs: idT[];
+  updatedAt: string;
+  createdAt: string;
   updatedCompletionStatus: ProjectCompletionStatusT;
-  updatedScientificFields: idT[];
+  updatedScientificFieldTagContainerID: idT;
 };
 
 export type BranchReviewT = EntityT & {
@@ -74,7 +76,7 @@ export type DiscussionT = EntityT & {
 };
 
 export type MemberT = EntityT & {
-  scientificFieldTagIDs: idT[];
+  scientificFieldTagContainerID: idT;
   email: string;
   firstName: string;
   institution: string;
@@ -89,11 +91,13 @@ export type PostCollaboratorT = EntityT & {
 
 export type PostT = EntityT & {
   collaboratorIDs: idT[];
-  discussionIDs: idT[];
+  createdAt: string;
+  discussionContainerID: idT[];
   postType: PostTypeT;
   renderStatus: RenderStatusT;
-  scientificFieldTagIDs: idT[];
+  scientificFieldTagContainerID: idT;
   title: string;
+  updatedAt: string;
 };
 
 export type ProjectPostT = EntityT & {
@@ -111,13 +115,17 @@ export type ScientificFieldTagT = EntityT & {
   subtagIDs: idT[];
 };
 
+export type ScientificFieldTagContainerT = EntityT & {
+  scientificFieldTagIDs: idT[];
+};
+
 // Forms
 
 export type PostCreationFormT = {
   anonymous: boolean;
   authorMemberIDs: idT[];
   postType: PostTypeT;
-  scientificFieldTags: idT[];
+  scientificFieldTagIDs: idT[];
   title: string;
 };
 
