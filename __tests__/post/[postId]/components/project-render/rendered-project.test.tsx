@@ -1,21 +1,28 @@
 import { expect, describe, it } from "@jest/globals";
 import { act, render, screen } from "@testing-library/react";
-import { getRender } from "@/lib/api-calls/version-api";
+import { useRender } from "@/lib/api/hooks/quarto-hooks";
 import { dummyHtml } from "~/__tests__/__utils__/dummys";
-import RenderedProject, {
+import RenderedQuarto, {
   iframeTitle,
-} from "@/post/[postId]/components/project-render/rendered-project";
+} from "@/post/[postId]/components/render/rendered-quarto";
 
-jest.mock("@/lib/api-calls/version-api");
+jest.mock("@/lib/api/hooks/quarto-hooks");
 
-describe("RenderedProject", () => {
+describe("RenderedQuarto", () => {
   const setupGoodWeather = async () => {
-    (getRender as jest.Mock).mockResolvedValue(dummyHtml.html);
+    (useRender as jest.Mock).mockReturnValue({
+      data: dummyHtml.html,
+      error: undefined,
+      isPending: false,
+      isLoading: false,
+    });
 
     // Disable reason: Need the async keyword for act to work properly
     // but render is not awaitable so eslint complains
     // eslint-disable-next-line @typescript-eslint/require-await
-    const content = await act(async () => render(<RenderedProject id="1" />));
+    const content = await act(async () =>
+      render(<RenderedQuarto id={1} container="branch" />),
+    );
 
     const iframe = content.getByTitle(iframeTitle) as HTMLIFrameElement;
     return { content, iframe };
@@ -23,12 +30,19 @@ describe("RenderedProject", () => {
 
   const setupBadWeather = async () => {
     const errorMessage = "this is a test failure!";
-    (getRender as jest.Mock).mockRejectedValue(errorMessage);
+    (useRender as jest.Mock).mockReturnValue({
+      data: undefined,
+      error: errorMessage,
+      isPending: false,
+      isLoading: false,
+    });
 
     // Disable reason: Need the async keyword for act to work properly
     // but render is not awaitable so eslint complains
     // eslint-disable-next-line @typescript-eslint/require-await
-    const content = await act(async () => render(<RenderedProject id="1" />));
+    const content = await act(async () =>
+      render(<RenderedQuarto id={1} container="branch" />),
+    );
 
     const error = screen.getByTestId("render-error");
     return { errorMessage, content, error };

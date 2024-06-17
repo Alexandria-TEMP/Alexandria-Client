@@ -3,9 +3,12 @@ import {
   PostT,
   BranchReviewT,
   MemberT,
-  ScientificFieldT,
+  ScientificFieldTagT,
+  DiscussionContainerT,
+  ProjectPostT,
 } from "@/lib/types/api-types";
 import { FileTreeT } from "@/lib/types/file-tree";
+import { PostUnionT } from "@/lib/types/post-union";
 
 export const dummyDiscussion = {
   id: "4321",
@@ -43,36 +46,43 @@ export const dummyMembers: MemberT[] = [
   },
 ];
 
-// TODO improve
 export const dummyPost: PostT = {
   title: "Post title",
   renderStatus: "success",
-  // status: "Open for review",
   collaboratorIDs: [1, 2],
-  // authors: ["1", "2"],
-  // contributors: ["1", "2"],
-  // anonymous: false,
-  // feedbackPreferences: "Formal feedback",
-  // completionStatus: "Ideation",
-  // createdAt: "10 May 2024",
-  // currentVersion: {
-  //   id: "1",
   discussionIDs: [1],
-  // },
   id: 43125,
   postType: "reflection",
-  scientificFields: [
-    "Computer Science",
-    "Mathematics",
-    "Theory of computation",
-  ],
-  // updatedAt: "04 June 2024",
+  scientificFieldTagIDs: [1, 2],
+};
+
+export const dummyProjectPost: ProjectPostT = {
+  id: 4215,
+  closedBranchIDs: [13],
+  openBranchIDs: [7],
+  postID: dummyPost.id,
+  postReviewStatus: "reviewed",
+  projectCompletionStatus: "completed",
+  projectFeedbackPreference: "formal feedback",
+};
+
+export const dummyPostUnion: {
+  withProject: PostUnionT;
+  noProject: PostUnionT;
+} = {
+  withProject: {
+    post: { ...dummyPost, postType: "project" },
+    projectPost: dummyProjectPost,
+  },
+  noProject: { post: dummyPost },
 };
 
 // TODO improve
-export const dummyScientificField: ScientificFieldT = {
+export const dummyScientificField: ScientificFieldTagT = {
   id: 1,
-  label: "Computer Science",
+  scientificField: "Computer Science",
+  parentID: undefined,
+  subtagIDs: [],
 };
 
 // TODO improve
@@ -146,7 +156,7 @@ export const dummyHtml = {
   `,
 };
 
-export const dummyVersion = {
+export const dummyDiscussionContainer: DiscussionContainerT = {
   id: 1,
   discussionIDs: [1, 2, 3, 4],
 };

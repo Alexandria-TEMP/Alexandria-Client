@@ -1,7 +1,7 @@
 import {
   MemberT,
   BranchOverallReviewStatusT,
-  ScientificFieldT,
+  ScientificFieldTagT,
   BranchReviewDecisionT,
   ProjectReviewStatusT,
 } from "./types/api-types";
@@ -21,8 +21,8 @@ export function getMemberName(i: MemberT | undefined) {
  * @param i tag, may be undefined
  * @returns tag's name/label or "Not found"
  */
-export function getFieldName(i: ScientificFieldT | undefined) {
-  return i === undefined ? "Not found" : i.label;
+export function getFieldName(i: ScientificFieldTagT | undefined) {
+  return i === undefined ? "Not found" : i.scientificField;
 }
 
 /**
@@ -30,29 +30,30 @@ export function getFieldName(i: ScientificFieldT | undefined) {
  * standardized naming scheme, in a short or user-facing
  * descriptive version.
  * @param status the status returned from API
- * @param descriptive get longer text to present to users
  */
 export function getStandardReviewStatus(
   status:
     | BranchOverallReviewStatusT
     | BranchReviewDecisionT
     | ProjectReviewStatusT,
-  descriptive?: boolean,
-) {
+): {
+  short: "open" | "accepted" | "rejected" | "unknown";
+  descriptive: string;
+} {
   if (status === "open for review" || status === "open") {
-    return descriptive ? "open for review" : "open";
+    return { descriptive: "open for review", short: "open" };
   }
   if (
     status === "approved" ||
     status === "peer reviewed" ||
     status === "reviewed"
   ) {
-    return descriptive ? "peer reviewed" : "accepted";
+    return { descriptive: "peer reviewed", short: "accepted" };
   }
   if (status === "rejected" || status === "revision needed") {
-    return descriptive ? "revision needed" : "rejected";
+    return { descriptive: "revision needed", short: "rejected" };
   }
-  return descriptive ? "unknown review status" : "unknown";
+  return { descriptive: "unknown review status", short: "unknown" };
 }
 
 /**

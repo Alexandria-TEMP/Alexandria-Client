@@ -14,13 +14,21 @@ export function capitalizeFirstLetter(str: string) {
 }
 
 /**
- * Converts ID from string to idType. Throws exception if string is not an ID.
+ * Converts ID from string to idT. Throws exception if string is not a valid idT.
  * @param idStr ID in string format
- * @returns ID in idType format
+ * @returns ID in idT format
  */
-export function parseId(idStr: string): idT {
-  // TODO change to consider more information in URL
+export function idStringToIDT(idStr: string): idT {
   const id = Number(idStr);
   if (isNaN(id)) throw Error(`id ${idStr} is NaN`);
   return id;
+}
+
+/**
+ * @param date any string representation of a date
+ * @returns [toLocaleDateString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString)
+ *          representation of date
+ */
+export function formatDateString(date: string): string {
+  return new Date(date).toLocaleDateString();
 }

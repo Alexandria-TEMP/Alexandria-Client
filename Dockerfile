@@ -2,6 +2,9 @@ ARG node_version=20-alpine
 #or 20.12
 FROM node:${node_version} as base
 
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
+
 # Create directory in container
 WORKDIR /app
 
@@ -25,20 +28,8 @@ ENV NEXT_TELEMETRY_DISABLED 1
 # Expose port
 EXPOSE 3000
 
-# TODO uncomment following lines to add back stages, and remove preceding line
-# reason for commenting out in development: `docker compose up dev` is inconsistent with
-# command for backend, which is just `docker compose up`, and this is causing confusion
-
-# Test stage (no e2e testing)
-# FROM base AS test
-# CMD \
-#     npm run lint && \
-#     npm run test
-
 # Development stage
 FROM base AS dev
 CMD npm run dev
 
-# Production stage
-# FROM base AS prod
-# CMD npm run build && npm run start
+# TODO production

@@ -4,10 +4,10 @@ import AuthorCardList from "@/post/[postId]/components/cards/author-card-list";
 import PostCardMini from "@/post/[postId]/components/cards/post-card-mini";
 import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";
-import { getBranchData } from "@/lib/api-calls/branch-api";
+import { getBranchData } from "@/lib/api/services/branch-api";
 import { dummyBranches } from "~/__tests__/__utils__/dummys";
 
-jest.mock("@/lib/api-calls/branch-api");
+jest.mock("@/lib/api/services/branch-api");
 jest.mock("@/components/common/chip-list");
 jest.mock("@/post/[postId]/components/cards/author-card-list");
 jest.mock("@/post/[postId]/components/cards/post-card-mini");

@@ -1,34 +1,30 @@
-import getPostData from "../../../lib/api-calls/post-api";
 import PostCardHeader from "../components/post-parts/post-card-header";
 import DiscussionSection from "../components/discussions/discussion-section";
 import { Card, CardBody } from "@nextui-org/react";
-import RenderedProject from "../components/project-render/rendered-project";
-import { parseId } from "@/lib/string-utils";
+import RenderedQuarto from "../components/render/rendered-quarto";
+import { pathIDToPostUnionID } from "@/lib/id-parser";
+import { idT } from "@/lib/types/api-types";
 
 /**
  * Page that shows contents of a Post.
  * @param params.postId Post ID, taken from route's dynamic segment /[postId].
  * Read more: https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
  */
-export default async function Post({ params }: { params: { postId: string } }) {
-  // TODO remove disable
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const data = await getPostData(parseId(params.postId));
-
+export default function Post({ params }: { params: { postId: string } }) {
+  const postUnionID = pathIDToPostUnionID(params.postId);
   return (
     <div className="flex flex-col space-y-4 w-full">
       <Card>
-        <PostCardHeader id={parseId(params.postId)} />
+        <PostCardHeader
+          id={postUnionID.id as idT}
+          isProject={postUnionID.isProject}
+          hideContribute={!postUnionID.isProject}
+        />
         <CardBody>
-          <RenderedProject
-            id={0} // TODO {data.currentVersion.id}
-          />
+          <RenderedQuarto id={postUnionID.id as idT} container="post" />
         </CardBody>
       </Card>
-
-      <DiscussionSection
-        versionId={0} // TODO {parseId(data.currentVersion.id)}
-      />
+      <DiscussionSection id={1} /> {/* TODO get proper ID */}
     </div>
   );
 }

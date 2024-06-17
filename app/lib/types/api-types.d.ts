@@ -39,12 +39,14 @@ export type BranchT = EntityT & {
   branchOverallReviewStatus: BranchOverallReviewStatusT;
   branchTitle: string;
   collaboratorIDs: idT[];
-  discussionIDs: idT[];
+  discussionContainerID: idT;
   projectPostID: idT;
   renderStatus: RenderStatusT;
   reviewIDs: idT[];
+  updatedAt: string;
+  createdAt: string;
   updatedCompletionStatus: ProjectCompletionStatusT;
-  updatedScientificFields: idT[];
+  updatedScientificFieldTagContainerID: idT;
 };
 
 export type BranchReviewT = EntityT & {
@@ -74,7 +76,7 @@ export type DiscussionT = EntityT & {
 };
 
 export type MemberT = EntityT & {
-  scientificFields: string[]; // TODO change to IDs
+  scientificFieldTagContainerID: idT;
   email: string;
   firstName: string;
   institution: string;
@@ -89,11 +91,13 @@ export type PostCollaboratorT = EntityT & {
 
 export type PostT = EntityT & {
   collaboratorIDs: idT[];
-  discussionIDs: idT[];
+  createdAt: string;
+  discussionContainerID: idT[];
   postType: PostTypeT;
   renderStatus: RenderStatusT;
-  scientificFields: string[]; // TODO change to IDs
+  scientificFieldTagContainerID: idT;
   title: string;
+  updatedAt: string;
 };
 
 export type ProjectPostT = EntityT & {
@@ -105,7 +109,12 @@ export type ProjectPostT = EntityT & {
   projectFeedbackPreference: ProjectFeedbackPreferenceT;
 };
 
-export type ScientificFieldT = EntityT & {
-  // TODO
-  label: string;
+export type ScientificFieldTagT = EntityT & {
+  parentID?: idT;
+  scientificField: string;
+  subtagIDs: idT[];
+};
+
+export type ScientificFieldTagContainerT = EntityT & {
+  scientificFieldTagIDs: idT[];
 };

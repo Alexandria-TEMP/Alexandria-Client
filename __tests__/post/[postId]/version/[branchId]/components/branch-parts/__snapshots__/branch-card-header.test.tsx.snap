@@ -63,7 +63,9 @@ exports[`BranchCardHeader matches snapshot when status is accepted 1`] = `
         </svg>
       </button>
       <button
-        class="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground data-[hover=true]:opacity-hover"
+        class="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium opacity-disabled pointer-events-none [&>svg]:max-w-[theme(spacing.8)] data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground data-[hover=true]:opacity-hover"
+        data-disabled="true"
+        disabled=""
         type="button"
       >
         Fork
@@ -103,7 +105,7 @@ exports[`BranchCardHeader matches snapshot when status is accepted 1`] = `
           <span
             class="flex-1 text-inherit font-normal px-2"
           >
-            Accepted
+            Peer reviewed
           </span>
         </div>
       </div>
@@ -257,7 +259,7 @@ exports[`BranchCardHeader matches snapshot when status is open 1`] = `
           <span
             class="flex-1 text-inherit font-normal px-2"
           >
-            Open
+            Open for review
           </span>
         </div>
       </div>
@@ -410,7 +412,7 @@ exports[`BranchCardHeader matches snapshot when status is rejected 1`] = `
           <span
             class="flex-1 text-inherit font-normal px-2"
           >
-            Rejected
+            Revision needed
           </span>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import getMemberData from "@/lib/api-calls/member-api";
+import fetchMemberData from "@/lib/api/services/member-api";
 import { getMemberName } from "@/lib/get-format";
 import { idT } from "@/lib/types/api-types";
 import { IdProp } from "@/lib/types/react-props/id-prop";
@@ -9,7 +9,12 @@ import { User } from "@nextui-org/react";
  * @param id Member ID
  */
 export default async function AuthorCard({ id }: IdProp) {
-  const data = await getMemberData(id as idT);
+  const data = await fetchMemberData(id as idT);
 
-  return <User name={getMemberName(data)} description={data.institution} />;
+  return (
+    // div wrapper is needed for proper centering
+    <div>
+      <User name={getMemberName(data)} description={data.institution} />
+    </div>
+  );
 }

@@ -1,9 +1,9 @@
-import { parseId } from "@/lib/string-utils";
+import { idStringToIDT } from "@/lib/string-utils";
 import DiscussionSection from "@/post/[postId]/components/discussions/discussion-section";
 import PeerReviewSection from "./components/peer-review/peer-review-section";
 import { CardFooter, Divider } from "@nextui-org/react";
 import BranchCard from "./components/branch-parts/branch-card";
-import { getBranchData } from "@/lib/api-calls/branch-api";
+import { getBranchData } from "@/lib/api/services/branch-api";
 
 /**
  * Page with branch version comparison, its reviews and discussion
@@ -15,15 +15,15 @@ export default async function Branch({
 }: {
   params: { postId: string; branchId: string };
 }) {
-  const data = await getBranchData(parseId(params.branchId));
+  const data = await getBranchData(idStringToIDT(params.branchId));
 
   return (
     <div className="flex flex-col space-y-4 w-full">
       <BranchCard
         newVersionId={0} // TODO{data.newVersionID}
         previousVersionId={0} // TODO{data.previousVersionID}
-        postId={parseId(params.postId)}
-        branchId={parseId(params.branchId)}
+        postId={idStringToIDT(params.postId)}
+        branchId={idStringToIDT(params.branchId)}
         footer={
           <CardFooter>
             <div className="w-full">
@@ -33,9 +33,7 @@ export default async function Branch({
           </CardFooter>
         }
       />
-      <DiscussionSection
-        versionId={0} // TODO {data.newVersionID}
-      />
+      <DiscussionSection id={1} /> {/* TODO get proper ID */}
     </div>
   );
 }

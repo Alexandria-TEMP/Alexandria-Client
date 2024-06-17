@@ -2,14 +2,14 @@ import { expect } from "@jest/globals";
 import {
   getBranchData,
   getBranchReviewStatuses,
-} from "@/lib/api-calls/branch-api";
+} from "@/lib/api/services/branch-api";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { dummyBranches } from "~/__tests__/__utils__/dummys";
 import { useRouter } from "next/navigation";
 import userEvent from "@testing-library/user-event";
 import BranchCard from "@/post/[postId]/components/cards/branch-card";
 
-jest.mock("@/lib/api-calls/branch-api");
+jest.mock("@/lib/api/services/branch-api");
 
 // Mock useRouter to spy on push
 const routerPushMock = jest.fn().mockName("router.push()");

@@ -1,10 +1,10 @@
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import { getDiscussionData } from "@/lib/api-calls/discussion-api";
+import { getDiscussionData } from "@/lib/api/services/discussion-api";
 import Discussion from "@/post/[postId]/components/discussions/discussion";
 import { dummyDiscussion } from "~/__tests__/__utils__/dummys";
 
-jest.mock("@/lib/api-calls/discussion-api");
+jest.mock("@/lib/api/services/discussion-api");
 
 describe("Discussion", () => {
   (getDiscussionData as jest.Mock).mockResolvedValue(dummyDiscussion);
