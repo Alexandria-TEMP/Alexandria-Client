@@ -206,7 +206,7 @@ exports[`BranchCardHeader matches snapshot when status is open 1`] = `
           aria-haspopup="true"
           class="group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-small gap-2 [&:not(:first-child):not(:last-child)]:rounded-none px-0 !gap-0 data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground rounded-none first:rounded-s-medium last:rounded-e-medium min-w-10 w-10 h-10 data-[hover=true]:opacity-hover z-10 aria-expanded:scale-[0.97] aria-expanded:opacity-70 subpixel-antialiased"
           data-slot="trigger"
-          id="react-aria-:ra:"
+          id="react-aria-:rg:"
           type="button"
         >
           <svg
@@ -359,7 +359,7 @@ exports[`BranchCardHeader matches snapshot when status is rejected 1`] = `
           aria-haspopup="true"
           class="group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-small gap-2 [&:not(:first-child):not(:last-child)]:rounded-none px-0 !gap-0 data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground rounded-none first:rounded-s-medium last:rounded-e-medium min-w-10 w-10 h-10 data-[hover=true]:opacity-hover z-10 aria-expanded:scale-[0.97] aria-expanded:opacity-70 subpixel-antialiased"
           data-slot="trigger"
-          id="react-aria-:r6:"
+          id="react-aria-:ra:"
           type="button"
         >
           <svg

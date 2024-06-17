@@ -4,16 +4,9 @@ import useSWR, { SWRResponse } from "swr";
 import { parseFileTree } from "../../file-tree-handler";
 import { FileTreeT } from "../../types/file-tree";
 import { QuartoContainerT } from "../../types/quarto-container";
-import { baseUrl, validateResponse } from "../api-common";
+import { validateResponse } from "../api-common";
 import { useMemo } from "react";
-
-/**
- * Builds URL path for quarto project API calls
- * @param container.id post or branch ID
- * @param container.type container type, ie if Quarto project is in a post or branch
- */
-const buildResourcePath = ({ id, type }: QuartoContainerT) =>
-  `${baseUrl}/${type === "branch" ? "branches" : "posts"}/${id}`;
+import { buildResourcePath } from "../services/quarto-api";
 
 /**
  * Fetches HTML render of a Quarto project.
