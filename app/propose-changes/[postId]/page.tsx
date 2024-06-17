@@ -70,7 +70,7 @@ export default function ProposeChanges({
         updatedFeedbackPreferences:
           postReq.data?.projectPost?.projectFeedbackPreference,
         updatedPostTitle: postReq.data?.post.title,
-        updatedScientificFieldIDs: [], // TODO postReq.data?.post.scientificFieldTagIDs, this will not work with scientific field tag containers
+        updatedScientificFieldIDs: postReq.data?.scientificFieldTagIDs,
         newFile: null,
       },
     });
@@ -96,10 +96,17 @@ export default function ProposeChanges({
 
   /* controls for the error dialog for the form submition */
   const errorModal = useDisclosure();
+  const [errorMessage, setErrorMessage] = useState("Unknown error");
 
   /* submit function that also passes the loading and error states */
   const onSubmit: SubmitHandler<FormType> = (data: FormType) =>
-    submitHandler(data, setIsLoading, errorModal.onOpen, router);
+    submitHandler(
+      data,
+      setIsLoading,
+      errorModal.onOpen,
+      setErrorMessage,
+      router,
+    );
 
   /* if the form is being submitted, return the loading page, i could make something fancier in the future */
   if (isLoading) return <GenericLoadingPage />;
@@ -122,7 +129,7 @@ export default function ProposeChanges({
     <>
       <ErrorModal
         modal={errorModal}
-        errorMsg="There was an error submitting your form. Please try again."
+        errorMsg={"Error when submitting: " + errorMessage}
       />
       <form
         // disable reason: this is the intended usage for handleSubmit

@@ -28,6 +28,7 @@ export const submitHandler = async (
   data: FormType,
   setIsLoading: (v: boolean) => void,
   onError: () => void,
+  setErrorMsg: (e: string) => void,
   router: AppRouterInstance,
 ) => {
   try {
@@ -65,6 +66,9 @@ export const submitHandler = async (
 
     setIsLoading(false);
   } catch (error) {
+    if (error instanceof Error) {
+      setErrorMsg(error.message);
+    }
     setIsLoading(false);
     onError();
   }
