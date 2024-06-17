@@ -32,12 +32,14 @@ export type FormType = {
  * @param data form data, as per react-hook-form
  * @param setIsLoading setter for a boolean, representing if the form is submitting
  * @param onError on error passed down from an ErrorModal component, used to open the error modal
+ * @param setErrorMsg on error, set the error message of the state holding variable
  * @param NextRouter for redirecting on successful submit
  */
 export const submitHandler = async (
   data: FormType,
   setIsLoading: (v: boolean) => void,
   onError: () => void,
+  setErrorMsg: (e: string) => void,
   router: AppRouterInstance,
 ) => {
   try {
@@ -91,6 +93,9 @@ export const submitHandler = async (
 
     setIsLoading(false);
   } catch (error) {
+    if (error instanceof Error) {
+      setErrorMsg(error.message);
+    }
     setIsLoading(false);
     onError();
   }
