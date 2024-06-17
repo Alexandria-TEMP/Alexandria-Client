@@ -1,6 +1,7 @@
 import { BranchUnionT, idBranchUnionT } from "@/lib/types/branch-union";
 import { BranchT, ClosedBranchtT, idT } from "../../types/api-types";
 import { baseUrl, validateResponse } from "../api-common";
+import fetchPostData from "./post-api";
 
 /**
  * Fetches branch or closed branch data in a unified object
@@ -25,22 +26,48 @@ export async function fetchBranchData(
   const branchResponse = await fetch(`${baseUrl}/branches/${branchID}`);
   await validateResponse(branchResponse);
 
-  // This additional variable and following check is needed due to a bug in
-  // the backend that returns a property in PascalCase instead of camelCase
-  // if that bug is fixed, change the lines up to the return statement to
-  // const branch = (await branchResponse.json()) as BranchT;
-
-  const branchResponseJson = (await branchResponse.json()) as BranchT & {
-    UpdatedPostTitle: string | undefined;
-  };
-  const branch: BranchT = {
-    ...branchResponseJson,
-    updatedPostTitle:
-      branchResponseJson.updatedPostTitle ??
-      branchResponseJson.UpdatedPostTitle,
-  };
+  const branch = (await branchResponse.json()) as BranchT;
 
   return { branch, closedBranch };
+}
+
+/**
+ * For each of the possible post fields that a branch updates, returns
+ * either the updated data or the current data if updated is null
+ * @param branchData branch whose update we're interested in
+ */
+export async function fetchBranchUpdatedFieldsFallback(
+  branchData: BranchUnionT,
+) {
+  const branch = branchData.branch;
+
+  if (
+    branch.updatedPostTitle &&
+    branch.updatedCompletionStatus &&
+    branch.updatedScientificFieldTagContainerID
+  ) {
+    return {
+      postTitle: branch.updatedPostTitle,
+      completionStatus: branch.updatedCompletionStatus,
+      scientificFieldTagContainerID:
+        branch.updatedScientificFieldTagContainerID,
+    };
+  }
+
+  const postData = await fetchPostData({
+    id: branch.projectPostID,
+    isProject: true,
+  });
+
+  return {
+    postTitle: branch.updatedPostTitle ?? postData.post.title,
+    completionStatus:
+      branch.updatedCompletionStatus ??
+      postData.projectPost!.projectCompletionStatus,
+    scientificFieldTagContainerID:
+      branch.updatedScientificFieldTagContainerID ??
+      postData.post.scientificFieldTagContainerID,
+  };
 }
 
 /**

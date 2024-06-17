@@ -35,7 +35,7 @@ export type BranchCollaboratorT = EntityT & {
 };
 
 export type BranchT = EntityT & {
-  updatedPostTitle: string;
+  updatedPostTitle: string | null;
   branchOverallReviewStatus: BranchOverallReviewStatusT;
   branchTitle: string;
   collaboratorIDs: idT[];
@@ -45,8 +45,8 @@ export type BranchT = EntityT & {
   reviewIDs: idT[];
   updatedAt: string;
   createdAt: string;
-  updatedCompletionStatus: ProjectCompletionStatusT;
-  updatedScientificFieldTagContainerID: idT;
+  updatedCompletionStatus: ProjectCompletionStatusT | null;
+  updatedScientificFieldTagContainerID: idT | null;
 };
 
 export type BranchReviewT = EntityT & {
@@ -60,7 +60,6 @@ export type BranchReviewT = EntityT & {
 export type ClosedBranchtT = EntityT & {
   branchID: idT;
   branchReviewDecision: BranchReviewDecisionT;
-
   projectPostID: idT;
   supercededBranchID: idT;
 };

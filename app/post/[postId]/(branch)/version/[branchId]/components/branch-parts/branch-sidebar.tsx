@@ -1,6 +1,9 @@
 import ChipList from "@/components/common/chip-list";
 import Sidebar from "@/components/layout/sidebar";
-import { fetchBranchData } from "@/lib/api/services/branch-api";
+import {
+  fetchBranchData,
+  fetchBranchUpdatedFieldsFallback,
+} from "@/lib/api/services/branch-api";
 import { fetchBranchCollaboratorsMemberIDs } from "@/lib/api/services/collaborator-api";
 import { fetchScientificFieldsFromContainer } from "@/lib/api/services/fields-api";
 import { idT } from "@/lib/types/api-types";
@@ -19,11 +22,12 @@ export default async function BranchSidebar({
   isClosed,
 }: Readonly<idBranchUnionT>) {
   const data = await fetchBranchData({ id: id as idT, isClosed });
-  const scientificFields = await fetchScientificFieldsFromContainer(
-    data.branch.updatedScientificFieldTagContainerID,
-  );
   const collaboratorMemberIDs = await fetchBranchCollaboratorsMemberIDs(
     id as idT,
+  );
+  const scientificFields = await fetchScientificFieldsFromContainer(
+    (await fetchBranchUpdatedFieldsFallback(data))
+      .scientificFieldTagContainerID,
   );
 
   return (
