@@ -1,5 +1,9 @@
-import { ScientificFieldTagT, idT } from "../../types/api-types";
-import { baseUrl } from "../api-common";
+import {
+  ScientificFieldTagContainerT,
+  ScientificFieldTagT,
+  idT,
+} from "../../types/api-types";
+import { baseUrl, validateResponse } from "../api-common";
 
 /**
  * TODO jsdoc when properly implemented
@@ -50,4 +54,30 @@ export async function fetchScientificFields(
   }
 
   return tags;
+}
+
+/**
+ * Fetch scientific field tag container
+ * @param id of the container
+ * @returns container object
+ */
+export async function fetchScientificFieldContainer(
+  id: idT,
+): Promise<ScientificFieldTagContainerT> {
+  const res = await fetch(`${baseUrl}/tags/scientific/containers/${id}`);
+  await validateResponse(res);
+  const container = (await res.json()) as ScientificFieldTagContainerT;
+  return container;
+}
+
+/**
+ * Method that gets the scientific fiels from a container
+ * @param id container id
+ * @returns a list of scientific field tags in that container
+ */
+export async function fetchScientificFieldsFromContainer(
+  id: idT,
+): Promise<ScientificFieldTagT[]> {
+  const container = await fetchScientificFieldContainer(id);
+  return await fetchScientificFields(container.scientificFieldTagIDs);
 }

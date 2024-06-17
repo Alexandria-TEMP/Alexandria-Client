@@ -14,12 +14,14 @@ export async function getBranchData(id: idT): Promise<BranchT> {
     branchOverallReviewStatus: "open for review",
     branchTitle: "",
     collaboratorIDs: [],
-    discussionIDs: [],
+    discussionContainerID: 1,
+    updatedAt: "17/06/2024",
+    createdAt: "17/06/2024",
     renderStatus: "failure",
     projectPostID: 1,
     reviewIDs: [],
     updatedCompletionStatus: "idea",
-    updatedScientificFields: [],
+    updatedScientificFieldTagContainerID: 1,
   };
   // if (id == 1)
   //   return {
