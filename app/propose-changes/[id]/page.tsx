@@ -35,7 +35,7 @@ const loggedIn: MemberT = {
   firstName: "Metal Bar",
   institution: "TU Delft",
   lastName: "Clanging",
-  scientificFieldTagIDs: [],
+  scientificFieldTagContainerID: 1,
 };
 
 /**
@@ -46,12 +46,14 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
     "/fake/api",
     () => ({
       title: "Post title",
-      discussionIDs: [],
+      discussionContainerID: 1,
       renderStatus: "failure",
       collaboratorIDs: [1, 2],
       id: 1,
       postType: "reflection",
-      scientificFieldTagIDs: [1, 2, 3],
+      scientificFieldTagContainerID: 1,
+      createdAt: "mem",
+      updatedAt: "hem",
     }),
   );
 
@@ -75,9 +77,9 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
         // postReq.data
         //   ? postReq.data.feedbackPreferences
         //   : "[Loading...]",
-        updatedScientificFields: postReq.data
-          ? postReq.data.scientificFieldTagIDs
-          : [],
+        // updatedScientificFields: postReq.data
+        //   ? postReq.data.scientificFieldTagIDs
+        //   : [],
         newFile: null,
       },
     });
@@ -86,7 +88,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
   useEffect(() => {
     if (!!postReq.data && !postReq.isLoading) {
       setValue("updatedTitle", postReq.data.title);
-      setValue("updatedScientificFields", postReq.data.scientificFieldTagIDs);
+      // setValue("updatedScientificFields", postReq.data.scientificFieldTagIDs);
       setValue("updatedCompletionStatus", ""); // TODO postReq.data.completionStatus);
       setValue("updatedFeedbackPreferences", ""); // TODO postReq.data.feedbackPreferences);
     }

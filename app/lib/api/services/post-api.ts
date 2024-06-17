@@ -21,8 +21,8 @@ export default async function fetchPostData(
     projectPost = (await projectPostResponse.json()) as ProjectPostT;
   }
 
-  const postId = (id.isProject ? projectPost?.postID : id.id) as idT;
-  const postResponse = await fetch(`${baseUrl}/posts/${postId}`);
+  const postID = projectPost?.postID ?? (id.id as idT);
+  const postResponse = await fetch(`${baseUrl}/posts/${postID}`);
   await validateResponse(postResponse);
 
   const post = (await postResponse.json()) as PostT;

@@ -30,7 +30,7 @@ const loggedIn: MemberT = {
   firstName: "Metal Bar",
   institution: "TU Delft",
   lastName: "Clanging",
-  scientificFieldTagIDs: [],
+  scientificFieldTagContainerID: 1,
 };
 
 /**
