@@ -1,8 +1,16 @@
 import {
+  postBranches,
+  postBranchesIdUpload,
+} from "@/lib/api/services/branch-api";
+import { branchUnionIDToPathID, postUnionIDToPathID } from "@/lib/id-parser";
+import {
+  BranchCreationFormT,
+  BranchT,
   ProjectCompletionStatusT,
   ProjectFeedbackPreferenceT,
   idT,
 } from "@/lib/types/api-types";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export type FormType = {
   anonymous: boolean;
@@ -16,38 +24,46 @@ export type FormType = {
   newFile: File | null;
 };
 
-/**
- * TODO jsdoc when properly implemented
- */
 export const submitHandler = async (
   data: FormType,
   setIsLoading: (v: boolean) => void,
   onError: () => void,
+  router: AppRouterInstance,
 ) => {
   try {
+    if (!data.newFile) throw new Error("No file provided.");
     setIsLoading(true);
-    const jsonData = JSON.stringify({
+
+    const branchCreationForm: BranchCreationFormT = {
       anonymous: data.anonymous,
       collaboratingMemberIDs: data.collaboratingMemberIDs,
-      projctPostID: data.projectPostID,
+      projectPostID: data.projectPostID,
       branchTitle: data.branchTitle,
       updatedCompletionStatus: data.updatedCompletionStatus,
       updatedFeedbackPreferences: data.updatedFeedbackPreferences,
       updatedPostTitle: data.updatedPostTitle,
       updatedScientificFieldIDs: data.updatedScientificFieldIDs,
-    });
-    const fileData = new FormData();
-    if (!data.newFile) throw new Error("Please submit a file");
-    fileData.append("file", data.newFile);
+    };
 
-    // TODO the actual sending of the files, should be two, potentially 3, fetches
-    await new Promise((resolve) => setTimeout(resolve, 300));
-
-    // uncomment if you want to see the error
-    // throw new Error("Please submit a file");
+    // try {
+    const newBranch: BranchT = await postBranches(branchCreationForm);
+    await postBranchesIdUpload(newBranch.id, data.newFile);
+    router.push(
+      "/post/" +
+        postUnionIDToPathID({
+          id: newBranch.projectPostID,
+          isProject: true,
+        }) +
+        "/version/" +
+        branchUnionIDToPathID({ id: newBranch.id, isClosed: false }),
+    );
+    // } catch (e) {
+    //   // TODO delete branch object if error uploading files
+    //   setIsLoading(false);
+    //   onError();
+    // }
 
     setIsLoading(false);
-    alert(jsonData);
   } catch (error) {
     setIsLoading(false);
     onError();

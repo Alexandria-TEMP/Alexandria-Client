@@ -134,3 +134,14 @@ export type ProjectPostCreationFormT = {
   projectCompletionStatus: ProjectCompletionStatusT;
   projectFeedbackPreference: ProjectFeedbackPreferenceT;
 };
+
+export type BranchCreationFormT = {
+  anonymous: boolean;
+  branchTitle: string;
+  collaboratingMemberIDs: idT[];
+  projectPostID: idT;
+  updatedCompletionStatus: ProjectCompletionStatusT;
+  updatedFeedbackPreferences: ProjectFeedbackPreferenceT;
+  updatedPostTitle: string;
+  updatedScientificFieldIDs: idT[];
+};

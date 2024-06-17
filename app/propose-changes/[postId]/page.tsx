@@ -28,6 +28,7 @@ import { getFieldName, getMemberName } from "@/lib/get-format";
 import ErrorModal from "@/components/form/error-modal";
 import { useFetchPostWithTags } from "@/lib/api/hooks/post-hooks";
 import { pathIDToPostUnionID } from "@/lib/id-parser";
+import { useRouter } from "next/navigation";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
 const loggedIn: MemberT = {
@@ -40,13 +41,18 @@ const loggedIn: MemberT = {
 };
 
 /**
- * TODO jsdoc @Miruna
+ * Propose changes / create a new branch page
+ * @param params the id of the project post you want to create a new branch for
+ * @returns the branch creation form
  */
 export default function ProposeChanges({
   params,
 }: {
   params: { postId: string };
 }) {
+  /* router for redirect on (successful) submit */
+  const router = useRouter();
+
   const projectPostId = pathIDToPostUnionID(params.postId);
   const postReq = useFetchPostWithTags(projectPostId);
 
@@ -93,7 +99,7 @@ export default function ProposeChanges({
 
   /* submit function that also passes the loading and error states */
   const onSubmit: SubmitHandler<FormType> = (data: FormType) =>
-    submitHandler(data, setIsLoading, errorModal.onOpen);
+    submitHandler(data, setIsLoading, errorModal.onOpen, router);
 
   /* if the form is being submitted, return the loading page, i could make something fancier in the future */
   if (isLoading) return <GenericLoadingPage />;
