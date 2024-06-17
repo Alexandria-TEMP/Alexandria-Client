@@ -136,7 +136,9 @@ export default function FileTree({
     <FileView
       id={id as idT}
       container={container}
-      path={path.reduce((accum, item) => accum.concat(`/${item}`), "")}
+      path={path
+        .reduce((accum, item) => accum.concat(`${item}/`), "")
+        .slice(0, -1)}
     />
   );
 
