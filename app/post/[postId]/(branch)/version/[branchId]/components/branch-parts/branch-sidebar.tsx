@@ -20,6 +20,7 @@ export default async function BranchSidebar({ id }: IdProp) {
           title: "Version of",
           node: <PostCardMini id={data.projectPostID.toString()} />,
         },
+        // TODO
         // {
         //   title: "Scientific fields",
         //   node: (

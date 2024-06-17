@@ -23,3 +23,12 @@ export function idStringToIDT(idStr: string): idT {
   if (isNaN(id)) throw Error(`id ${idStr} is NaN`);
   return id;
 }
+
+/**
+ * @param date any string representation of a date
+ * @returns [toLocaleDateString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString)
+ *          representation of date
+ */
+export function formatDateString(date: string): string {
+  return new Date(date).toLocaleDateString();
+}

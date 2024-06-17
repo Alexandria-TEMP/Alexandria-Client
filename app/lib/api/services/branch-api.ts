@@ -17,13 +17,13 @@ export async function getBranchData(id: idT): Promise<BranchT> {
     branchTitle: "",
     collaboratorIDs: [],
     discussionContainerID: 1,
+    updatedAt: "17/06/2024",
+    createdAt: "17/06/2024",
     renderStatus: "failure",
     projectPostID: 1,
     reviewIDs: [],
     updatedCompletionStatus: "idea",
     updatedScientificFieldTagContainerID: 1,
-    updatedAt: "",
-    createdAt: "",
   };
   // if (id == 1)
   //   return {

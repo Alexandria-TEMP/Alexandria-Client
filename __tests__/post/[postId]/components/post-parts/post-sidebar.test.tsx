@@ -8,13 +8,20 @@ import {
 } from "~/__tests__/__utils__/dummys";
 import AuthorCardList from "@/post/[postId]/components/cards/author-card-list";
 import { fetchScientificFieldsFromContainer } from "@/lib/api/services/fields-api";
+import { fetchPostCollaboratorsAsSortedMemberIDs } from "@/lib/api/services/collaborator-api";
 
 jest.mock("@/lib/api/services/post-api");
 jest.mock("@/lib/api/services/fields-api");
+jest.mock("@/lib/api/services/collaborator-api");
 jest.mock("@/post/[postId]/components/cards/author-card-list");
 
 describe("PostSidebar", () => {
   (fetchPostData as jest.Mock).mockResolvedValue(dummyPostUnion.withProject);
+  (fetchPostCollaboratorsAsSortedMemberIDs as jest.Mock).mockResolvedValue({
+    author: [1],
+    contributor: [1],
+    reviewer: [1],
+  });
   (fetchScientificFieldsFromContainer as jest.Mock).mockResolvedValue([
     dummyScientificFields[0],
     dummyScientificFields[1],

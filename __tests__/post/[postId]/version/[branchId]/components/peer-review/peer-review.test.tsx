@@ -1,4 +1,4 @@
-import getMemberData from "@/lib/api/services/member-api";
+import fetchMemberData from "@/lib/api/services/member-api";
 import { getReviewData } from "@/lib/api/services/review-api";
 import PeerReview from "@/post/[postId]/(branch)/version/[branchId]/components/peer-review/peer-review";
 import { expect, describe, it } from "@jest/globals";
@@ -9,7 +9,7 @@ jest.mock("@/lib/api/services/review-api");
 jest.mock("@/lib/api/services/member-api");
 
 describe("PeerReview", () => {
-  (getMemberData as jest.Mock).mockResolvedValue(dummyMembers[0]);
+  (fetchMemberData as jest.Mock).mockResolvedValue(dummyMembers[0]);
 
   it("matches snapshot", async () => {
     (getReviewData as jest.Mock).mockResolvedValue(dummyReview["accepted"]);

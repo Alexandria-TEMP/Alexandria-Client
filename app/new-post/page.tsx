@@ -66,10 +66,11 @@ export default function NewPost() {
 
   /* controls for the error dialog for the form submition */
   const errorModal = useDisclosure();
+  const [errorMsg, setErrorMsg] = useState("Unkown error");
 
   /* submit function that also passes the loading and error states */
   const onSubmit: SubmitHandler<FormType> = (data: FormType) =>
-    submitHandler(data, setIsLoading, errorModal.onOpen, router);
+    submitHandler(data, setIsLoading, errorModal.onOpen, setErrorMsg, router);
 
   /* if the form is being submitted, return the loading page, i could make something fancier in the future */
   if (isLoading) return <GenericLoadingPage />;
@@ -78,7 +79,7 @@ export default function NewPost() {
     <>
       <ErrorModal
         modal={errorModal}
-        errorMsg="There was an error when submitting your post. Please try again."
+        errorMsg={"Error when submitting: " + errorMsg}
       />
       <form
         // disable reason: this is the intended usage for handleSubmit

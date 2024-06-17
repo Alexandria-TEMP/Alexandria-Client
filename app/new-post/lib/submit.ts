@@ -1,6 +1,7 @@
 import { postBranchesIdUpload } from "@/lib/api/services/branch-api";
 import { postPosts, postPostsIdUpload } from "@/lib/api/services/post-api";
 import { postProjectPost } from "@/lib/api/services/project-post-api";
+import { postUnionIDToPathID } from "@/lib/id-parser";
 import {
   PostTypeT,
   ProjectCompletionStatusT,
@@ -31,12 +32,14 @@ export type FormType = {
  * @param data form data, as per react-hook-form
  * @param setIsLoading setter for a boolean, representing if the form is submitting
  * @param onError on error passed down from an ErrorModal component, used to open the error modal
+ * @param setErrorMsg on error, set the error message of the state holding variable
  * @param NextRouter for redirecting on successful submit
  */
 export const submitHandler = async (
   data: FormType,
   setIsLoading: (v: boolean) => void,
   onError: () => void,
+  setErrorMsg: (e: string) => void,
   router: AppRouterInstance,
 ) => {
   try {
@@ -65,7 +68,10 @@ export const submitHandler = async (
       if (newProjectPost.openBranchIDs.length <= 0)
         throw Error("No initial branch created.");
       await postBranchesIdUpload(newProjectPost.openBranchIDs[0], data.file);
-      router.push("/post/p-" + newProjectPost.id);
+      router.push(
+        "/post/" +
+          postUnionIDToPathID({ id: newProjectPost.id, isProject: true }),
+      );
       // } catch (e) {
       // TODO delete post if error uploading files, without that this try catch block is not necessary
       // setIsLoading(false);
@@ -75,7 +81,9 @@ export const submitHandler = async (
       // try {
       const newPost = await postPosts(postCreationForm);
       await postPostsIdUpload(newPost.id, data.file);
-      router.push("/post/r-" + newPost.id);
+      router.push(
+        "/post/" + postUnionIDToPathID({ id: newPost.id, isProject: false }),
+      );
       // } catch (e) {
       // TODO delete post if error uploading files, without that this try catch block is not necessary
       // setIsLoading(false);
@@ -85,6 +93,9 @@ export const submitHandler = async (
 
     setIsLoading(false);
   } catch (error) {
+    if (error instanceof Error) {
+      setErrorMsg(error.message);
+    }
     setIsLoading(false);
     onError();
   }

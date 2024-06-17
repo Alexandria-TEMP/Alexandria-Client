@@ -2,7 +2,7 @@
 "use client";
 
 import HeaderSubtle from "@/components/common/header-subtle";
-import getMemberData from "@/lib/api/services/member-api";
+import fetchMemberData from "@/lib/api/services/member-api";
 import { getReviewData } from "@/lib/api/services/review-api";
 import { getMemberName } from "@/lib/get-format";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
@@ -30,7 +30,7 @@ export default function PeerReview({ id }: IdProp) {
     const getData = async () => {
       const reviewData = await getReviewData(id as idT);
       setData(reviewData);
-      setAuthor(await getMemberData(reviewData.memberID));
+      setAuthor(await fetchMemberData(reviewData.memberID));
     };
     getData().catch(() => {});
   });
