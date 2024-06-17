@@ -28,7 +28,7 @@ export default async function Branch({
           <CardFooter>
             <div className="w-full">
               <Divider className="mb-4" />
-              <PeerReviewSection reviewIDs={data.reviewIDs} />
+              <PeerReviewSection reviewIDs={data.branch.reviewIDs} />
             </div>
           </CardFooter>
         }

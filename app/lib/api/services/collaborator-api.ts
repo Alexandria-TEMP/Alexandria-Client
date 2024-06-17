@@ -60,3 +60,13 @@ export async function fetchPostCollaboratorsAsSortedMemberIDs(
 
   return sortedMembers;
 }
+
+/**
+ * Fetches all collaborators of a branch and returns their member IDs
+ * @param id branch ID
+ */
+export async function fetchBranchCollaboratorsMemberIDs(
+  id: idT,
+): Promise<idT[]> {
+  return (await fetchBranchCollaborators(id)).map((c) => c.memberID);
+}
