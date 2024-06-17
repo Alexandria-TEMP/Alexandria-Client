@@ -1,7 +1,7 @@
 import ChipList from "@/components/common/chip-list";
 import Sidebar from "@/components/layout/sidebar";
 import { fetchBranchData } from "@/lib/api/services/branch-api";
-import { fetchScientificFields } from "@/lib/api/services/fields-api";
+import { fetchScientificFieldsFromContainer } from "@/lib/api/services/fields-api";
 import { idT } from "@/lib/types/api-types";
 import { idBranchUnionT } from "@/lib/types/branch-union";
 import PostCardMini from "@/post/[postId]/components/cards/post-card-mini";
@@ -17,8 +17,8 @@ export default async function BranchSidebar({
   isClosed,
 }: Readonly<idBranchUnionT>) {
   const data = await fetchBranchData({ id: id as idT, isClosed });
-  const scientificFields = await fetchScientificFields(
-    data.branch.updatedScientificFieldTagIDs,
+  const scientificFields = await fetchScientificFieldsFromContainer(
+    data.branch.updatedScientificFieldTagContainerID,
   );
 
   return (

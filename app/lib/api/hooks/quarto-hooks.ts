@@ -79,6 +79,8 @@ export function useFileContents(
   return useSWR(
     `${buildResourcePath(container)}/file/${path}`,
     async (...args) => {
+      if (path === "") return "";
+
       const res = await fetch(...args);
       await validateResponse(res);
       return res.text();

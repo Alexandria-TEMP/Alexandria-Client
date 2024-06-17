@@ -25,6 +25,15 @@ export function idStringToIDT(idStr: string): idT {
 }
 
 /**
+ * @param date any string representation of a date
+ * @returns [toLocaleDateString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString)
+ *          representation of date
+ */
+export function formatDateString(date: string): string {
+  return new Date(date).toLocaleDateString();
+}
+
+/**
  * Converts a string to kebab-case
  */
 export function toKebabCase(str: string): string {

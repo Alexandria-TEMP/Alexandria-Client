@@ -8,7 +8,10 @@ import { idT } from "@/lib/types/api-types";
 import DownloadButton from "../buttons/download-button";
 import { idPostUnionT } from "@/lib/types/post-union";
 import { branchUnionIDToPathID, postUnionIDToPathID } from "@/lib/id-parser";
-import { capitalizeFirstLetter as cap } from "@/lib/string-utils";
+import {
+  capitalizeFirstLetter as cap,
+  formatDateString,
+} from "@/lib/string-utils";
 import { getStandardReviewStatus } from "@/lib/get-format";
 
 /**
@@ -120,16 +123,10 @@ export default async function PostCardHeader({
 
         <div className="flex-col">
           <HeaderSubtle>
-            Created on
-            {/* TODO */}
-            {0}
-            {/* {data.createdAt} */}
+            Created on {formatDateString(data.post.createdAt)}
           </HeaderSubtle>
           <HeaderSubtle>
-            Last update on
-            {/* TODO */}
-            {0}
-            {/* {data.updatedAt} */}
+            Last update on {formatDateString(data.post.updatedAt)}
           </HeaderSubtle>
         </div>
       </CardHeader>

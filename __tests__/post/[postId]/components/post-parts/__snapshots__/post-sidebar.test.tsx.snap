@@ -42,6 +42,33 @@ exports[`PostSidebar matches snapshot 1`] = `
     <div
       class="h-4"
     />
+    <h3>
+      Authors
+    </h3>
+    <p>
+      List of members
+    </p>
+    <div
+      class="h-4"
+    />
+    <h3>
+      Contributors
+    </h3>
+    <p>
+      List of members
+    </p>
+    <div
+      class="h-4"
+    />
+    <h3>
+      Reviewers
+    </h3>
+    <p>
+      List of members
+    </p>
+    <div
+      class="h-4"
+    />
   </div>
 </div>
 `;
