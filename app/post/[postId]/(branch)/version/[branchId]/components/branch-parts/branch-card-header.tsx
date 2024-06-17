@@ -24,9 +24,9 @@ import DefaultError from "@/error";
  * Includes title, metadata, and action buttons.
  * @param id branch ID
  * @param isClosed indicates if branch is closed
- * @param postPathID post path ID, used for routing only
+ * @param postPathID post path ID, used for routing in contribute, if undefined hides contribute button
  * @param actions list of actions performed when pressing buttons on left side of header
- * @param hideContribute hides button with contribution options
+ * @param hideContribute hides button with contribution options, no effect if postPathID is undefined
  * @param onCompare called when "Compare" switch is toggled, if undefined switch won't be rendered
  */
 export default function BranchCardHeader({
@@ -38,7 +38,7 @@ export default function BranchCardHeader({
   onCompare,
 }: Readonly<
   idBranchUnionT & {
-    postPathID: string;
+    postPathID?: string;
     actions: { do: () => void; label: string; isDisabled: boolean }[];
     hideContribute?: boolean;
     onCompare?: (value: boolean) => void;
@@ -92,7 +92,9 @@ export default function BranchCardHeader({
           container="branch"
           projectTitle={`${data.updated.postTitle}-v-${id}`}
         />
-        {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
+        {!(hideContribute || !postPathID) && (
+          <ContributeDropdown routes={contributeRoutes} />
+        )}
         {!!onCompare && <Switch onValueChange={onCompare}>Compare</Switch>}
 
         <div className="grow" />
