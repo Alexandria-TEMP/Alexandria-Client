@@ -28,19 +28,17 @@ export async function fetchBranchData(
 
   const branch = (await branchResponse.json()) as BranchT;
 
-  return { branch, closedBranch };
+  const updated = await fetchBranchUpdatedFieldsFallback(branch);
+
+  return { branch, closedBranch, updated };
 }
 
 /**
  * For each of the possible post fields that a branch updates, returns
  * either the updated data or the current data if updated is null
- * @param branchData branch whose update we're interested in
+ * @param branch branch whose update we're interested in
  */
-export async function fetchBranchUpdatedFieldsFallback(
-  branchData: BranchUnionT,
-) {
-  const branch = branchData.branch;
-
+export async function fetchBranchUpdatedFieldsFallback(branch: BranchT) {
   if (
     branch.updatedPostTitle &&
     branch.updatedCompletionStatus &&

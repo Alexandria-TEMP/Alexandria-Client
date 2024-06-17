@@ -26,7 +26,7 @@ export default async function BranchSidebar({
     id as idT,
   );
   const scientificFields = await fetchScientificFieldsFromContainer(
-    (await fetchBranchUpdatedFieldsFallback(data))
+    (await fetchBranchUpdatedFieldsFallback(data.branch))
       .scientificFieldTagContainerID,
   );
 

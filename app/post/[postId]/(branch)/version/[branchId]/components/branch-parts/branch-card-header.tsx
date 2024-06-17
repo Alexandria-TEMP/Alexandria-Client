@@ -2,7 +2,10 @@
 
 import { CardHeader, Switch } from "@nextui-org/react";
 import HeaderSubtle from "@/components/common/header-subtle";
-import { capitalizeFirstLetter as cap } from "@/lib/string-utils";
+import {
+  capitalizeFirstLetter as cap,
+  formatDateString,
+} from "@/lib/string-utils";
 import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
 import { getStandardReviewStatus } from "@/lib/get-format";
 import { idT } from "@/lib/types/api-types";
@@ -78,7 +81,7 @@ export default function BranchCardHeader({
     <>
       {/* Title */}
       <CardHeader>
-        <h1 className="font-semibold">{data.branch.updatedPostTitle}</h1>
+        <h1 className="font-semibold">{data.updated.postTitle}</h1>
       </CardHeader>
 
       <CardHeader className="-mt-4 flex gap-8">
@@ -87,7 +90,7 @@ export default function BranchCardHeader({
         <DownloadButton
           id={id as idT}
           container="branch"
-          projectTitle={`${data.branch.updatedPostTitle}-v-${id}`}
+          projectTitle={`${data.updated.postTitle}-v-${id}`}
         />
         {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
         {!!onCompare && <Switch onValueChange={onCompare}>Compare</Switch>}
@@ -96,7 +99,7 @@ export default function BranchCardHeader({
 
         {/* Metadata */}
         <ChipWithTitle title="Completion">
-          {cap(data.branch.updatedCompletionStatus)}
+          {cap(data.updated.completionStatus as string)}
         </ChipWithTitle>
 
         {status && (
@@ -110,20 +113,17 @@ export default function BranchCardHeader({
             <>
               <HeaderSubtle>Created on</HeaderSubtle>
               <HeaderSubtle>
-                {/* TODO */}
-                {0 /* {data.createdAt} */}
+                {formatDateString(data.branch.createdAt)}
               </HeaderSubtle>
             </>
           ) : (
             status && (
               <>
                 <HeaderSubtle>
-                  {/* TODO */}
-                  Created on {0 /* {data.createdAt} */}
+                  Created on {formatDateString(data.branch.createdAt)}
                 </HeaderSubtle>
                 <HeaderSubtle>
-                  {/* TODO */}
-                  {`${cap(status.short)} on ${0}` /* ${data.updatedAt} */}
+                  {`${cap(status.short)} on ${formatDateString(data.branch.updatedAt)}`}
                 </HeaderSubtle>
               </>
             )
