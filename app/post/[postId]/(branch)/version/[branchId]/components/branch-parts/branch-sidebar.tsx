@@ -1,4 +1,3 @@
-import ChipList from "@/components/common/chip-list";
 import Sidebar from "@/components/layout/sidebar";
 import { getBranchData } from "@/lib/api/services/branch-api";
 import { idT } from "@/lib/types/api-types";
@@ -21,12 +20,13 @@ export default async function BranchSidebar({ id }: IdProp) {
           title: "Version of",
           node: <PostCardMini id={data.projectPostID.toString()} />,
         },
-        {
-          title: "Scientific fields",
-          node: (
-            <ChipList labels={data.updatedScientificFields.map(toString)} />
-          ),
-        },
+        // TODO
+        // {
+        //   title: "Scientific fields",
+        //   node: (
+        //     <ChipList labels={data.updatedScientificFields.map(toString)} />
+        //   ),
+        // },
         {
           title: "Contributors",
           node: <AuthorCardList ids={data.collaboratorIDs} />,
