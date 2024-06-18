@@ -1,3 +1,4 @@
+import { BranchReviewDecisionT } from "@/lib/types/api-types";
 import ReviewChip from "./review-chip";
 
 /**
@@ -6,7 +7,7 @@ import ReviewChip from "./review-chip";
  */
 export default function ReviewChips({
   reviews,
-}: Readonly<{ reviews: string[] }>) {
+}: Readonly<{ reviews: BranchReviewDecisionT[] }>) {
   if (reviews.length != 3)
     throw Error(`expected ${reviews.toString()} to have length 3`);
   return (
