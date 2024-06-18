@@ -1,6 +1,6 @@
 "use client";
 
-import { CardHeader, Switch } from "@nextui-org/react";
+import { CardHeader, Divider, Switch } from "@nextui-org/react";
 import HeaderSubtle from "@/components/common/header-subtle";
 import {
   capitalizeFirstLetter as cap,
@@ -78,7 +78,7 @@ export default function BranchCardHeader({
 
   return (
     <>
-      {/* Title */}
+      {/* (Updated) post title */}
       <CardHeader>
         <h1 className="font-semibold">{data.updated.postTitle}</h1>
       </CardHeader>
@@ -129,6 +129,18 @@ export default function BranchCardHeader({
               </>
             )
           )}
+        </div>
+      </CardHeader>
+
+      {/* Branch title (description of changes) */}
+      <CardHeader>
+        <div className="w-full">
+          {data.branch.branchTitle.length > 0 && (
+            <h3 className="italic">
+              Proposed changes: &quot;{data.branch.branchTitle}&quot;
+            </h3>
+          )}
+          <Divider className="mt-4" />
         </div>
       </CardHeader>
     </>
