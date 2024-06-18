@@ -82,7 +82,11 @@ export default function BranchCardHeader({
         <ActionGroup actions={actions} />
         {/* <DownloadButton id={data.newVersionID.toString()} /> */}
         {/* TODO */}
-        <DownloadButton id={"PLACEHOLDER"} />
+        <DownloadButton
+          id={branchId}
+          container="branch"
+          // TODO optionally: title
+        />
         {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
         {!!onCompare && <Switch onValueChange={onCompare}>Compare</Switch>}
 

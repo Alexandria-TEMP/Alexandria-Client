@@ -1,4 +1,8 @@
-import { capitalizeFirstLetter, idStringToIDT } from "@/lib/string-utils";
+import {
+  capitalizeFirstLetter,
+  idStringToIDT,
+  toKebabCase,
+} from "@/lib/string-utils";
 import { idT } from "@/lib/types/api-types";
 import { expect } from "@jest/globals";
 
@@ -29,5 +33,13 @@ describe("StringUtils parseId", () => {
 
   it("throws error on NaN", () => {
     expect(() => idStringToIDT("this is not a number")).toThrow();
+  });
+});
+
+describe("StringUtils toKebabCase", () => {
+  it("works", () => {
+    const test = "is THIS in Kebab CaSe";
+    const expected = "is-this-in-kebab-case";
+    expect(toKebabCase(test)).toBe(expected);
   });
 });
