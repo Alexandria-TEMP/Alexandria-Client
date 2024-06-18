@@ -1,4 +1,4 @@
-import fetchMemberData from "@/lib/api/services/member-api";
+import { fetchMemberData } from "@/lib/api/services/member-api";
 import { getReviewData } from "@/lib/api/services/review-api";
 import PeerReview from "@/post/[postId]/(branch)/version/[branchId]/components/peer-review/peer-review";
 import { expect, describe, it } from "@jest/globals";

@@ -2,7 +2,7 @@
 "use client";
 
 import HeaderSubtle from "@/components/common/header-subtle";
-import fetchMemberData from "@/lib/api/services/member-api";
+import { fetchMemberData } from "@/lib/api/services/member-api";
 import { getReviewData } from "@/lib/api/services/review-api";
 import { getMemberName } from "@/lib/get-format";
 import { capitalizeFirstLetter } from "@/lib/string-utils";

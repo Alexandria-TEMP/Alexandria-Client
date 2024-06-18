@@ -27,8 +27,6 @@ export default async function fetchPostData(
 
   const post = (await postResponse.json()) as PostT;
 
-  console.log("in fetchPostData " + JSON.stringify(post));
-
   return { post, projectPost };
 }
 

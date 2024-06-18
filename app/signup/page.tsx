@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import GenericLoadingPage from "@/loading";
 import ErrorModal from "@/components/form/error-modal";
+import { idT } from "@/lib/types/api-types";
 
 /**
  * @returns A page containing the title and the sinup form
@@ -23,7 +24,7 @@ export default function SignupPage() {
     setMounted(true);
   }, []);
 
-  /* router to refresh the page if necessary */
+  /* router to refresh the page if necessary and redirect on signup */
   const router = useRouter();
 
   /* create the form state */
@@ -34,7 +35,7 @@ export default function SignupPage() {
       firstName: "",
       lastName: "",
       institution: "",
-      fields: [] as string[],
+      scientificFieldTagIDs: [] as idT[],
       password: "",
       confpass: "",
     },
@@ -46,10 +47,11 @@ export default function SignupPage() {
 
   /* controls for the error dialog for the form submition */
   const errorModal = useDisclosure();
+  const [errorMsg, setErrorMsg] = useState("Unknown error");
 
   /* submit function that also passes the loading and error states */
   const onSubmit: SubmitHandler<FormType> = (data: FormType) =>
-    submitHandler(data, setIsLoading, errorModal.onOpen);
+    submitHandler(data, setIsLoading, errorModal.onOpen, setErrorMsg, router);
 
   /* if the page is not hydrated, refresh the page */
   if (!mounted && typeof window !== "undefined") {
@@ -64,7 +66,7 @@ export default function SignupPage() {
     <>
       <ErrorModal
         modal={errorModal}
-        errorMsg="There was an error creating your account. Please try again."
+        errorMsg={"Error when creating account: " + errorMsg}
       />
       <form
         // disable reason: this is the intended usage for handleSubmit
