@@ -43,14 +43,14 @@ export const submitHandler = async (
   router: AppRouterInstance,
 ) => {
   try {
-    setIsLoading(true);
     if (!data.file) throw new Error("No file provided.");
+    setIsLoading(true);
 
     const postCreationForm = {
       anonymous: data.anonymous,
       authorMemberIDs: data.authorMemberIDs,
       postType: data.postType,
-      scientificFieldTags: data.scientificFieldTagIDs,
+      scientificFieldTagIDs: data.scientificFieldTagIDs,
       title: data.title,
     };
     const projectPostCreationForm = {

@@ -1,4 +1,4 @@
-import { BranchT, idT } from "../../types/api-types";
+import { BranchCreationFormT, BranchT, idT } from "../../types/api-types";
 import { baseUrl } from "../api-common";
 import { validateResponse } from "../api-common";
 
@@ -102,6 +102,28 @@ export async function getBranchReviewStatuses(id: idT) {
   // if (id == 1) return ["accept", "reject", "accept"];
   // else if (id == 2) return ["accept", "open", "open"];
   // else return ["accept", "accept", "accept"];
+}
+
+/**
+ * Endpoint for creating a new branch object
+ * @async
+ * @param branchCreationForm object containing branch creation form data
+ * @returns the newly created branch object
+ */
+export async function postBranches(
+  branchCreationForm: BranchCreationFormT,
+): Promise<BranchT> {
+  const jsonPost = JSON.stringify(branchCreationForm);
+  const response = await fetch(`${baseUrl}/branches`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: jsonPost,
+  });
+  await validateResponse(response);
+  const branch = (await response.json()) as BranchT;
+  return branch;
 }
 
 /**

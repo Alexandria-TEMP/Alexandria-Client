@@ -118,18 +118,28 @@ export type ScientificFieldTagT = EntityT & {
 export type ScientificFieldTagContainerT = EntityT & {
   scientificFieldTagIDs: idT[];
 };
-
 // Forms
 
 export type PostCreationFormT = {
   anonymous: boolean;
   authorMemberIDs: idT[];
   postType: PostTypeT;
-  scientificFieldTags: idT[];
+  scientificFieldTagIDs: idT[];
   title: string;
 };
 
 export type ProjectPostCreationFormT = PostCreationFormT & {
   projectCompletionStatus: ProjectCompletionStatusT;
   projectFeedbackPreference: ProjectFeedbackPreferenceT;
+};
+
+export type BranchCreationFormT = {
+  anonymous: boolean;
+  branchTitle: string;
+  collaboratingMemberIDs: idT[];
+  projectPostID: idT;
+  updatedCompletionStatus: ProjectCompletionStatusT;
+  updatedFeedbackPreferences: ProjectFeedbackPreferenceT;
+  updatedPostTitle: string;
+  updatedScientificFieldIDs: idT[];
 };

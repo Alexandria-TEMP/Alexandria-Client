@@ -16,21 +16,23 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { submitHandler, FormType } from "./lib/submit";
-import useSWR from "swr";
 import { useEffect, useState } from "react";
 import {
   getCompletionTypes,
   getFeedbackTypes,
 } from "@/lib/api/services/tags-api";
 import GenericLoadingPage from "@/loading";
-import { MemberT, PostT } from "@/lib/types/api-types";
+import { MemberT, idT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
 import { getFieldName, getMemberName } from "@/lib/get-format";
 import ErrorModal from "@/components/form/error-modal";
+import { useFetchPostWithTags } from "@/lib/api/hooks/post-hooks";
+import { pathIDToPostUnionID } from "@/lib/id-parser";
+import { useRouter } from "next/navigation";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
 const loggedIn: MemberT = {
-  id: 3,
+  id: 1,
   email: "kopernicus@tudelft.nl",
   firstName: "Metal Bar",
   institution: "TU Delft",
@@ -39,58 +41,53 @@ const loggedIn: MemberT = {
 };
 
 /**
- * TODO jsdoc @Miruna
+ * Propose changes / create a new branch page
+ * @param params the id of the project post you want to create a new branch for
+ * @returns the branch creation form
  */
-export default function ProposeChanges({ params }: { params: { id: string } }) {
-  const postReq: { data: PostT | undefined; isLoading: boolean } = useSWR(
-    "/fake/api",
-    () => ({
-      title: "Post title",
-      discussionContainerID: 1,
-      renderStatus: "failure",
-      collaboratorIDs: [1, 2],
-      id: 1,
-      postType: "reflection",
-      scientificFieldTagContainerID: 1,
-      createdAt: "mem",
-      updatedAt: "hem",
-    }),
-  );
+export default function ProposeChanges({
+  params,
+}: {
+  params: { postId: string };
+}) {
+  /* router for redirect on (successful) submit */
+  const router = useRouter();
+
+  const projectPostId = pathIDToPostUnionID(params.postId);
+  const postReq = useFetchPostWithTags(projectPostId);
 
   /* create form state */
   const { handleSubmit, formState, control, getValues, trigger, setValue } =
     useForm<FormType>({
       mode: "onTouched",
       defaultValues: {
-        branchTitle: "",
-        contributors: [loggedIn.id.toString()], // TODO change type to accept idT [loggedIn.id],
         anonymous: false,
-        originalPostId: params.id,
-        updatedTitle: postReq.data ? postReq.data.title : "[Loading...]",
-        updatedCompletionStatus: "",
-        // TODO
-        // postReq.data
-        //   ? postReq.data.completionStatus
-        //   : "[Loading...]",
-        updatedFeedbackPreferences: "",
-        // TODO
-        // postReq.data
-        //   ? postReq.data.feedbackPreferences
-        //   : "[Loading...]",
-        // updatedScientificFields: postReq.data
-        //   ? postReq.data.scientificFieldTagIDs
-        //   : [],
+        branchTitle: "",
+        collaboratingMemberIDs: [loggedIn.id],
+        projectPostID: projectPostId.id as idT,
+        updatedCompletionStatus:
+          postReq.data?.projectPost?.projectCompletionStatus,
+        updatedFeedbackPreferences:
+          postReq.data?.projectPost?.projectFeedbackPreference,
+        updatedPostTitle: postReq.data?.post.title,
+        updatedScientificFieldIDs: postReq.data?.scientificFieldTagIDs,
         newFile: null,
       },
     });
 
   /* update form values once the post request finishes */
   useEffect(() => {
-    if (!!postReq.data && !postReq.isLoading) {
-      setValue("updatedTitle", postReq.data.title);
-      // setValue("updatedScientificFields", postReq.data.scientificFieldTagIDs);
-      setValue("updatedCompletionStatus", ""); // TODO postReq.data.completionStatus);
-      setValue("updatedFeedbackPreferences", ""); // TODO postReq.data.feedbackPreferences);
+    if (!!postReq.data && !postReq.isLoading && !!postReq.data.projectPost) {
+      setValue("updatedPostTitle", postReq.data.post.title);
+      setValue("updatedScientificFieldIDs", postReq.data.scientificFieldTagIDs);
+      setValue(
+        "updatedCompletionStatus",
+        postReq.data.projectPost?.projectCompletionStatus,
+      );
+      setValue(
+        "updatedFeedbackPreferences",
+        postReq.data.projectPost?.projectFeedbackPreference,
+      );
     }
   }, [postReq, setValue]);
 
@@ -99,10 +96,17 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
 
   /* controls for the error dialog for the form submition */
   const errorModal = useDisclosure();
+  const [errorMessage, setErrorMessage] = useState("Unknown error");
 
   /* submit function that also passes the loading and error states */
   const onSubmit: SubmitHandler<FormType> = (data: FormType) =>
-    submitHandler(data, setIsLoading, errorModal.onOpen);
+    submitHandler(
+      data,
+      setIsLoading,
+      errorModal.onOpen,
+      setErrorMessage,
+      router,
+    );
 
   /* if the form is being submitted, return the loading page, i could make something fancier in the future */
   if (isLoading) return <GenericLoadingPage />;
@@ -110,11 +114,22 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
   /* while fetching the post data, wait */
   if (postReq.isLoading) return <GenericLoadingPage />;
 
+  /* if trying to propose changes to a non-project post, display an error */
+  if (!projectPostId.isProject)
+    return (
+      <div
+        data-testid="default-error"
+        className="h-80 flex flex-col justify-center items-center bg-warning-100 rounded-lg"
+      >
+        <h2>You cannot propose changes to a non-project post!</h2>
+      </div>
+    );
+
   return (
     <>
       <ErrorModal
         modal={errorModal}
-        errorMsg="There was an error submitting your form. Please try again."
+        errorMsg={"Error when submitting: " + errorMessage}
       />
       <form
         // disable reason: this is the intended usage for handleSubmit
@@ -181,7 +196,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                 getItemLabel={getMemberName}
                 control={control}
                 trigger={trigger}
-                name="contributors"
+                name="collaboratingMemberIDs"
                 rules={{
                   validate: (v: string[]) => {
                     if (!getValues("anonymous") && v.length <= 0)
@@ -209,7 +224,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                   <div className="space-y-5">
                     <div>
                       <Controller
-                        name="updatedTitle"
+                        name="updatedPostTitle"
                         control={control}
                         rules={{
                           maxLength: {
@@ -228,8 +243,10 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                             placeholder="Enter a title for the post..."
                             description="Update the original post's title to match the new changes."
                             className="space-y-2"
-                            errorMessage={formState.errors.updatedTitle?.message?.toString()}
-                            isInvalid={!!formState.errors.updatedTitle?.message}
+                            errorMessage={formState.errors.updatedPostTitle?.message?.toString()}
+                            isInvalid={
+                              !!formState.errors.updatedPostTitle?.message
+                            }
                           />
                         )}
                       />
@@ -243,7 +260,7 @@ export default function ProposeChanges({ params }: { params: { id: string } }) {
                       description="Modify the list of scientific fields to match the changes you made."
                       getItemLabel={getFieldName}
                       control={control}
-                      name="updatedScientificFields"
+                      name="updatedScientificFieldIDs"
                       optionsHook={useScientificFields}
                     />
 

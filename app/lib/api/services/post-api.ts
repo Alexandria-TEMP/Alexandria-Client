@@ -27,6 +27,8 @@ export default async function fetchPostData(
 
   const post = (await postResponse.json()) as PostT;
 
+  console.log("in fetchPostData " + JSON.stringify(post));
+
   return { post, projectPost };
 }
 
@@ -40,7 +42,7 @@ export async function postPosts(
   postCreationForm: PostCreationFormT,
 ): Promise<PostT> {
   const jsonPost = JSON.stringify(postCreationForm);
-  const response = await fetch(baseUrl + "/posts", {
+  const response = await fetch(`${baseUrl}/posts`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -64,7 +66,7 @@ export async function postPostsIdUpload(postId: idT, file: File) {
   const fileData = new FormData();
   fileData.append("file", file);
 
-  const response = await fetch(baseUrl + "/posts/" + postId + "/upload", {
+  const response = await fetch(`${baseUrl}/posts/${postId}/upload`, {
     method: "POST",
     body: fileData,
   });
