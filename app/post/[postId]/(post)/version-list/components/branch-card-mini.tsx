@@ -1,57 +1,33 @@
-"use client";
-
 import HeaderSubtle from "@/components/common/header-subtle";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
-import { useMemo } from "react";
-import BranchCardMiniSkeleton from "./branch-card-mini-skeleton";
-import { idT } from "@/lib/types/api-types";
 import ReviewChips from "@/components/common/review-chips";
-import { useBranchAndReviewData } from "@/lib/api/hooks/branch-hooks";
-import { idBranchUnionT } from "@/lib/types/branch-union";
-import useTriggerRerender from "@/lib/hooks/use-trigger-rerender";
-import DefaultError from "@/error";
+import { BranchUnionT } from "@/lib/types/branch-union";
 import { capitalizeFirstLetter, formatDateString } from "@/lib/string-utils";
 import { getStandardReviewStatus } from "@/lib/get-format";
+import { branchUnionIDToPathID } from "@/lib/id-parser";
+import { fetchBranchReviewStatuses } from "@/lib/api/services/branch-api";
+import Link from "next/link";
 
 /**
  * Card that represents some post branch
- * @param id branch ID
- * @param isClosed indicates if branch is closed
- * @param postPathID post path ID, used for routing in contribute
+ * @param branchUnion branch data
+ * @param postPathID post path ID, used for routing
  * @param short makes the card less wide
  */
-export default function BranchCardMini({
-  id,
-  isClosed,
+export default async function BranchCardMini({
+  branchUnion,
   postPathID,
   short,
-}: idBranchUnionT & Readonly<{ postPathID: string; short?: boolean }>) {
-  const { data, isLoading, error } = useBranchAndReviewData({
-    id: id as idT,
-    isClosed,
-  });
+}: Readonly<{
+  branchUnion: BranchUnionT;
+  postPathID: string;
+  short?: boolean;
+}>) {
+  const reviews = await fetchBranchReviewStatuses(branchUnion.branch.id);
 
-  const status = useMemo(
-    () =>
-      getStandardReviewStatus(
-        data?.branchUnion?.branch.branchOverallReviewStatus,
-      ).short,
-    [data],
-  );
-
-  const { triggerRerender } = useTriggerRerender();
-  const router = useRouter();
-
-  if (isLoading || !data) {
-    return <BranchCardMiniSkeleton />;
-  }
-
-  if (error) {
-    return <DefaultError reset={triggerRerender} error={error} />;
-  }
-
-  const { branchUnion, reviews } = data;
+  const status = getStandardReviewStatus(
+    branchUnion.branch.branchOverallReviewStatus,
+  ).short;
 
   // We create variables for the separate parts of the card to avoid
   // code duplication between the short and !short card versions
@@ -72,25 +48,29 @@ export default function BranchCardMini({
       <p className="text-sm">{`${capitalizeFirstLetter(status)} on ${formatDateString(branchUnion.branch.updatedAt)}`}</p>
     );
 
-  const onPress = () => router.push(`/post/${postPathID}/version/${id}`);
-
-  return short ? (
-    <Card className="w-full" isPressable onPress={onPress}>
-      <CardBody>{titleAndCreateDate}</CardBody>
-      <CardFooter>
-        {updateDate}
-        <div className="grow" />
-        <ReviewChips reviews={reviews} />
-      </CardFooter>
-    </Card>
-  ) : (
-    <Card className="w-full" isPressable onPress={onPress}>
-      <CardHeader className="gap-2">
-        {titleAndCreateDate}
-        {updateDate}
-        <div className="grow" />
-        <ReviewChips reviews={reviews} />
-      </CardHeader>
-    </Card>
+  return (
+    <Link
+      href={`/post/${postPathID}/version/${branchUnionIDToPathID(branchUnion.id)}`}
+    >
+      {short ? (
+        <Card className="w-full">
+          <CardBody>{titleAndCreateDate}</CardBody>
+          <CardFooter>
+            {updateDate}
+            <div className="grow" />
+            <ReviewChips reviews={reviews} />
+          </CardFooter>
+        </Card>
+      ) : (
+        <Card className="w-full">
+          <CardHeader className="gap-2">
+            {titleAndCreateDate}
+            {updateDate}
+            <div className="grow" />
+            <ReviewChips reviews={reviews} />
+          </CardHeader>
+        </Card>
+      )}
+    </Link>
   );
 }

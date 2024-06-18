@@ -24,7 +24,7 @@ export async function fetchPostData(id: idPostUnionT): Promise<PostUnionT> {
 
   const post = (await postResponse.json()) as PostT;
 
-  return { post, projectPost };
+  return { post, projectPost, id };
 }
 
 /**

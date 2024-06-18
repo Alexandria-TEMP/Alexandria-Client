@@ -42,7 +42,7 @@ export async function fetchBranchData(
 
   const updated = await fetchBranchUpdatedFieldsFallback(branch, projectPostID);
 
-  return { branch, closedBranch, updated, projectPostID };
+  return { branch, closedBranch, updated, projectPostID, id };
 }
 
 /**
@@ -85,11 +85,36 @@ export async function fetchBranchUpdatedFieldsFallback(
 }
 
 /**
- * Fetches statuses of all brach reviews
+ * Fetches statuses of all brabch reviews
  * @param id branch ID
  */
 export async function fetchBranchReviewStatuses(id: idT) {
   const res = await fetch(`${baseUrl}/branches/${id}/review-statuses`);
   await validateResponse(res);
   return (await res.json()) as BranchReviewDecisionT[];
+}
+
+/**
+ * Fetches data for all branches and returns them in array sorted by
+ * updated date (latest update first)
+ * @param ids branch IDs
+ * @returns branch data sorted by latest update
+ */
+export async function fetchOrderedBranches(ids: idBranchUnionT[]) {
+  let branches: BranchUnionT[] = [];
+
+  for (const id of ids) {
+    const branch = await fetchBranchData(id);
+    branches = [...branches, branch];
+  }
+
+  return branches.toSorted((a, b) => {
+    // Use created at as fallbacke for updated at
+    const aDate = new Date(a.branch.updatedAt ?? a.branch.createdAt);
+    const bDate = new Date(b.branch.updatedAt ?? b.branch.createdAt);
+
+    // Sorts by latest update first
+    const aIsEarlier = aDate.getTime() < bDate.getTime();
+    return aIsEarlier ? 1 : -1;
+  });
 }

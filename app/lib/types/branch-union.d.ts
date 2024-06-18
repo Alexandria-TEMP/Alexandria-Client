@@ -5,6 +5,7 @@ export type BranchUnionT = {
   closedBranch?: ClosedBranchT;
   updated: BranchUpdatedFieldsT;
   projectPostID: idT;
+  id: idBranchUnionT;
 };
 
 export type idBranchUnionT = {
