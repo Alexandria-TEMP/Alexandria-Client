@@ -10,7 +10,7 @@ import { EllipsisHorizontalCircleIcon } from "@heroicons/react/24/outline";
 export default function ReviewChip({
   status,
   small,
-}: Readonly<{ status: BranchReviewDecisionT | undefined; small?: boolean }>) {
+}: Readonly<{ status?: BranchReviewDecisionT; small?: boolean }>) {
   const size = small ? "size-5" : "size-10";
 
   if (status == "approved") {

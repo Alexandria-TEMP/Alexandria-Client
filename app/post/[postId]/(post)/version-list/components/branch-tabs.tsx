@@ -12,7 +12,7 @@ import { Tab, Tabs } from "@nextui-org/react";
  * @param rejectedList Component that gets rendered on the "Rejected changes" tab
  */
 export default function BranchTabs({
-  // Since this has to be a client component, including `BranchList`s  or `BranchCard`s
+  // Since this has to be a client component, including `BranchList`s  or `BranchCardMini`s
   // here as children of <Tab> would force those component to also be client components
   // As a workaround, we take in `BranchList`s as props here
   historyList,

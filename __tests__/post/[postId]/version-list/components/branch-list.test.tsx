@@ -1,6 +1,6 @@
 import { fetchBranchData } from "@/lib/api/services/branch-api";
 import BranchList from "@/post/[postId]/(post)/version-list/components/branch-list";
-import BranchCard from "@/post/[postId]/components/cards/branch-card";
+import BranchCardMini from "@/post/[postId]/(post)/version-list/components/branch-card-mini";
 import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";
 import { dummyBranches } from "~/__tests__/__utils__/dummys";
@@ -10,7 +10,7 @@ jest.mock("@/post/[postId]/components/cards/branch-card");
 
 describe("BranchList", () => {
   (fetchBranchData as jest.Mock).mockResolvedValue(dummyBranches["open"]);
-  (BranchCard as jest.Mock).mockReturnValue(<p>Card</p>);
+  (BranchCardMini as jest.Mock).mockReturnValue(<p>Card</p>);
 
   it("matches snapshot", () => {
     const { container } = render(

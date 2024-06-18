@@ -4,7 +4,7 @@ import HeaderSubtle from "@/components/common/header-subtle";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
-import BranchCardSkeleton from "./branch-card-skeleton";
+import BranchCardMiniSkeleton from "./branch-card-mini-skeleton";
 import { idT } from "@/lib/types/api-types";
 import ReviewChips from "@/components/common/review-chips";
 import { useBranchAndReviewData } from "@/lib/api/hooks/branch-hooks";
@@ -21,7 +21,7 @@ import { getStandardReviewStatus } from "@/lib/get-format";
  * @param postPathID post path ID, used for routing in contribute
  * @param short makes the card less wide
  */
-export default function BranchCard({
+export default function BranchCardMini({
   id,
   isClosed,
   postPathID,
@@ -44,7 +44,7 @@ export default function BranchCard({
   const router = useRouter();
 
   if (isLoading || !data) {
-    return <BranchCardSkeleton />;
+    return <BranchCardMiniSkeleton />;
   }
 
   if (error) {

@@ -7,7 +7,7 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import { dummyBranches } from "~/__tests__/__utils__/dummys";
 import { useRouter } from "next/navigation";
 import userEvent from "@testing-library/user-event";
-import BranchCard from "@/post/[postId]/components/cards/branch-card";
+import BranchCardMini from "@/post/[postId]/(post)/version-list/components/branch-card-mini";
 
 jest.mock("@/lib/api/services/branch-api");
 
@@ -30,7 +30,7 @@ describe("BranchCard", () => {
     // eslint-disable-next-line @typescript-eslint/require-await
     await act(async () => {
       render(
-        <BranchCard
+        <BranchCardMini
           id={dummyBranches["open"].id.toString()}
           postId={dummyBranches["open"].projectPostID}
         />,
