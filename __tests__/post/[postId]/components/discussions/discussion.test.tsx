@@ -1,13 +1,13 @@
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import { getDiscussionData } from "@/lib/api/services/discussion-api";
+import { fetchDiscussionData } from "@/lib/api/services/discussion-api";
 import Discussion from "@/post/[postId]/components/discussions/discussion";
 import { dummyDiscussion } from "~/__tests__/__utils__/dummys";
 
 jest.mock("@/lib/api/services/discussion-api");
 
 describe("Discussion", () => {
-  (getDiscussionData as jest.Mock).mockResolvedValue(dummyDiscussion);
+  (fetchDiscussionData as jest.Mock).mockResolvedValue(dummyDiscussion);
 
   it("shows its author", async () => {
     // Written like this because Jest currently doesn't support async
