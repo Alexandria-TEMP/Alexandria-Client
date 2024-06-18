@@ -12,7 +12,10 @@ import {
   dummyBranches,
   dummyScientificFields,
 } from "~/__tests__/__utils__/dummys";
-import { fetchBranchCollaboratorsMemberIDs } from "@/lib/api/services/collaborator-api";
+import {
+  fetchBranchCollaboratorsMemberIDs,
+  fetchPostCollaboratorsMemberIDs,
+} from "@/lib/api/services/collaborator-api";
 import { fetchScientificFieldsFromContainer } from "@/lib/api/services/fields-api";
 
 jest.mock("@/lib/api/services/collaborator-api");
@@ -27,6 +30,7 @@ describe("BranchSidebarTest", () => {
     dummyBranches["accepted"].updated,
   );
   (fetchBranchCollaboratorsMemberIDs as jest.Mock).mockResolvedValue([1]);
+  (fetchPostCollaboratorsMemberIDs as jest.Mock).mockResolvedValue([1]);
   (fetchScientificFieldsFromContainer as jest.Mock).mockResolvedValue(
     dummyScientificFields,
   );

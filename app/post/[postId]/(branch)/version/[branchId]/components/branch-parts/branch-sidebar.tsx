@@ -4,7 +4,10 @@ import {
   fetchBranchData,
   fetchBranchUpdatedFieldsFallback,
 } from "@/lib/api/services/branch-api";
-import { fetchBranchCollaboratorsMemberIDs } from "@/lib/api/services/collaborator-api";
+import {
+  fetchBranchCollaboratorsMemberIDs,
+  fetchPostCollaboratorsMemberIDs,
+} from "@/lib/api/services/collaborator-api";
 import { fetchScientificFieldsFromContainer } from "@/lib/api/services/fields-api";
 import { idT } from "@/lib/types/api-types";
 import { idBranchUnionT } from "@/lib/types/branch-union";
@@ -22,7 +25,10 @@ export default async function BranchSidebar({
   isClosed,
 }: Readonly<idBranchUnionT>) {
   const data = await fetchBranchData({ id: id as idT, isClosed });
-  const collaboratorMemberIDs = await fetchBranchCollaboratorsMemberIDs(
+  const branchCollaboratorMemberIDs = await fetchBranchCollaboratorsMemberIDs(
+    id as idT,
+  );
+  const postCollaboratorMemberIDs = await fetchPostCollaboratorsMemberIDs(
     id as idT,
   );
   const scientificFields = await fetchScientificFieldsFromContainer(
@@ -45,7 +51,9 @@ export default async function BranchSidebar({
           ? []
           : [
               {
-                title: "Updated scientific fields",
+                title: "Scientific fields",
+                tooltip:
+                  "If the version is accepted, these will be the post's scientific fields.",
                 node: (
                   <ChipList
                     labels={scientificFields.map((f) => f.scientificField)}
@@ -53,12 +61,24 @@ export default async function BranchSidebar({
                 ),
               },
             ]),
-        ...(collaboratorMemberIDs.length == 0
+        ...(branchCollaboratorMemberIDs.length == 0
           ? []
           : [
               {
-                title: "Contributors",
-                node: <AuthorCardList ids={collaboratorMemberIDs} />,
+                title: "Version contributors",
+                tooltip:
+                  "The members who have contributed to propose these changes.",
+                node: <AuthorCardList ids={branchCollaboratorMemberIDs} />,
+              },
+            ]),
+        ...(postCollaboratorMemberIDs.length == 0
+          ? []
+          : [
+              {
+                title: "Post collaborators",
+                tooltip:
+                  "The members who have authored and contributed to the post that originated this a version.",
+                node: <AuthorCardList ids={postCollaboratorMemberIDs} />,
               },
             ]),
       ]}
