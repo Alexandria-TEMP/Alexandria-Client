@@ -39,7 +39,7 @@ beforeEach(async () => {
               message: "Please select",
             },
           }}
-          optionsGetter={async () => dumOptions}
+          optionsGetter={() => dumOptions}
         />
       </Wrapper>,
     );

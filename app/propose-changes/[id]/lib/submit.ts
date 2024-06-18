@@ -1,3 +1,5 @@
+import { idT } from "@/lib/types/api-types";
+
 export type FormType = {
   branchTitle: string; // hihi mister title
   contributors: string[];
@@ -6,7 +8,7 @@ export type FormType = {
   updatedTitle: string;
   updatedCompletionStatus: string;
   updatedFeedbackPreferences: string;
-  updatedScientificFields: string[];
+  updatedScientificFields: idT[];
   newFile: File | null;
 };
 

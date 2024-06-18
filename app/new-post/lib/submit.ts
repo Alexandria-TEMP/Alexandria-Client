@@ -1,49 +1,101 @@
+import { postBranchesIdUpload } from "@/lib/api/services/branch-api";
+import { postPosts, postPostsIdUpload } from "@/lib/api/services/post-api";
+import { postProjectPost } from "@/lib/api/services/project-post-api";
+import { postUnionIDToPathID } from "@/lib/id-parser";
+import {
+  PostTypeT,
+  ProjectCompletionStatusT,
+  ProjectFeedbackPreferenceT,
+  ProjectPostT,
+  idT,
+} from "@/lib/types/api-types";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+
+/**
+ * Type of all form fields
+ * Similar datatypes to possible submit values of PostCreationForm and ProjectPostCreation form
+ * but integrated into one
+ */
 export type FormType = {
   title: string;
   anonymous: boolean;
-  authors: string[];
-  contributors: string[];
-  fields: string[];
-  type: string;
-  completionStatus: string;
-  feedbackPreference: string;
+  authorMemberIDs: idT[];
+  scientificFieldTagIDs: idT[];
+  postType: PostTypeT;
+  projectCompletionStatus: ProjectCompletionStatusT;
+  projectFeedbackPreference: ProjectFeedbackPreferenceT;
   file: File | null;
 };
 
 /**
- * TODO jsdoc when properly implemented
+ * Method that constructs form creation objects, and calls the correct API methods for creating posts and project posts
+ * @param data form data, as per react-hook-form
+ * @param setIsLoading setter for a boolean, representing if the form is submitting
+ * @param onError on error passed down from an ErrorModal component, used to open the error modal
+ * @param setErrorMsg on error, set the error message of the state holding variable
+ * @param NextRouter for redirecting on successful submit
  */
 export const submitHandler = async (
   data: FormType,
   setIsLoading: (v: boolean) => void,
   onError: () => void,
+  setErrorMsg: (e: string) => void,
+  router: AppRouterInstance,
 ) => {
   try {
     setIsLoading(true);
-    const jsonData = JSON.stringify({
-      completionStatus: data.completionStatus,
-      feedbackPreference: data.feedbackPreference,
-      postCreationForm: {
-        anonymous: data.anonymous,
-        authorMemberIDs: data.authors,
-        postType: data.type,
-        scientificFieldTags: data.fields,
-        title: data.title,
-      },
-    });
-    const fileData = new FormData();
-    if (!data.file) throw new Error("Please submit a file");
-    fileData.append("file", data.file);
+    if (!data.file) throw new Error("No file provided.");
 
-    // TODO the actual sending of the files, should be two, potentially 3, fetches
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    const postCreationForm = {
+      anonymous: data.anonymous,
+      authorMemberIDs: data.authorMemberIDs,
+      postType: data.postType,
+      scientificFieldTags: data.scientificFieldTagIDs,
+      title: data.title,
+    };
+    const projectPostCreationForm = {
+      ...postCreationForm,
+      projectCompletionStatus: data.projectCompletionStatus,
+      projectFeedbackPreference: data.projectFeedbackPreference,
+    };
 
-    // uncomment if you want to see the error
-    // throw new Error("Please submit a file");
+    if (data.postType == "project") {
+      // try {
+      const newProjectPost: ProjectPostT = await postProjectPost(
+        projectPostCreationForm,
+      );
+      // TODO the fact that i kinda have to blindly trust that there is a branch and that the first one is the corret one is kindaaaaa not cool
+      if (newProjectPost.openBranchIDs.length <= 0)
+        throw Error("No initial branch created.");
+      await postBranchesIdUpload(newProjectPost.openBranchIDs[0], data.file);
+      router.push(
+        "/post/" +
+          postUnionIDToPathID({ id: newProjectPost.id, isProject: true }),
+      );
+      // } catch (e) {
+      // TODO delete post if error uploading files, without that this try catch block is not necessary
+      // setIsLoading(false);
+      // onError();
+      // }
+    } else {
+      // try {
+      const newPost = await postPosts(postCreationForm);
+      await postPostsIdUpload(newPost.id, data.file);
+      router.push(
+        "/post/" + postUnionIDToPathID({ id: newPost.id, isProject: false }),
+      );
+      // } catch (e) {
+      // TODO delete post if error uploading files, without that this try catch block is not necessary
+      // setIsLoading(false);
+      // onError();
+      // }
+    }
 
     setIsLoading(false);
-    alert(jsonData);
   } catch (error) {
+    if (error instanceof Error) {
+      setErrorMsg(error.message);
+    }
     setIsLoading(false);
     onError();
   }

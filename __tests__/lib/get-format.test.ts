@@ -1,6 +1,6 @@
 import { expect, describe, it } from "@jest/globals";
 import { getMemberName, getFieldName, getByteMultiple } from "@/lib/get-format";
-import { dummyMembers, dummyScientificField } from "../__utils__/dummys";
+import { dummyMembers, dummyScientificFields } from "../__utils__/dummys";
 
 describe("API getters formatting helper", () => {
   it("gets full name", () => {
@@ -9,7 +9,7 @@ describe("API getters formatting helper", () => {
   });
 
   it("gets field name", () => {
-    expect(getFieldName(dummyScientificField)).toBe("Computer Science");
+    expect(getFieldName(dummyScientificFields[1])).toBe("Computer Science");
     expect(getFieldName(undefined)).toBe("Not found");
   });
 });

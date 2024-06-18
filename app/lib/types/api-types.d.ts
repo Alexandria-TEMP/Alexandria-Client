@@ -92,7 +92,7 @@ export type PostCollaboratorT = EntityT & {
 export type PostT = EntityT & {
   collaboratorIDs: idT[];
   createdAt: string;
-  discussionContainerID: idT[];
+  discussionContainerID: idT;
   postType: PostTypeT;
   renderStatus: RenderStatusT;
   scientificFieldTagContainerID: idT;
@@ -117,4 +117,19 @@ export type ScientificFieldTagT = EntityT & {
 
 export type ScientificFieldTagContainerT = EntityT & {
   scientificFieldTagIDs: idT[];
+};
+
+// Forms
+
+export type PostCreationFormT = {
+  anonymous: boolean;
+  authorMemberIDs: idT[];
+  postType: PostTypeT;
+  scientificFieldTags: idT[];
+  title: string;
+};
+
+export type ProjectPostCreationFormT = PostCreationFormT & {
+  projectCompletionStatus: ProjectCompletionStatusT;
+  projectFeedbackPreference: ProjectFeedbackPreferenceT;
 };

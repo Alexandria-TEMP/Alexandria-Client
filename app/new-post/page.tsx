@@ -2,22 +2,13 @@
 
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
-import { getMembers } from "../lib/api/services/member-api";
-import { getFields } from "../lib/api/services/fields-api";
+import { useFetchMembers } from "@/lib/api/hooks/member-hooks";
+import { useScientificFields } from "../lib/api/hooks/scientific-fields-hooks";
 import { MultiSelectAutocomplete } from "../components/form/multi-select-autocomplete";
 import { SingleSelectAutocomplete } from "../components/form/single-select-autocomplete";
 import UploadContentCard from "../components/form/upload-content-card";
-// TODO import { getMemberName, getFieldName } from "@/lib/get-format";
-import {
-  Card,
-  Input,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
-} from "@nextui-org/react";
+import { getMemberName, getFieldName } from "@/lib/get-format";
+import { Card, Input, useDisclosure } from "@nextui-org/react";
 import { FormType, submitHandler } from "./lib/submit";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import {
@@ -25,76 +16,71 @@ import {
   getFeedbackTypes,
   getPostTypes,
 } from "@/lib/api/services/tags-api";
-// TODO import { MemberT } from "@/lib/types/api-types";
+import { MemberT, idT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
 import { useState } from "react";
 import GenericLoadingPage from "@/loading";
+import ErrorModal from "@/components/form/error-modal";
+import { useRouter } from "next/navigation";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
-// TODO
-// const loggedIn: MemberT = {
-//   id: 3,
-//   email: "kopernicus@tudelft.nl",
-//   firstName: "Metal Bar",
-//   institution: "TU Delft",
-//   lastName: "Clanging",
-//   scientificFields: [],
-// };
+const loggedIn: MemberT = {
+  id: 1,
+  email: "kopernicus@tudelft.nl",
+  firstName: "Metal Bar",
+  institution: "TU Delft",
+  lastName: "Clanging",
+  scientificFieldTagContainerID: 1,
+};
 
 /**
- * TODO jsdoc @miruna
+ * New post form
+ * creates the form state and submit handler
+ * @returns the post creation form
  */
 export default function NewPost() {
+  /* router for redirect on (successful) submit */
+  const router = useRouter();
+
   /* create the form state */
-  const { handleSubmit, formState, control, trigger, getValues } =
+  const { handleSubmit, formState, control, trigger, getValues, watch } =
     useForm<FormType>({
       mode: "onTouched",
       defaultValues: {
         title: "",
         anonymous: false,
-        authors: ["3"], // TODO [loggedIn.id],
-        contributors: [] as string[],
-        fields: [] as string[],
-        type: "Ideation (to begin)",
-        completionStatus: "Project",
-        feedbackPreference: "Community Discussion", // TODO these are hardcoded, could just make them empty
+        authorMemberIDs: [loggedIn.id],
+        scientificFieldTagIDs: [] as idT[],
+        postType: "question",
+        projectCompletionStatus: "idea",
+        projectFeedbackPreference: "discussion feedback",
         file: null,
       },
     });
+
+  /* listen to changes to post type field, so as to conditionally display completion and feedback options */
+  const watchPostType = watch("postType");
 
   /* is loading set to true, if the form is submitting */
   const [isLoading, setIsLoading] = useState(false);
 
   /* controls for the error dialog for the form submition */
   const errorModal = useDisclosure();
+  const [errorMsg, setErrorMsg] = useState("Unkown error");
 
   /* submit function that also passes the loading and error states */
   const onSubmit: SubmitHandler<FormType> = (data: FormType) =>
-    submitHandler(data, setIsLoading, errorModal.onOpen);
+    submitHandler(data, setIsLoading, errorModal.onOpen, setErrorMsg, router);
 
   /* if the form is being submitted, return the loading page, i could make something fancier in the future */
   if (isLoading) return <GenericLoadingPage />;
 
   return (
     <>
-      {/* error alert, only visible if there is an error */}
-      <Modal isOpen={errorModal.isOpen} onOpenChange={errorModal.onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader>Error</ModalHeader>
-              <ModalBody>
-                There was an error when submitting your post. Please try again.
-              </ModalBody>
-              <ModalFooter>
-                <Button color="primary" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      <ErrorModal
+        modal={errorModal}
+        errorMsg={"Error when submitting: " + errorMsg}
+      />
       <form
         // disable reason: this is the intended usage for handleSubmit
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -157,10 +143,10 @@ export default function NewPost() {
               <MultiSelectAutocomplete
                 label={<h2>Authors</h2>}
                 description="Select the people who worked on this post."
-                getItemLabel={() => ""} // TODO {getMemberName}
+                getItemLabel={getMemberName}
                 control={control}
                 trigger={trigger}
-                name="authors"
+                name="authorMemberIDs"
                 rules={{
                   validate: (v: string[]) => {
                     if (!getValues("anonymous") && v.length <= 0)
@@ -170,8 +156,8 @@ export default function NewPost() {
                 }}
                 disableFieldName="anonymous"
                 disableMessage="Post this anonymously."
-                optionsGetter={getMembers}
-                nonRemovables={[]} // TODO {[loggedIn.id]}
+                optionsHook={useFetchMembers}
+                nonRemovables={[loggedIn.id]}
                 nonRemoveReason="You must be in the author list, or make this post anonymous."
               />
 
@@ -180,12 +166,10 @@ export default function NewPost() {
               <MultiSelectAutocomplete
                 label={<h2>Scientific Fields</h2>}
                 description="Select the scientific fields your post is about."
-                getItemLabel={() => ""} // TODO {getFieldName}
+                getItemLabel={getFieldName}
                 control={control}
-                name="fields"
-                optionsGetter={getFields}
-                nonRemovables={[]} // TODO {[loggedIn.id]}
-                nonRemoveReason="You must be in the author list, or make this post anonymous."
+                name="scientificFieldTagIDs"
+                optionsHook={useScientificFields}
               />
 
               <Divider />
@@ -195,7 +179,7 @@ export default function NewPost() {
                 description="The type of post represents what kind of content you are sharing."
                 placeholder="Select a type for your post..."
                 control={control}
-                name="type"
+                name="postType"
                 rules={{
                   required: {
                     value: true,
@@ -207,41 +191,45 @@ export default function NewPost() {
 
               <Divider />
 
-              <SingleSelectAutocomplete
-                label={<h2>What are your feedback preferences?</h2>}
-                description="The type of replies you want to encourage under your post."
-                placeholder="Select the type of feedback preferences you want..."
-                name="feedbackPreference"
-                control={control}
-                rules={{
-                  required: {
-                    value: true,
-                    message:
-                      "Please select feedback preferences for your post.",
-                  },
-                }}
-                optionsGetter={getFeedbackTypes}
-              />
+              {watchPostType === "project" && (
+                <>
+                  <SingleSelectAutocomplete
+                    label={<h2>What are your feedback preferences?</h2>}
+                    description="The type of replies you want to encourage under your post."
+                    placeholder="Select the type of feedback preferences you want..."
+                    name="projectFeedbackPreference"
+                    control={control}
+                    rules={{
+                      required: {
+                        value: watchPostType == "project",
+                        message:
+                          "Please select feedback preferences for your post.",
+                      },
+                    }}
+                    optionsGetter={getFeedbackTypes}
+                  />
 
-              <Divider />
+                  <Divider />
 
-              <SingleSelectAutocomplete
-                label={<h2>What is the completion of your project?</h2>}
-                description="This helps other users understand your work and give advice."
-                placeholder="Select the completion status for your post..."
-                name="completionStatus"
-                control={control}
-                rules={{
-                  required: {
-                    value: true,
-                    message:
-                      "Please select the completion status of your post.",
-                  },
-                }}
-                optionsGetter={getCompletionTypes}
-              />
+                  <SingleSelectAutocomplete
+                    label={<h2>What is the completion of your project?</h2>}
+                    description="This helps other users understand your work and give advice."
+                    placeholder="Select the completion status for your post..."
+                    name="projectCompletionStatus"
+                    control={control}
+                    rules={{
+                      required: {
+                        value: watchPostType == "project",
+                        message:
+                          "Please select the completion status of your post.",
+                      },
+                    }}
+                    optionsGetter={getCompletionTypes}
+                  />
 
-              <Divider />
+                  <Divider />
+                </>
+              )}
             </div>
           </Card>
         </div>

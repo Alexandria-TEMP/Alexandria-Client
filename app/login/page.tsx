@@ -4,17 +4,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 "use client";
 
-import {
-  Button,
-  Card,
-  Input,
-  useDisclosure,
-  Modal,
-  ModalContent,
-  ModalBody,
-  ModalHeader,
-  ModalFooter,
-} from "@nextui-org/react";
+import { Button, Card, Input, useDisclosure } from "@nextui-org/react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { submitHandler, FormType } from "./lib/submit";
 import Logo from "@/components/theme/logo";
@@ -22,6 +12,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { emailRegex } from "@/lib/validation-rules";
 import GenericLoadingPage from "@/loading";
+import ErrorModal from "@/components/form/error-modal";
 
 /**
  * Login page, uses react-hook-form
@@ -68,24 +59,10 @@ export default function LoginPage() {
 
   return (
     <>
-      {/* error alert, only visible if there is an error */}
-      <Modal isOpen={errorModal.isOpen} onOpenChange={errorModal.onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader>Error</ModalHeader>
-              <ModalBody>
-                There was an error when submitting your post. Please try again.
-              </ModalBody>
-              <ModalFooter>
-                <Button color="primary" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      <ErrorModal
+        modal={errorModal}
+        errorMsg="There was an error when logging in. Please try again."
+      />
       <form
         // disable reason: this is the intended usage for handleSubmit
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
