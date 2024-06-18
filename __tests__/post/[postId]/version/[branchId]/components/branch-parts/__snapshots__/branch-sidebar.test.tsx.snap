@@ -15,7 +15,7 @@ exports[`BranchSidebarTest matches snapshot 1`] = `
       class="h-4"
     />
     <h3>
-      Updated scientific fields
+      Scientific fields
     </h3>
     <p>
       ChipList
@@ -24,7 +24,16 @@ exports[`BranchSidebarTest matches snapshot 1`] = `
       class="h-4"
     />
     <h3>
-      Contributors
+      Version contributors
+    </h3>
+    <p>
+      AuthorCardList
+    </p>
+    <div
+      class="h-4"
+    />
+    <h3>
+      Post collaborators
     </h3>
     <p>
       AuthorCardList
