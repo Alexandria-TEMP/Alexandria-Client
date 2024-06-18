@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardBody, CardFooter, Chip, Skeleton } from "@nextui-org/react";
+import { Card, CardBody, CardFooter, Chip } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { idT } from "@/lib/types/api-types";
 import { usePostData } from "@/lib/api/hooks/post-hooks";
@@ -48,18 +48,14 @@ export default function PostCardMini({
       isPressable
     >
       <CardBody>
-        <Skeleton isLoaded={!isLoading}>
-          <h2>{data.post.title}</h2>
-        </Skeleton>
+        <h2>{data.post.title}</h2>
       </CardBody>
       <CardFooter>
-        <Skeleton isLoaded={!isLoading}>
-          <Chip>
-            {capitalizeFirstLetter(
-              data.projectPost?.postReviewStatus ?? data.post.postType,
-            )}
-          </Chip>
-        </Skeleton>
+        <Chip>
+          {capitalizeFirstLetter(
+            data.projectPost?.postReviewStatus ?? data.post.postType,
+          )}
+        </Chip>
       </CardFooter>
     </Card>
   );

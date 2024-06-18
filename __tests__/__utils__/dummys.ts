@@ -1,5 +1,4 @@
 import {
-  BranchT,
   PostT,
   BranchReviewT,
   MemberT,
@@ -7,6 +6,7 @@ import {
   DiscussionContainerT,
   ProjectPostT,
 } from "@/lib/types/api-types";
+import { BranchUnionT } from "@/lib/types/branch-union";
 import { FileTreeT } from "@/lib/types/file-tree";
 import { PostUnionT } from "@/lib/types/post-union";
 
@@ -19,12 +19,12 @@ export const dummyDiscussion = {
     institution: "TU Delft",
     lastName: "Curie",
   },
-  createdAt: "11 May 2024",
+  createdAt: "2024-06-16T16:00:43.234Z",
   deleted: false,
   deletedAt: "-",
   replies: [],
   text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut ducimus amet ex qui eius corrupti reiciendis, quibusdam suscipit, aspernatur ipsum. Reprehenderit libero molestias nostrum eum sed? Illo, quidem ad.",
-  updatedAt: "11 May 2024",
+  updatedAt: "2024-06-16T16:00:43.234Z",
 };
 
 export const dummyMembers: MemberT[] = [
@@ -34,7 +34,7 @@ export const dummyMembers: MemberT[] = [
     firstName: "Marie",
     institution: "TU Delft",
     lastName: "Curie",
-    scientificFieldTagIDs: [],
+    scientificFieldTagContainerID: 1,
   },
   {
     id: 2,
@@ -42,7 +42,7 @@ export const dummyMembers: MemberT[] = [
     firstName: "Nicolaus",
     institution: "TU Delft",
     lastName: "Copernicus",
-    scientificFieldTagIDs: [],
+    scientificFieldTagContainerID: 1,
   },
 ];
 
@@ -50,14 +50,16 @@ export const dummyPost: PostT = {
   title: "Post title",
   renderStatus: "success",
   collaboratorIDs: [1, 2],
-  discussionIDs: [1],
-  id: 43125,
+  discussionContainerID: 1,
+  id: 1,
   postType: "reflection",
-  scientificFieldTagIDs: [1, 2],
+  scientificFieldTagContainerID: 1,
+  createdAt: "2024-06-16T16:00:43.234Z",
+  updatedAt: "2024-06-16T16:00:43.234Z",
 };
 
 export const dummyProjectPost: ProjectPostT = {
-  id: 4215,
+  id: 1,
   closedBranchIDs: [13],
   openBranchIDs: [7],
   postID: dummyPost.id,
@@ -73,8 +75,9 @@ export const dummyPostUnion: {
   withProject: {
     post: { ...dummyPost, postType: "project" },
     projectPost: dummyProjectPost,
+    id: { id: 1, isProject: true },
   },
-  noProject: { post: dummyPost },
+  noProject: { post: dummyPost, id: { id: 1, isProject: false } },
 };
 
 export const dummyScientificFields: ScientificFieldTagT[] = [
@@ -98,62 +101,106 @@ export const dummyScientificFields: ScientificFieldTagT[] = [
   },
 ];
 
-// TODO improve
 export const dummyBranches: {
-  rejected: BranchT;
-  accepted: BranchT;
-  open: BranchT;
+  rejected: BranchUnionT;
+  accepted: BranchUnionT;
+  open: BranchUnionT;
 } = {
   rejected: {
-    id: 547964732,
-    updatedPostTitle: "Post title",
+    branch: {
+      id: 2,
+      updatedAt: "2024-06-16T16:00:43.234Z",
+      createdAt: "2024-06-16T16:00:43.234Z",
+      updatedCompletionStatus: null,
+      updatedPostTitle: null,
+      updatedScientificFieldTagContainerID: null,
+      branchOverallReviewStatus: "rejected",
+      projectPostID: null,
+      collaboratorIDs: [1],
+      renderStatus: "success",
+      branchTitle: "Something",
+      discussionContainerID: 1,
+      reviewIDs: [1, 2, 3],
+    },
+    closedBranch: {
+      id: 1,
+      branchID: 2,
+      branchReviewDecision: "rejected",
+      projectPostID: 1,
+      supercededBranchID: 1,
+    },
+    updated: {
+      postTitle: "New title",
+      completionStatus: "ongoing",
+      scientificFieldTagContainerID: 1,
+    },
+    id: {
+      id: 1,
+      isClosed: true,
+    },
     projectPostID: 1,
-    discussionIDs: [1],
-    renderStatus: "success",
-    branchTitle: "Remove contents section",
-    // newVersionID: 1,
-    reviewIDs: [0, 1, 2],
-    // createdAt: "19 May 2024",
-    collaboratorIDs: [0, 1],
-    // updatedAt: "20 May 2024",
-    updatedCompletionStatus: "idea",
-    updatedScientificFieldTagIDs: [],
-    branchOverallReviewStatus: "rejected",
-    // previousVersionID: 2,
-  },
-  open: {
-    id: 547964732,
-    updatedPostTitle: "Post title",
-    projectPostID: 1,
-    discussionIDs: [1],
-    renderStatus: "success",
-    branchTitle: "Remove contents section",
-    // newVersionID: 1,
-    reviewIDs: [0, 1, 2],
-    // createdAt: "19 May 2024",
-    collaboratorIDs: [0, 1],
-    // updatedAt: "20 May 2024",
-    updatedCompletionStatus: "idea",
-    updatedScientificFieldTagIDs: [],
-    branchOverallReviewStatus: "open for review",
-    // previousVersionID: 2,
   },
   accepted: {
-    id: 547964732,
-    updatedPostTitle: "Post title",
+    branch: {
+      id: 3,
+      updatedAt: "2024-06-16T16:00:43.234Z",
+      createdAt: "2024-06-16T16:00:43.234Z",
+      updatedCompletionStatus: null,
+      updatedPostTitle: null,
+      updatedScientificFieldTagContainerID: null,
+      branchOverallReviewStatus: "peer reviewed",
+      projectPostID: null,
+      collaboratorIDs: [1],
+      renderStatus: "success",
+      branchTitle: "Something",
+      discussionContainerID: 1,
+      reviewIDs: [4, 2, 3],
+    },
+    closedBranch: {
+      id: 2,
+      branchID: 3,
+      branchReviewDecision: "approved",
+      projectPostID: 1,
+      supercededBranchID: 1,
+    },
+    updated: {
+      postTitle: "New title",
+      completionStatus: "ongoing",
+      scientificFieldTagContainerID: 1,
+    },
+    id: {
+      id: 2,
+      isClosed: true,
+    },
     projectPostID: 1,
-    discussionIDs: [1],
-    renderStatus: "success",
-    branchTitle: "Remove contents section",
-    // newVersionID: 1,
-    reviewIDs: [0, 1, 2],
-    // createdAt: "19 May 2024",
-    collaboratorIDs: [0, 1],
-    // updatedAt: "20 May 2024",
-    updatedCompletionStatus: "idea",
-    updatedScientificFieldTagIDs: [],
-    branchOverallReviewStatus: "peer reviewed",
-    // previousVersionID: 2,
+  },
+  open: {
+    branch: {
+      id: 4,
+      updatedAt: "2024-06-16T16:00:43.234Z",
+      createdAt: "2024-06-16T16:00:43.234Z",
+      updatedCompletionStatus: null,
+      updatedPostTitle: null,
+      updatedScientificFieldTagContainerID: null,
+      branchOverallReviewStatus: "open for review",
+      projectPostID: 1,
+      collaboratorIDs: [1],
+      renderStatus: "success",
+      branchTitle: "Something",
+      discussionContainerID: 1,
+      reviewIDs: [5],
+    },
+    closedBranch: undefined,
+    updated: {
+      postTitle: "New title",
+      completionStatus: "ongoing",
+      scientificFieldTagContainerID: 1,
+    },
+    id: {
+      id: 4,
+      isClosed: false,
+    },
+    projectPostID: 1,
   },
 };
 
@@ -183,7 +230,7 @@ export const dummyReview: { rejected: BranchReviewT; accepted: BranchReviewT } =
       memberID: 0,
       branchReviewDecision: "rejected",
       branchID: 0,
-      createdAt: "02 June 2024",
+      createdAt: "2024-06-16T16:00:43.234Z",
     },
     accepted: {
       id: 2,
@@ -192,7 +239,7 @@ export const dummyReview: { rejected: BranchReviewT; accepted: BranchReviewT } =
       memberID: 1,
       branchReviewDecision: "approved",
       branchID: 0,
-      createdAt: "02 June 2024",
+      createdAt: "2024-06-16T16:00:43.234Z",
     },
   };
 

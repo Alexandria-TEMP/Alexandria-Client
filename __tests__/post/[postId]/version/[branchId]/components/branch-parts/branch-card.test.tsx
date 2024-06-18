@@ -1,4 +1,5 @@
-import { fetchBranchData } from "@/lib/api/services/branch-api";
+import { useBranchData } from "@/lib/api/hooks/branch-hooks";
+import { idT } from "@/lib/types/api-types";
 import BranchCard from "@/post/[postId]/(branch)/version/[branchId]/components/branch-parts/branch-card";
 import FileTree from "@/post/[postId]/components/files/file-tree";
 import RenderedQuarto from "@/post/[postId]/components/render/rendered-quarto";
@@ -9,8 +10,8 @@ import { usePathname, useRouter } from "next/navigation";
 import createMockRouter from "~/__tests__/__utils__/create-mock-router";
 import { dummyBranches } from "~/__tests__/__utils__/dummys";
 
-// Mock getBranchData()
-jest.mock("@/lib/api/services/branch-api");
+// Mock useBranchData()
+jest.mock("@/lib/api/hooks/branch-hooks");
 // Mock useRouter so it's mounted
 jest.mock("next/navigation");
 // Mock render and file tree to reduce coupling
@@ -20,37 +21,38 @@ jest.mock("@/post/[postId]/components/files/file-tree");
 describe("BranchCard", () => {
   (usePathname as jest.Mock).mockReturnValue("");
   (useRouter as jest.Mock).mockReturnValue(createMockRouter());
-  (fetchBranchData as jest.Mock).mockResolvedValue(dummyBranches["accepted"]);
+  (useBranchData as jest.Mock).mockReturnValue({
+    data: dummyBranches["accepted"],
+    isLoading: false,
+  });
 
   beforeEach(async () => {
     (RenderedQuarto as jest.Mock).mockImplementation(({ id }) =>
       id === 1 ? (
-        <p data-testid="new-version">This is the new version</p>
-      ) : (
         <p data-testid="old-version">This version is being replaced</p>
+      ) : (
+        <p data-testid="new-version">This is the new version</p>
       ),
     );
 
     (FileTree as jest.Mock).mockImplementation(({ id }) =>
       id === 1 ? (
-        <p data-testid="new-files">These are the new files</p>
-      ) : (
         <p data-testid="old-files">These files are being replaced</p>
+      ) : (
+        <p data-testid="new-files">These are the new files</p>
       ),
     );
 
     render(
       <BranchCard
-        newVersionId={1}
-        previousVersionId={2}
-        postId={0}
-        branchId={0}
+        id={dummyBranches["accepted"].id.id as idT}
+        isClosed={dummyBranches["accepted"].id.isClosed}
       />,
     );
 
     await waitFor(() => {
       const title = screen.getByRole("heading", {
-        name: dummyBranches["accepted"].updatedPostTitle,
+        name: dummyBranches["accepted"].updated.postTitle,
       });
       expect(title).toBeInTheDocument();
     });
