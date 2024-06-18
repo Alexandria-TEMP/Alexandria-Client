@@ -2,7 +2,7 @@
 
 import { PostUnionT, idPostUnionT } from "@/lib/types/post-union";
 import useSWR, { SWRResponse } from "swr";
-import fetchPostData from "../services/post-api";
+import { fetchPostData } from "../services/post-api";
 
 /**
  * Fetches post or project post data in a unified object

@@ -1,7 +1,12 @@
 import { BranchUnionT, idBranchUnionT } from "@/lib/types/branch-union";
-import { BranchT, ClosedBranchT, idT } from "../../types/api-types";
+import {
+  BranchReviewDecisionT,
+  BranchT,
+  ClosedBranchT,
+  idT,
+} from "../../types/api-types";
 import { baseUrl, validateResponse } from "../api-common";
-import fetchPostData from "./post-api";
+import { fetchPostData } from "./post-api";
 
 /**
  * Fetches branch or closed branch data in a unified object
@@ -80,32 +85,11 @@ export async function fetchBranchUpdatedFieldsFallback(
 }
 
 /**
- * Gets branches of a post given their ID.
- * @async
- * @param id Post ID
+ * Fetches statuses of all brach reviews
+ * @param id branch ID
  */
-// TODO remove next line
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function getPostBranches(id: idT) {
-  await new Promise((resolve) => setTimeout(resolve, 100));
-  // TODO
-  return {
-    rejected: [1],
-    open: [2],
-    accepted: [3],
-  };
-}
-
-/**
- * TODO jsdoc when properly implemented
- */
-// TODO remove next line
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function getBranchReviewStatuses(id: idT) {
-  // TODO
-  await new Promise((resolve) => setTimeout(resolve, 70));
-  return [];
-  // if (id == 1) return ["accept", "reject", "accept"];
-  // else if (id == 2) return ["accept", "open", "open"];
-  // else return ["accept", "accept", "accept"];
+export async function fetchBranchReviewStatuses(id: idT) {
+  const res = await fetch(`${baseUrl}/branches/${id}/review-statuses`);
+  await validateResponse(res);
+  return (await res.json()) as BranchReviewDecisionT[];
 }

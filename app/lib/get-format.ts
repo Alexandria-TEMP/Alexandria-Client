@@ -35,7 +35,8 @@ export function getStandardReviewStatus(
   status:
     | BranchOverallReviewStatusT
     | BranchReviewDecisionT
-    | ProjectReviewStatusT,
+    | ProjectReviewStatusT
+    | undefined,
 ): {
   short: "open" | "accepted" | "rejected" | "unknown";
   descriptive: string;

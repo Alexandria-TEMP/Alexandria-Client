@@ -1,73 +1,78 @@
 "use client";
 
 import HeaderSubtle from "@/components/common/header-subtle";
-import {
-  fetchBranchData,
-  getBranchReviewStatuses,
-} from "@/lib/api/services/branch-api";
-import { IdProp } from "@/lib/types/react-props/id-prop";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import BranchCardSkeleton from "./branch-card-skeleton";
-import { BranchT, idT } from "@/lib/types/api-types";
+import { idT } from "@/lib/types/api-types";
 import ReviewChips from "@/components/common/review-chips";
+import { useBranchAndReviewData } from "@/lib/api/hooks/branch-hooks";
+import { idBranchUnionT } from "@/lib/types/branch-union";
+import useTriggerRerender from "@/lib/hooks/use-trigger-rerender";
+import DefaultError from "@/error";
+import { capitalizeFirstLetter, formatDateString } from "@/lib/string-utils";
+import { getStandardReviewStatus } from "@/lib/get-format";
 
 /**
  * Card that represents some post branch
  * @param id branch ID
- * @param postId branch's post ID, used only for routing
+ * @param isClosed indicates if branch is closed
+ * @param postPathID post path ID, used for routing in contribute
  * @param short makes the card less wide
  */
 export default function BranchCard({
   id,
-  postId,
+  isClosed,
+  postPathID,
   short,
-}: IdProp & { postId: idT; short?: boolean }) {
-  const router = useRouter();
-  const [data, setData] = useState<BranchT | undefined>(undefined);
-  const [reviews, setReviews] = useState<string[] | undefined>(undefined);
-
-  useEffect(() => {
-    const getData = async () => {
-      setData(await fetchBranchData(id as idT));
-      setReviews(await getBranchReviewStatuses(id as idT));
-    };
-    getData().catch(() => {
-      setData(undefined);
-      setReviews(undefined);
-    });
+}: idBranchUnionT & Readonly<{ postPathID: string; short?: boolean }>) {
+  const { data, isLoading, error } = useBranchAndReviewData({
+    id: id as idT,
+    isClosed,
   });
 
-  if (data === undefined || reviews === undefined) {
+  const status = useMemo(
+    () =>
+      getStandardReviewStatus(
+        data?.branchUnion?.branch.branchOverallReviewStatus,
+      ).short,
+    [data],
+  );
+
+  const { triggerRerender } = useTriggerRerender();
+  const router = useRouter();
+
+  if (isLoading || !data) {
     return <BranchCardSkeleton />;
   }
 
-  // We create variables for the separate parts of the card to avoid code duplication
-  // between the short and !short card versions
+  if (error) {
+    return <DefaultError reset={triggerRerender} error={error} />;
+  }
+
+  const { branchUnion, reviews } = data;
+
+  // We create variables for the separate parts of the card to avoid
+  // code duplication between the short and !short card versions
 
   const titleAndCreateDate = (
     <>
-      <h3 className="font-semibold">{data.branchTitle}</h3>
+      <h3 className="font-semibold">{branchUnion.branch.branchTitle}</h3>
       <HeaderSubtle>
-        Created on
-        {/* TODO */}
-        {0}
-        {/* {data.createdAt} */}
+        Created on {formatDateString(branchUnion.branch.createdAt)}
       </HeaderSubtle>
     </>
   );
 
-  const updateDate = (
-    <p className="text-sm">
-      {data.branchOverallReviewStatus != "open for review" &&
-        // TODO
-        `a`}
-      {/* `${capitalizeFirstLetter(getStandardReviewStatus(data.branchOverallReviewStatus))} on ${data.updatedAt}`} */}
-    </p>
-  );
+  const updateDate =
+    status === "open" || status === "unknown" ? (
+      <></>
+    ) : (
+      <p className="text-sm">{`${capitalizeFirstLetter(status)} on ${formatDateString(branchUnion.branch.updatedAt)}`}</p>
+    );
 
-  const onPress = () => router.push(`/post/${postId}/version/${id}`);
+  const onPress = () => router.push(`/post/${postPathID}/version/${id}`);
 
   return short ? (
     <Card className="w-full" isPressable onPress={onPress}>
