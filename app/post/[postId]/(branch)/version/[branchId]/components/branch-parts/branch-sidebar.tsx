@@ -26,8 +26,12 @@ export default async function BranchSidebar({
     id as idT,
   );
   const scientificFields = await fetchScientificFieldsFromContainer(
-    (await fetchBranchUpdatedFieldsFallback(data.branch))
-      .scientificFieldTagContainerID,
+    (
+      await fetchBranchUpdatedFieldsFallback(
+        data.branch,
+        data.projectPostID as idT,
+      )
+    ).scientificFieldTagContainerID,
   );
 
   return (
@@ -35,7 +39,7 @@ export default async function BranchSidebar({
       items={[
         {
           title: "Version of",
-          node: <PostCardMini id={data.branch.projectPostID} isProject />,
+          node: <PostCardMini id={data.projectPostID as idT} isProject />,
         },
         ...(scientificFields.length == 0
           ? []

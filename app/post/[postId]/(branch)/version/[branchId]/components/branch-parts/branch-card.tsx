@@ -40,9 +40,14 @@ export default function BranchCard({
   const supercededProject: QuartoContainerT | undefined = useMemo(() => {
     if (!data) return undefined;
 
+    if (data.closedBranch && data.closedBranch.supercededBranchID === null)
+      // Initial branch (first peer review of project post) has supercededBranch == null
+      // as it has no previous content that it is replacing
+      return undefined;
+
     return data.closedBranch
-      ? { id: data.closedBranch.supercededBranchID, type: "branch" }
-      : { id: data.branch.projectPostID, type: "post" };
+      ? { id: data.closedBranch.supercededBranchID as idT, type: "branch" }
+      : { id: data.projectPostID as idT, type: "post" };
   }, [data]);
 
   const [compare, setCompare] = useState(false);
@@ -58,7 +63,7 @@ export default function BranchCard({
     );
   }
 
-  if (error || !data || !supercededProject) {
+  if (error || !data) {
     return (
       <DefaultError
         error={error ?? new Error("branch data is undefined")}
@@ -73,7 +78,7 @@ export default function BranchCard({
         id={id as idT}
         isClosed={isClosed}
         postPathID={postPathID}
-        onCompare={setCompare}
+        onCompare={supercededProject ? setCompare : undefined}
         hideContribute={hideContribute}
         actions={[
           {
@@ -98,27 +103,28 @@ export default function BranchCard({
       )}
 
       <CardBody className="flex flex-row gap-3 w-full">
-        <div className={data.closedBranch && compare ? "w-1/2" : "w-full"}>
+        <div className={supercededProject && compare ? "w-1/2" : "w-full"}>
           {view === "files" ? (
             <FileTree id={data.branch.id} container="branch" />
           ) : (
             <RenderedQuarto id={data.branch.id} container="branch" />
           )}
         </div>
-
-        <div className={compare ? "w-1/2" : "hidden"}>
-          {view === "files" ? (
-            <FileTree
-              id={supercededProject.id}
-              container={supercededProject.type}
-            />
-          ) : (
-            <RenderedQuarto
-              id={supercededProject.id}
-              container={supercededProject.type}
-            />
-          )}
-        </div>
+        {supercededProject && (
+          <div className={compare ? "w-1/2" : "hidden"}>
+            {view === "files" ? (
+              <FileTree
+                id={supercededProject.id}
+                container={supercededProject.type}
+              />
+            ) : (
+              <RenderedQuarto
+                id={supercededProject.id}
+                container={supercededProject.type}
+              />
+            )}
+          </div>
+        )}{" "}
       </CardBody>
 
       {footer}

@@ -35,18 +35,18 @@ export type BranchCollaboratorT = EntityT & {
 };
 
 export type BranchT = EntityT & {
-  updatedPostTitle: string | null;
+  updatedPostTitle: string | null; // Null when this field is not updated
   branchOverallReviewStatus: BranchOverallReviewStatusT;
   branchTitle: string;
   collaboratorIDs: idT[];
   discussionContainerID: idT;
-  projectPostID: idT;
+  projectPostID: idT | null; // Becomes null and goes to ClosedBranchT once it is closed
   renderStatus: RenderStatusT;
   reviewIDs: idT[];
   updatedAt: string;
   createdAt: string;
-  updatedCompletionStatus: ProjectCompletionStatusT | null;
-  updatedScientificFieldTagContainerID: idT | null;
+  updatedCompletionStatus: ProjectCompletionStatusT | null; // Null when this field is not updated
+  updatedScientificFieldTagContainerID: idT | null; // Null when this field is not updated
 };
 
 export type BranchReviewT = EntityT & {
@@ -57,11 +57,11 @@ export type BranchReviewT = EntityT & {
   memberID: idT;
 };
 
-export type ClosedBranchtT = EntityT & {
+export type ClosedBranchT = EntityT & {
   branchID: idT;
   branchReviewDecision: BranchReviewDecisionT;
   projectPostID: idT;
-  supercededBranchID: idT;
+  supercededBranchID: idT | null; // Null when this branch was the initial peer review
 };
 
 export type DiscussionContainerT = EntityT & {

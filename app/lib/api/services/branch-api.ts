@@ -1,5 +1,5 @@
 import { BranchUnionT, idBranchUnionT } from "@/lib/types/branch-union";
-import { BranchT, ClosedBranchtT, idT } from "../../types/api-types";
+import { BranchT, ClosedBranchT, idT } from "../../types/api-types";
 import { baseUrl, validateResponse } from "../api-common";
 import fetchPostData from "./post-api";
 
@@ -19,7 +19,7 @@ export async function fetchBranchData(
       `${baseUrl}/branches/closed/${id.id}`,
     );
     await validateResponse(closedBranchResponse);
-    closedBranch = (await closedBranchResponse.json()) as ClosedBranchtT;
+    closedBranch = (await closedBranchResponse.json()) as ClosedBranchT;
   }
 
   const branchID = closedBranch?.branchID ?? (id.id as idT);
@@ -28,17 +28,32 @@ export async function fetchBranchData(
 
   const branch = (await branchResponse.json()) as BranchT;
 
-  const updated = await fetchBranchUpdatedFieldsFallback(branch);
+  const projectPostID = branch.projectPostID ?? closedBranch?.projectPostID;
+  if (!projectPostID) {
+    throw new Error(
+      `missing some project post ID in ${id.isClosed ? "closed" : ""} branch ${id.id}`,
+    );
+  }
 
-  return { branch, closedBranch, updated };
+  const updated = await fetchBranchUpdatedFieldsFallback(branch, projectPostID);
+
+  return { branch, closedBranch, updated, projectPostID };
 }
 
 /**
  * For each of the possible post fields that a branch updates, returns
  * either the updated data or the current data if updated is null
  * @param branch branch whose update we're interested in
+ * @param projectPostID ID of project post that branch is updating
  */
-export async function fetchBranchUpdatedFieldsFallback(branch: BranchT) {
+export async function fetchBranchUpdatedFieldsFallback(
+  branch: BranchT,
+  projectPostID: idT,
+) {
+  console.log(
+    "In fetchBranchUpdatedFieldsFallback, branch is " + JSON.stringify(branch),
+  );
+
   if (
     branch.updatedPostTitle &&
     branch.updatedCompletionStatus &&
@@ -53,7 +68,7 @@ export async function fetchBranchUpdatedFieldsFallback(branch: BranchT) {
   }
 
   const postData = await fetchPostData({
-    id: branch.projectPostID,
+    id: projectPostID,
     isProject: true,
   });
 

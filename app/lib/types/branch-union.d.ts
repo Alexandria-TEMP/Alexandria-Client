@@ -1,9 +1,10 @@
-import { BranchT, ClosedBranchtT } from "./api-types";
+import { BranchT, ClosedBranchT } from "./api-types";
 
 export type BranchUnionT = {
   branch: BranchT;
-  closedBranch?: ClosedBranchtT;
+  closedBranch?: ClosedBranchT;
   updated: BranchUpdatedFieldsT;
+  projectPostID: idT;
 };
 
 export type idBranchUnionT = {
