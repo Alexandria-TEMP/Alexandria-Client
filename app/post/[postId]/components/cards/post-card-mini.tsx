@@ -6,9 +6,9 @@ import { idT } from "@/lib/types/api-types";
 import { usePostData } from "@/lib/api/hooks/post-hooks";
 import { idPostUnionT } from "@/lib/types/post-union";
 import ErrorWithMessage from "@/components/error-with-message";
-import { useState } from "react";
 import PostCardMiniSkeleton from "./post-card-mini-skeleton";
 import { postUnionIDToPathID } from "@/lib/id-parser";
+import useTriggerRerender from "@/lib/hooks/use-trigger-rerender";
 
 /**
  * Mini card that represents a post. Clicking it redirects to the post page.
@@ -21,14 +21,13 @@ export default function PostCardMini({
 }: Readonly<idPostUnionT>) {
   const { data, isLoading, error } = usePostData({ id: id as idT, isProject });
   const router = useRouter();
-  // Used to force a rerender on error
-  const [rerender, setRerender] = useState(false);
+  const { triggerRerender } = useTriggerRerender();
 
   if (error) {
     return (
       <ErrorWithMessage
         message="Failed to get post data."
-        reset={() => setRerender(!rerender)}
+        reset={triggerRerender}
       />
     );
   }

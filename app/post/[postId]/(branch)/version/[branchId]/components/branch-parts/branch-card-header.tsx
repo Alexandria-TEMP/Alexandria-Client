@@ -11,13 +11,14 @@ import { getStandardReviewStatus } from "@/lib/get-format";
 import { idT } from "@/lib/types/api-types";
 import ChipWithTitle from "@/components/common/chip-with-title";
 import BranchCardHeaderSkeleton from "./branch-card-header-skeleton";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import ActionGroup from "@/post/[postId]/components/buttons/action-group";
 import DownloadButton from "@/post/[postId]/components/buttons/download-button";
 import { idBranchUnionT } from "@/lib/types/branch-union";
 import { useBranchData } from "@/lib/api/hooks/branch-hooks";
 import { branchUnionIDToPathID } from "@/lib/id-parser";
 import DefaultError from "@/error";
+import useTriggerRerender from "@/lib/hooks/use-trigger-rerender";
 
 /**
  * Header for branch contents card. Uses CardHeader, so it must be child of a Card.
@@ -45,8 +46,7 @@ export default function BranchCardHeader({
   }
 >) {
   const { data, isLoading, error } = useBranchData({ id: id as idT, isClosed });
-  // Used to force a rerender on error
-  const [rerender, setRerender] = useState(false);
+  const { triggerRerender } = useTriggerRerender();
 
   const status = useMemo(
     () =>
@@ -74,8 +74,7 @@ export default function BranchCardHeader({
 
   if (isLoading || !data) return <BranchCardHeaderSkeleton />;
 
-  if (error)
-    return <DefaultError error={error} reset={() => setRerender(!rerender)} />;
+  if (error) return <DefaultError error={error} reset={triggerRerender} />;
 
   return (
     <>

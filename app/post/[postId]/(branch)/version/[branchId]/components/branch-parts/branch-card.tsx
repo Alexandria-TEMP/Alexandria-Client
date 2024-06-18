@@ -11,6 +11,7 @@ import { useBranchData } from "@/lib/api/hooks/branch-hooks";
 import { idT } from "@/lib/types/api-types";
 import GenericLoadingPage from "@/loading";
 import DefaultError from "@/error";
+import useTriggerRerender from "@/lib/hooks/use-trigger-rerender";
 
 /**
  * Displays a Card for a branch, containing a [BranchCardHeader](./branch-card-header)
@@ -51,8 +52,7 @@ export default function BranchCard({
   const [compare, setCompare] = useState(false);
   const [view, setView] = useState<"contents" | "files">("contents");
 
-  // Used to force a rerender in case of an error
-  const [rerender, setRerender] = useState(false);
+  const { triggerRerender } = useTriggerRerender();
 
   if (isLoading) {
     return (
@@ -66,7 +66,7 @@ export default function BranchCard({
     return (
       <DefaultError
         error={error ?? new Error("branch data is undefined")}
-        reset={() => setRerender(!rerender)}
+        reset={triggerRerender}
       />
     );
   }
