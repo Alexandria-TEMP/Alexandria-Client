@@ -19,12 +19,12 @@ export const dummyDiscussion = {
     institution: "TU Delft",
     lastName: "Curie",
   },
-  createdAt: "2024-06-16T16:00:43.234Z",
+  createdAt: "date", // Must be invalid date to avoid locale differences in snapshot
   deleted: false,
   deletedAt: "-",
   replies: [],
   text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut ducimus amet ex qui eius corrupti reiciendis, quibusdam suscipit, aspernatur ipsum. Reprehenderit libero molestias nostrum eum sed? Illo, quidem ad.",
-  updatedAt: "2024-06-16T16:00:43.234Z",
+  updatedAt: "date", // Must be invalid date to avoid locale differences in snapshot
 };
 
 export const dummyMembers: MemberT[] = [
@@ -54,8 +54,8 @@ export const dummyPost: PostT = {
   id: 1,
   postType: "reflection",
   scientificFieldTagContainerID: 1,
-  createdAt: "2024-06-16T16:00:43.234Z",
-  updatedAt: "2024-06-16T16:00:43.234Z",
+  createdAt: "date", // Must be invalid date to avoid locale differences in snapshot
+  updatedAt: "date", // Must be invalid date to avoid locale differences in snapshot
 };
 
 export const dummyProjectPost: ProjectPostT = {
@@ -109,8 +109,8 @@ export const dummyBranches: {
   rejected: {
     branch: {
       id: 2,
-      updatedAt: "2024-06-16T16:00:43.234Z",
-      createdAt: "2024-06-16T16:00:43.234Z",
+      updatedAt: "date", // Must be invalid date to avoid locale differences in snapshot
+      createdAt: "date", // Must be invalid date to avoid locale differences in snapshot
       updatedCompletionStatus: null,
       updatedPostTitle: null,
       updatedScientificFieldTagContainerID: null,
@@ -143,8 +143,8 @@ export const dummyBranches: {
   accepted: {
     branch: {
       id: 3,
-      updatedAt: "2024-06-16T16:00:43.234Z",
-      createdAt: "2024-06-16T16:00:43.234Z",
+      updatedAt: "date", // Must be invalid date to avoid locale differences in snapshot
+      createdAt: "date", // Must be invalid date to avoid locale differences in snapshot
       updatedCompletionStatus: null,
       updatedPostTitle: null,
       updatedScientificFieldTagContainerID: null,
@@ -177,8 +177,8 @@ export const dummyBranches: {
   open: {
     branch: {
       id: 4,
-      updatedAt: "2024-06-16T16:00:43.234Z",
-      createdAt: "2024-06-16T16:00:43.234Z",
+      updatedAt: "date", // Must be invalid date to avoid locale differences in snapshot
+      createdAt: "date", // Must be invalid date to avoid locale differences in snapshot
       updatedCompletionStatus: null,
       updatedPostTitle: null,
       updatedScientificFieldTagContainerID: null,
@@ -230,7 +230,7 @@ export const dummyReview: { rejected: BranchReviewT; accepted: BranchReviewT } =
       memberID: 0,
       branchReviewDecision: "rejected",
       branchID: 0,
-      createdAt: "2024-06-16T16:00:43.234Z",
+      createdAt: "date", // Must be invalid date to avoid locale differences in snapshot
     },
     accepted: {
       id: 2,
@@ -239,7 +239,7 @@ export const dummyReview: { rejected: BranchReviewT; accepted: BranchReviewT } =
       memberID: 1,
       branchReviewDecision: "approved",
       branchID: 0,
-      createdAt: "2024-06-16T16:00:43.234Z",
+      createdAt: "date", // Must be invalid date to avoid locale differences in snapshot
     },
   };
 

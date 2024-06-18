@@ -116,12 +116,12 @@ exports[`BranchCardHeader matches snapshot when status is accepted 1`] = `
           class="text-neutral-400"
         >
           Created on 
-          16/06/2024
+          Invalid Date
         </h6>
         <h6
           class="text-neutral-400"
         >
-          Accepted on 16/06/2024
+          Accepted on Invalid Date
         </h6>
       </div>
     </div>
@@ -274,7 +274,7 @@ exports[`BranchCardHeader matches snapshot when status is open 1`] = `
         <h6
           class="text-neutral-400"
         >
-          16/06/2024
+          Invalid Date
         </h6>
       </div>
     </div>
@@ -423,12 +423,12 @@ exports[`BranchCardHeader matches snapshot when status is rejected 1`] = `
           class="text-neutral-400"
         >
           Created on 
-          16/06/2024
+          Invalid Date
         </h6>
         <h6
           class="text-neutral-400"
         >
-          Rejected on 16/06/2024
+          Rejected on Invalid Date
         </h6>
       </div>
     </div>
