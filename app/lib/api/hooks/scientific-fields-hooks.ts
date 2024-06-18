@@ -25,7 +25,7 @@ export function useScientificFields(): SWRResponse<
 }
 
 /**
- * Hook that gets all the scientifici field tag objects in a container, by id
+ * Hook that gets all the scientific field tag objects in a container, by id
  * @param id of the container
  * @returns an SWR response containing an array of scientific field tag id, loading and erorr states
  */

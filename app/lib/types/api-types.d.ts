@@ -40,16 +40,12 @@ export type BranchT = EntityT & {
   branchTitle: string;
   collaboratorIDs: idT[];
   discussionContainerID: idT;
-  discussionContainerID: idT;
   projectPostID: idT;
   renderStatus: RenderStatusT;
   reviewIDs: idT[];
   updatedAt: string;
   createdAt: string;
-  updatedAt: string;
-  createdAt: string;
   updatedCompletionStatus: ProjectCompletionStatusT;
-  updatedScientificFieldTagContainerID: idT;
   updatedScientificFieldTagContainerID: idT;
 };
 
@@ -100,9 +96,7 @@ export type PostT = EntityT & {
   postType: PostTypeT;
   renderStatus: RenderStatusT;
   scientificFieldTagContainerID: idT;
-  scientificFieldTagContainerID: idT;
   title: string;
-  updatedAt: string;
   updatedAt: string;
 };
 
@@ -124,11 +118,6 @@ export type ScientificFieldTagT = EntityT & {
 export type ScientificFieldTagContainerT = EntityT & {
   scientificFieldTagIDs: idT[];
 };
-
-export type ScientificFieldTagContainerT = EntityT & {
-  scientificFieldTagIDs: idT[];
-};
-
 // Forms
 
 export type PostCreationFormT = {
