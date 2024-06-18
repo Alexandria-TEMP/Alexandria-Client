@@ -110,7 +110,7 @@ export default function PersonalDataCard({
           description="Select the scientific fields that you study."
           getItemLabel={getFieldName}
           control={control}
-          name="fields"
+          name="scientificFieldTagIDs"
           optionsHook={useScientificFields}
         />
       </div>

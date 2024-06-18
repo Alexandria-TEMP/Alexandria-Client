@@ -154,3 +154,12 @@ export type BranchCreationFormT = {
   updatedPostTitle: string;
   updatedScientificFieldIDs: idT[];
 };
+
+export type MemberCreationFormtT = {
+  email: string;
+  firstName: string;
+  institution: string;
+  lastName: string;
+  password: string;
+  scientificFieldTagIDs: idT[];
+};

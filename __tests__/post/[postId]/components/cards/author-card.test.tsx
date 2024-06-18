@@ -1,7 +1,7 @@
 import { expect, describe, it } from "@jest/globals";
 import AuthorCard from "@/post/[postId]/components/cards/author-card";
 import { render, screen } from "@testing-library/react";
-import fetchMemberData from "@/lib/api/services/member-api";
+import { fetchMemberData } from "@/lib/api/services/member-api";
 import { dummyMembers } from "~/__tests__/__utils__/dummys";
 
 jest.mock("@/lib/api/services/member-api");
