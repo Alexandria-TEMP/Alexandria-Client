@@ -34,7 +34,7 @@ export const dummyMembers: MemberT[] = [
     firstName: "Marie",
     institution: "TU Delft",
     lastName: "Curie",
-    scientificFields: [],
+    scientificFieldTagIDs: [],
   },
   {
     id: 2,
@@ -42,7 +42,7 @@ export const dummyMembers: MemberT[] = [
     firstName: "Nicolaus",
     institution: "TU Delft",
     lastName: "Copernicus",
-    scientificFields: [],
+    scientificFieldTagIDs: [],
   },
 ];
 
@@ -77,13 +77,26 @@ export const dummyPostUnion: {
   noProject: { post: dummyPost },
 };
 
-// TODO improve
-export const dummyScientificField: ScientificFieldTagT = {
-  id: 1,
-  scientificField: "Computer Science",
-  parentID: undefined,
-  subtagIDs: [],
-};
+export const dummyScientificFields: ScientificFieldTagT[] = [
+  {
+    id: 1,
+    scientificField: "Computer Science",
+    parentID: 1,
+    subtagIDs: [],
+  },
+  {
+    id: 2,
+    scientificField: "Computer Science",
+    parentID: 1,
+    subtagIDs: [],
+  },
+  {
+    id: 3,
+    scientificField: "Computer Science",
+    parentID: 1,
+    subtagIDs: [],
+  },
+];
 
 // TODO improve
 export const dummyBranches: {
@@ -195,3 +208,5 @@ export const dummyFileTree: FileTreeT = {
     "f.txt": 2430,
   },
 };
+
+export const dummyFile: File = new File([], "filename");

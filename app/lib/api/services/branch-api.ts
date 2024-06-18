@@ -1,5 +1,6 @@
 import { BranchUnionT, idBranchUnionT } from "@/lib/types/branch-union";
 import {
+  BranchCreationFormT,
   BranchReviewDecisionT,
   BranchT,
   ClosedBranchT,
@@ -117,4 +118,48 @@ export async function fetchOrderedBranches(ids: idBranchUnionT[]) {
     const aIsEarlier = aDate.getTime() < bDate.getTime();
     return aIsEarlier ? 1 : -1;
   });
+}
+
+/**
+ * Endpoint for creating a new branch object
+ * @async
+ * @param branchCreationForm object containing branch creation form data
+ * @returns the newly created branch object
+ */
+export async function postBranches(
+  branchCreationForm: BranchCreationFormT,
+): Promise<BranchT> {
+  const jsonPost = JSON.stringify(branchCreationForm);
+  const response = await fetch(`${baseUrl}/branches`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: jsonPost,
+  });
+  await validateResponse(response);
+  const branch = (await response.json()) as BranchT;
+  return branch;
+}
+
+/**
+ * Method that sends a POST request to the server to upload a file to an existing branch
+ * @async
+ * @param branchId the branch we want to upload the file to
+ * @param file the file we want to upload
+ * @returns whether the request retuned a 200OK response
+ */
+export async function postBranchesIdUpload(
+  branchId: idT,
+  file: File,
+): Promise<boolean> {
+  const fileData = new FormData();
+  fileData.append("file", file);
+
+  const response = await fetch(baseUrl + "/branches/" + branchId + "/upload", {
+    method: "POST",
+    body: fileData,
+  });
+  await validateResponse(response);
+  return response.ok;
 }

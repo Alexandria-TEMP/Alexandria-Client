@@ -12,11 +12,24 @@ import { MultiSelectAutocomplete } from "@/components/form/multi-select-autocomp
 import { dummyMembers } from "~/__tests__/__utils__/dummys";
 import { useForm, FormProvider } from "react-hook-form";
 import { expect, describe, it } from "@jest/globals";
+import { SWRResponse } from "swr";
 
 const dumTitle = "Dummy title";
 const dumDesc = "Dummy description";
 const dumItems = dummyMembers;
 const dumGetItemLabel = jest.fn((item: MemberT | undefined) => "Dummy name");
+
+// Mock the get options hook
+const mockGetOptions = () => {
+  const defaultResponse: SWRResponse<MemberT[], Error> = {
+    data: dumItems,
+    error: undefined,
+    mutate: jest.fn(),
+    isValidating: false,
+    isLoading: false,
+  };
+  return defaultResponse;
+};
 
 const Wrapper = ({
   children,
@@ -45,7 +58,7 @@ describe("MultiSelectAutocomplete", () => {
             description={dumDesc}
             name="dumItem"
             getItemLabel={dumGetItemLabel}
-            optionsGetter={async () => dumItems}
+            optionsHook={mockGetOptions}
           />
         </Wrapper>,
       );
@@ -81,7 +94,7 @@ describe("MultiSelectAutocomplete", () => {
             description={dumDesc}
             name="dumItem"
             getItemLabel={dumGetItemLabel}
-            optionsGetter={async () => dumItems}
+            optionsHook={mockGetOptions}
           />
         </Wrapper>,
       );
@@ -164,7 +177,7 @@ describe("MultiSelectAutocomplete that is Required", () => {
                 message: "pls select",
               },
             }}
-            optionsGetter={async () => dumItems}
+            optionsHook={mockGetOptions}
           />
         </Wrapper>,
       );
@@ -189,7 +202,7 @@ describe("MultiSelectAutocomplete that is Required", () => {
                 message: "pls select",
               },
             }}
-            optionsGetter={async () => dumItems}
+            optionsHook={mockGetOptions}
           />
         </Wrapper>,
       );

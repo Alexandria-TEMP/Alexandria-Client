@@ -25,18 +25,7 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
   rules,
   optionsGetter,
 }: SingleSelectAutocompleteT<FormType>) {
-  const [options, setOptions] = useState<string[]>([]);
-  /**
-   * Update the options list when request for them finishes
-   */
-  useEffect(() => {
-    const getOptions = async () => {
-      const opts: string[] = await optionsGetter();
-      setOptions(opts);
-    };
-
-    getOptions().catch(() => console.log("error fetching data")); // TODO maybe make it refetch the data if it fails
-  }, [optionsGetter]);
+  const options = optionsGetter();
 
   /* Register the field as part of the parent form using appropriate name and rules  */
   const { field } = useController({
@@ -53,15 +42,16 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
    *   but it would be more inefficient to search the array each time you need to rerender
    */
   const keys = Array.from(Array(options.length).keys());
-  const values = new Map(keys.map((k) => [k.toString(), options[k]]));
-  const [defaultKey, setDefaultKey] = useState(
-    options.indexOf(field.value).toString(),
-  );
+  const values = new Map(keys.map((k) => [k, options[k]]));
+  const [defaultKey, setDefaultKey] = useState(options.indexOf(field.value));
 
   /** idk why this doesnt work cause the value does load correctly but the default value doesnt get set */
   useEffect(() => {
-    setDefaultKey(options.indexOf(field.value).toString());
-  }, [field.value, options]);
+    setDefaultKey(options.indexOf(field.value));
+    // field.onChange(field.value);
+    // field.onBlur();
+    // alert("setting default key to " + options.indexOf(field.value));
+  }, [field, options]);
 
   /**
    * Method that updates the form field when an element is selected
@@ -70,8 +60,8 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
    * @param k the key (index) of the item that is selected, or null if the item is not in the options
    */
   const handleOnChange = (k: Key | null) => {
-    if (k !== null && values.has(k.toString())) {
-      field.onChange(values.get(k.toString())!);
+    if (k !== null && values.has(Number(k.toString()))) {
+      field.onChange(values.get(Number(k.toString()))!);
       field.onBlur(); /* notifies the form hook that the field has been changed */
     }
   };
@@ -94,16 +84,13 @@ export function SingleSelectAutocomplete<FormType extends FieldValues>({
         value={field.value}
         defaultSelectedKey={defaultKey}
         isRequired={
-          !!rules?.required
+          !!rules?.required?.value
         } /* using build in NextUI isRequired option to display error */
         aria-labelledby={name}
       >
         {keys.map((key) => (
-          <AutocompleteItem
-            key={key.toString()}
-            data-testid="select-item-test-id"
-          >
-            {values.get(key.toString())}
+          <AutocompleteItem key={key} data-testid="select-item-test-id">
+            {values.get(key)}
           </AutocompleteItem>
         ))}
       </Autocomplete>

@@ -14,14 +14,14 @@ describe("BranchList", () => {
 
   it("matches snapshot", () => {
     const { container } = render(
-      <BranchList postId={1} ids={["0", "1", "2", "3", "4"]} />,
+      <BranchList postId={1} ids={[0, 1, 2, 3, 4]} />,
     );
     expect(container).toMatchSnapshot();
   });
 
   it("grid matches snapshot", () => {
     const { container } = render(
-      <BranchList grid postId={1} ids={["0", "1", "2", "3", "4"]} />,
+      <BranchList grid postId={1} ids={[0, 1, 2, 3, 4]} />,
     );
     expect(container).toMatchSnapshot();
   });

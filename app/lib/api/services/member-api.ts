@@ -1,4 +1,4 @@
-import { MemberT, idT } from "../../types/api-types";
+import { MemberCreationFormtT, MemberT, idT } from "../../types/api-types";
 import { baseUrl, validateResponse } from "../api-common";
 
 /**
@@ -6,55 +6,29 @@ import { baseUrl, validateResponse } from "../api-common";
  * @async
  * @param id Member ID
  */
-export default async function fetchMemberData(id: idT): Promise<MemberT> {
+export async function fetchMemberData(id: idT): Promise<MemberT> {
   const res = await fetch(`${baseUrl}/members/${id}`);
   await validateResponse(res);
   return (await res.json()) as MemberT;
 }
 
 /**
- * Method that gets all members from the database, should be deprecated?
- * @returns A map of all members with their database id as key, and the whole member object as value
+ * Method for creating a new member
+ * @param memberCreationForm the data for creating a new member, according to API spec
+ * @returns the newly created member
  */
-export async function getMembers() {
-  // TODO implement
-  // TODO edit jsdoc (deprecation remark)
-  // pretend this does multiple fetches
-  await new Promise((resolve) => setTimeout(resolve, 100));
-  const members = [
-    {
-      id: "1",
-      email: "mariecurie@tudelft.nl",
-      firstName: "Marie",
-      picture: "/placeholders/Marie_Curie.jpg",
-      institution: "TU Delft",
-      lastName: "Curie",
+export async function postMembers(
+  memberCreationForm: MemberCreationFormtT,
+): Promise<MemberT> {
+  const jsonMember = JSON.stringify(memberCreationForm);
+  const res = await fetch(`${baseUrl}/members`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-    {
-      id: "2",
-      email: "kopernicus@tudelft.nl",
-      firstName: "Nicolaus",
-      institution: "TU Delft",
-      picture: "/placeholders/Nikolaus_Kopernikus.jpg",
-      lastName: "Copernicus",
-    },
-    {
-      id: "3",
-      email: "kopernicus@tudelft.nl",
-      firstName: "Metal Bar",
-      institution: "TU Delft",
-      picture: "/placeholders/Nikolaus_Kopernikus.jpg",
-      lastName: "Clanging",
-    },
-    {
-      id: "4",
-      email: "kopernicus@tudelft.nl",
-      firstName: "Michael",
-      institution: "TU Delft",
-      picture: "/placeholders/Nikolaus_Kopernikus.jpg",
-      lastName: "Yippie",
-    },
-  ];
-
-  return members;
+    body: jsonMember,
+  });
+  await validateResponse(res);
+  const newMember = (await res.json()) as MemberT;
+  return newMember;
 }

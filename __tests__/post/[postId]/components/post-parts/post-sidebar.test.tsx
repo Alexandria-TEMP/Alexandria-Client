@@ -4,7 +4,7 @@ import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";
 import {
   dummyPostUnion,
-  dummyScientificField,
+  dummyScientificFields,
 } from "~/__tests__/__utils__/dummys";
 import AuthorCardList from "@/post/[postId]/components/cards/author-card-list";
 import { fetchScientificFieldsFromContainer } from "@/lib/api/services/fields-api";
@@ -23,9 +23,9 @@ describe("PostSidebar", () => {
     reviewer: [1],
   });
   (fetchScientificFieldsFromContainer as jest.Mock).mockResolvedValue([
-    dummyScientificField,
-    dummyScientificField,
-    dummyScientificField,
+    dummyScientificFields[0],
+    dummyScientificFields[1],
+    dummyScientificFields[2],
   ]);
   (AuthorCardList as jest.Mock).mockReturnValue(<p>List of members</p>);
 
