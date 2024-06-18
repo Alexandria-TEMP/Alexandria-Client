@@ -50,10 +50,6 @@ export async function fetchBranchUpdatedFieldsFallback(
   branch: BranchT,
   projectPostID: idT,
 ) {
-  console.log(
-    "In fetchBranchUpdatedFieldsFallback, branch is " + JSON.stringify(branch),
-  );
-
   if (
     branch.updatedPostTitle &&
     branch.updatedCompletionStatus &&

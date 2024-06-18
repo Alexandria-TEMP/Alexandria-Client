@@ -9,6 +9,7 @@ import ErrorWithMessage from "@/components/error-with-message";
 import PostCardMiniSkeleton from "./post-card-mini-skeleton";
 import { postUnionIDToPathID } from "@/lib/id-parser";
 import useTriggerRerender from "@/lib/hooks/use-trigger-rerender";
+import { capitalizeFirstLetter } from "@/lib/string-utils";
 
 /**
  * Mini card that represents a post. Clicking it redirects to the post page.
@@ -44,6 +45,7 @@ export default function PostCardMini({
         )
       }
       fullWidth
+      isPressable
     >
       <CardBody>
         <Skeleton isLoaded={!isLoading}>
@@ -53,7 +55,9 @@ export default function PostCardMini({
       <CardFooter>
         <Skeleton isLoaded={!isLoading}>
           <Chip>
-            {data.projectPost?.postReviewStatus ?? data.post.postType}
+            {capitalizeFirstLetter(
+              data.projectPost?.postReviewStatus ?? data.post.postType,
+            )}
           </Chip>
         </Skeleton>
       </CardFooter>
