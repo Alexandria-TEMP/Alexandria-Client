@@ -17,15 +17,11 @@ import useTriggerRerender from "@/lib/hooks/use-trigger-rerender";
  * Displays a Card for a branch, containing a [BranchCardHeader](./branch-card-header)
  * and two side-by-side [RenderedQuarto](@/post/[postId]/components/render/rendered-quarto)
  * which can be turned into a single RenderedQuarto by clicking a Switch.
- 
- TODO update params
-
-* @param footer optional CardFooter component, gets placed at the end of the Card
- * @param hideContribute hides button with contribution options
- * @param newVersionID new version ID
- * @param previousVersionID previous version ID
- * @param postId post ID
- * @param branchId branch ID
+ * @param id branch ID
+ * @param isClosed indicates if branch is closed
+ * @param postPathID post path ID, used for routing in contribute, if undefined hides contribute button
+ * @param hideContribute hides button with contribution options, no effect if postPathID is undefined
+ * @param footer optional CardFooter component, gets placed at the end of the Card
  */
 export default function BranchCard({
   id,
