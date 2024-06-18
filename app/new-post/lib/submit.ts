@@ -54,9 +54,9 @@ export const submitHandler = async (
       title: data.title,
     };
     const projectPostCreationForm = {
+      ...postCreationForm,
       projectCompletionStatus: data.projectCompletionStatus,
       projectFeedbackPreference: data.projectFeedbackPreference,
-      postCreationForm: postCreationForm,
     };
 
     if (data.postType == "project") {

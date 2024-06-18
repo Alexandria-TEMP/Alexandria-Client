@@ -139,8 +139,7 @@ export type PostCreationFormT = {
   title: string;
 };
 
-export type ProjectPostCreationFormT = {
-  postCreationForm: PostCreationFormT;
+export type ProjectPostCreationFormT = PostCreationFormT & {
   projectCompletionStatus: ProjectCompletionStatusT;
   projectFeedbackPreference: ProjectFeedbackPreferenceT;
 };
