@@ -21,11 +21,11 @@ export async function fetchMemberData(id: idT): Promise<MemberT> {
 /**
  * Method for creating a new member
  * @param memberCreationForm the data for creating a new member, according to API spec
- * @returns the newly created member
+ * @returns the newly created member along with refresh and access tokens
  */
 export async function postMembers(
   memberCreationForm: MemberCreationFormtT,
-): Promise<MemberT> {
+): Promise<TokensWithMemberT> {
   const jsonMember = JSON.stringify(memberCreationForm);
   const res = await fetch(`${baseUrl}/members`, {
     method: "POST",
@@ -35,7 +35,7 @@ export async function postMembers(
     body: jsonMember,
   });
   await validateResponse(res);
-  const newMember = (await res.json()) as MemberT;
+  const newMember = (await res.json()) as TokensWithMemberT;
   return newMember;
 }
 

@@ -1,4 +1,6 @@
 import { postMembers } from "@/lib/api/services/member-api";
+import { setSessionCookies } from "@/lib/cookie-utils";
+import { getMemberName } from "@/lib/get-format";
 import { MemberCreationFormtT, idT } from "@/lib/types/api-types";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
@@ -30,7 +32,14 @@ export const submitHandler = async (
       scientificFieldTagIDs: data.scientificFieldTagIDs,
     };
 
-    await postMembers(memberForm); // TODO when auth is merged, store the session and log the user in
+    const newMember = await postMembers(memberForm); // TODO when auth is merged, store the session and log the user in
+    setSessionCookies(
+      newMember.member.id.toString(),
+      getMemberName(newMember.member),
+      newMember.member.email,
+      newMember.accessToken,
+      newMember.refreshToken,
+    );
     router.push("/"); // route to home page
 
     setIsLoading(false);
