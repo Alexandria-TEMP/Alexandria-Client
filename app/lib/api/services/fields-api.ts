@@ -64,7 +64,9 @@ export async function fetchScientificFields(
 export async function fetchScientificFieldContainer(
   id: idT,
 ): Promise<ScientificFieldTagContainerT> {
-  const res = await fetch(`${baseUrl}/tags/scientific/containers/${id}`);
+  const res = await fetch(`${baseUrl}/tags/scientific/containers/${id}`, {
+    next: { revalidate: 60 },
+  });
   await validateResponse(res);
   const container = (await res.json()) as ScientificFieldTagContainerT;
   return container;

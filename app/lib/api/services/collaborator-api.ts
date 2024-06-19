@@ -20,7 +20,9 @@ const buildResourcePath = ({ id, type }: QuartoContainerT) =>
  * @param id post ID
  */
 export async function fetchPostCollaborators(id: idT) {
-  const res = await fetch(`${buildResourcePath({ id, type: "post" })}`);
+  const res = await fetch(`${buildResourcePath({ id, type: "post" })}`, {
+    next: { revalidate: 5 },
+  });
   await validateResponse(res);
   return (await res.json()) as PostCollaboratorT[];
 }

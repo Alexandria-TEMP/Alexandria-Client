@@ -8,7 +8,9 @@ import { baseUrl, validateResponse } from "../api-common";
 export async function fetchDiscussionContainer(
   id: idT,
 ): Promise<DiscussionContainerT> {
-  const res = await fetch(`${baseUrl}/discussion-containers/${id}`);
+  const res = await fetch(`${baseUrl}/discussion-containers/${id}`, {
+    next: { revalidate: 5 },
+  });
   await validateResponse(res);
   return (await res.json()) as DiscussionContainerT;
 }

@@ -29,7 +29,9 @@ export async function fetchBranchData(
   }
 
   const branchID = closedBranch?.branchID ?? (id.id as idT);
-  const branchResponse = await fetch(`${baseUrl}/branches/${branchID}`);
+  const branchResponse = await fetch(`${baseUrl}/branches/${branchID}`, {
+    next: { revalidate: 5 },
+  });
   await validateResponse(branchResponse);
 
   const branch = (await branchResponse.json()) as BranchT;
@@ -86,11 +88,13 @@ export async function fetchBranchUpdatedFieldsFallback(
 }
 
 /**
- * Fetches statuses of all brabch reviews
+ * Fetches statuses of all branch reviews
  * @param id branch ID
  */
 export async function fetchBranchReviewStatuses(id: idT) {
-  const res = await fetch(`${baseUrl}/branches/${id}/review-statuses`);
+  const res = await fetch(`${baseUrl}/branches/${id}/review-statuses`, {
+    next: { revalidate: 5 },
+  });
   await validateResponse(res);
   return (await res.json()) as BranchReviewDecisionT[];
 }
@@ -136,6 +140,8 @@ export async function postBranches(
       "Content-Type": "application/json",
     },
     body: jsonPost,
+    // If someone uploads the exact same contents, we don't want the same response
+    next: { revalidate: 0 },
   });
   await validateResponse(response);
   const branch = (await response.json()) as BranchT;
@@ -159,6 +165,8 @@ export async function postBranchesIdUpload(
   const response = await fetch(baseUrl + "/branches/" + branchId + "/upload", {
     method: "POST",
     body: fileData,
+    // If someone uploads the exact same contents, we don't want the same response
+    next: { revalidate: 0 },
   });
   await validateResponse(response);
   return response.ok;
