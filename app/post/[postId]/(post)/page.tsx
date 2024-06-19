@@ -15,6 +15,11 @@ export default async function Post({ params }: { params: { postId: string } }) {
   const postUnionID = pathIDToPostUnionID(params.postId);
   const data = await fetchPostData(postUnionID);
 
+  const isOpenProject =
+    data.projectPost &&
+    data.projectPost.postReviewStatus === "open" &&
+    data.projectPost.openBranchIDs.length === 1;
+
   return (
     <div className="flex flex-col space-y-4 w-full">
       <Card>
@@ -24,7 +29,12 @@ export default async function Post({ params }: { params: { postId: string } }) {
           hideContribute={!postUnionID.isProject}
         />
         <CardBody>
-          <RenderedQuarto id={postUnionID.id as idT} container="post" />
+          <RenderedQuarto
+            id={
+              isOpenProject ? data.projectPost!.openBranchIDs[0] : data.post.id
+            }
+            container={isOpenProject ? "branch" : "post"}
+          />
         </CardBody>
       </Card>
       <DiscussionSection id={data.post.discussionContainerID} />

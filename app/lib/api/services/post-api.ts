@@ -14,13 +14,16 @@ export async function fetchPostData(id: idPostUnionT): Promise<PostUnionT> {
   if (id.isProject) {
     const projectPostResponse = await fetch(
       `${baseUrl}/project-posts/${id.id}`,
+      { next: { revalidate: 5 } },
     );
     await validateResponse(projectPostResponse);
     projectPost = (await projectPostResponse.json()) as ProjectPostT;
   }
 
   const postID = projectPost?.postID ?? (id.id as idT);
-  const postResponse = await fetch(`${baseUrl}/posts/${postID}`);
+  const postResponse = await fetch(`${baseUrl}/posts/${postID}`, {
+    next: { revalidate: 5 },
+  });
   await validateResponse(postResponse);
 
   const post = (await postResponse.json()) as PostT;
@@ -34,7 +37,9 @@ export async function fetchPostData(id: idPostUnionT): Promise<PostUnionT> {
  * @returns object with branch IDs grouped by open, approved and rejected
  */
 export async function fetchPostSortedBranchIDs(id: idT) {
-  const res = await fetch(`${baseUrl}/project-posts/${id}/branches-by-status`);
+  const res = await fetch(`${baseUrl}/project-posts/${id}/branches-by-status`, {
+    next: { revalidate: 5 },
+  });
   await validateResponse(res);
   return (await res.json()) as {
     openBranchIDs: idT[];
@@ -59,6 +64,8 @@ export async function postPosts(
       "Content-Type": "application/json",
     },
     body: jsonPost,
+    // If someone uploads the exact same contents, we don't want the same response
+    next: { revalidate: 0 },
   });
   await validateResponse(response);
   const post: PostT = (await response.json()) as PostT;
@@ -80,6 +87,8 @@ export async function postPostsIdUpload(postId: idT, file: File) {
   const response = await fetch(`${baseUrl}/posts/${postId}/upload`, {
     method: "POST",
     body: fileData,
+    // If someone uploads the exact same contents, we don't want the same response
+    next: { revalidate: 0 },
   });
   await validateResponse(response);
   return response.ok;
