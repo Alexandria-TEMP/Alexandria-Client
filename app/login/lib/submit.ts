@@ -1,5 +1,5 @@
 import { postMembersLogin } from "@/lib/api/services/member-api";
-import { setSessionCookies } from "@/lib/cookie-utils";
+import { destroySessionCookies, setSessionCookies } from "@/lib/cookie-utils";
 import { getMemberName } from "@/lib/get-format";
 import { MemberLoginFormT } from "@/lib/types/api-types";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -21,6 +21,8 @@ export async function submitHandler(
 ) {
   try {
     setIsLoading(true);
+    destroySessionCookies();
+
     const loginForm: MemberLoginFormT = {
       email: data.email,
       password: data.password,

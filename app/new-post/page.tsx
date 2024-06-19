@@ -16,22 +16,14 @@ import {
   getFeedbackTypes,
   getPostTypes,
 } from "@/lib/api/services/tags-api";
-import { MemberT, idT } from "@/lib/types/api-types";
+import { idT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
 import { useState } from "react";
 import GenericLoadingPage from "@/loading";
 import ErrorModal from "@/components/form/error-modal";
 import { useRouter } from "next/navigation";
-
-// TODO, in the future the currently logged in member should be fetched from some sort of session variable
-const loggedIn: MemberT = {
-  id: 1,
-  email: "kopernicus@tudelft.nl",
-  firstName: "Metal Bar",
-  institution: "TU Delft",
-  lastName: "Clanging",
-  scientificFieldTagContainerID: 1,
-};
+import { getCookie } from "cookies-next";
+import NotLoggedInError from "@/components/common/logged-in-error";
 
 /**
  * New post form
@@ -42,6 +34,9 @@ export default function NewPost() {
   /* router for redirect on (successful) submit */
   const router = useRouter();
 
+  /* get the currently logged in user id */
+  const loggedInId: idT = Number(getCookie("user-id"));
+
   /* create the form state */
   const { handleSubmit, formState, control, trigger, getValues, watch } =
     useForm<FormType>({
@@ -49,8 +44,8 @@ export default function NewPost() {
       defaultValues: {
         title: "",
         anonymous: false,
-        authorMemberIDs: [loggedIn.id],
-        scientificFieldTagIDs: [] as idT[],
+        scientificFieldTagIDs: [],
+        authorMemberIDs: [loggedInId],
         postType: "question",
         projectCompletionStatus: "idea",
         projectFeedbackPreference: "discussion feedback",
@@ -71,6 +66,9 @@ export default function NewPost() {
   /* submit function that also passes the loading and error states */
   const onSubmit: SubmitHandler<FormType> = (data: FormType) =>
     submitHandler(data, setIsLoading, errorModal.onOpen, setErrorMsg, router);
+
+  /* if the user is not logged in, display error page */
+  if (!getCookie("access-token")) return <NotLoggedInError />;
 
   /* if the form is being submitted, return the loading page, i could make something fancier in the future */
   if (isLoading) return <GenericLoadingPage />;
@@ -157,7 +155,7 @@ export default function NewPost() {
                 disableFieldName="anonymous"
                 disableMessage="Post this anonymously."
                 optionsHook={useFetchMembers}
-                nonRemovables={[loggedIn.id]}
+                nonRemovables={[loggedInId]}
                 nonRemoveReason="You must be in the author list, or make this post anonymous."
               />
 

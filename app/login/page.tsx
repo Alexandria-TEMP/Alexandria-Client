@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { emailRegex } from "@/lib/validation-rules";
 import GenericLoadingPage from "@/loading";
 import ErrorModal from "@/components/form/error-modal";
+import { getCookie } from "cookies-next";
 
 /**
  * Login page, uses react-hook-form
@@ -54,6 +55,17 @@ export default function LoginPage() {
     router.refresh();
     return null;
   }
+
+  /* if the user is already logged in, display that */
+  if (getCookie("access-token"))
+    return (
+      <div
+        data-testid="default-error"
+        className="h-full flex flex-col justify-center items-center bg-primary-100 rounded-lg space-y-4"
+      >
+        <h2>You are already logged in, {getCookie("user-name")}</h2>{" "}
+      </div>
+    );
 
   /* if the form is being submitted, return the loading page, i could make something fancier in the future */
   if (isLoading) return <GenericLoadingPage />;

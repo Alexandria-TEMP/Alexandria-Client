@@ -29,6 +29,8 @@ import ErrorModal from "@/components/form/error-modal";
 import { useFetchPostWithTags } from "@/lib/api/hooks/post-hooks";
 import { pathIDToPostUnionID } from "@/lib/id-parser";
 import { useRouter } from "next/navigation";
+import { getCookie } from "cookies-next";
+import NotLoggedInError from "@/components/common/logged-in-error";
 
 // TODO, in the future the currently logged in member should be fetched from some sort of session variable
 const loggedIn: MemberT = {
@@ -108,11 +110,12 @@ export default function ProposeChanges({
       router,
     );
 
-  /* if the form is being submitted, return the loading page, i could make something fancier in the future */
-  if (isLoading) return <GenericLoadingPage />;
+  /* if the user is not logged in, display error page */
+  if (!getCookie("access-token")) return <NotLoggedInError />;
 
+  /* if the form is being submitted, return the loading page, i could make something fancier in the future */
   /* while fetching the post data, wait */
-  if (postReq.isLoading) return <GenericLoadingPage />;
+  if (isLoading || postReq.isLoading) return <GenericLoadingPage />;
 
   /* if trying to propose changes to a non-project post, display an error */
   if (!projectPostId.isProject)
