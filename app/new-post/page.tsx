@@ -65,7 +65,14 @@ export default function NewPost() {
 
   /* submit function that also passes the loading and error states */
   const onSubmit: SubmitHandler<FormType> = (data: FormType) =>
-    submitHandler(data, setIsLoading, errorModal.onOpen, setErrorMsg, router);
+    submitHandler(
+      data,
+      getCookie("access-token"),
+      setIsLoading,
+      errorModal.onOpen,
+      setErrorMsg,
+      router,
+    );
 
   /* if the user is not logged in, display error page */
   if (!getCookie("access-token")) return <NotLoggedInError />;

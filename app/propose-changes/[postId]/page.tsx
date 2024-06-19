@@ -104,6 +104,7 @@ export default function ProposeChanges({
   const onSubmit: SubmitHandler<FormType> = (data: FormType) =>
     submitHandler(
       data,
+      getCookie("access-token"),
       setIsLoading,
       errorModal.onOpen,
       setErrorMessage,

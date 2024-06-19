@@ -112,12 +112,13 @@ export async function getBranchReviewStatuses(id: idT) {
  */
 export async function postBranches(
   branchCreationForm: BranchCreationFormT,
+  accessToken: string,
 ): Promise<BranchT> {
   const jsonPost = JSON.stringify(branchCreationForm);
   const response = await fetch(`${baseUrl}/branches`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
     },
     body: jsonPost,
   });
@@ -133,12 +134,19 @@ export async function postBranches(
  * @param file the file we want to upload
  * @returns whether the request retuned a 200OK response
  */
-export async function postBranchesIdUpload(branchId: idT, file: File) {
+export async function postBranchesIdUpload(
+  branchId: idT,
+  file: File,
+  accessToken: string,
+) {
   const fileData = new FormData();
   fileData.append("file", file);
 
   const response = await fetch(baseUrl + "/branches/" + branchId + "/upload", {
     method: "POST",
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
     body: fileData,
   });
   await validateResponse(response);

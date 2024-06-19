@@ -37,6 +37,7 @@ export type FormType = {
  */
 export const submitHandler = async (
   data: FormType,
+  accessToken: string | undefined,
   setIsLoading: (v: boolean) => void,
   onError: () => void,
   setErrorMsg: (e: string) => void,
@@ -44,6 +45,8 @@ export const submitHandler = async (
 ) => {
   try {
     if (!data.file) throw new Error("No file provided.");
+    if (!accessToken)
+      throw new Error("No access token provided. Please log in.");
     setIsLoading(true);
 
     const postCreationForm = {
@@ -60,35 +63,28 @@ export const submitHandler = async (
     };
 
     if (data.postType == "project") {
-      // try {
       const newProjectPost: ProjectPostT = await postProjectPost(
         projectPostCreationForm,
+        accessToken,
       );
       // TODO the fact that i kinda have to blindly trust that there is a branch and that the first one is the corret one is kindaaaaa not cool
       if (newProjectPost.openBranchIDs.length <= 0)
         throw Error("No initial branch created.");
-      await postBranchesIdUpload(newProjectPost.openBranchIDs[0], data.file);
+      await postBranchesIdUpload(
+        newProjectPost.openBranchIDs[0],
+        data.file,
+        accessToken,
+      );
       router.push(
         "/post/" +
           postUnionIDToPathID({ id: newProjectPost.id, isProject: true }),
       );
-      // } catch (e) {
-      // TODO delete post if error uploading files, without that this try catch block is not necessary
-      // setIsLoading(false);
-      // onError();
-      // }
     } else {
-      // try {
-      const newPost = await postPosts(postCreationForm);
-      await postPostsIdUpload(newPost.id, data.file);
+      const newPost = await postPosts(postCreationForm, accessToken);
+      await postPostsIdUpload(newPost.id, data.file, accessToken);
       router.push(
         "/post/" + postUnionIDToPathID({ id: newPost.id, isProject: false }),
       );
-      // } catch (e) {
-      // TODO delete post if error uploading files, without that this try catch block is not necessary
-      // setIsLoading(false);
-      // onError();
-      // }
     }
 
     setIsLoading(false);
