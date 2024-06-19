@@ -95,7 +95,15 @@ export default async function PostCardHeader({
           container="post"
           projectTitle={data.post.title}
         />
-        {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
+        {!hideContribute && (
+          <ContributeDropdown
+            routes={contributeRoutes}
+            descriptions={{
+              review:
+                "Peer review this post. If the post is accepted by three peers, it'll tagged as 'peer reviewed'.",
+            }}
+          />
+        )}
 
         <div className="grow" />
 

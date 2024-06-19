@@ -19,11 +19,15 @@ export type ContributeOptions = "contribute" | "review" | "fork";
  * Dropdown style button group for post contribution options.
  * @param routes Defines route to redirect to when each button is pressed.
  *               If a route is not included, the button is disabled.
+ * @param descriptions The tooltip that accompanies each button. If a description
+ *                     is not included, falls back to the default ones.
  */
 export default function ContributeDropdown({
   routes,
+  descriptions,
 }: Readonly<{
   routes: { [key in ContributeOptions]?: string };
+  descriptions?: { [key in ContributeOptions]?: string };
 }>) {
   const router = useRouter();
 
@@ -45,6 +49,7 @@ export default function ContributeDropdown({
       key: "contribute",
       label: "Contribute",
       description:
+        descriptions?.contribute ??
         "Suggest changes to this post, which might be incorporated after a peer review.",
       href: "",
     },
@@ -52,13 +57,15 @@ export default function ContributeDropdown({
       key: "review",
       label: "Review",
       description:
+        descriptions?.review ??
         "Peer review this version. If the version is accepted by three peers, it'll become the post's main version.",
       href: "",
     },
     {
       key: "fork",
       label: "Fork",
-      description: "Start a new post, using this one as a base.",
+      description:
+        descriptions?.fork ?? "Start a new post, using this one as a base.",
       href: "",
     },
   ]);

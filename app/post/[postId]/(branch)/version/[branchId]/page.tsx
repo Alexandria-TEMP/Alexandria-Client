@@ -34,7 +34,7 @@ export default async function Branch({
           </CardFooter>
         }
       />
-      <DiscussionSection id={1} /> {/* TODO get proper ID */}
+      <DiscussionSection id={data.branch.discussionContainerID} />
     </div>
   );
 }
