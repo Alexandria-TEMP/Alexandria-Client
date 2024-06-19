@@ -1,3 +1,9 @@
+import { postMembersLogin } from "@/lib/api/services/member-api";
+import { setSessionCookies } from "@/lib/cookie-utils";
+import { getMemberName } from "@/lib/get-format";
+import { MemberLoginFormT } from "@/lib/types/api-types";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+
 export type FormType = {
   email: string;
   password: string;
@@ -6,27 +12,37 @@ export type FormType = {
 /**
  * TODO jsdoc when properly implemented
  */
-export const submitHandler = async (
+export async function submitHandler(
   data: FormType,
   setIsLoading: (v: boolean) => void,
   onError: () => void,
-) => {
+  setErrorMsg: (e: string) => void,
+  router: AppRouterInstance,
+) {
   try {
     setIsLoading(true);
-    // TODO hash password?
-    const jsonData = JSON.stringify(data);
-    // TODO the actual sending of the form, should be a fetch and potentially storing cookie
-    // in this case we might want to have custom error messages (if the account exists or the password was incorrect)
-    // but ill burn that bridge when i get to it
-    await new Promise((resolve) => setTimeout(resolve, 400));
+    const loginForm: MemberLoginFormT = {
+      email: data.email,
+      password: data.password,
+    };
 
-    // uncomment if you want to see the error
-    // throw new Error("Please submit a file");
+    const loggedMember = await postMembersLogin(loginForm);
+    // TODO encrypt data?
+    setSessionCookies(
+      loggedMember.member.id.toString(),
+      getMemberName(loggedMember.member),
+      loggedMember.member.email,
+      loggedMember.accessToken,
+      loggedMember.refreshToken,
+    );
 
+    router.push("/");
     setIsLoading(false);
-    alert(jsonData);
   } catch (error) {
+    if (error instanceof Error) {
+      setErrorMsg(error.message);
+    }
     setIsLoading(false);
     onError();
   }
-};
+}

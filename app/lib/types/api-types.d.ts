@@ -87,6 +87,15 @@ export type MemberT = EntityT & {
   lastName: string;
 };
 
+export type TokensT = {
+  accessToken: string;
+  refreshToken: string;
+};
+
+export type TokensWithMemberT = TokensT & {
+  member: MemberT;
+};
+
 export type PostCollaboratorT = EntityT & {
   collaborationType: CollaborationTypeT;
   memberID: idT;
@@ -162,4 +171,9 @@ export type MemberCreationFormtT = {
   lastName: string;
   password: string;
   scientificFieldTagIDs: idT[];
+};
+
+export type MemberLoginFormT = {
+  email: string;
+  password: string;
 };

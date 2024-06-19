@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Avatar,
   Button,
   Navbar,
   NavbarBrand,
@@ -12,6 +11,8 @@ import Link from "next/link";
 import ThemeSwitcher from "@/components/theme/theme-switcher";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/theme/logo";
+import { getCookie } from "cookies-next";
+import { destroySessionCookies } from "@/lib/cookie-utils";
 
 /**
  * Each item in this array becomes an available path in the navbar
@@ -38,8 +39,7 @@ export const navigationItems = [
  */
 export default function AlexandriaNavbar() {
   const pathname = usePathname();
-  // TODO get this from somewhere, get user data and test the conditional render
-  const isLoggedIn = false;
+  const isLoggedIn = getCookie("access-token");
 
   return (
     <Navbar
@@ -93,15 +93,20 @@ export default function AlexandriaNavbar() {
         {/* Conditionally render based on log in status */}
         {isLoggedIn ? (
           // Either a user avatar
-          <NavbarItem>
-            <Link href="/profile">
-              <Avatar
-                isBordered
-                size="sm"
-                src="/placeholders/Nikolaus_Kopernikus.jpg"
-              />
-            </Link>
-          </NavbarItem>
+          <>
+            <NavbarItem>
+              <Link href="/profile">
+                <h3>Welcome, {getCookie("user-name")}!</h3>
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link href="/">
+                <Button variant="ghost" onClick={destroySessionCookies}>
+                  Log out
+                </Button>
+              </Link>
+            </NavbarItem>
+          </>
         ) : (
           // Or 'log in' and 'sign up' buttons
           <>

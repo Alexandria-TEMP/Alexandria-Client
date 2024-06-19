@@ -43,10 +43,11 @@ export default function LoginPage() {
 
   /* controls for the error dialog for the form submition */
   const errorModal = useDisclosure();
+  const [errorMsg, setErrorMsg] = useState("Unknown error");
 
   /* submit function that also passes the loading and error states */
   const onSubmit: SubmitHandler<FormType> = (data: FormType) =>
-    submitHandler(data, setIsLoading, errorModal.onOpen);
+    submitHandler(data, setIsLoading, errorModal.onOpen, setErrorMsg, router);
 
   /* if the page is not hydrated, refresh the page */
   if (!mounted && typeof window !== "undefined") {
@@ -61,7 +62,7 @@ export default function LoginPage() {
     <>
       <ErrorModal
         modal={errorModal}
-        errorMsg="There was an error when logging in. Please try again."
+        errorMsg={"Error when loggin in: " + errorMsg}
       />
       <form
         // disable reason: this is the intended usage for handleSubmit

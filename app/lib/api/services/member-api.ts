@@ -1,4 +1,10 @@
-import { MemberCreationFormtT, MemberT, idT } from "../../types/api-types";
+import {
+  MemberCreationFormtT,
+  MemberLoginFormT,
+  MemberT,
+  TokensWithMemberT,
+  idT,
+} from "../../types/api-types";
 import { baseUrl, validateResponse } from "../api-common";
 
 /**
@@ -31,4 +37,20 @@ export async function postMembers(
   await validateResponse(res);
   const newMember = (await res.json()) as MemberT;
   return newMember;
+}
+
+/**
+ * Log a user in by sending credentials
+ * @param memberLoginForm the credentials necessary for logging in
+ * @returns the logged in user, as well as refresh and access tokens
+ */
+export async function postMembersLogin(
+  memberLoginForm: MemberLoginFormT,
+): Promise<TokensWithMemberT> {
+  const res = await fetch(`${baseUrl}/members/login`, {
+    method: "POST",
+    body: JSON.stringify(memberLoginForm),
+  });
+  await validateResponse(res);
+  return (await res.json()) as TokensWithMemberT;
 }
