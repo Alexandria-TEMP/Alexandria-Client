@@ -24,7 +24,7 @@ export default async function Post({ params }: { params: { postId: string } }) {
           hideContribute={!postUnionID.isProject}
         />
         <CardBody>
-          <RenderedQuarto id={postUnionID.id as idT} container="post" />
+          <RenderedQuarto id={data.post.id} container="post" />
         </CardBody>
       </Card>
       <DiscussionSection id={data.post.discussionContainerID} />

@@ -28,7 +28,7 @@ export default async function PostFiles({
           hideContribute={!postUnionID.isProject}
         />
         <CardBody>
-          <FileTree id={postUnionID.id as idT} container="post" />
+          <FileTree id={data.post.id} container="post" />
         </CardBody>
       </Card>
       <DiscussionSection id={data.post.discussionContainerID} />

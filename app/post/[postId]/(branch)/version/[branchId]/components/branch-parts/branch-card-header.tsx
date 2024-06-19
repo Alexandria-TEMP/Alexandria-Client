@@ -87,7 +87,7 @@ export default function BranchCardHeader({
         {/* Buttons */}
         <ActionGroup actions={actions} />
         <DownloadButton
-          id={id as idT}
+          id={data.branch.id}
           container="branch"
           projectTitle={`${data.updated.postTitle}-v-${id}`}
         />
