@@ -132,12 +132,13 @@ export async function fetchOrderedBranches(ids: idBranchUnionT[]) {
  */
 export async function postBranches(
   branchCreationForm: BranchCreationFormT,
+  accessToken: string,
 ): Promise<BranchT> {
   const jsonPost = JSON.stringify(branchCreationForm);
   const response = await fetch(`${baseUrl}/branches`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
     },
     body: jsonPost,
     // If someone uploads the exact same contents, we don't want the same response
@@ -158,12 +159,16 @@ export async function postBranches(
 export async function postBranchesIdUpload(
   branchId: idT,
   file: File,
-): Promise<boolean> {
+  accessToken: string,
+) {
   const fileData = new FormData();
   fileData.append("file", file);
 
   const response = await fetch(baseUrl + "/branches/" + branchId + "/upload", {
     method: "POST",
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
     body: fileData,
     // If someone uploads the exact same contents, we don't want the same response
     next: { revalidate: 0 },

@@ -17,15 +17,6 @@ exports[`PostCardMini matches snapshot 1`] = `
       class="p-3 h-auto w-full items-center overflow-hidden color-inherit subpixel-antialiased rounded-b-large flex flex-row"
     >
       <div
-        class="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-default text-default-foreground"
-      >
-        <span
-          class="flex-1 text-inherit font-normal px-2"
-        >
-          Reviewed
-        </span>
-      </div>
-      <div
         class="grow"
       />
       <button

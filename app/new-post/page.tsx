@@ -16,22 +16,14 @@ import {
   getFeedbackTypes,
   getPostTypes,
 } from "@/lib/api/services/tags-api";
-import { MemberT, idT } from "@/lib/types/api-types";
+import { idT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GenericLoadingPage from "@/loading";
 import ErrorModal from "@/components/form/error-modal";
 import { useRouter } from "next/navigation";
-
-// TODO, in the future the currently logged in member should be fetched from some sort of session variable
-const loggedIn: MemberT = {
-  id: 1,
-  email: "kopernicus@tudelft.nl",
-  firstName: "Metal Bar",
-  institution: "TU Delft",
-  lastName: "Clanging",
-  scientificFieldTagContainerID: 1,
-};
+import NotLoggedInError from "@/components/common/logged-in-error";
+import { useCookieWithRefresh } from "@/lib/cookies/cookie-hooks";
 
 /**
  * New post form
@@ -42,21 +34,34 @@ export default function NewPost() {
   /* router for redirect on (successful) submit */
   const router = useRouter();
 
+  /* get the currently logged in user id */
+  const loggedInId: idT = Number(useCookieWithRefresh("user-id"));
+
+  /* get the currently logged in user's access token, and make sure its refreshed if it expires */
+  const accessToken = useCookieWithRefresh("access-token");
+
   /* create the form state */
-  const { handleSubmit, formState, control, trigger, getValues, watch } =
-    useForm<FormType>({
-      mode: "onTouched",
-      defaultValues: {
-        title: "",
-        anonymous: false,
-        authorMemberIDs: [loggedIn.id],
-        scientificFieldTagIDs: [] as idT[],
-        postType: "question",
-        projectCompletionStatus: "idea",
-        projectFeedbackPreference: "discussion feedback",
-        file: null,
-      },
-    });
+  const {
+    handleSubmit,
+    formState,
+    control,
+    trigger,
+    getValues,
+    watch,
+    setValue,
+  } = useForm<FormType>({
+    mode: "onTouched",
+    defaultValues: {
+      title: "",
+      anonymous: false,
+      scientificFieldTagIDs: [],
+      authorMemberIDs: [loggedInId],
+      postType: "question",
+      projectCompletionStatus: "idea",
+      projectFeedbackPreference: "discussion feedback",
+      file: null,
+    },
+  });
 
   /* listen to changes to post type field, so as to conditionally display completion and feedback options */
   const watchPostType = watch("postType");
@@ -70,7 +75,23 @@ export default function NewPost() {
 
   /* submit function that also passes the loading and error states */
   const onSubmit: SubmitHandler<FormType> = (data: FormType) =>
-    submitHandler(data, setIsLoading, errorModal.onOpen, setErrorMsg, router);
+    submitHandler(
+      data,
+      accessToken,
+      setIsLoading,
+      errorModal.onOpen,
+      setErrorMsg,
+      router,
+    );
+
+  /* in case at first load the cookie has not been set yet it, update it
+        the userid cookie should only be set once, on login so hopefully this will not be an issue */
+  useEffect(() => {
+    setValue("authorMemberIDs", [loggedInId]);
+  }, [loggedInId, setValue]);
+
+  /* if the user is not logged in, display error page */
+  if (!accessToken) return <NotLoggedInError />;
 
   /* if the form is being submitted, return the loading page, i could make something fancier in the future */
   if (isLoading) return <GenericLoadingPage />;
@@ -157,7 +178,7 @@ export default function NewPost() {
                 disableFieldName="anonymous"
                 disableMessage="Post this anonymously."
                 optionsHook={useFetchMembers}
-                nonRemovables={[loggedIn.id]}
+                nonRemovables={[loggedInId]}
                 nonRemoveReason="You must be in the author list, or make this post anonymous."
               />
 
