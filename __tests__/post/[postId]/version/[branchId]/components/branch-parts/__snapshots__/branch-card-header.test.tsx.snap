@@ -10,9 +10,14 @@ exports[`BranchCardHeader matches snapshot when status is accepted 1`] = `
       class="flex p-3 z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large"
     >
       <h1
+        class="text-foreground-500 mr-2"
+      >
+        Version:
+      </h1>
+      <h1
         class="font-semibold"
       >
-        New title
+        Something
       </h1>
     </div>
     <div
@@ -131,13 +136,6 @@ exports[`BranchCardHeader matches snapshot when status is accepted 1`] = `
       <div
         class="w-full"
       >
-        <h3
-          class="italic"
-        >
-          Proposed changes: "
-          Something
-          "
-        </h3>
         <hr
           class="shrink-0 bg-divider border-none w-full h-divider mt-4"
           role="separator"
@@ -158,9 +156,14 @@ exports[`BranchCardHeader matches snapshot when status is open 1`] = `
       class="flex p-3 z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large"
     >
       <h1
+        class="text-foreground-500 mr-2"
+      >
+        Version:
+      </h1>
+      <h1
         class="font-semibold"
       >
-        New title
+        Something
       </h1>
     </div>
     <div
@@ -303,13 +306,6 @@ exports[`BranchCardHeader matches snapshot when status is open 1`] = `
       <div
         class="w-full"
       >
-        <h3
-          class="italic"
-        >
-          Proposed changes: "
-          Something
-          "
-        </h3>
         <hr
           class="shrink-0 bg-divider border-none w-full h-divider mt-4"
           role="separator"
@@ -330,9 +326,14 @@ exports[`BranchCardHeader matches snapshot when status is rejected 1`] = `
       class="flex p-3 z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large"
     >
       <h1
+        class="text-foreground-500 mr-2"
+      >
+        Version:
+      </h1>
+      <h1
         class="font-semibold"
       >
-        New title
+        Something
       </h1>
     </div>
     <div
@@ -476,13 +477,6 @@ exports[`BranchCardHeader matches snapshot when status is rejected 1`] = `
       <div
         class="w-full"
       >
-        <h3
-          class="italic"
-        >
-          Proposed changes: "
-          Something
-          "
-        </h3>
         <hr
           class="shrink-0 bg-divider border-none w-full h-divider mt-4"
           role="separator"
