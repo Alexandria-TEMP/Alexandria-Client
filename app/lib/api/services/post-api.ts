@@ -32,6 +32,42 @@ export async function fetchPostData(id: idPostUnionT): Promise<PostUnionT> {
 }
 
 /**
+ * Fetches post or project post data in a unified object, from just a post ID.
+ * For usage when project post ID is unknown (or if it is unknown if post is
+ * project post). **Prefer `fetchPostData` when possible**.
+ * @param postID post ID (**not** *project post ID*)
+ */
+export async function fetchDataForPostOfUnkownType(
+  postID: idT,
+): Promise<PostUnionT> {
+  const postResponse = await fetch(`${baseUrl}/posts/${postID}`, {
+    next: { revalidate: 1 },
+  });
+  await validateResponse(postResponse);
+
+  const post = (await postResponse.json()) as PostT;
+
+  if (post.postType != "project") {
+    return { post, id: { id: postID, isProject: false } };
+  }
+
+  const projectPostIDResponse = await fetch(
+    `${baseUrl}/posts/${postID}/project-post`,
+  );
+  await validateResponse(projectPostIDResponse);
+  const projectPostID = (await projectPostIDResponse.json()) as idT;
+
+  const projectPostResponse = await fetch(
+    `${baseUrl}/project-posts/${projectPostID}`,
+    { next: { revalidate: 1 } },
+  );
+  await validateResponse(projectPostResponse);
+  const projectPost = (await projectPostResponse.json()) as ProjectPostT;
+
+  return { post, projectPost, id: { id: projectPostID, isProject: true } };
+}
+
+/**
  * Fetches a project post's branches grouped by review status
  * @param id project post ID
  * @returns object with branch IDs grouped by open, approved and rejected
@@ -46,6 +82,23 @@ export async function fetchPostSortedBranchIDs(id: idT) {
     approvedClosedBranchIDs: idT[];
     rejectedClosedBranchIDs: idT[];
   };
+}
+
+/**
+ * Gets all posts in the database, paginated. Includes project posts.
+ * @param pageNumber which page to fetch
+ */
+export async function fetchPaginatedPostIDs(
+  pageNumber: number,
+): Promise<idT[]> {
+  await new Promise((resolve) => setTimeout(resolve, 200));
+  return [11, 10, 9, 8, 7, 6];
+  // const res = await fetch(
+  //   `${baseUrl}/filter/posts?page=${pageNumber}&size=10`,
+  //   { body: JSON.stringify({ includeProjectPosts: true }) },
+  // );
+  // await validateResponse(res);
+  // return (await res.json()) as idT[];
 }
 
 /**

@@ -1,7 +1,6 @@
-"use client"; // had to make this a client component because otherwise i could not have interleaved it inside more-posts
+"use client";
 
-import { getPostById } from "@/lib/api-calls/post-api";
-import { ScientificFieldT, idT } from "@/lib/types/api-types";
+import { idT } from "@/lib/types/api-types";
 import {
   Card,
   CardBody,
@@ -9,120 +8,97 @@ import {
   CardHeader,
   Chip,
 } from "@nextui-org/react";
-import ChipList from "./common/chip-list";
-// import { getVersionData } from "@/lib/api-calls/version-api";
 import { LuMessagesSquare } from "react-icons/lu";
 import { HiMiniDocumentText } from "react-icons/hi2";
-import { getFieldById } from "@/lib/api-calls/fields-api";
-import getMemberData from "@/lib/api-calls/member-api";
-import { getMemberName } from "@/lib/get-format";
-// import HeaderSubtle from "./common/header-subtle";
-// import { RxDividerVertical } from "react-icons/rx";
 import { FaUserGraduate } from "react-icons/fa";
-import Link from "next/link";
-import { useEffect, useState } from "react";
 import PostPreviewCardSkeleton from "./post-preview-card-skeleton";
-import { PostT } from "@/lib/types/api-types";
+import { useHomepagePostData } from "@/lib/api/hooks/post-hooks";
+import {
+  capitalizeFirstLetter as cap,
+  formatDateString,
+} from "@/lib/string-utils";
+import { getStandardReviewStatus } from "@/lib/get-format";
+import HeaderSubtle from "@/components/common/header-subtle";
+import ChipList from "@/components/common/chip-list";
+import { useRouter } from "next/navigation";
+import { postUnionIDToPathID } from "@/lib/id-parser";
 
 /**
  * Returns a card that displays basic information about a post, namely title, review status,
  * creation and last update date, author list, scientific tags, post type and reply count
- * @param postId the Id of the post from which to get the data
+ * @param postID the Id of the post from which to get the data
  * @returns a card containing the information mentioned above
  */
-export default function PostPreviewCard({ postId }: { postId: idT }) {
-  const [postData, setPostData] = useState<PostT | null>(null);
-  // const [discusionData, setDiscussionData] = useState<BranchT | null>(null);
-  const [tags, setTags] = useState<string[] | null>(null);
-  const [authors, setAuthors] = useState<string[] | null>(null);
+export default function PostPreviewCard({ postID }: { postID: idT }) {
+  const { data, isLoading, error } = useHomepagePostData(postID);
+  const router = useRouter();
 
-  useEffect(() => {
-    const getData = async () => {
-      const pdata = await getPostById(postId);
-      setPostData(pdata);
+  if (isLoading) return <PostPreviewCardSkeleton />;
 
-      // setDiscussionData(await getVersionData(1));
+  if (!data || error) {
+    console.warn(
+      `homepage failed to load post ${postID} for reason ${error?.message ?? "data is undefined"}`,
+    );
+    return <></>;
+  }
 
-      const tagsPromises = pdata.scientificFields.map(async (id) => {
-        return getFieldById(Number(id));
-      });
-      const tagdata = (await Promise.all(tagsPromises)).map(
-        (t: ScientificFieldT) => t.label,
-      );
-      setTags(tagdata);
-
-      const authorsPromises = pdata.collaboratorIDs.map(
-        async (
-          id, // TODO change to get authors specifically
-        ) => getMemberData(id),
-      );
-      const adata = (await Promise.all(authorsPromises)).map((a) =>
-        getMemberName(a),
-      );
-      setAuthors(adata);
-    };
-
-    getData().catch((e) => console.log(e));
-  }, [postId]);
-
-  // || !discusionData
-  if (!postData || !authors || !tags) return <PostPreviewCardSkeleton />;
+  // Shorthand for some values
+  const reviewStatus = getStandardReviewStatus(
+    data.projectPost?.postReviewStatus,
+  );
+  const scientificFields = data.scientificFields.map((i) => i.scientificField);
+  const authors = ["a", "b", "c"];
 
   return (
-    <div>
-      <Link href={"/post/" + postId}>
-        <Card className="p-3 w-full">
-          <CardHeader className="flex justify-between flex-row-reverse space-y-3 items-start space-x-3">
-            <div>
-              <Chip
-              // color={
-              //   postData.renderStatus == "Open for review" // TODO this will need to be updated with the actual values returned from the api
-              //     ? "default"
-              //     : postData.renderStatus == "Revision needed"
-              //       ? "danger"
-              //       : "success"
-              // }
-              // TODO this needs to be completion status, not render status
-              >
-                {postData.renderStatus}
-              </Chip>
-            </div>
-            <div className="flex-col">
-              <h2>{postData.title}</h2>
-              {/* <div className="flex-row flex flex-grow items-center">
-                <HeaderSubtle>Created on {postData.createdAt}</HeaderSubtle>
-                <RxDividerVertical />
-                <HeaderSubtle>Last update on {postData.updatedAt}</HeaderSubtle>
-              </div> */}
-            </div>
-          </CardHeader>
-          <CardBody className="flex flex-col space-y-3">
-            <div className="flex flex-row items-center space-x-2">
-              <div>
-                <FaUserGraduate />
-              </div>
-              <div>{authors.map((a) => a + ", ")}</div>
-            </div>
-            <ChipList labels={tags}></ChipList>
-          </CardBody>
-          <CardFooter className="flex flex-row flex-wrap justify-between">
-            <div className="flex flex-row space-x-1 items-center">
-              {/* TODO maybe make the icon change based on post type */}
-              <div>
-                <HiMiniDocumentText />
-              </div>
-              <div>{postData.postType}</div>
-              {/* TODO maybe add icons for feedback preferences and completion type if its a project post, this would require an extra request to server and logic */}
-            </div>
-            <div className="flex flex-row space-x-1 items-center">
-              <div>
-                <LuMessagesSquare />
-              </div>
-              {/* <div>{discusionData.discussionIDs.length}</div> */}
-            </div>
-          </CardFooter>
-        </Card>
-      </Link>
-    </div>
+    <Card
+      className="p-3 w-full m-b-7"
+      isPressable
+      onPress={() => router.push(`/post/${postUnionIDToPathID(data.id)}`)}
+    >
+      <CardHeader className="flex flex-row justify-between -mb-5 items-start space-x-3">
+        {/* Title */}
+        <h2 className="text-start">{data.post.title}</h2>
+        {/* Review status */}
+        {data.projectPost && (
+          <Chip
+            color={
+              reviewStatus.short === "accepted"
+                ? "success"
+                : reviewStatus.short === "rejected"
+                  ? "danger"
+                  : "default"
+            }
+          >
+            {cap(reviewStatus.descriptive)}
+          </Chip>
+        )}
+      </CardHeader>
+      <CardBody className="flex flex-col space-y-3">
+        {/* Dates */}
+        <HeaderSubtle>
+          Created on {formatDateString(data.post.createdAt)} | Last update on{" "}
+          {formatDateString(data.post.updatedAt)}
+        </HeaderSubtle>
+        {/* Scientific fields */}
+        <ChipList labels={scientificFields} />
+        {/* Authors */}
+        <div className="flex flex-row space-x-2">
+          <FaUserGraduate />
+          <p>{authors.reduceRight((name, accum) => `${accum}, ${name}`)}</p>
+        </div>
+      </CardBody>
+      <CardFooter className="flex flex-row flex-wrap justify-between">
+        {/* Post type */}
+        <div className="flex flex-row space-x-1 items-center">
+          <HiMiniDocumentText />
+          <p>{cap(data.post.postType)}</p>
+        </div>
+        {/* Number of discussions */}
+        <div className="flex flex-row space-x-1 items-center">
+          <LuMessagesSquare />
+          <p>{data.numDiscussions}</p>
+        </div>
+      </CardFooter>
+    </Card>
   );
 }

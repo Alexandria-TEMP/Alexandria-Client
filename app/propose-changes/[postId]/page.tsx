@@ -26,7 +26,7 @@ import { MemberT, idT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
 import { getFieldName, getMemberName } from "@/lib/get-format";
 import ErrorModal from "@/components/form/error-modal";
-import { useFetchPostWithTags } from "@/lib/api/hooks/post-hooks";
+import { usePostAndScientificFieldData } from "@/lib/api/hooks/post-hooks";
 import { pathIDToPostUnionID } from "@/lib/id-parser";
 import { useRouter } from "next/navigation";
 
@@ -54,7 +54,7 @@ export default function ProposeChanges({
   const router = useRouter();
 
   const projectPostId = pathIDToPostUnionID(params.postId);
-  const postReq = useFetchPostWithTags(projectPostId);
+  const postReq = usePostAndScientificFieldData(projectPostId);
 
   /* create form state */
   const { handleSubmit, formState, control, getValues, trigger, setValue } =

@@ -2,9 +2,16 @@
 
 import { PostUnionT, idPostUnionT } from "@/lib/types/post-union";
 import useSWR, { SWRResponse } from "swr";
-import { fetchPostData } from "../services/post-api";
-import { idT } from "@/lib/types/api-types";
-import { fetchScientificFieldContainer } from "../services/fields-api";
+import {
+  fetchDataForPostOfUnkownType,
+  fetchPostData,
+} from "../services/post-api";
+import { ScientificFieldTagT, idT } from "@/lib/types/api-types";
+import {
+  fetchScientificFieldContainer,
+  fetchScientificFieldsFromContainer,
+} from "../services/fields-api";
+import { fetchDiscussionContainer } from "../services/discussion-api";
 
 /**
  * Fetches post or project post data in a unified object
@@ -27,7 +34,7 @@ export function usePostData(id: idPostUnionT): SWRResponse<PostUnionT, Error> {
  *    error: error thrown by fetcher (or undefined),
  *    isLoading: if there's an ongoing request and no "loaded data"
  */
-export function useFetchPostWithTags(
+export function usePostAndScientificFieldData(
   id: idPostUnionT,
 ): SWRResponse<PostUnionT & { scientificFieldTagIDs: idT[] }, Error> {
   return useSWR(id, async (id) => {
@@ -39,5 +46,25 @@ export function useFetchPostWithTags(
       ...postData,
       scientificFieldTagIDs: scientificFieldsContainer.scientificFieldTagIDs,
     };
+  });
+}
+
+export function useHomepagePostData(id: idT): SWRResponse<
+  PostUnionT & {
+    scientificFields: ScientificFieldTagT[];
+    numDiscussions: number;
+  },
+  Error
+> {
+  return useSWR({ id }, async ({ id }) => {
+    const postUnion = await fetchDataForPostOfUnkownType(id);
+    const scientificFields = await fetchScientificFieldsFromContainer(
+      postUnion.post.scientificFieldTagContainerID,
+    );
+    const numDiscussions = (
+      await fetchDiscussionContainer(postUnion.post.discussionContainerID)
+    ).discussionIDs.length;
+
+    return { ...postUnion, scientificFields, numDiscussions };
   });
 }
