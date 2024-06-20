@@ -91,14 +91,9 @@ export async function fetchPostSortedBranchIDs(id: idT) {
 export async function fetchPaginatedPostIDs(
   pageNumber: number,
 ): Promise<idT[]> {
-  await new Promise((resolve) => setTimeout(resolve, 200));
-  return [11, 10, 9, 8, 7, 6];
-  // const res = await fetch(
-  //   `${baseUrl}/filter/posts?page=${pageNumber}&size=10`,
-  //   { body: JSON.stringify({ includeProjectPosts: true }) },
-  // );
-  // await validateResponse(res);
-  // return (await res.json()) as idT[];
+  const res = await fetch(`${baseUrl}/filter/posts?page=${pageNumber}&size=10`);
+  await validateResponse(res);
+  return (await res.json()) as idT[];
 }
 
 /**

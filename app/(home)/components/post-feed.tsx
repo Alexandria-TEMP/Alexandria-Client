@@ -33,7 +33,9 @@ export default function PostFeed({
       });
   };
 
-  useEffect(loadMorePosts);
+  // Disable reason: this should only run once, when component is mounted
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(loadMorePosts, []);
 
   return (
     <div className="space-y-7 w-full">

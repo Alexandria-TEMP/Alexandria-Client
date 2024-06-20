@@ -12,7 +12,7 @@ import { LuMessagesSquare } from "react-icons/lu";
 import { HiMiniDocumentText } from "react-icons/hi2";
 import { FaUserGraduate } from "react-icons/fa";
 import PostPreviewCardSkeleton from "./post-preview-card-skeleton";
-import { useHomepagePostData } from "@/lib/api/hooks/post-hooks";
+import { usePostPreviewData } from "@/lib/api/hooks/post-hooks";
 import {
   capitalizeFirstLetter as cap,
   formatDateString,
@@ -22,6 +22,7 @@ import HeaderSubtle from "@/components/common/header-subtle";
 import ChipList from "@/components/common/chip-list";
 import { useRouter } from "next/navigation";
 import { postUnionIDToPathID } from "@/lib/id-parser";
+import { MdTimelapse } from "react-icons/md";
 
 /**
  * Returns a card that displays basic information about a post, namely title, review status,
@@ -30,7 +31,7 @@ import { postUnionIDToPathID } from "@/lib/id-parser";
  * @returns a card containing the information mentioned above
  */
 export default function PostPreviewCard({ postID }: { postID: idT }) {
-  const { data, isLoading, error } = useHomepagePostData(postID);
+  const { data, isLoading, error } = usePostPreviewData(postID);
   const router = useRouter();
 
   if (isLoading) return <PostPreviewCardSkeleton />;
@@ -87,12 +88,21 @@ export default function PostPreviewCard({ postID }: { postID: idT }) {
           <p>{authors.reduceRight((name, accum) => `${accum}, ${name}`)}</p>
         </div>
       </CardBody>
-      <CardFooter className="flex flex-row flex-wrap justify-between">
+      <CardFooter className="flex flex-row flex-wrap gap-5">
         {/* Post type */}
         <div className="flex flex-row space-x-1 items-center">
           <HiMiniDocumentText />
           <p>{cap(data.post.postType)}</p>
         </div>
+        {/* Project post only settings */}
+        {data.projectPost && (
+          // Completion status
+          <div className="flex flex-row space-x-1 items-center">
+            <MdTimelapse />
+            <p>{cap(data.projectPost.projectCompletionStatus)}</p>
+          </div>
+        )}
+        <div className="grow" />
         {/* Number of discussions */}
         <div className="flex flex-row space-x-1 items-center">
           <LuMessagesSquare />

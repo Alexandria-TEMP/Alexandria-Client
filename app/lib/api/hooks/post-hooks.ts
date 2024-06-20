@@ -49,7 +49,17 @@ export function usePostAndScientificFieldData(
   });
 }
 
-export function useHomepagePostData(id: idT): SWRResponse<
+/**
+ * Fetches post or project post data in a unified object in addition to
+ * the post's list of scientificFields and how many discussions are associated
+ * with it. Intended for use in PostPreviewCard.
+ * @param id the id of the post or project post whose data we are getting
+ * @returns
+ *    data: post and optionally project post data (or undefined if not loaded),
+ *    error: error thrown by fetcher (or undefined),
+ *    isLoading: if there's an ongoing request and no "loaded data"
+ */
+export function usePostPreviewData(id: idT): SWRResponse<
   PostUnionT & {
     scientificFields: ScientificFieldTagT[];
     numDiscussions: number;

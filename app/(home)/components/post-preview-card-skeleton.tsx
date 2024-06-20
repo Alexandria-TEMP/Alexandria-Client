@@ -3,12 +3,13 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  Chip,
   Skeleton,
 } from "@nextui-org/react";
 import { LuMessagesSquare } from "react-icons/lu";
 import { HiMiniDocumentText } from "react-icons/hi2";
 import { FaUserGraduate } from "react-icons/fa";
+import HeaderSubtle from "@/components/common/header-subtle";
+import ChipList from "@/components/common/chip-list";
 
 /**
  * Skeleton for the post preview card
@@ -16,49 +17,47 @@ import { FaUserGraduate } from "react-icons/fa";
  */
 export default function PostPreviewCardSkeleton() {
   return (
-    <Card className="p-3 w-full">
-      <CardHeader className="flex flex-wrap justify-between flex-row-reverse space-y-5">
+    <Card className="p-3 w-full m-b-7">
+      <CardHeader className="flex flex-row justify-between -mb-5 items-start space-x-3">
+        {/* Title */}
         <Skeleton className="rounded-lg">
-          <Chip>Status of the post</Chip>
+          <h2 className="text-start">
+            This post title is currently loading...
+          </h2>
         </Skeleton>
-        <div className="flex-col space-y-3">
-          <Skeleton className="rounded-lg">
-            <h2>
-              The post title that is loading... and loading... and loading...
-            </h2>
-          </Skeleton>
-          <Skeleton className="rounded-lg">
-            <div className="flex-row flex flex-grow items-center">
-              creatinodata date | lastupdate date
-            </div>
-          </Skeleton>
-        </div>
       </CardHeader>
       <CardBody className="flex flex-col space-y-3">
-        <div className="flex flex-row items-center space-x-2">
-          <div>
-            <FaUserGraduate />
-          </div>
+        {/* Dates */}
+        <Skeleton className="rounded-lg">
+          <HeaderSubtle>Created on DATE | Last update on DATE</HeaderSubtle>
+        </Skeleton>
+        {/* Scientific fields */}
+        <Skeleton className="rounded-lg">
+          <ChipList labels={["Field 1", "Field 2"]} />
+        </Skeleton>
+        {/* Authors */}
+        <div className="flex flex-row space-x-2">
+          <FaUserGraduate />
           <Skeleton className="rounded-lg">
-            <div className="flex flex-row flex-grow w-full">
-              Author 1, author 2, author 3, authors loading...
-            </div>
+            <p>Nikolaus Copernicus, Marie Curie, Albert Einstein</p>
           </Skeleton>
         </div>
       </CardBody>
-      <CardFooter className="flex flex-row flex-wrap justify-between">
+      <CardFooter className="flex flex-row flex-wrap gap-5">
+        {/* Post type */}
         <div className="flex flex-row space-x-1 items-center">
-          <div>
-            <HiMiniDocumentText />
-          </div>
+          <HiMiniDocumentText />
           <Skeleton className="rounded-lg">
-            <div>Post type</div>
+            <p>Post type</p>
           </Skeleton>
         </div>
+        <div className="grow" />
+        {/* Number of discussions */}
         <div className="flex flex-row space-x-1 items-center">
-          <div>
-            <LuMessagesSquare />
-          </div>
+          <LuMessagesSquare />
+          <Skeleton className="rounded-lg">
+            <p>0</p>
+          </Skeleton>
         </div>
       </CardFooter>
     </Card>

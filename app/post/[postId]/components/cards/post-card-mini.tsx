@@ -42,7 +42,6 @@ export default function PostCardMini({
         <h2>{data.post.title}</h2>
       </CardBody>
       <CardFooter className="flex flex-row">
-        <div className="grow" />
         <Button
           variant="ghost"
           color="primary"
