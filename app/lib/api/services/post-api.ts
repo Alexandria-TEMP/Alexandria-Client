@@ -52,16 +52,18 @@ export async function fetchPostSortedBranchIDs(id: idT) {
  * Method that sends a POST request to the server to create a new post, currently only metadata
  * @async
  * @param postCreationForm object containing post creation form data
+ * @param accessToken token of the logged in user
  * @returns the newly created post
  */
 export async function postPosts(
   postCreationForm: PostCreationFormT,
+  accessToken: string,
 ): Promise<PostT> {
   const jsonPost = JSON.stringify(postCreationForm);
   const response = await fetch(`${baseUrl}/posts`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
     },
     body: jsonPost,
     // If someone uploads the exact same contents, we don't want the same response
@@ -78,14 +80,22 @@ export async function postPosts(
  * @async
  * @param postId the id of the post we want to upload files to
  * @param file the file object
+ * @param accessToken token of the logged in user
  * @returns whether the request retuned a 200OK response
  */
-export async function postPostsIdUpload(postId: idT, file: File) {
+export async function postPostsIdUpload(
+  postId: idT,
+  file: File,
+  accessToken: string,
+) {
   const fileData = new FormData();
   fileData.append("file", file);
 
   const response = await fetch(`${baseUrl}/posts/${postId}/upload`, {
     method: "POST",
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
     body: fileData,
     // If someone uploads the exact same contents, we don't want the same response
     next: { revalidate: 0 },

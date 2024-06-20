@@ -8,12 +8,13 @@ import { validateResponse } from "../api-common";
  */
 export async function postProjectPost(
   projectPostCreationForm: ProjectPostCreationFormT,
+  accessToken: string,
 ): Promise<ProjectPostT> {
   const jsonProjectPost = JSON.stringify(projectPostCreationForm);
   const response = await fetch(baseUrl + "/project-posts", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
     },
     body: jsonProjectPost,
     // If someone uploads the exact same contents, we don't want the same response

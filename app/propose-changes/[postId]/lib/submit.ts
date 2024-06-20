@@ -26,6 +26,7 @@ export type FormType = {
 
 export const submitHandler = async (
   data: FormType,
+  accessToken: string | undefined,
   setIsLoading: (v: boolean) => void,
   onError: () => void,
   setErrorMsg: (e: string) => void,
@@ -33,6 +34,8 @@ export const submitHandler = async (
 ) => {
   try {
     if (!data.newFile) throw new Error("No file provided.");
+    if (!accessToken)
+      throw new Error("No access token provided. Please log in.");
     setIsLoading(true);
 
     const branchCreationForm: BranchCreationFormT = {
@@ -46,8 +49,12 @@ export const submitHandler = async (
       updatedScientificFieldIDs: data.updatedScientificFieldIDs,
     };
 
-    const newBranch: BranchT = await postBranches(branchCreationForm);
-    await postBranchesIdUpload(newBranch.id, data.newFile);
+    // try {
+    const newBranch: BranchT = await postBranches(
+      branchCreationForm,
+      accessToken,
+    );
+    await postBranchesIdUpload(newBranch.id, data.newFile, accessToken);
     router.push(
       "/post/" +
         postUnionIDToPathID({

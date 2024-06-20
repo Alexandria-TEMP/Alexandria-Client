@@ -22,23 +22,15 @@ import {
   getFeedbackTypes,
 } from "@/lib/api/services/tags-api";
 import GenericLoadingPage from "@/loading";
-import { MemberT, idT } from "@/lib/types/api-types";
+import { idT } from "@/lib/types/api-types";
 import { maxTitle } from "@/lib/validation-rules";
 import { getFieldName, getMemberName } from "@/lib/get-format";
 import ErrorModal from "@/components/form/error-modal";
 import { useFetchPostWithTags } from "@/lib/api/hooks/post-hooks";
 import { pathIDToPostUnionID } from "@/lib/id-parser";
 import { useRouter } from "next/navigation";
-
-// TODO, in the future the currently logged in member should be fetched from some sort of session variable
-const loggedIn: MemberT = {
-  id: 1,
-  email: "kopernicus@tudelft.nl",
-  firstName: "Metal Bar",
-  institution: "TU Delft",
-  lastName: "Clanging",
-  scientificFieldTagContainerID: 1,
-};
+import NotLoggedInError from "@/components/common/logged-in-error";
+import { useCookieWithRefresh } from "@/lib/cookies/cookie-hooks";
 
 /**
  * Propose changes / create a new branch page
@@ -53,6 +45,12 @@ export default function ProposeChanges({
   /* router for redirect on (successful) submit */
   const router = useRouter();
 
+  /* get the currently logged in user id */
+  const loggedInId: idT = Number(useCookieWithRefresh("user-id"));
+
+  /* get the currently logged in user's access token, and make sure its refreshed if it expires */
+  const accessToken = useCookieWithRefresh("access-token");
+
   const projectPostId = pathIDToPostUnionID(params.postId);
   const postReq = useFetchPostWithTags(projectPostId);
 
@@ -63,7 +61,7 @@ export default function ProposeChanges({
       defaultValues: {
         anonymous: false,
         branchTitle: "",
-        collaboratingMemberIDs: [loggedIn.id],
+        collaboratingMemberIDs: [loggedInId],
         projectPostID: projectPostId.id as idT,
         updatedCompletionStatus:
           postReq.data?.projectPost?.projectCompletionStatus,
@@ -88,8 +86,9 @@ export default function ProposeChanges({
         "updatedFeedbackPreferences",
         postReq.data.projectPost?.projectFeedbackPreference,
       );
+      setValue("collaboratingMemberIDs", [loggedInId]);
     }
-  }, [postReq, setValue]);
+  }, [postReq, setValue, loggedInId]);
 
   /* is loading set to true, if the form is submitting */
   const [isLoading, setIsLoading] = useState(false);
@@ -102,17 +101,19 @@ export default function ProposeChanges({
   const onSubmit: SubmitHandler<FormType> = (data: FormType) =>
     submitHandler(
       data,
+      accessToken,
       setIsLoading,
       errorModal.onOpen,
       setErrorMessage,
       router,
     );
 
-  /* if the form is being submitted, return the loading page, i could make something fancier in the future */
-  if (isLoading) return <GenericLoadingPage />;
+  /* if the user is not logged in, display error page */
+  if (!accessToken) return <NotLoggedInError />;
 
+  /* if the form is being submitted, return the loading page, i could make something fancier in the future */
   /* while fetching the post data, wait */
-  if (postReq.isLoading) return <GenericLoadingPage />;
+  if (isLoading || postReq.isLoading) return <GenericLoadingPage />;
 
   /* if trying to propose changes to a non-project post, display an error */
   if (!projectPostId.isProject)
@@ -207,7 +208,7 @@ export default function ProposeChanges({
                 disableFieldName="anonymous"
                 disableMessage="Suggest these changes anonymously"
                 optionsHook={useFetchMembers}
-                nonRemovables={[loggedIn.id]}
+                nonRemovables={[loggedInId]}
                 nonRemoveReason="You must be in the contributor list, or make this contribution anonymously."
               />
 
