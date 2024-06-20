@@ -60,7 +60,6 @@ export const submitHandler = async (
     };
 
     if (data.postType == "project") {
-      // try {
       const newProjectPost: ProjectPostT = await postProjectPost(
         projectPostCreationForm,
       );
@@ -72,23 +71,12 @@ export const submitHandler = async (
         "/post/" +
           postUnionIDToPathID({ id: newProjectPost.id, isProject: true }),
       );
-      // } catch (e) {
-      // TODO delete post if error uploading files, without that this try catch block is not necessary
-      // setIsLoading(false);
-      // onError();
-      // }
     } else {
-      // try {
       const newPost = await postPosts(postCreationForm);
       await postPostsIdUpload(newPost.id, data.file);
       router.push(
         "/post/" + postUnionIDToPathID({ id: newPost.id, isProject: false }),
       );
-      // } catch (e) {
-      // TODO delete post if error uploading files, without that this try catch block is not necessary
-      // setIsLoading(false);
-      // onError();
-      // }
     }
 
     setIsLoading(false);

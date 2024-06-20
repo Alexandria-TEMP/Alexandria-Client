@@ -2,57 +2,59 @@
 
 import { CardHeader, Switch } from "@nextui-org/react";
 import HeaderSubtle from "@/components/common/header-subtle";
-import { getBranchData } from "@/lib/api/services/branch-api";
-import { capitalizeFirstLetter as cap } from "@/lib/string-utils";
+import {
+  capitalizeFirstLetter as cap,
+  formatDateString,
+} from "@/lib/string-utils";
 import ContributeDropdown from "@/post/[postId]/components/buttons/contribute-dropdown";
 import { getStandardReviewStatus } from "@/lib/get-format";
-import { BranchT, idT } from "@/lib/types/api-types";
+import { idT } from "@/lib/types/api-types";
 import ChipWithTitle from "@/components/common/chip-with-title";
 import BranchCardHeaderSkeleton from "./branch-card-header-skeleton";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import ActionGroup from "@/post/[postId]/components/buttons/action-group";
 import DownloadButton from "@/post/[postId]/components/buttons/download-button";
+import { idBranchUnionT } from "@/lib/types/branch-union";
+import { useBranchData } from "@/lib/api/hooks/branch-hooks";
+import { branchUnionIDToPathID } from "@/lib/id-parser";
+import DefaultError from "@/error";
+import useTriggerRerender from "@/lib/hooks/use-trigger-rerender";
 
 /**
  * Header for branch contents card. Uses CardHeader, so it must be child of a Card.
  * Includes title, metadata, and action buttons.
- * @param postId post ID, used for routing only
- * @param branchId branch ID
+ * @param id branch ID
+ * @param isClosed indicates if branch is closed
+ * @param postPathID post path ID, used for routing in contribute, if undefined hides contribute button
  * @param actions list of actions performed when pressing buttons on left side of header
- * @param hideContribute hides button with contribution options
+ * @param hideContribute hides button with contribution options, no effect if postPathID is undefined
  * @param onCompare called when "Compare" switch is toggled, if undefined switch won't be rendered
  */
 export default function BranchCardHeader({
-  postId,
-  branchId,
+  id,
+  isClosed,
+  postPathID,
   actions,
   hideContribute,
   onCompare,
-}: {
-  postId: idT;
-  branchId: idT;
-  actions: { do: () => void; label: string; isDisabled: boolean }[];
-  hideContribute?: boolean;
-  onCompare?: (value: boolean) => void;
-}) {
-  const [data, setData] = useState<BranchT>();
-  const [isLoading, setIsLoading] = useState(true);
+}: Readonly<
+  idBranchUnionT & {
+    postPathID?: string;
+    actions: { do: () => void; label: string; isDisabled: boolean }[];
+    hideContribute?: boolean;
+    onCompare?: (value: boolean) => void;
+  }
+>) {
+  const { data, isLoading, error } = useBranchData({ id: id as idT, isClosed });
+  const { triggerRerender } = useTriggerRerender();
+
   const status = useMemo(
     () =>
       data
-        ? getStandardReviewStatus(data.branchOverallReviewStatus)
+        ? getStandardReviewStatus(data.branch.branchOverallReviewStatus)
         : undefined,
     [data],
   );
-
-  useEffect(() => {
-    getBranchData(branchId)
-      .then(setData)
-      .catch((e) => {
-        throw e;
-      })
-      .finally(() => setIsLoading(false));
-  }, [branchId]);
 
   const contributeRoutes = {
     // Enabled buttons per status:
@@ -61,40 +63,44 @@ export default function BranchCardHeader({
     // Open     -> Fork, Review
     fork: `/todo`,
     contribute:
-      status?.short == "rejected" ? `/propose-changes/${postId}` : undefined,
+      status?.short == "rejected"
+        ? `/propose-changes/${postPathID}`
+        : undefined,
     review:
       status?.short == "open"
-        ? `/post/${postId}/version/${branchId}/review`
+        ? `/post/${postPathID}/version/${branchUnionIDToPathID({ id: id as idT, isClosed })}/review`
         : undefined,
   };
 
   if (isLoading || !data) return <BranchCardHeaderSkeleton />;
 
+  if (error) return <DefaultError error={error} reset={triggerRerender} />;
+
   return (
     <>
       {/* Title */}
       <CardHeader>
-        <h1 className="font-semibold">{data.updatedPostTitle}</h1>
+        <h1 className="font-semibold">{data.updated.postTitle}</h1>
       </CardHeader>
 
       <CardHeader className="-mt-4 flex gap-8">
         {/* Buttons */}
         <ActionGroup actions={actions} />
-        {/* <DownloadButton id={data.newVersionID.toString()} /> */}
-        {/* TODO */}
         <DownloadButton
-          id={branchId}
+          id={id as idT}
           container="branch"
-          // TODO optionally: title
+          projectTitle={`${data.updated.postTitle}-v-${id}`}
         />
-        {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
+        {!(hideContribute || !postPathID) && (
+          <ContributeDropdown routes={contributeRoutes} />
+        )}
         {!!onCompare && <Switch onValueChange={onCompare}>Compare</Switch>}
 
         <div className="grow" />
 
         {/* Metadata */}
         <ChipWithTitle title="Completion">
-          {cap(data.updatedCompletionStatus)}
+          {cap(data.updated.completionStatus as string)}
         </ChipWithTitle>
 
         {status && (
@@ -108,24 +114,17 @@ export default function BranchCardHeader({
             <>
               <HeaderSubtle>Created on</HeaderSubtle>
               <HeaderSubtle>
-                {/* TODO */}
-                {0}
-                {/* {data.createdAt} */}
+                {formatDateString(data.branch.createdAt)}
               </HeaderSubtle>
             </>
           ) : (
             status && (
               <>
                 <HeaderSubtle>
-                  Created on
-                  {/* TODO */}
-                  {0}
-                  {/* {data.createdAt} */}
+                  Created on {formatDateString(data.branch.createdAt)}
                 </HeaderSubtle>
                 <HeaderSubtle>
-                  {/* TODO */}
-                  {`${cap(status.short)} on ${0}`}
-                  {/* {`${capitalizeFirstLetter(status)} on ${data.updatedAt}`} */}
+                  {`${cap(status.short)} on ${formatDateString(data.branch.updatedAt)}`}
                 </HeaderSubtle>
               </>
             )

@@ -1,4 +1,4 @@
-import fetchPostData from "@/lib/api/services/post-api";
+import { fetchPostData } from "@/lib/api/services/post-api";
 import ChipList from "@/components/common/chip-list";
 import AuthorCardList from "../cards/author-card-list";
 import Sidebar from "@/components/layout/sidebar";
@@ -10,6 +10,7 @@ import { fetchPostCollaboratorsAsSortedMemberIDs } from "@/lib/api/services/coll
 /**
  * Sidebar that is shown in a Post's page. Includes most of post's metadata.
  * @param id Post ID
+ * @param isProject indicates if post is a project post
  */
 export default async function PostSidebar({
   id,

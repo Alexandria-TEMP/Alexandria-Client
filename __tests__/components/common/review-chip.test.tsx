@@ -4,15 +4,15 @@ import { render, screen } from "@testing-library/react";
 
 describe("ReviewChip", () => {
   it("renders accepted", () => {
-    render(<ReviewChip status="accept" />);
+    render(<ReviewChip status="approved" />);
     expect(screen.getByTestId("review-chip-accept")).toBeInTheDocument();
   });
   it("renders rejected", () => {
-    render(<ReviewChip status="reject" />);
+    render(<ReviewChip status="rejected" />);
     expect(screen.getByTestId("review-chip-reject")).toBeInTheDocument();
   });
   it("renders open", () => {
-    render(<ReviewChip status="open" />);
+    render(<ReviewChip status={undefined} />);
     expect(screen.getByTestId("review-chip-open")).toBeInTheDocument();
   });
 });

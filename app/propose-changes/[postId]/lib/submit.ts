@@ -46,7 +46,6 @@ export const submitHandler = async (
       updatedScientificFieldIDs: data.updatedScientificFieldIDs,
     };
 
-    // try {
     const newBranch: BranchT = await postBranches(branchCreationForm);
     await postBranchesIdUpload(newBranch.id, data.newFile);
     router.push(
@@ -58,11 +57,6 @@ export const submitHandler = async (
         "/version/" +
         branchUnionIDToPathID({ id: newBranch.id, isClosed: false }),
     );
-    // } catch (e) {
-    //   // TODO delete branch object if error uploading files
-    //   setIsLoading(false);
-    //   onError();
-    // }
 
     setIsLoading(false);
   } catch (error) {

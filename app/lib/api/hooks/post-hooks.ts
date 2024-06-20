@@ -2,26 +2,30 @@
 
 import { PostUnionT, idPostUnionT } from "@/lib/types/post-union";
 import useSWR, { SWRResponse } from "swr";
-import fetchPostData from "../services/post-api";
+import { fetchPostData } from "../services/post-api";
 import { idT } from "@/lib/types/api-types";
 import { fetchScientificFieldContainer } from "../services/fields-api";
 
 /**
- * Live update post fetching for client side components
+ * Fetches post or project post data in a unified object
  * @param id the id of the post or project post whose data we are getting
- * @returns SWR response containing data, isLoading and error states
+ * @returns
+ *    data: post and optionally project post data (or undefined if not loaded),
+ *    error: error thrown by fetcher (or undefined),
+ *    isLoading: if there's an ongoing request and no "loaded data"
  */
-export function useFetchPost(id: idPostUnionT): SWRResponse<PostUnionT, Error> {
+export function usePostData(id: idPostUnionT): SWRResponse<PostUnionT, Error> {
   return useSWR(id, fetchPostData);
 }
 
 /**
  * Function that fetches all data about a post, including the list of scientific field tag ids
- * This is necessary because if you need all of this information in a client component,
- * you will need to conditionally call the hook for scientific fields, depending on whether the data for the post is loaded
- * and react will complain a lot about this
+ * This is necessary to conditionally fetch scientific fields, after post data is looaded
  * @param id post/project post id
- * @returns SWR response containing post data, scientific field ids, is loading and erorr states
+ * @returns
+ *    data: scientific fields IDs, post, and optionally project post data (or undefined if not loaded),
+ *    error: error thrown by fetcher (or undefined),
+ *    isLoading: if there's an ongoing request and no "loaded data"
  */
 export function useFetchPostWithTags(
   id: idPostUnionT,

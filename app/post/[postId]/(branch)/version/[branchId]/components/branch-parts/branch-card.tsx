@@ -1,47 +1,84 @@
 "use client";
 
 import { Card, CardBody } from "@nextui-org/react";
-import { idT } from "@/lib/types/api-types";
 import RenderedQuarto from "@/post/[postId]/components/render/rendered-quarto";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import BranchCardHeader from "./branch-card-header";
 import FileTree from "@/post/[postId]/components/files/file-tree";
+import { idBranchUnionT } from "@/lib/types/branch-union";
+import { QuartoContainerT } from "@/lib/types/quarto-container";
+import { useBranchData } from "@/lib/api/hooks/branch-hooks";
+import { idT } from "@/lib/types/api-types";
+import GenericLoadingPage from "@/loading";
+import DefaultError from "@/error";
+import useTriggerRerender from "@/lib/hooks/use-trigger-rerender";
 
 /**
  * Displays a Card for a branch, containing a [BranchCardHeader](./branch-card-header)
  * and two side-by-side [RenderedQuarto](@/post/[postId]/components/render/rendered-quarto)
  * which can be turned into a single RenderedQuarto by clicking a Switch.
+ * @param id branch ID
+ * @param isClosed indicates if branch is closed
+ * @param postPathID post path ID, used for routing in contribute, if undefined hides contribute button
+ * @param hideContribute hides button with contribution options, no effect if postPathID is undefined
  * @param footer optional CardFooter component, gets placed at the end of the Card
- * @param hideContribute hides button with contribution options
- * @param newVersionID new version ID
- * @param previousVersionID previous version ID
- * @param postId post ID
- * @param branchId branch ID
  */
 export default function BranchCard({
+  id,
+  isClosed,
   footer,
-  newVersionId,
-  previousVersionId,
-  postId,
-  branchId,
+  postPathID,
   hideContribute,
-}: Readonly<{
-  footer?: React.ReactNode;
-  newVersionId: idT;
-  previousVersionId: idT;
-  postId: idT;
-  branchId: idT;
-  hideContribute?: boolean;
-}>) {
+}: idBranchUnionT &
+  Readonly<{
+    footer?: React.ReactNode;
+    postPathID?: string;
+    hideContribute?: boolean;
+  }>) {
+  const { data, isLoading, error } = useBranchData({ id: id as idT, isClosed });
+
+  const supercededProject: QuartoContainerT | undefined = useMemo(() => {
+    if (!data) return undefined;
+
+    if (data.closedBranch && data.closedBranch.supercededBranchID === null)
+      // Initial branch (first peer review of project post) has supercededBranch == null
+      // as it has no previous content that it is replacing
+      return undefined;
+
+    return data.closedBranch
+      ? { id: data.closedBranch.supercededBranchID as idT, type: "branch" }
+      : { id: data.projectPostID as idT, type: "post" };
+  }, [data]);
+
   const [compare, setCompare] = useState(false);
   const [view, setView] = useState<"contents" | "files">("contents");
+
+  const { triggerRerender } = useTriggerRerender();
+
+  if (isLoading) {
+    return (
+      <Card>
+        <GenericLoadingPage />
+      </Card>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <DefaultError
+        error={error ?? new Error("branch data is undefined")}
+        reset={triggerRerender}
+      />
+    );
+  }
 
   return (
     <Card>
       <BranchCardHeader
-        postId={postId}
-        branchId={branchId}
-        onCompare={setCompare}
+        id={id as idT}
+        isClosed={isClosed}
+        postPathID={postPathID}
+        onCompare={supercededProject ? setCompare : undefined}
         hideContribute={hideContribute}
         actions={[
           {
@@ -66,21 +103,28 @@ export default function BranchCard({
       )}
 
       <CardBody className="flex flex-row gap-3 w-full">
-        <div className={compare ? "w-1/2" : "w-full"}>
+        <div className={supercededProject && compare ? "w-1/2" : "w-full"}>
           {view === "files" ? (
-            <FileTree id={newVersionId} container="branch" />
+            <FileTree id={data.branch.id} container="branch" />
           ) : (
-            <RenderedQuarto id={newVersionId} container="branch" />
+            <RenderedQuarto id={data.branch.id} container="branch" />
           )}
         </div>
-
-        <div className={compare ? "w-1/2" : "hidden"}>
-          {view === "files" ? (
-            <FileTree id={previousVersionId} container="branch" />
-          ) : (
-            <RenderedQuarto id={previousVersionId} container="branch" />
-          )}
-        </div>
+        {supercededProject && (
+          <div className={compare ? "w-1/2" : "hidden"}>
+            {view === "files" ? (
+              <FileTree
+                id={supercededProject.id}
+                container={supercededProject.type}
+              />
+            ) : (
+              <RenderedQuarto
+                id={supercededProject.id}
+                container={supercededProject.type}
+              />
+            )}
+          </div>
+        )}{" "}
       </CardBody>
 
       {footer}

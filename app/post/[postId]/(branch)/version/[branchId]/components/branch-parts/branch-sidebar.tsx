@@ -1,7 +1,13 @@
+import ChipList from "@/components/common/chip-list";
 import Sidebar from "@/components/layout/sidebar";
-import { getBranchData } from "@/lib/api/services/branch-api";
+import {
+  fetchBranchData,
+  fetchBranchUpdatedFieldsFallback,
+} from "@/lib/api/services/branch-api";
+import { fetchBranchCollaboratorsMemberIDs } from "@/lib/api/services/collaborator-api";
+import { fetchScientificFieldsFromContainer } from "@/lib/api/services/fields-api";
 import { idT } from "@/lib/types/api-types";
-import { IdProp } from "@/lib/types/react-props/id-prop";
+import { idBranchUnionT } from "@/lib/types/branch-union";
 import AuthorCardList from "@/post/[postId]/components/cards/author-card-list";
 import PostCardMini from "@/post/[postId]/components/cards/post-card-mini";
 
@@ -9,28 +15,52 @@ import PostCardMini from "@/post/[postId]/components/cards/post-card-mini";
  * Sidebar for a branch.
  * Displays its post, scientific field list and contributor list.
  * @param id branch ID
+ * @param isClosed indicates if branch is a closed branch
  */
-export default async function BranchSidebar({ id }: IdProp) {
-  const data = await getBranchData(id as idT);
+export default async function BranchSidebar({
+  id,
+  isClosed,
+}: Readonly<idBranchUnionT>) {
+  const data = await fetchBranchData({ id: id as idT, isClosed });
+  const collaboratorMemberIDs = await fetchBranchCollaboratorsMemberIDs(
+    id as idT,
+  );
+  const scientificFields = await fetchScientificFieldsFromContainer(
+    (
+      await fetchBranchUpdatedFieldsFallback(
+        data.branch,
+        data.projectPostID as idT,
+      )
+    ).scientificFieldTagContainerID,
+  );
 
   return (
     <Sidebar
       items={[
         {
           title: "Version of",
-          node: <PostCardMini id={data.projectPostID.toString()} />,
+          node: <PostCardMini id={data.projectPostID as idT} isProject />,
         },
-        // TODO
-        // {
-        //   title: "Scientific fields",
-        //   node: (
-        //     <ChipList labels={data.updatedScientificFields.map(toString)} />
-        //   ),
-        // },
-        {
-          title: "Contributors",
-          node: <AuthorCardList ids={data.collaboratorIDs} />,
-        },
+        ...(scientificFields.length == 0
+          ? []
+          : [
+              {
+                title: "Updated scientific fields",
+                node: (
+                  <ChipList
+                    labels={scientificFields.map((f) => f.scientificField)}
+                  />
+                ),
+              },
+            ]),
+        ...(collaboratorMemberIDs.length == 0
+          ? []
+          : [
+              {
+                title: "Contributors",
+                node: <AuthorCardList ids={collaboratorMemberIDs} />,
+              },
+            ]),
       ]}
     />
   );

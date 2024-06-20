@@ -1,11 +1,11 @@
 import { Card } from "@nextui-org/react";
-import { getPostBranches } from "@/lib/api/services/branch-api";
-import { idStringToIDT } from "@/lib/string-utils";
 import PostCardHeader from "../../components/post-parts/post-card-header";
 import BranchTabs from "../../(post)/version-list/components/branch-tabs";
 import BranchList from "../../(post)/version-list/components/branch-list";
 import { pathIDToPostUnionID } from "@/lib/id-parser";
 import { idT } from "@/lib/types/api-types";
+import ErrorWithMessage from "@/components/error-with-message";
+import { fetchPostSortedBranchIDs } from "@/lib/api/services/post-api";
 
 /**
  * Page that shows all branches of a Post.
@@ -19,8 +19,16 @@ export default async function PostBranchList({
 }: {
   params: { postId: string };
 }) {
-  const branches = await getPostBranches(idStringToIDT(params.postId));
   const postUnionID = pathIDToPostUnionID(params.postId);
+
+  if (!postUnionID.isProject) {
+    return (
+      <ErrorWithMessage message="Non-project posts do not have versions." />
+    );
+  }
+
+  const branches = await fetchPostSortedBranchIDs(postUnionID.id as idT);
+
   return (
     <div>
       <Card className="pb-4 mb-12">
@@ -31,9 +39,35 @@ export default async function PostBranchList({
         />
       </Card>
       <BranchTabs
-        historyList={<BranchList ids={branches.accepted} postId={0} />}
-        openList={<BranchList grid ids={branches.open} postId={0} />}
-        rejectedList={<BranchList grid ids={branches.rejected} postId={0} />}
+        historyList={
+          <BranchList
+            postPathID={params.postId}
+            branchUnionIDs={branches.approvedClosedBranchIDs.map((id) => ({
+              id,
+              isClosed: true,
+            }))}
+          />
+        }
+        rejectedList={
+          <BranchList
+            grid
+            postPathID={params.postId}
+            branchUnionIDs={branches.rejectedClosedBranchIDs.map((id) => ({
+              id,
+              isClosed: true,
+            }))}
+          />
+        }
+        openList={
+          <BranchList
+            grid
+            postPathID={params.postId}
+            branchUnionIDs={branches.openBranchIDs.map((id) => ({
+              id,
+              isClosed: false,
+            }))}
+          />
+        }
       />
     </div>
   );

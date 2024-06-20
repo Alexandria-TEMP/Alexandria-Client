@@ -1,11 +1,20 @@
-import { BranchT, ClosedBranchtT } from "./api-types";
+import { BranchT, ClosedBranchT } from "./api-types";
 
 export type BranchUnionT = {
   branch: BranchT;
-  closedBranch?: ClosedBranchtT;
+  closedBranch?: ClosedBranchT;
+  updated: BranchUpdatedFieldsT;
+  projectPostID: idT;
+  id: idBranchUnionT;
 };
 
 export type idBranchUnionT = {
   id: idT;
   isClosed: boolean;
+};
+
+export type BranchUpdatedFieldsT = {
+  postTitle: string;
+  completionStatus: ProjectCompletionStatusT;
+  scientificFieldTagContainerID: idT;
 };

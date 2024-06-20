@@ -16,6 +16,8 @@ export async function postProjectPost(
       "Content-Type": "application/json",
     },
     body: jsonProjectPost,
+    // If someone uploads the exact same contents, we don't want the same response
+    next: { revalidate: 0 },
   });
   await validateResponse(response);
   const projectPost: ProjectPostT = (await response.json()) as ProjectPostT;

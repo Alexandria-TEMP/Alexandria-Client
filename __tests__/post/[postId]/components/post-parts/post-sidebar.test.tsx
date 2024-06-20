@@ -1,4 +1,4 @@
-import fetchPostData from "@/lib/api/services/post-api";
+import { fetchPostData } from "@/lib/api/services/post-api";
 import PostSidebar from "@/post/[postId]/components/post-parts/post-sidebar";
 import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";

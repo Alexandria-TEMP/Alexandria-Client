@@ -1,107 +1,127 @@
-import { BranchCreationFormT, BranchT, idT } from "../../types/api-types";
-import { baseUrl } from "../api-common";
-import { validateResponse } from "../api-common";
+import { BranchUnionT, idBranchUnionT } from "@/lib/types/branch-union";
+import {
+  BranchCreationFormT,
+  BranchReviewDecisionT,
+  BranchT,
+  ClosedBranchT,
+  idT,
+} from "../../types/api-types";
+import { baseUrl, validateResponse } from "../api-common";
+import { fetchPostData } from "./post-api";
 
 /**
- * Gets data for a branch given their ID.
+ * Fetches branch or closed branch data in a unified object
  * @async
+ * @param id branch or closed branch ID
+ * @returns branch and optionally closed branch data
+ */
+export async function fetchBranchData(
+  id: idBranchUnionT,
+): Promise<BranchUnionT> {
+  let closedBranch = undefined;
+
+  if (id.isClosed) {
+    const closedBranchResponse = await fetch(
+      `${baseUrl}/branches/closed/${id.id}`,
+    );
+    await validateResponse(closedBranchResponse);
+    closedBranch = (await closedBranchResponse.json()) as ClosedBranchT;
+  }
+
+  const branchID = closedBranch?.branchID ?? (id.id as idT);
+  const branchResponse = await fetch(`${baseUrl}/branches/${branchID}`, {
+    next: { revalidate: 5 },
+  });
+  await validateResponse(branchResponse);
+
+  const branch = (await branchResponse.json()) as BranchT;
+
+  const projectPostID = branch.projectPostID ?? closedBranch?.projectPostID;
+  if (!projectPostID) {
+    throw new Error(
+      `missing some project post ID in ${id.isClosed ? "closed" : ""} branch ${id.id}`,
+    );
+  }
+
+  const updated = await fetchBranchUpdatedFieldsFallback(branch, projectPostID);
+
+  return { branch, closedBranch, updated, projectPostID, id };
+}
+
+/**
+ * For each of the possible post fields that a branch updates, returns
+ * either the updated data or the current data if updated is null
+ * @param branch branch whose update we're interested in
+ * @param projectPostID ID of project post that branch is updating
+ */
+export async function fetchBranchUpdatedFieldsFallback(
+  branch: BranchT,
+  projectPostID: idT,
+) {
+  if (
+    branch.updatedPostTitle &&
+    branch.updatedCompletionStatus &&
+    branch.updatedScientificFieldTagContainerID
+  ) {
+    return {
+      postTitle: branch.updatedPostTitle,
+      completionStatus: branch.updatedCompletionStatus,
+      scientificFieldTagContainerID:
+        branch.updatedScientificFieldTagContainerID,
+    };
+  }
+
+  const postData = await fetchPostData({
+    id: projectPostID,
+    isProject: true,
+  });
+
+  return {
+    postTitle: branch.updatedPostTitle ?? postData.post.title,
+    completionStatus:
+      branch.updatedCompletionStatus ??
+      postData.projectPost!.projectCompletionStatus,
+    scientificFieldTagContainerID:
+      branch.updatedScientificFieldTagContainerID ??
+      postData.post.scientificFieldTagContainerID,
+  };
+}
+
+/**
+ * Fetches statuses of all branch reviews
  * @param id branch ID
  */
-export async function getBranchData(id: idT): Promise<BranchT> {
-  // TODO
-  await new Promise((resolve) => setTimeout(resolve, 800));
-  return {
-    id,
-    updatedPostTitle: "",
-    branchOverallReviewStatus: "open for review",
-    branchTitle: "",
-    collaboratorIDs: [],
-    discussionContainerID: 1,
-    updatedAt: "17/06/2024",
-    createdAt: "17/06/2024",
-    renderStatus: "failure",
-    projectPostID: 1,
-    reviewIDs: [],
-    updatedCompletionStatus: "idea",
-    updatedScientificFieldTagContainerID: 1,
-  };
-  // if (id == 1)
-  //   return {
-  //     id: id,
-  //     updatedPostTitle: "Post title",
-  //     projectPostID: 1,
-  //     branchTitle: "Remove contents section",
-  //     reviewIDs: [3, 1, 2],
-  //     collaboratorIDs: [0, 1],
-  //     updatedCompletionStatus: "idea",
-  //     updatedScientificFields: [1],
-  //     branchOverallReviewStatus: "rejected",
-  //   };
-  // else if (id == 2)
-  //   return {
-  //     id: id,
-  //     updatedPostTitle: "Post title",
-  //     projectPostID: 1,
-  //     branchTitle: "Do some stuff",
-  //     newVersionID: 1,
-  //     reviewIDs: [3, 2],
-  //     anonymous: false,
-  //     createdAt: "19 May 2024",
-  //     collaboratorIDs: [0, 1],
-  //     updatedAt: "20 May 2024",
-  //     updatedCompletionStatus: "idea",
-  //     updatedScientificFields: [1],
-  //     branchOverallReviewStatus: "open for review",
-  //     previousVersionID: 2,
-  //   };
-  // else
-  //   return {
-  //     id: id,
-  //     updatedPostTitle: "Post title",
-  //     projectPostID: 1,
-  //     branchTitle: "Grammar fixes",
-  //     newVersionID: 1,
-  //     reviewIDs: [2, 4, 3],
-  //     anonymous: false,
-  //     createdAt: "19 May 2024",
-  //     collaboratorIDs: [0, 1],
-  //     updatedAt: "20 May 2024",
-  //     updatedCompletionStatus: "idea",
-  //     updatedScientificFields: [1],
-  //     branchOverallReviewStatus: "peer reviewed",
-  //     previousVersionID: 2,
-  //   };
+export async function fetchBranchReviewStatuses(id: idT) {
+  const res = await fetch(`${baseUrl}/branches/${id}/review-statuses`, {
+    next: { revalidate: 5 },
+  });
+  await validateResponse(res);
+  return (await res.json()) as BranchReviewDecisionT[];
 }
 
 /**
- * Gets branches of a post given their ID.
- * @async
- * @param id Post ID
+ * Fetches data for all branches and returns them in array sorted by
+ * updated date (latest update first)
+ * @param ids branch IDs
+ * @returns branch data sorted by latest update
  */
-// TODO remove next line
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function getPostBranches(id: idT) {
-  await new Promise((resolve) => setTimeout(resolve, 100));
-  // TODO
-  return {
-    rejected: [1],
-    open: [2],
-    accepted: [3],
-  };
-}
+export async function fetchOrderedBranches(ids: idBranchUnionT[]) {
+  let branches: BranchUnionT[] = [];
 
-/**
- * TODO jsdoc when properly implemented
- */
-// TODO remove next line
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function getBranchReviewStatuses(id: idT) {
-  // TODO
-  await new Promise((resolve) => setTimeout(resolve, 70));
-  return [];
-  // if (id == 1) return ["accept", "reject", "accept"];
-  // else if (id == 2) return ["accept", "open", "open"];
-  // else return ["accept", "accept", "accept"];
+  for (const id of ids) {
+    const branch = await fetchBranchData(id);
+    branches = [...branches, branch];
+  }
+
+  return branches.toSorted((a, b) => {
+    // Use created at as fallbacke for updated at
+    const aDate = new Date(a.branch.updatedAt ?? a.branch.createdAt);
+    const bDate = new Date(b.branch.updatedAt ?? b.branch.createdAt);
+
+    // Sorts by latest update first
+    const aIsEarlier = aDate.getTime() < bDate.getTime();
+    return aIsEarlier ? 1 : -1;
+  });
 }
 
 /**
@@ -120,6 +140,8 @@ export async function postBranches(
       "Content-Type": "application/json",
     },
     body: jsonPost,
+    // If someone uploads the exact same contents, we don't want the same response
+    next: { revalidate: 0 },
   });
   await validateResponse(response);
   const branch = (await response.json()) as BranchT;
@@ -133,13 +155,18 @@ export async function postBranches(
  * @param file the file we want to upload
  * @returns whether the request retuned a 200OK response
  */
-export async function postBranchesIdUpload(branchId: idT, file: File) {
+export async function postBranchesIdUpload(
+  branchId: idT,
+  file: File,
+): Promise<boolean> {
   const fileData = new FormData();
   fileData.append("file", file);
 
   const response = await fetch(baseUrl + "/branches/" + branchId + "/upload", {
     method: "POST",
     body: fileData,
+    // If someone uploads the exact same contents, we don't want the same response
+    next: { revalidate: 0 },
   });
   await validateResponse(response);
   return response.ok;

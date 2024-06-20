@@ -78,7 +78,7 @@ exports[`PeerReviewInput matches snapshot 1`] = `
                 tabindex="0"
                 title=""
                 type="radio"
-                value="approve"
+                value="approved"
               />
             </div>
             <span
@@ -114,7 +114,7 @@ exports[`PeerReviewInput matches snapshot 1`] = `
                 tabindex="0"
                 title=""
                 type="radio"
-                value="reject"
+                value="rejected"
               />
             </div>
             <span

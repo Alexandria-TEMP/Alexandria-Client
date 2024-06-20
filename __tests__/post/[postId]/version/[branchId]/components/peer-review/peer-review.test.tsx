@@ -1,18 +1,17 @@
-import { fetchMemberData } from "@/lib/api/services/member-api";
-import { getReviewData } from "@/lib/api/services/review-api";
+import { useReviewData } from "@/lib/api/hooks/review-hooks";
 import PeerReview from "@/post/[postId]/(branch)/version/[branchId]/components/peer-review/peer-review";
 import { expect, describe, it } from "@jest/globals";
 import { render, waitFor, screen } from "@testing-library/react";
-import { dummyMembers, dummyReview } from "~/__tests__/__utils__/dummys";
+import { dummyReview } from "~/__tests__/__utils__/dummys";
 
-jest.mock("@/lib/api/services/review-api");
-jest.mock("@/lib/api/services/member-api");
+jest.mock("@/lib/api/hooks/review-hooks");
 
 describe("PeerReview", () => {
-  (fetchMemberData as jest.Mock).mockResolvedValue(dummyMembers[0]);
-
   it("matches snapshot", async () => {
-    (getReviewData as jest.Mock).mockResolvedValue(dummyReview["accepted"]);
+    (useReviewData as jest.Mock).mockReturnValue({
+      data: dummyReview["accepted"],
+      isLoading: false,
+    });
 
     const { container } = render(
       <PeerReview id={dummyReview["accepted"].id.toString()} />,

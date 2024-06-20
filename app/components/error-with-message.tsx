@@ -8,11 +8,11 @@ import { Button } from "@nextui-org/react";
  * @param reset called when the button "Try again" is pressed
  */
 export default function ErrorWithMessage({
-  reset,
   message,
+  reset, // TODO Props must be serializable for components in the "use client" entry file, "reset" is invalid.
 }: {
-  reset: () => void;
   message: string;
+  reset?: () => void;
 }) {
   return (
     <div
@@ -21,9 +21,11 @@ export default function ErrorWithMessage({
     >
       <h1 className="text-warning">Something went wrong!</h1>
       <h3>{message}</h3>
-      <Button onClick={reset} color="warning" className="mt-8">
-        <h3 className="px-4">Try again</h3>
-      </Button>
+      {reset && (
+        <Button onClick={reset} color="warning" className="mt-8">
+          <h3 className="px-4">Try again</h3>
+        </Button>
+      )}
     </div>
   );
 }

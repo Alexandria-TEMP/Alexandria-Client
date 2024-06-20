@@ -23,6 +23,7 @@ import DefaultError from "@/error";
 import { idT } from "@/lib/types/api-types";
 import { QuartoContainerTypeT } from "@/lib/types/quarto-container";
 import { useFileTree } from "@/lib/api/hooks/quarto-hooks";
+import useTriggerRerender from "@/lib/hooks/use-trigger-rerender";
 
 /**
  * Displays a table with all files in the Quarto project, allowing one to
@@ -42,8 +43,8 @@ export default function FileTree({
   const [path, setPath] = useState<string[]>([]);
   const [rows, setRows] = useState<{ name: string; size: number }[]>([]);
   const [openedFile, setOpenedFile] = useState(false);
-  // Used to trigger a rerender in case of an error
-  const [rerender, setRerender] = useState(false);
+
+  const { triggerRerender } = useTriggerRerender();
 
   useEffect(() => {
     if (!data) return;
@@ -69,7 +70,7 @@ export default function FileTree({
   }, [path, data]);
 
   if (error) {
-    return <DefaultError error={error} reset={() => setRerender(!rerender)} />;
+    return <DefaultError error={error} reset={triggerRerender} />;
   }
 
   const breadcrumbs = (
