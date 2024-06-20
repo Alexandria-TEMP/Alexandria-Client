@@ -11,8 +11,8 @@ import Link from "next/link";
 import ThemeSwitcher from "@/components/theme/theme-switcher";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/theme/logo";
-import { getCookie } from "cookies-next";
-import { destroySessionCookies } from "@/lib/cookie-utils";
+import { destroySessionCookies } from "@/lib/cookies/cookie-utils";
+import { useCookieWithRefresh } from "@/lib/cookies/cookie-hooks";
 
 /**
  * Each item in this array becomes an available path in the navbar
@@ -39,7 +39,7 @@ export const navigationItems = [
  */
 export default function AlexandriaNavbar() {
   const pathname = usePathname();
-  const isLoggedIn = getCookie("access-token");
+  const uname = useCookieWithRefresh("user-name"); // technically dont need the refresh here but i need the hook
 
   return (
     <Navbar
@@ -91,12 +91,12 @@ export default function AlexandriaNavbar() {
       {/* End contents */}
       <NavbarContent justify="end">
         {/* Conditionally render based on log in status */}
-        {isLoggedIn ? (
+        {uname ? (
           // Either a user avatar
           <>
             <NavbarItem>
               <Link href="/profile">
-                <h3>Welcome, {getCookie("user-name")}!</h3>
+                <h3>Welcome, {uname}!</h3>
               </Link>
             </NavbarItem>
             <NavbarItem>

@@ -1,5 +1,5 @@
 import { postMembers } from "@/lib/api/services/member-api";
-import { setSessionCookies } from "@/lib/cookie-utils";
+import { setSessionCookies } from "@/lib/cookies/cookie-utils";
 import { getMemberName } from "@/lib/get-format";
 import { MemberCreationFormtT, idT } from "@/lib/types/api-types";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -39,6 +39,8 @@ export const submitHandler = async (
       newMember.member.email,
       newMember.accessToken,
       newMember.refreshToken,
+      newMember.accessExp,
+      newMember.refreshExp,
     );
     router.push("/"); // route to home page
 

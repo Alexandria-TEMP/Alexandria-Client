@@ -88,7 +88,9 @@ export type MemberT = EntityT & {
 };
 
 export type TokensT = {
+  accessExp: number;
   accessToken: string;
+  refreshExp: number;
   refreshToken: string;
 };
 

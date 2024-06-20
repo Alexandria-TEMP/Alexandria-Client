@@ -22,8 +22,8 @@ import { useState } from "react";
 import GenericLoadingPage from "@/loading";
 import ErrorModal from "@/components/form/error-modal";
 import { useRouter } from "next/navigation";
-import { getCookie } from "cookies-next";
 import NotLoggedInError from "@/components/common/logged-in-error";
+import { useCookieWithRefresh } from "@/lib/cookies/cookie-hooks";
 
 /**
  * New post form
@@ -35,7 +35,10 @@ export default function NewPost() {
   const router = useRouter();
 
   /* get the currently logged in user id */
-  const loggedInId: idT = Number(getCookie("user-id"));
+  const loggedInId: idT = Number(useCookieWithRefresh("user-id"));
+
+  /* get the currently logged in user's access token, and make sure its refreshed if it expires */
+  const accessToken = useCookieWithRefresh("access-token");
 
   /* create the form state */
   const { handleSubmit, formState, control, trigger, getValues, watch } =
@@ -67,7 +70,7 @@ export default function NewPost() {
   const onSubmit: SubmitHandler<FormType> = (data: FormType) =>
     submitHandler(
       data,
-      getCookie("access-token"),
+      accessToken,
       setIsLoading,
       errorModal.onOpen,
       setErrorMsg,
@@ -75,7 +78,7 @@ export default function NewPost() {
     );
 
   /* if the user is not logged in, display error page */
-  if (!getCookie("access-token")) return <NotLoggedInError />;
+  if (!accessToken) return <NotLoggedInError />;
 
   /* if the form is being submitted, return the loading page, i could make something fancier in the future */
   if (isLoading) return <GenericLoadingPage />;

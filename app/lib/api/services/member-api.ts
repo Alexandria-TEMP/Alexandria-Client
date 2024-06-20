@@ -2,6 +2,7 @@ import {
   MemberCreationFormtT,
   MemberLoginFormT,
   MemberT,
+  TokensT,
   TokensWithMemberT,
   idT,
 } from "../../types/api-types";
@@ -53,4 +54,18 @@ export async function postMembersLogin(
   });
   await validateResponse(res);
   return (await res.json()) as TokensWithMemberT;
+}
+
+/**
+ * Method that calls the token refresh endpoint, to generate new tokens for the logged in user
+ * @param refreshToken currently loggen in user's refresh token
+ * @returns the new refresh and access tokens
+ */
+export async function postMembersToken(refreshToken: string): Promise<TokensT> {
+  const res = await fetch(`${baseUrl}/members/token`, {
+    method: "POST",
+    body: JSON.stringify({ refreshToken: refreshToken }),
+  });
+  await validateResponse(res);
+  return (await res.json()) as TokensT;
 }

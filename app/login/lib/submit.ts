@@ -1,5 +1,8 @@
 import { postMembersLogin } from "@/lib/api/services/member-api";
-import { destroySessionCookies, setSessionCookies } from "@/lib/cookie-utils";
+import {
+  destroySessionCookies,
+  setSessionCookies,
+} from "@/lib/cookies/cookie-utils";
 import { getMemberName } from "@/lib/get-format";
 import { MemberLoginFormT } from "@/lib/types/api-types";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -36,6 +39,8 @@ export async function submitHandler(
       loggedMember.member.email,
       loggedMember.accessToken,
       loggedMember.refreshToken,
+      loggedMember.accessExp,
+      loggedMember.refreshExp,
     );
 
     router.push("/");
