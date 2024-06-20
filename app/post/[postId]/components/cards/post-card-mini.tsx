@@ -52,11 +52,12 @@ export default function PostCardMini({
         <Button
           variant="ghost"
           color="primary"
-          onPress={() =>
+          onPress={() => {
             router.push(
               `/post/${postUnionIDToPathID({ id: id as idT, isProject })}`,
-            )
-          }
+            );
+            router.refresh();
+          }}
         >
           Return to post
         </Button>

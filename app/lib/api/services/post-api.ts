@@ -14,7 +14,7 @@ export async function fetchPostData(id: idPostUnionT): Promise<PostUnionT> {
   if (id.isProject) {
     const projectPostResponse = await fetch(
       `${baseUrl}/project-posts/${id.id}`,
-      { next: { revalidate: 5 } },
+      { next: { revalidate: 1 } },
     );
     await validateResponse(projectPostResponse);
     projectPost = (await projectPostResponse.json()) as ProjectPostT;
@@ -22,7 +22,7 @@ export async function fetchPostData(id: idPostUnionT): Promise<PostUnionT> {
 
   const postID = projectPost?.postID ?? (id.id as idT);
   const postResponse = await fetch(`${baseUrl}/posts/${postID}`, {
-    next: { revalidate: 5 },
+    next: { revalidate: 1 },
   });
   await validateResponse(postResponse);
 
@@ -38,7 +38,7 @@ export async function fetchPostData(id: idPostUnionT): Promise<PostUnionT> {
  */
 export async function fetchPostSortedBranchIDs(id: idT) {
   const res = await fetch(`${baseUrl}/project-posts/${id}/branches-by-status`, {
-    next: { revalidate: 5 },
+    cache: "no-cache",
   });
   await validateResponse(res);
   return (await res.json()) as {
