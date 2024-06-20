@@ -20,15 +20,14 @@ export default function HomeSidebar() {
         },
         {
           node: (
-            <div className="text-justify">
-              TODO: Change this text. Alexandria is an open-source platform for
-              scientific collaboration. Its aim is to make science available for
-              everyone and to promote spontaneous, international collaboration.
-              Read more about it{" "}
+            <div className="text-center">
+              <span className="font-bold">Alexandria</span> is an open-source
+              platform for scientific collaboration. Its aim is to make science
+              available for everyone and to promote spontaneous, international
+              collaboration.{" "}
               <Link href="/about" className="text-primary">
-                here
+                Read more about it.
               </Link>
-              .
             </div>
           ),
         },
