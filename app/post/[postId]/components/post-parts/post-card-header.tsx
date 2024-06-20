@@ -91,7 +91,7 @@ export default async function PostCardHeader({
 
         <LinkGroup links={links} />
         <DownloadButton
-          id={id as idT}
+          id={data.post.id}
           container="post"
           projectTitle={data.post.title}
         />
