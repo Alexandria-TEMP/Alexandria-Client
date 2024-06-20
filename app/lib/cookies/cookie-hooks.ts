@@ -10,7 +10,7 @@ import useSWR from "swr";
  */
 export function useCookieWithRefresh(name: string) {
   const cookie = useSWR(name, getCookieWithRefresh, {
-    refreshInterval: 5000, // every 12 mins, set kinda randomly
+    refreshInterval: 10 * 60 * 1000, // every 10 mins, set kinda randomly
   });
   return cookie.data;
 }

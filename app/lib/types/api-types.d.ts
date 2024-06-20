@@ -72,6 +72,7 @@ export type DiscussionT = EntityT & {
   memberID: idT;
   replyIDs: idT[];
   text: string;
+  createdAt: string;
 };
 
 export type MemberT = EntityT & {
@@ -128,6 +129,7 @@ export type ScientificFieldTagT = EntityT & {
 export type ScientificFieldTagContainerT = EntityT & {
   scientificFieldTagIDs: idT[];
 };
+
 // Forms
 
 export type PostCreationFormT = {
@@ -166,4 +168,19 @@ export type MemberCreationFormtT = {
 export type MemberLoginFormT = {
   email: string;
   password: string;
+};
+
+type DiscussionCreationFormT = {
+  anonymous: boolean;
+  text: string;
+};
+
+export type RootDiscussionCreationFormT = {
+  containerID: idT;
+  discussion: DiscussionCreationFormT;
+};
+
+export type ReplyDiscussionCreationFormtT = {
+  parentID: idT;
+  discussion: DiscussionCreationFormT;
 };

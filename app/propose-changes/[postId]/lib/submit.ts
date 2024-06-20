@@ -24,14 +24,23 @@ export type FormType = {
   newFile: File | null;
 };
 
-export const submitHandler = async (
+/**
+ * Submit handler for new branches, in charge of creating creation form, calling post fetch endpoint and setting error and loading states
+ * @param data the branch creation form data
+ * @param accessToken of the currently logged in user
+ * @param setIsLoading set the loading state of the page calling this
+ * @param onError action to be taken on error
+ * @param setErrorMsg setter for the error message
+ * @param router to redirect on successful submit
+ */
+export async function submitHandler(
   data: FormType,
   accessToken: string | undefined,
   setIsLoading: (v: boolean) => void,
   onError: () => void,
   setErrorMsg: (e: string) => void,
   router: AppRouterInstance,
-) => {
+) {
   try {
     if (!data.newFile) throw new Error("No file provided.");
     if (!accessToken)
@@ -73,4 +82,4 @@ export const submitHandler = async (
     setIsLoading(false);
     onError();
   }
-};
+}

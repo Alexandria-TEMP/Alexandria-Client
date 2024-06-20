@@ -22,7 +22,7 @@ export const dummyDiscussion = {
   createdAt: "date", // Must be invalid date to avoid locale differences in snapshot
   deleted: false,
   deletedAt: "-",
-  replies: [],
+  replyIDs: [],
   text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut ducimus amet ex qui eius corrupti reiciendis, quibusdam suscipit, aspernatur ipsum. Reprehenderit libero molestias nostrum eum sed? Illo, quidem ad.",
   updatedAt: "date", // Must be invalid date to avoid locale differences in snapshot
 };
