@@ -17,7 +17,7 @@ export default async function DiscussionSection({ id }: IdProp) {
       {discussionIDs.map((id) => (
         <Discussion id={id.toString()} key={id} />
       ))}
-      <InputDiscussion id={id as idT} />
+      <InputDiscussion isRoot id={id as idT} />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import fetchPostData from "@/lib/api/services/post-api";
+import { fetchPostData } from "@/lib/api/services/post-api";
 import ChipList from "@/components/common/chip-list";
 import AuthorCardList from "../cards/author-card-list";
 import Sidebar from "@/components/layout/sidebar";
@@ -10,6 +10,7 @@ import { fetchPostCollaboratorsAsSortedMemberIDs } from "@/lib/api/services/coll
 /**
  * Sidebar that is shown in a Post's page. Includes most of post's metadata.
  * @param id Post ID
+ * @param isProject indicates if post is a project post
  */
 export default async function PostSidebar({
   id,
@@ -44,6 +45,7 @@ export default async function PostSidebar({
           : [
               {
                 title: "Authors",
+                tooltip: "The members who wrote the firs version of this post.",
                 node: <AuthorCardList ids={collaborators.author} />,
               },
             ]),
@@ -52,6 +54,8 @@ export default async function PostSidebar({
           : [
               {
                 title: "Contributors",
+                tooltip:
+                  "The members who proposed changes that have been incorporated into this post.",
                 node: <AuthorCardList ids={collaborators.contributor} />,
               },
             ]),
@@ -60,6 +64,8 @@ export default async function PostSidebar({
           : [
               {
                 title: "Reviewers",
+                tooltip:
+                  "The members who have reviewed the original version of this post or any proposed changes.",
                 node: <AuthorCardList ids={collaborators.reviewer} />,
               },
             ]),

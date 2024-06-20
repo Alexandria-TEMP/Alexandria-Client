@@ -1,3 +1,4 @@
+import { BranchReviewDecisionT } from "@/lib/types/api-types";
 import ReviewChip from "./review-chip";
 
 /**
@@ -6,14 +7,12 @@ import ReviewChip from "./review-chip";
  */
 export default function ReviewChips({
   reviews,
-}: Readonly<{ reviews: string[] }>) {
-  if (reviews.length != 3)
-    throw Error(`expected ${reviews.toString()} to have length 3`);
+}: Readonly<{ reviews: BranchReviewDecisionT[] }>) {
   return (
     <div className="flex flex-row">
-      <ReviewChip status={reviews[0]} />
-      <ReviewChip status={reviews[1]} />
-      <ReviewChip status={reviews[2]} />
+      <ReviewChip status={reviews[0] ?? undefined} />
+      <ReviewChip status={reviews[1] ?? undefined} />
+      <ReviewChip status={reviews[2] ?? undefined} />
     </div>
   );
 }

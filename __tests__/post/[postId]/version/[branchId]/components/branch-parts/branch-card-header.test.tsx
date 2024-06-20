@@ -1,4 +1,4 @@
-import { getBranchData } from "@/lib/api/services/branch-api";
+import { useBranchData } from "@/lib/api/hooks/branch-hooks";
 import BranchCardHeader from "@/post/[postId]/(branch)/version/[branchId]/components/branch-parts/branch-card-header";
 import { expect, describe, it } from "@jest/globals";
 import { Card } from "@nextui-org/react";
@@ -7,8 +7,8 @@ import { usePathname, useRouter } from "next/navigation";
 import createMockRouter from "~/__tests__/__utils__/create-mock-router";
 import { dummyBranches } from "~/__tests__/__utils__/dummys";
 
-// Mock getBranchData()
-jest.mock("@/lib/api/services/branch-api");
+// Mock useBranchData()
+jest.mock("@/lib/api/hooks/branch-hooks");
 // Mock useRouter so it's mounted
 jest.mock("next/navigation");
 
@@ -20,12 +20,16 @@ describe("BranchCardHeader", () => {
     status: "accepted" | "rejected" | "open",
   ) => {
     return async () => {
-      (getBranchData as jest.Mock).mockResolvedValue(dummyBranches[status]);
+      (useBranchData as jest.Mock).mockReturnValue({
+        isLoading: false,
+        data: dummyBranches[status],
+      });
       const { container } = render(
         <Card>
           <BranchCardHeader
-            postId={0}
-            branchId={0}
+            id={1}
+            isClosed={status != "open"}
+            postPathID="somepath"
             actions={[
               { label: "Contents", do: () => jest.fn(), isDisabled: true },
               { label: "Files", do: () => jest.fn(), isDisabled: false },
@@ -35,7 +39,7 @@ describe("BranchCardHeader", () => {
       );
       await waitFor(() => {
         const title = screen.getByRole("heading", {
-          name: dummyBranches[status].updatedPostTitle,
+          name: dummyBranches[status].updated.postTitle,
         });
         expect(title).toBeInTheDocument();
       });

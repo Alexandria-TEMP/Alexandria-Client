@@ -1,7 +1,7 @@
 import PostCardHeader from "@/post/[postId]/components/post-parts/post-card-header";
 import { expect, describe, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import fetchPostData from "@/lib/api/services/post-api";
+import { fetchPostData } from "@/lib/api/services/post-api";
 import { dummyPost, dummyPostUnion } from "~/__tests__/__utils__/dummys";
 import { Card } from "@nextui-org/react";
 import { useRouter } from "next/navigation";

@@ -1,5 +1,6 @@
 "use client";
 
+import { BranchReviewDecisionT } from "@/lib/types/api-types";
 import {
   Button,
   Card,
@@ -20,7 +21,9 @@ export default function PeerReviewInput() {
   const router = useRouter();
 
   const [feedback, setFeedback] = useState<string | undefined>(undefined);
-  const [approval, setApproval] = useState<string | undefined>(undefined); // TODO api typing
+  const [approval, setApproval] = useState<BranchReviewDecisionT | undefined>(
+    undefined,
+  );
 
   return (
     <Card isBlurred className="sticky top-20 z-50">
@@ -43,13 +46,13 @@ export default function PeerReviewInput() {
       <CardFooter>
         <RadioGroup
           value={approval}
-          onValueChange={setApproval}
+          onValueChange={(value) => setApproval(value as BranchReviewDecisionT)}
           orientation="horizontal"
         >
-          <Radio color="success" value="approve">
-            Approve
+          <Radio color="success" value="approved">
+            Accept
           </Radio>
-          <Radio color="danger" value="reject">
+          <Radio color="danger" value="rejected">
             Reject
           </Radio>
         </RadioGroup>

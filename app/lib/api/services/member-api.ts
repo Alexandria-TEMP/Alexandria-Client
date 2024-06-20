@@ -34,6 +34,8 @@ export async function postMembers(
       "Content-Type": "application/json",
     },
     body: jsonMember,
+    // If someone uploads the exact same contents, we don't want the same response
+    next: { revalidate: 0 },
   });
   await validateResponse(res);
   const newMember = (await res.json()) as TokensWithMemberT;

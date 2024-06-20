@@ -3,10 +3,10 @@ import { Card, CardBody, CardFooter, Skeleton } from "@nextui-org/react";
 import ReviewChip from "@/components/common/review-chip";
 
 /**
- * Placeholder card for [BranchCard](./branch-card.tsx), which
+ * Placeholder card for [BranchCardMini](./branch-card-mini.tsx), which
  * can be rendered while it loads.
  */
-export default function BranchCardSkeleton() {
+export default function BranchCardMiniSkeleton() {
   return (
     <Card className="w-full">
       <CardBody>
@@ -18,13 +18,13 @@ export default function BranchCardSkeleton() {
       <CardFooter>
         <div className="grow" />
         <Skeleton className="rounded-full">
-          <ReviewChip status="open" />
+          <ReviewChip />
         </Skeleton>
         <Skeleton className="rounded-full">
-          <ReviewChip status="open" />
+          <ReviewChip />
         </Skeleton>
         <Skeleton className="rounded-full">
-          <ReviewChip status="open" />
+          <ReviewChip />
         </Skeleton>
       </CardFooter>
     </Card>

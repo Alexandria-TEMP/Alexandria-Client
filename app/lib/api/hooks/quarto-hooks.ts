@@ -6,7 +6,7 @@ import { FileTreeT } from "../../types/file-tree";
 import { QuartoContainerT } from "../../types/quarto-container";
 import { validateResponse } from "../api-common";
 import { useMemo } from "react";
-import { buildResourcePath } from "../services/quarto-api";
+import { buildFetchConfig, buildResourcePath } from "../services/quarto-api";
 
 /**
  * Fetches HTML render of a Quarto project.
@@ -24,7 +24,7 @@ export function useRender(
   const swrResponse: SWRResponse<string, Error> = useSWR(
     `${buildResourcePath(container)}/render`,
     async (...args) => {
-      const res = await fetch(...args);
+      const res = await fetch(...args, buildFetchConfig(container.type));
       if (res.status === 202) return "pending";
       await validateResponse(res);
       return res.text();
@@ -55,7 +55,7 @@ export function useFileTree(
   container: QuartoContainerT,
 ): SWRResponse<FileTreeT, Error> {
   return useSWR(`${buildResourcePath(container)}/tree`, async (...args) => {
-    const res = await fetch(...args);
+    const res = await fetch(...args, buildFetchConfig(container.type));
     await validateResponse(res);
     const responseTree = (await res.json()) as { [key: string]: number };
     return parseFileTree(responseTree);
@@ -81,7 +81,7 @@ export function useFileContents(
     async (...args) => {
       if (path === "") return "";
 
-      const res = await fetch(...args);
+      const res = await fetch(...args, buildFetchConfig(container.type));
       await validateResponse(res);
       return res.text();
     },

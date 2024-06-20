@@ -8,26 +8,44 @@ import { PostCreationFormT } from "../../types/api-types";
  * @param id post or project post id
  * @returns post and optionally project post data
  */
-export default async function fetchPostData(
-  id: idPostUnionT,
-): Promise<PostUnionT> {
+export async function fetchPostData(id: idPostUnionT): Promise<PostUnionT> {
   let projectPost = undefined;
 
   if (id.isProject) {
     const projectPostResponse = await fetch(
       `${baseUrl}/project-posts/${id.id}`,
+      { next: { revalidate: 5 } },
     );
     await validateResponse(projectPostResponse);
     projectPost = (await projectPostResponse.json()) as ProjectPostT;
   }
 
   const postID = projectPost?.postID ?? (id.id as idT);
-  const postResponse = await fetch(`${baseUrl}/posts/${postID}`);
+  const postResponse = await fetch(`${baseUrl}/posts/${postID}`, {
+    next: { revalidate: 5 },
+  });
   await validateResponse(postResponse);
 
   const post = (await postResponse.json()) as PostT;
 
-  return { post, projectPost };
+  return { post, projectPost, id };
+}
+
+/**
+ * Fetches a project post's branches grouped by review status
+ * @param id project post ID
+ * @returns object with branch IDs grouped by open, approved and rejected
+ */
+export async function fetchPostSortedBranchIDs(id: idT) {
+  const res = await fetch(`${baseUrl}/project-posts/${id}/branches-by-status`, {
+    next: { revalidate: 5 },
+  });
+  await validateResponse(res);
+  return (await res.json()) as {
+    openBranchIDs: idT[];
+    approvedClosedBranchIDs: idT[];
+    rejectedClosedBranchIDs: idT[];
+  };
 }
 
 /**
@@ -48,6 +66,8 @@ export async function postPosts(
       Authorization: "Bearer " + accessToken,
     },
     body: jsonPost,
+    // If someone uploads the exact same contents, we don't want the same response
+    next: { revalidate: 0 },
   });
   await validateResponse(response);
   const post: PostT = (await response.json()) as PostT;
@@ -77,6 +97,8 @@ export async function postPostsIdUpload(
       Authorization: "Bearer " + accessToken,
     },
     body: fileData,
+    // If someone uploads the exact same contents, we don't want the same response
+    next: { revalidate: 0 },
   });
   await validateResponse(response);
   return response.ok;

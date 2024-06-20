@@ -1,4 +1,4 @@
-import { DiscussionContainerT, idT } from "@/lib/types/api-types";
+import { DiscussionContainerT, DiscussionT, idT } from "@/lib/types/api-types";
 import { baseUrl, validateResponse } from "../api-common";
 
 /**
@@ -8,37 +8,21 @@ import { baseUrl, validateResponse } from "../api-common";
 export async function fetchDiscussionContainer(
   id: idT,
 ): Promise<DiscussionContainerT> {
-  const res = await fetch(`${baseUrl}/discussion-containers/${id}`);
+  const res = await fetch(`${baseUrl}/discussion-containers/${id}`, {
+    next: { revalidate: 5 },
+  });
   await validateResponse(res);
   return (await res.json()) as DiscussionContainerT;
 }
 
 /**
- * Gets data for a discussion given its ID.
- * @async
+ * Fetches discussion data
  * @param id Discussion ID
  */
-export async function getDiscussionData(id: string) {
-  // TODO
-  // const res = await fetch();
-  await new Promise((resolve) => setTimeout(resolve, 100));
-
-  return {
-    id: id,
-    anonymous: false,
-    author: {
-      email: "mariecurie@tudelft.nl",
-      firstName: "Marie",
-      institution: "TU Delft",
-      lastName: "Curie",
-    },
-    createdAt: "11 May 2024",
-    deleted: false,
-    deletedAt: "-",
-    replies: [],
-    text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut ducimus amet ex qui eius corrupti reiciendis, quibusdam suscipit, aspernatur ipsum. Reprehenderit libero molestias nostrum eum sed? Illo, quidem ad.",
-    updatedAt: "11 May 2024",
-  };
+export async function fetchDiscussionData(id: idT): Promise<DiscussionT> {
+  const res = await fetch(`${baseUrl}/discussions/${id}`);
+  await validateResponse(res);
+  return (await res.json()) as DiscussionT;
 }
 
 // TODO parameter type should include all data needed for a discussion

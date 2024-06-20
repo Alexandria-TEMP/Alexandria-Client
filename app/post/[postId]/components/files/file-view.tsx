@@ -2,11 +2,11 @@
 
 import DefaultError from "@/error";
 import { useFileContents } from "@/lib/api/hooks/quarto-hooks";
+import useTriggerRerender from "@/lib/hooks/use-trigger-rerender";
 import { idT } from "@/lib/types/api-types";
 import { QuartoContainerTypeT } from "@/lib/types/quarto-container";
 import { IdProp } from "@/lib/types/react-props/id-prop";
 import GenericLoadingPage from "@/loading";
-import { useState } from "react";
 
 /**
  * Displays contents of some file in a project
@@ -30,11 +30,10 @@ export default function FileView({
     },
     path,
   );
-  // Used to trigger a rerender in case of an error
-  const [rerender, setRerender] = useState(false);
+  const { triggerRerender } = useTriggerRerender();
 
   if (error) {
-    return <DefaultError error={error} reset={() => setRerender(!rerender)} />;
+    return <DefaultError error={error} reset={triggerRerender} />;
   }
 
   if (isLoading) {

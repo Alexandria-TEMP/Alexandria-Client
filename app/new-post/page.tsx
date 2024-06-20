@@ -88,7 +88,7 @@ export default function NewPost() {
         the userid cookie should only be set once, on login so hopefully this will not be an issue */
   useEffect(() => {
     setValue("authorMemberIDs", [loggedInId]);
-  }, [loggedInId]);
+  }, [loggedInId, setValue]);
 
   /* if the user is not logged in, display error page */
   if (!accessToken) return <NotLoggedInError />;

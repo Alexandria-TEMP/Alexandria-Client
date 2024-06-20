@@ -20,7 +20,9 @@ const buildResourcePath = ({ id, type }: QuartoContainerT) =>
  * @param id post ID
  */
 export async function fetchPostCollaborators(id: idT) {
-  const res = await fetch(`${buildResourcePath({ id, type: "post" })}`);
+  const res = await fetch(`${buildResourcePath({ id, type: "post" })}`, {
+    next: { revalidate: 5 },
+  });
   await validateResponse(res);
   return (await res.json()) as PostCollaboratorT[];
 }
@@ -59,4 +61,22 @@ export async function fetchPostCollaboratorsAsSortedMemberIDs(
   }
 
   return sortedMembers;
+}
+
+/**
+ * Fetches all collaborators of a branch and returns their member IDs
+ * @param id branch ID
+ */
+export async function fetchBranchCollaboratorsMemberIDs(
+  id: idT,
+): Promise<idT[]> {
+  return (await fetchBranchCollaborators(id)).map((c) => c.memberID);
+}
+
+/**
+ * Fetches all collaborators of a post and returns their member IDs
+ * @param id post ID
+ */
+export async function fetchPostCollaboratorsMemberIDs(id: idT): Promise<idT[]> {
+  return (await fetchPostCollaborators(id)).map((c) => c.memberID);
 }

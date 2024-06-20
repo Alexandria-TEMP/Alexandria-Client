@@ -23,7 +23,7 @@ export default function PeerReviewSection({
     <Tabs items={items} fullWidth variant="light">
       {(item) => (
         <Tab key={item.id} title={`Review ${item.index}`} className="w-full">
-          <PeerReview id={item.id.toString()} />
+          <PeerReview id={item.id} />
         </Tab>
       )}
     </Tabs>

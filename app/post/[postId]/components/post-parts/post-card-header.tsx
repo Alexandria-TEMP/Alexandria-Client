@@ -2,7 +2,7 @@ import { CardHeader } from "@nextui-org/react";
 import HeaderSubtle from "@/components/common/header-subtle";
 import LinkGroup from "../buttons/link-group";
 import ContributeDropdown from "../buttons/contribute-dropdown";
-import fetchPostData from "@/lib/api/services/post-api";
+import { fetchPostData } from "@/lib/api/services/post-api";
 import ChipWithTitle from "@/components/common/chip-with-title";
 import { idT } from "@/lib/types/api-types";
 import DownloadButton from "../buttons/download-button";
@@ -18,6 +18,7 @@ import { getStandardReviewStatus } from "@/lib/get-format";
  * Header for post contents card. Uses CardHeader, so it must be child of a Card.
  * Includes title, main metadata, and action buttons.
  * @param id Post ID
+ * @param isProject indicates if post is a project post
  * @param hideContribute Hides contribute button and dropdown
  */
 export default async function PostCardHeader({
@@ -90,11 +91,19 @@ export default async function PostCardHeader({
 
         <LinkGroup links={links} />
         <DownloadButton
-          id={id as idT}
+          id={data.post.id}
           container="post"
           projectTitle={data.post.title}
         />
-        {!hideContribute && <ContributeDropdown routes={contributeRoutes} />}
+        {!hideContribute && (
+          <ContributeDropdown
+            routes={contributeRoutes}
+            descriptions={{
+              review:
+                "Peer review this post. If the post is accepted by three peers, it'll tagged as 'peer reviewed'.",
+            }}
+          />
+        )}
 
         <div className="grow" />
 
