@@ -6,12 +6,13 @@ import {
   fetchDataForPostOfUnkownType,
   fetchPostData,
 } from "../services/post-api";
-import { ScientificFieldTagT, idT } from "@/lib/types/api-types";
+import { MemberT, ScientificFieldTagT, idT } from "@/lib/types/api-types";
 import {
   fetchScientificFieldContainer,
   fetchScientificFieldsFromContainer,
 } from "../services/fields-api";
 import { fetchDiscussionContainer } from "../services/discussion-api";
+import { fetchPostAuthorsMemberData } from "../services/collaborator-api";
 
 /**
  * Fetches post or project post data in a unified object
@@ -63,6 +64,7 @@ export function usePostPreviewData(id: idT): SWRResponse<
   PostUnionT & {
     scientificFields: ScientificFieldTagT[];
     numDiscussions: number;
+    authors: MemberT[];
   },
   Error
 > {
@@ -74,7 +76,8 @@ export function usePostPreviewData(id: idT): SWRResponse<
     const numDiscussions = (
       await fetchDiscussionContainer(postUnion.post.discussionContainerID)
     ).discussionIDs.length;
+    const authors = await fetchPostAuthorsMemberData(postUnion.post.id);
 
-    return { ...postUnion, scientificFields, numDiscussions };
+    return { ...postUnion, scientificFields, numDiscussions, authors };
   });
 }

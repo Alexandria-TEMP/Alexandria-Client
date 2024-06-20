@@ -17,7 +17,7 @@ import {
   capitalizeFirstLetter as cap,
   formatDateString,
 } from "@/lib/string-utils";
-import { getStandardReviewStatus } from "@/lib/get-format";
+import { getMemberName, getStandardReviewStatus } from "@/lib/get-format";
 import HeaderSubtle from "@/components/common/header-subtle";
 import ChipList from "@/components/common/chip-list";
 import { useRouter } from "next/navigation";
@@ -48,7 +48,7 @@ export default function PostPreviewCard({ postID }: { postID: idT }) {
     data.projectPost?.postReviewStatus,
   );
   const scientificFields = data.scientificFields.map((i) => i.scientificField);
-  const authors = ["a", "b", "c"];
+  const authors = data.authors.map(getMemberName);
 
   return (
     <Card
