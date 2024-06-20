@@ -14,5 +14,8 @@ import { BranchUnionT, idBranchUnionT } from "@/lib/types/branch-union";
 export function useBranchData(
   id: idBranchUnionT,
 ): SWRResponse<BranchUnionT, Error> {
-  return useSWR(id, fetchBranchData);
+  return useSWR(id, fetchBranchData, {
+    revalidateOnMount: true,
+    refreshInterval: 5000,
+  });
 }

@@ -10,7 +10,7 @@ describe("PeerReviewInput", () => {
   (useRouter as jest.Mock).mockReturnValue(createMockRouter());
 
   it("matches snapshot", () => {
-    const { container } = render(<PeerReviewInput />);
+    const { container } = render(<PeerReviewInput branchID={1} postID={1} />);
     expect(container).toMatchSnapshot();
   });
 

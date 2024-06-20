@@ -184,3 +184,9 @@ export type ReplyDiscussionCreationFormtT = {
   parentID: idT;
   discussion: DiscussionCreationFormT;
 };
+
+export type ReviewCreationFormT = {
+  branchID: idT;
+  branchReviewDecision: BranchReviewDecisionT;
+  feedback: string;
+};
