@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeSidebar matches snapshot 1`] = `
+<div>
+  <div
+    class="sticky top-20"
+  >
+    <div
+      class="shadow-black/5 shadow-none group relative overflow-hidden bg-content3 dark:bg-content2 before:opacity-100 before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:border-t before:border-content4/30 before:bg-gradient-to-r before:from-transparent before:via-content4 dark:before:via-default-700/10 before:to-transparent after:opacity-100 after:absolute after:inset-0 after:-z-10 after:bg-content3 dark:after:bg-content2 rounded-large"
+      style="max-width: 300px;"
+    >
+       
+      <img
+        alt="Alexandria logo"
+        class="relative z-10 shadow-black/5 data-[loaded=true]:opacity-100 shadow-none opacity-0 transition-transform-opacity motion-reduce:transition-none !duration-300 rounded-large"
+        src="/logo/logo32white.svg"
+        width="300"
+      />
+    </div>
+    <div
+      class="h-4"
+    />
+    <h1>
+      Welcome to Alexandria!
+    </h1>
+    <div
+      class="h-4"
+    />
+    <div
+      class="text-center"
+    >
+      <span
+        class="font-bold"
+      >
+        Alexandria
+      </span>
+       is an open-source platform for scientific collaboration. Its aim is to make science available for everyone and to promote spontaneous, international collaboration.
+       
+      <a
+        class="text-primary"
+        href="/about"
+      >
+        Read more about it.
+      </a>
+    </div>
+    <div
+      class="h-4"
+    />
+  </div>
+</div>
+`;

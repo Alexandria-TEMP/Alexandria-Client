@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
 import { expect, describe, it } from "@jest/globals";
-import PostPreviewCardSkeleton from "@/(home)/components/post-preview-card-skeleton";
+import HomeSidebar from "@/(home)/components/home-sidebar";
 
-describe("PostPreviewCard", () => {
+describe("HomeSidebar", () => {
   it("matches snapshot", () => {
-    const { container } = render(<PostPreviewCardSkeleton />);
+    const { container } = render(<HomeSidebar />);
     expect(container).toMatchSnapshot();
   });
 });
