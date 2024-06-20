@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardBody, CardFooter, Chip } from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter, Chip } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { idT } from "@/lib/types/api-types";
 import { usePostData } from "@/lib/api/hooks/post-hooks";
@@ -38,24 +38,28 @@ export default function PostCardMini({
   }
 
   return (
-    <Card
-      onPress={() =>
-        router.push(
-          `/post/${postUnionIDToPathID({ id: id as idT, isProject })}`,
-        )
-      }
-      fullWidth
-      isPressable
-    >
+    <Card fullWidth>
       <CardBody>
         <h2>{data.post.title}</h2>
       </CardBody>
-      <CardFooter>
+      <CardFooter className="flex flex-row">
         <Chip>
           {capitalizeFirstLetter(
             data.projectPost?.postReviewStatus ?? data.post.postType,
           )}
         </Chip>
+        <div className="grow" />
+        <Button
+          variant="ghost"
+          color="primary"
+          onPress={() =>
+            router.push(
+              `/post/${postUnionIDToPathID({ id: id as idT, isProject })}`,
+            )
+          }
+        >
+          Return to post
+        </Button>
       </CardFooter>
     </Card>
   );

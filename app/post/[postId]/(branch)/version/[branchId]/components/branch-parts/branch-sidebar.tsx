@@ -44,7 +44,6 @@ export default async function BranchSidebar({
     <Sidebar
       items={[
         {
-          title: "Version of",
           node: <PostCardMini id={data.projectPostID as idT} isProject />,
         },
         ...(scientificFields.length == 0
