@@ -10,6 +10,7 @@ import {
 } from "@/lib/api/services/branch-api";
 import {
   dummyBranches,
+  dummyPostUnion,
   dummyScientificFields,
 } from "~/__tests__/__utils__/dummys";
 import {
@@ -17,6 +18,7 @@ import {
   fetchPostCollaboratorsMemberIDs,
 } from "@/lib/api/services/collaborator-api";
 import { fetchScientificFieldsFromContainer } from "@/lib/api/services/fields-api";
+import { fetchPostData } from "@/lib/api/services/post-api";
 
 jest.mock("@/lib/api/services/collaborator-api");
 jest.mock("@/lib/api/services/fields-api");
@@ -24,6 +26,7 @@ jest.mock("@/lib/api/services/branch-api");
 jest.mock("@/components/common/chip-list");
 jest.mock("@/post/[postId]/components/cards/author-card-list");
 jest.mock("@/post/[postId]/components/cards/post-card-mini");
+jest.mock("@/lib/api/services/post-api");
 
 describe("BranchSidebarTest", () => {
   (fetchBranchUpdatedFieldsFallback as jest.Mock).mockResolvedValue(
@@ -35,6 +38,7 @@ describe("BranchSidebarTest", () => {
     dummyScientificFields,
   );
   (fetchBranchData as jest.Mock).mockResolvedValue(dummyBranches["accepted"]);
+  (fetchPostData as jest.Mock).mockResolvedValue(dummyPostUnion.withProject);
   (ChipList as jest.Mock).mockReturnValue(<p>ChipList</p>);
   (AuthorCardList as jest.Mock).mockReturnValue(<p>AuthorCardList</p>);
   (PostCardMini as jest.Mock).mockReturnValue(<p>PostCardMini</p>);

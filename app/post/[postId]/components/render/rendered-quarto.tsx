@@ -13,6 +13,7 @@ import {
   useIframeDynamicTheme,
 } from "./lib/iframe-hooks";
 import useTriggerRerender from "@/lib/hooks/use-trigger-rerender";
+import RenderFailed from "./render-failed";
 
 /**
  * Isolated iframe with a quarto project's rendered html.
@@ -30,6 +31,7 @@ export default function RenderedQuarto({
   const {
     data: html,
     isPending,
+    hasFailed,
     isLoading,
     error,
   } = useRender({ id: id as idT, type: container });
@@ -52,6 +54,10 @@ export default function RenderedQuarto({
 
   if (isPending) {
     return <RenderPending refresh={triggerRerender} />;
+  }
+
+  if (hasFailed) {
+    return <RenderFailed />;
   }
 
   if (isLoading) {

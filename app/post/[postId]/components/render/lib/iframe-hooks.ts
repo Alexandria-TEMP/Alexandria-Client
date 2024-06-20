@@ -17,12 +17,13 @@ export function useIframeDynamicHeight(
   const [iframeHeight, setIframeHeight] = useState(300);
 
   // Setup to get html height once it first renders
-  useEffect(() => {
-    return setupResize(iframeRef, setIframeHeight);
+  useEffect(
+    () => setupResize(iframeRef, setIframeHeight),
 
     // Disable reason: it doesn't like passing deps in arguments
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [iframeRef, ...deps]);
+    [iframeRef, ...deps],
+  );
 
   return iframeHeight;
 }

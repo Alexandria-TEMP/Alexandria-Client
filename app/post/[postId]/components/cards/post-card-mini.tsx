@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardBody, CardFooter, Chip } from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { idT } from "@/lib/types/api-types";
 import { usePostData } from "@/lib/api/hooks/post-hooks";
@@ -9,7 +9,6 @@ import ErrorWithMessage from "@/components/error-with-message";
 import PostCardMiniSkeleton from "./post-card-mini-skeleton";
 import { postUnionIDToPathID } from "@/lib/id-parser";
 import useTriggerRerender from "@/lib/hooks/use-trigger-rerender";
-import { capitalizeFirstLetter } from "@/lib/string-utils";
 
 /**
  * Mini card that represents a post. Clicking it redirects to the post page.
@@ -38,24 +37,24 @@ export default function PostCardMini({
   }
 
   return (
-    <Card
-      onPress={() =>
-        router.push(
-          `/post/${postUnionIDToPathID({ id: id as idT, isProject })}`,
-        )
-      }
-      fullWidth
-      isPressable
-    >
+    <Card fullWidth>
       <CardBody>
         <h2>{data.post.title}</h2>
       </CardBody>
-      <CardFooter>
-        <Chip>
-          {capitalizeFirstLetter(
-            data.projectPost?.postReviewStatus ?? data.post.postType,
-          )}
-        </Chip>
+      <CardFooter className="flex flex-row">
+        <div className="grow" />
+        <Button
+          variant="ghost"
+          color="primary"
+          onPress={() => {
+            router.push(
+              `/post/${postUnionIDToPathID({ id: id as idT, isProject })}`,
+            );
+            router.refresh();
+          }}
+        >
+          Return to post
+        </Button>
       </CardFooter>
     </Card>
   );

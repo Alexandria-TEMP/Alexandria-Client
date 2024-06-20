@@ -16,7 +16,6 @@ export function useDiscussionAndAuthorData(
   return useSWR({ id }, async ({ id }) => {
     const discussion = await fetchDiscussionData(id);
     const author = await fetchMemberData(discussion.memberID);
-    console.log(JSON.stringify({ discussion, author }));
     return { discussion, author };
   });
 }

@@ -1,7 +1,4 @@
-import {
-  QuartoContainerT,
-  QuartoContainerTypeT,
-} from "@/lib/types/quarto-container";
+import { QuartoContainerT } from "@/lib/types/quarto-container";
 import { baseUrl, validateResponse } from "../api-common";
 import { toKebabCase } from "@/lib/string-utils";
 
@@ -15,16 +12,6 @@ export function buildResourcePath({ id, type }: QuartoContainerT) {
 }
 
 /**
- * Returns fetch configuration for quarto project API calls, according to the
- * quarto project container type. Makes posts revalidate in 5 seconds and branches never.
- * @param type container type, ie if Quarto project is in a post or branch
- * @returns fetch configuration, used as second parameter of `fetch`
- */
-export function buildFetchConfig(type: QuartoContainerTypeT) {
-  return type === "post" ? { next: { revalidate: 5 } } : undefined;
-}
-
-/**
  * Downloads quarto project to client computer
  * @param container.id post or branch ID
  * @param container.type container type, ie if Quarto project is in a post or branch
@@ -34,10 +21,7 @@ export function downloadProject(
   container: QuartoContainerT,
   filename?: string,
 ) {
-  fetch(
-    `${buildResourcePath(container)}/repository`,
-    buildFetchConfig(container.type),
-  )
+  fetch(`${buildResourcePath(container)}/repository`)
     .then(async (res) => {
       await validateResponse(res);
       return res.blob();
