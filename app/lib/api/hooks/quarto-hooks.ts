@@ -31,11 +31,7 @@ export function useRender(
       if (res.status === 202) return "pending";
       await validateResponse(res);
 
-      console.log(res);
-      const text = await res.text();
-      console.log(text);
-
-      return text;
+      return await res.text();
     },
   );
 
