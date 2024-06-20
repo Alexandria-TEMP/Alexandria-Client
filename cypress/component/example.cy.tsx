@@ -1,4 +1,4 @@
-import Home from "@/page";
+import Home from "@/(home)/page";
 
 describe("<Home />", () => {
   it("should render and display expected content", () => {
