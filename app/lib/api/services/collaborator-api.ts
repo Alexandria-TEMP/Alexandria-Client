@@ -78,5 +78,7 @@ export async function fetchBranchCollaboratorsMemberIDs(
  * @param id post ID
  */
 export async function fetchPostCollaboratorsMemberIDs(id: idT): Promise<idT[]> {
-  return (await fetchPostCollaborators(id)).map((c) => c.memberID);
+  return Array.from(
+    new Set((await fetchPostCollaborators(id)).map((c) => c.memberID)),
+  );
 }
