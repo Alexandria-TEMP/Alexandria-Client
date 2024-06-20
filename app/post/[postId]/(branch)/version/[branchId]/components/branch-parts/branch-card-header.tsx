@@ -80,7 +80,8 @@ export default function BranchCardHeader({
     <>
       {/* (Updated) post title */}
       <CardHeader>
-        <h1 className="font-semibold">{data.updated.postTitle}</h1>
+        <h1 className="text-foreground-500 mr-2">Version:</h1>
+        <h1 className="font-semibold">{data.branch.branchTitle}</h1>
       </CardHeader>
 
       <CardHeader className="-mt-4 flex gap-8">
@@ -135,11 +136,15 @@ export default function BranchCardHeader({
       {/* Branch title (description of changes) */}
       <CardHeader>
         <div className="w-full">
-          {data.branch.branchTitle.length > 0 && (
-            <h3 className="italic">
-              Proposed changes: &quot;{data.branch.branchTitle}&quot;
-            </h3>
-          )}
+          {data.branch.updatedPostTitle &&
+            data.branch.updatedPostTitle.length > 0 && (
+              <div className="flex flex-row gap-1">
+                <h2 className="font-normal">Updated title:</h2>
+                <h2 className="font-semibold">
+                  &quot;{data.branch.updatedPostTitle}&quot;
+                </h2>
+              </div>
+            )}
           <Divider className="mt-4" />
         </div>
       </CardHeader>

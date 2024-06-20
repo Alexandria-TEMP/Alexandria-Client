@@ -40,9 +40,14 @@ export default function BranchCard({
   const supercededProject: QuartoContainerT | undefined = useMemo(() => {
     if (!data) return undefined;
 
-    if (data.closedBranch && data.closedBranch.supercededBranchID === null)
-      // Initial branch (first peer review of project post) has supercededBranch == null
-      // as it has no previous content that it is replacing
+    // Initial branch (first peer review of project post) should not have compare,
+    // as it has no previous content that it is replacing
+    if (
+      // initial branch has supercededBranch == null when closed
+      (data.closedBranch && data.closedBranch.supercededBranchID === null) ||
+      // only way to check if its initial branch while it is open without getting post data
+      data.branch.branchTitle === "Initial Peer Review"
+    )
       return undefined;
 
     return data.closedBranch

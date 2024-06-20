@@ -9,6 +9,7 @@ import {
   fetchPostCollaboratorsMemberIDs,
 } from "@/lib/api/services/collaborator-api";
 import { fetchScientificFieldsFromContainer } from "@/lib/api/services/fields-api";
+import { fetchPostData } from "@/lib/api/services/post-api";
 import { idT } from "@/lib/types/api-types";
 import { idBranchUnionT } from "@/lib/types/branch-union";
 import AuthorCardList from "@/post/[postId]/components/cards/author-card-list";
@@ -25,11 +26,16 @@ export default async function BranchSidebar({
   isClosed,
 }: Readonly<idBranchUnionT>) {
   const data = await fetchBranchData({ id: id as idT, isClosed });
+  const postData = await fetchPostData({
+    id: data.projectPostID as idT,
+    isProject: true,
+  });
+
   const branchCollaboratorMemberIDs = await fetchBranchCollaboratorsMemberIDs(
     id as idT,
   );
   const postCollaboratorMemberIDs = await fetchPostCollaboratorsMemberIDs(
-    id as idT,
+    postData.post.id,
   );
   const scientificFields = await fetchScientificFieldsFromContainer(
     (
@@ -44,7 +50,6 @@ export default async function BranchSidebar({
     <Sidebar
       items={[
         {
-          title: "Version of",
           node: <PostCardMini id={data.projectPostID as idT} isProject />,
         },
         ...(scientificFields.length == 0
