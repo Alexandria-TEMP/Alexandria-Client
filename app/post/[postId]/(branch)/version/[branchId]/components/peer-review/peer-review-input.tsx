@@ -50,7 +50,7 @@ export default function PeerReviewInput() {
           orientation="horizontal"
         >
           <Radio color="success" value="approved">
-            Approve
+            Accept
           </Radio>
           <Radio color="danger" value="rejected">
             Reject

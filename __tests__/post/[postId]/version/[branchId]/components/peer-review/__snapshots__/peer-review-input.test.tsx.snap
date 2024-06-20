@@ -72,7 +72,7 @@ exports[`PeerReviewInput matches snapshot 1`] = `
             >
               <input
                 aria-describedby="react-aria-:r8:"
-                aria-label="Approve"
+                aria-label="Accept"
                 aria-labelledby=":rb:"
                 name="react-aria-:ra:"
                 tabindex="0"
@@ -96,7 +96,7 @@ exports[`PeerReviewInput matches snapshot 1`] = `
                 class="relative text-foreground select-none text-medium transition-colors motion-reduce:transition-none"
                 id=":rb:"
               >
-                Approve
+                Accept
               </span>
             </div>
           </label>

@@ -125,6 +125,25 @@ exports[`BranchCardHeader matches snapshot when status is accepted 1`] = `
         </h6>
       </div>
     </div>
+    <div
+      class="flex p-3 z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large"
+    >
+      <div
+        class="w-full"
+      >
+        <h3
+          class="italic"
+        >
+          Proposed changes: "
+          Something
+          "
+        </h3>
+        <hr
+          class="shrink-0 bg-divider border-none w-full h-divider mt-4"
+          role="separator"
+        />
+      </div>
+    </div>
   </div>
 </div>
 `;
@@ -276,6 +295,25 @@ exports[`BranchCardHeader matches snapshot when status is open 1`] = `
         >
           Invalid Date
         </h6>
+      </div>
+    </div>
+    <div
+      class="flex p-3 z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large"
+    >
+      <div
+        class="w-full"
+      >
+        <h3
+          class="italic"
+        >
+          Proposed changes: "
+          Something
+          "
+        </h3>
+        <hr
+          class="shrink-0 bg-divider border-none w-full h-divider mt-4"
+          role="separator"
+        />
       </div>
     </div>
   </div>
@@ -430,6 +468,25 @@ exports[`BranchCardHeader matches snapshot when status is rejected 1`] = `
         >
           Rejected on Invalid Date
         </h6>
+      </div>
+    </div>
+    <div
+      class="flex p-3 z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large"
+    >
+      <div
+        class="w-full"
+      >
+        <h3
+          class="italic"
+        >
+          Proposed changes: "
+          Something
+          "
+        </h3>
+        <hr
+          class="shrink-0 bg-divider border-none w-full h-divider mt-4"
+          role="separator"
+        />
       </div>
     </div>
   </div>

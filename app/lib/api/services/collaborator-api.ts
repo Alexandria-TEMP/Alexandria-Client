@@ -72,3 +72,11 @@ export async function fetchBranchCollaboratorsMemberIDs(
 ): Promise<idT[]> {
   return (await fetchBranchCollaborators(id)).map((c) => c.memberID);
 }
+
+/**
+ * Fetches all collaborators of a post and returns their member IDs
+ * @param id post ID
+ */
+export async function fetchPostCollaboratorsMemberIDs(id: idT): Promise<idT[]> {
+  return (await fetchPostCollaborators(id)).map((c) => c.memberID);
+}

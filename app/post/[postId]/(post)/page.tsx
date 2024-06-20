@@ -37,7 +37,7 @@ export default async function Post({ params }: { params: { postId: string } }) {
           />
         </CardBody>
       </Card>
-      <DiscussionSection id={1} /> {/* TODO get proper ID */}
+      <DiscussionSection id={data.post.discussionContainerID} />
     </div>
   );
 }
