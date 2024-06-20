@@ -15,12 +15,13 @@ import { buildResourcePath } from "../services/quarto-api";
  * @returns
  *    data: text contents of the HTML render (or undefined if not loaded),
  *    isPending: true if render is not finalized (or undefined if not loaded),
+ *    hasFailed: true if render failed (or undefined if not loaded),
  *    error: error thrown by fetcher (or undefined),
  *    isLoading: if there's an ongoing request and no "loaded data"
  */
 export function useRender(
   container: QuartoContainerT,
-): SWRResponse<string, Error> & { isPending: boolean } {
+): SWRResponse<string, Error> & { isPending: boolean; hasFailed: boolean } {
   const swrResponse: SWRResponse<string, Error> = useSWR(
     `${buildResourcePath(container)}/render`,
     async (...args) => {
@@ -29,6 +30,7 @@ export function useRender(
         headers: [["Accept", "text/html"]],
       });
       if (res.status === 202) return "pending";
+      if (res.status === 204) return "render failed";
       await validateResponse(res);
 
       return await res.text();
@@ -40,8 +42,14 @@ export function useRender(
     [swrResponse.data],
   );
 
+  const hasFailed = useMemo(
+    () => swrResponse.data === "render failed",
+    [swrResponse.data],
+  );
+
   return {
     isPending,
+    hasFailed,
     ...swrResponse,
   };
 }
