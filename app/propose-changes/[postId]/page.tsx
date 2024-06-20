@@ -86,8 +86,9 @@ export default function ProposeChanges({
         "updatedFeedbackPreferences",
         postReq.data.projectPost?.projectFeedbackPreference,
       );
+      setValue("collaboratingMemberIDs", [loggedInId]);
     }
-  }, [postReq, setValue]);
+  }, [postReq, setValue, loggedInId]);
 
   /* is loading set to true, if the form is submitting */
   const [isLoading, setIsLoading] = useState(false);

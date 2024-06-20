@@ -95,7 +95,7 @@ export default function AlexandriaNavbar() {
           // Either a user avatar
           <>
             <NavbarItem>
-              <Link href="/profile">
+              <Link href="/todo">
                 <h3>Welcome, {uname}!</h3>
               </Link>
             </NavbarItem>
