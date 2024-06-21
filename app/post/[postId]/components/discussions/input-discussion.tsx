@@ -1,11 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Switch, Textarea } from "@nextui-org/react";
-import { uploadDiscussion } from "@/lib/api/services/discussion-api";
+import { Button, Spinner, Switch, Textarea } from "@nextui-org/react";
 import { IdProp } from "@/lib/types/react-props/id-prop";
-import { idT } from "@/lib/types/api-types";
+import { DiscussionCreationFormT, idT } from "@/lib/types/api-types";
 import HeaderSubtle from "@/components/common/header-subtle";
+import { Controller, useForm } from "react-hook-form";
+import {
+  replyDiscussionSubmitHandler,
+  rootDiscussionSubmitHandler,
+} from "../../lib/submit-discussion";
+import { useCookieWithRefresh } from "@/lib/cookies/cookie-hooks";
+import { SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 /**
  * TextArea to create a new discussion for some Version.
@@ -18,53 +25,110 @@ import HeaderSubtle from "@/components/common/header-subtle";
  */
 export default function InputDiscussion({
   id,
-  isRoot,
+  isRoot = false,
   onCancel,
   replyTo,
 }: IdProp &
   Readonly<{ isRoot?: boolean; onCancel?: () => void; replyTo?: string }>) {
-  // TODO
+  /* router for redirect on (successful) submit */
+  const router = useRouter();
 
-  const [input, setInput] = useState("");
+  /* get the currently logged in user's access token, and make sure its refreshed if it expires */
+  const accessToken = useCookieWithRefresh("access-token");
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | undefined>(undefined);
+
+  const { handleSubmit, formState, control } = useForm<DiscussionCreationFormT>(
+    {
+      mode: "onTouched",
+      defaultValues: {
+        text: "",
+        anonymous: false,
+      },
+    },
+  );
+
+  /* submit function that also passes the loading and error states */
+  const onSubmit: SubmitHandler<DiscussionCreationFormT> = async (
+    data: DiscussionCreationFormT,
+  ) => {
+    isRoot
+      ? await rootDiscussionSubmitHandler(
+          data,
+          id as idT,
+          accessToken,
+          setIsLoading,
+          setErrorMsg,
+          router,
+        )
+      : await replyDiscussionSubmitHandler(
+          data,
+          id as idT,
+          accessToken,
+          setIsLoading,
+          setErrorMsg,
+          router,
+        );
+  };
+
+  if (isLoading) return <Spinner></Spinner>;
 
   return (
-    <div>
-      <Textarea
-        label={
-          isRoot ? (
-            <h2>Your reply</h2>
-          ) : (
-            <HeaderSubtle>
-              {replyTo ? `Reply to ${replyTo}` : "Your reply"}
-            </HeaderSubtle>
-          )
-        }
-        labelPlacement="outside"
-        placeholder="Start a new discussion..."
-        value={input}
-        onValueChange={setInput}
+    // disable reason: this is the intended usage for handleSubmit
+    // linter complains about it being a promise, but if i fix it then `submit` function does not get called
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Controller
+        name="text"
+        control={control}
+        rules={{
+          required: {
+            value: true,
+            message: "You cannot submit an empty discussion",
+          },
+        }}
+        render={({ field }) => (
+          <Textarea
+            {...field}
+            label={
+              isRoot ? (
+                <h2>Your reply</h2>
+              ) : (
+                <HeaderSubtle>
+                  {replyTo ? `Reply to ${replyTo}` : "Your reply"}
+                </HeaderSubtle>
+              )
+            }
+            labelPlacement="outside"
+            placeholder={
+              isRoot ? "Start a new discussion..." : "Reply to a discussion..."
+            }
+            errorMessage={
+              formState.errors.text?.message?.toString() || errorMsg
+            }
+            isInvalid={!!formState.errors.text?.message || !!errorMsg}
+          />
+        )}
       />
       <div className="flex flex-row mt-4 content-center gap-2">
-        <div className="flex flex-col">
-          <Switch size="sm" />
-          <HeaderSubtle>Anonymous reply</HeaderSubtle>
-        </div>
+        <Controller
+          name="anonymous"
+          control={control}
+          render={({ field }) => (
+            <Switch checked={field.value} onChange={field.onChange} size="sm">
+              <HeaderSubtle>Anonymous reply</HeaderSubtle>{" "}
+            </Switch>
+          )}
+        />
         <div className="grow" />
         {onCancel && (
           <Button color="danger" onPress={onCancel}>
             Cancel
           </Button>
         )}
-        <Button
-          onPress={() => {
-            uploadDiscussion(input, id as idT).catch(() =>
-              alert("Failed to submit discussion."),
-            );
-          }}
-        >
-          Post your answer
-        </Button>
+        <Button type="submit">Post your answer</Button>
       </div>
-    </div>
+    </form>
   );
 }

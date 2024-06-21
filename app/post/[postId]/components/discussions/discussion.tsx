@@ -9,12 +9,17 @@ import GenericLoadingPage from "@/loading";
 import { useState } from "react";
 import InputDiscussion from "./input-discussion";
 import { getMemberName } from "@/lib/get-format";
+import HeaderSubtle from "@/components/common/header-subtle";
+import { formatDateString } from "@/lib/string-utils";
 
 /**
  * Displays a discussion, including: contents, author, creation date, and 'reply' button.
  * @param id Discussion ID
  */
-export default function Discussion({ id }: IdProp) {
+export default function Discussion({
+  id,
+  isRoot = true,
+}: IdProp & { isRoot?: boolean }) {
   const { data, isLoading, error } = useDiscussionAndAuthorData(id as idT);
   const [replyOpen, setReplyOpen] = useState(false);
 
@@ -32,12 +37,16 @@ export default function Discussion({ id }: IdProp) {
   }
 
   return (
-    <Card>
-      <CardBody>
+    <Card className={!isRoot ? "bg-default-100" : ""}>
+      <CardBody className="space-y-5">
         <div className="flex flex-row gap-x-2 items-baseline -mt-2">
-          <p className="font-semibold">{getMemberName(data.author)}</p>
+          <p className="font-semibold">
+            {data.author ? getMemberName(data.author) : "Anonymous"}
+          </p>
           {/* TODO need property on discussion DTO */}
-          {/* <HeaderSubtle>wrote on {data.createdAt}</HeaderSubtle> */}
+          <HeaderSubtle>
+            wrote on {formatDateString(data.discussion.createdAt)}
+          </HeaderSubtle>
           <div className="grow" />
           <Button
             variant="light"
@@ -53,11 +62,15 @@ export default function Discussion({ id }: IdProp) {
             <Divider className="my-4" />
             <InputDiscussion
               id={id as idT}
+              isRoot={false}
               onCancel={() => setReplyOpen(false)}
-              replyTo={getMemberName(data.author)}
+              replyTo={data.author ? getMemberName(data.author) : "Anonymous"}
             />
           </>
         )}
+        {data.discussion.replyIDs.map((id) => (
+          <Discussion id={id} isRoot={false} key={id} />
+        ))}
       </CardBody>
     </Card>
   );

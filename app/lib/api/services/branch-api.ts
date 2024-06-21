@@ -2,8 +2,10 @@ import { BranchUnionT, idBranchUnionT } from "@/lib/types/branch-union";
 import {
   BranchCreationFormT,
   BranchReviewDecisionT,
+  BranchReviewT,
   BranchT,
   ClosedBranchT,
+  ReviewCreationFormT,
   idT,
 } from "../../types/api-types";
 import { baseUrl, validateResponse } from "../api-common";
@@ -23,6 +25,9 @@ export async function fetchBranchData(
   if (id.isClosed) {
     const closedBranchResponse = await fetch(
       `${baseUrl}/branches/closed/${id.id}`,
+      {
+        cache: "no-cache",
+      },
     );
     await validateResponse(closedBranchResponse);
     closedBranch = (await closedBranchResponse.json()) as ClosedBranchT;
@@ -160,7 +165,7 @@ export async function postBranchesIdUpload(
   branchId: idT,
   file: File,
   accessToken: string,
-) {
+): Promise<boolean> {
   const fileData = new FormData();
   fileData.append("file", file);
 
@@ -175,4 +180,27 @@ export async function postBranchesIdUpload(
   });
   await validateResponse(response);
   return response.ok;
+}
+
+/**
+ * Method that posts a new review to a branch
+ * @param reviewCreationForm information about the review to be added
+ * @param accessToken of the signed in user
+ * @returns the newly added review
+ */
+export async function postBranchesReviews(
+  reviewCreationForm: ReviewCreationFormT,
+  accessToken: string,
+): Promise<BranchReviewT> {
+  const jsonReview = JSON.stringify(reviewCreationForm);
+  const res = await fetch(`${baseUrl}/branches/reviews`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+    body: jsonReview,
+  });
+  await validateResponse(res);
+  return (await res.json()) as BranchReviewT;
 }
