@@ -12,7 +12,7 @@ export default function HomeSidebar() {
         {
           node: (
             // TODO make the width of the logo adjustable
-            <Logo width={300}></Logo>
+            <Logo width={300} />
           ),
         },
         {
