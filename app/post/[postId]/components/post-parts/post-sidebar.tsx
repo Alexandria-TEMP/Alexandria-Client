@@ -22,7 +22,7 @@ export default async function PostSidebar({
     data.post.scientificFieldTagContainerID,
   );
   const collaborators = await fetchPostCollaboratorsAsSortedMemberIDs(
-    id as idT,
+    data.post.id,
   );
 
   return (
