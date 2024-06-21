@@ -98,7 +98,7 @@ export async function fetchBranchUpdatedFieldsFallback(
  */
 export async function fetchBranchReviewStatuses(id: idT) {
   const res = await fetch(`${baseUrl}/branches/${id}/review-statuses`, {
-    next: { revalidate: 5 },
+    next: { revalidate: 0 },
   });
   await validateResponse(res);
   return (await res.json()) as BranchReviewDecisionT[];

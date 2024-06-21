@@ -1,11 +1,13 @@
 import {
   BranchCollaboratorT,
   CollaborationTypeT,
+  MemberT,
   PostCollaboratorT,
   idT,
 } from "@/lib/types/api-types";
 import { QuartoContainerT } from "../../types/quarto-container";
 import { baseUrl, validateResponse } from "../api-common";
+import { fetchMemberData } from "./member-api";
 
 /**
  * Builds URL path for collaborator API calls
@@ -80,5 +82,17 @@ export async function fetchBranchCollaboratorsMemberIDs(
 export async function fetchPostCollaboratorsMemberIDs(id: idT): Promise<idT[]> {
   return Array.from(
     new Set((await fetchPostCollaborators(id)).map((c) => c.memberID)),
+  );
+}
+
+/**
+ * Fetches all authors of a post and returns their member data
+ * @param id post ID
+ */
+export async function fetchPostAuthorsMemberData(id: idT): Promise<MemberT[]> {
+  return Promise.all(
+    (await fetchPostCollaboratorsAsSortedMemberIDs(id)).author.map(
+      async (a) => await fetchMemberData(a),
+    ),
   );
 }

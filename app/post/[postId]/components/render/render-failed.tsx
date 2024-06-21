@@ -8,10 +8,9 @@ export default function RenderFailed() {
       data-testid="render-pending"
     >
       <h1>Render has failed!</h1>
-      <h3>
+      <h3 className="w-2/5 text-center">
         This publication&apos;s Quarto project failed to render. Please try to
-        render in your computer before submitting. Contact the Alexandria team
-        if your render works on your computer.
+        render in your computer before submitting.
       </h3>
     </div>
   );

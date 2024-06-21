@@ -5,6 +5,7 @@ import FileTree from "../../components/files/file-tree";
 import { pathIDToPostUnionID } from "@/lib/id-parser";
 import { idT } from "@/lib/types/api-types";
 import { fetchPostData } from "@/lib/api/services/post-api";
+import getPostsQuartoProject from "../lib/get-posts-quarto-project";
 
 /**
  * Page that shows files of a Post.
@@ -19,10 +20,7 @@ export default async function PostFiles({
   const postUnionID = pathIDToPostUnionID(params.postId);
   const data = await fetchPostData(postUnionID);
 
-  const isOpenProject =
-    data.projectPost &&
-    data.projectPost.postReviewStatus === "open" &&
-    data.projectPost.openBranchIDs.length === 1;
+  const quartoContainer = getPostsQuartoProject(data);
 
   return (
     <div className="flex flex-col space-y-4 w-full">
@@ -33,12 +31,7 @@ export default async function PostFiles({
           hideContribute={!postUnionID.isProject}
         />
         <CardBody>
-          <FileTree
-            id={
-              isOpenProject ? data.projectPost!.openBranchIDs[0] : data.post.id
-            }
-            container={isOpenProject ? "branch" : "post"}
-          />
+          <FileTree id={quartoContainer.id} container={quartoContainer.type} />
         </CardBody>
       </Card>
       <DiscussionSection id={data.post.discussionContainerID} />
