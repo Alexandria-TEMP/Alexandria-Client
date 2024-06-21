@@ -83,10 +83,12 @@ export default function PostPreviewCard({ postID }: { postID: idT }) {
         {/* Scientific fields */}
         <ChipList labels={scientificFields} />
         {/* Authors */}
-        <div className="flex flex-row space-x-2">
-          <FaUserGraduate />
-          <p>{authors.reduceRight((name, accum) => `${accum}, ${name}`)}</p>
-        </div>
+        {authors.length > 0 && (
+          <div className="flex flex-row space-x-2">
+            <FaUserGraduate />
+            <p>{authors.reduceRight((name, accum) => `${accum}, ${name}`)}</p>
+          </div>
+        )}
       </CardBody>
       <CardFooter className="flex flex-row flex-wrap gap-5">
         {/* Post type */}
