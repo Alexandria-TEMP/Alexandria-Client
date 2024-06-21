@@ -42,6 +42,7 @@ exports[`PeerReviewInput matches snapshot 1`] = `
                 class="w-full font-normal bg-transparent !outline-none placeholder:text-foreground-500 focus-visible:outline-none data-[has-start-content=true]:ps-1.5 data-[has-end-content=true]:pe-1.5 text-small resize-none data-[hide-scroll=true]:scrollbar-hide h-full transition-height !duration-100 motion-reduce:transition-none"
                 data-hide-scroll="true"
                 data-slot="input"
+                data-testid="review-input-textarea"
                 id="react-aria-:r0:"
                 name="feedback"
                 placeholder="Enter your feedback for this proposal..."
@@ -58,6 +59,7 @@ exports[`PeerReviewInput matches snapshot 1`] = `
           aria-label=" "
           aria-orientation="horizontal"
           class="relative flex flex-col gap-2"
+          data-testid="review-input-decision"
           id="react-aria-:r5:"
           role="radiogroup"
         >
@@ -145,6 +147,7 @@ exports[`PeerReviewInput matches snapshot 1`] = `
         />
         <button
           class="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground data-[hover=true]:opacity-hover"
+          data-testid="review-submit"
           type="submit"
         >
           Submit review
