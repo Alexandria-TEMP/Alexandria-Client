@@ -1,5 +1,8 @@
 import { postMembers } from "@/lib/api/services/member-api";
-import { setSessionCookies } from "@/lib/cookies/cookie-utils";
+import {
+  destroySessionCookies,
+  setSessionCookies,
+} from "@/lib/cookies/cookie-utils";
 import { getMemberName } from "@/lib/get-format";
 import { MemberCreationFormtT, idT } from "@/lib/types/api-types";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -14,15 +17,24 @@ export type FormType = {
   confpass: string;
 };
 
-export const submitHandler = async (
+/**
+ * Submit handler for member creation, in charge of making member creation form, calling post endpoint setting loading and error states
+ * @param data member creation form data
+ * @param setIsLoading setter for loading state
+ * @param onError callback for when there is an error, used for modals
+ * @param setErrorMsg setter for error message
+ * @param router for redirect on success
+ */
+export async function submitHandler(
   data: FormType,
   setIsLoading: (v: boolean) => void,
   onError: () => void,
   setErrorMsg: (e: string) => void,
   router: AppRouterInstance,
-) => {
+) {
   try {
     setIsLoading(true);
+    destroySessionCookies();
     const memberForm: MemberCreationFormtT = {
       email: data.email,
       firstName: data.firstName,
@@ -42,7 +54,7 @@ export const submitHandler = async (
       newMember.accessExp,
       newMember.refreshExp,
     );
-    router.push("/"); // route to home page
+    router.back();
 
     setIsLoading(false);
   } catch (error) {
@@ -52,4 +64,4 @@ export const submitHandler = async (
     setIsLoading(false);
     onError();
   }
-};
+}

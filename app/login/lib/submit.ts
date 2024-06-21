@@ -13,7 +13,12 @@ export type FormType = {
 };
 
 /**
- * TODO jsdoc when properly implemented
+ * Submit method for login form, in charge of making login creation form, post request, loading and error states
+ * @param data the login credentials
+ * @param setIsLoading setter for the loading state
+ * @param onError method called on error
+ * @param setErrorMsg setter for error message when there is one
+ * @param router router for redirect on successful login
  */
 export async function submitHandler(
   data: FormType,
@@ -43,7 +48,7 @@ export async function submitHandler(
       loggedMember.refreshExp,
     );
 
-    router.push("/");
+    router.back();
     setIsLoading(false);
   } catch (error) {
     if (error instanceof Error) {
