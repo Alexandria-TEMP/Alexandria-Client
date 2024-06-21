@@ -3,6 +3,7 @@ import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import SignupPage from "@/signup/page";
+import { act } from "react";
 
 // mock the router since it depends on the context
 jest.mock("next/navigation", () => ({
@@ -15,12 +16,12 @@ jest.mock("next/navigation", () => ({
 }));
 
 describe("Account data fields test", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     // TODO i cannot figure out how to mock the control and form state object
     // so i cannot individually render the personal data card component
     // so i am testing it by rendering the entire page, so that it has a proper useForm hook
     // const { rerender } = render(<SignupPage />);
-    render(<SignupPage />);
+    await act(() => render(<SignupPage />));
   });
 
   describe("Email tests", () => {

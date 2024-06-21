@@ -85,7 +85,7 @@ export default function InputDiscussion({
         rules={{
           required: {
             value: true,
-            message: "You cannot submit an empty discussion",
+            message: "You cannot submit an empty discussion.",
           },
         }}
         render={({ field }) => (
@@ -108,6 +108,7 @@ export default function InputDiscussion({
               formState.errors.text?.message?.toString() || errorMsg
             }
             isInvalid={!!formState.errors.text?.message || !!errorMsg}
+            data-testid="input-discussion-textarea"
           />
         )}
       />
@@ -127,7 +128,9 @@ export default function InputDiscussion({
             Cancel
           </Button>
         )}
-        <Button type="submit">Post your answer</Button>
+        <Button type="submit" data-testid="submit-discussion">
+          Post your answer
+        </Button>
       </div>
     </form>
   );

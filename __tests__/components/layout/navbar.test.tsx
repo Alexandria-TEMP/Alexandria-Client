@@ -4,6 +4,9 @@ import AlexandriaNavbar, { navigationItems } from "@/components/layout/navbar";
 import userEvent from "@testing-library/user-event";
 import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtime";
 import createMockRouter from "../../__utils__/create-mock-router";
+import { useCookieWithRefresh } from "@/lib/cookies/cookie-hooks";
+
+jest.mock("@/lib/cookies/cookie-hooks");
 
 describe("Navbar", () => {
   it("includes the theme switcher", () => {
@@ -13,12 +16,20 @@ describe("Navbar", () => {
     ).toBeInTheDocument();
   });
 
-  // TODO tests based on conditional render if user is logged in or not
-  it("includes log in and sign up buttons", () => {
+  it("includes log in and sign up buttons when not logged in", () => {
+    (useCookieWithRefresh as jest.Mock).mockReturnValue(undefined);
     render(<AlexandriaNavbar />);
 
     expect(screen.getByRole("button", { name: "Log in" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Sign up" })).toBeInTheDocument();
+  });
+
+  it("includes log in and sign up buttons when not logged in", () => {
+    (useCookieWithRefresh as jest.Mock).mockReturnValue("User Name");
+    render(<AlexandriaNavbar />);
+
+    expect(screen.getByRole("button", { name: "Log out" })).toBeInTheDocument();
+    expect(screen.getByText("User Name")).toBeInTheDocument();
   });
 
   // Returns an anonymous function which tests navigation

@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputDiscussion matches snapshot normal 1`] = `
+<div>
+  <form>
+    <div
+      class="group flex flex-col w-full"
+      data-filled="true"
+      data-filled-within="true"
+      data-has-elements="true"
+      data-has-label="true"
+      data-slot="base"
+    >
+      <label
+        class="z-10 pointer-events-none origin-top-left rtl:origin-top-right subpixel-antialiased block text-small text-foreground-500 relative will-change-auto !duration-200 !ease-out motion-reduce:transition-none transition-[transform,color,left,opacity] group-data-[filled-within=true]:text-foreground group-data-[filled-within=true]:pointer-events-auto pb-1.5 pe-2 max-w-full text-ellipsis overflow-hidden"
+        data-slot="label"
+        for="react-aria-:r0:"
+        id="react-aria-:r1:"
+      >
+        <h2>
+          Your reply
+        </h2>
+      </label>
+      <div
+        class="relative w-full inline-flex tap-highlight-transparent flex-row items-center shadow-sm px-3 gap-3 bg-default-100 data-[hover=true]:bg-default-200 group-data-[focus=true]:bg-default-100 h-10 min-h-10 rounded-medium !h-auto transition-background motion-reduce:transition-none !duration-150 outline-none group-data-[focus-visible=true]:z-10 group-data-[focus-visible=true]:ring-2 group-data-[focus-visible=true]:ring-focus group-data-[focus-visible=true]:ring-offset-2 group-data-[focus-visible=true]:ring-offset-background py-2"
+        data-has-multiple-rows="true"
+        data-slot="input-wrapper"
+        style="cursor: text;"
+      >
+        <div
+          class="inline-flex w-full h-full box-border items-start group-data-[has-label=true]:items-start"
+          data-slot="inner-wrapper"
+        >
+          <textarea
+            aria-label="Start a new discussion..."
+            aria-labelledby="react-aria-:r0: react-aria-:r1:"
+            class="w-full font-normal bg-transparent !outline-none placeholder:text-foreground-500 focus-visible:outline-none data-[has-start-content=true]:ps-1.5 data-[has-end-content=true]:pe-1.5 text-small resize-none data-[hide-scroll=true]:scrollbar-hide group-data-[has-value=true]:text-default-foreground h-full transition-height !duration-100 motion-reduce:transition-none"
+            data-hide-scroll="true"
+            data-slot="input"
+            data-testid="input-discussion-textarea"
+            id="react-aria-:r0:"
+            name="text"
+            placeholder="Start a new discussion..."
+            title=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex flex-row mt-4 content-center gap-2"
+    >
+      <label
+        class="group relative max-w-fit inline-flex items-center justify-start cursor-pointer touch-none tap-highlight-transparent"
+      >
+        <div
+          style="border: 0px; clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
+        >
+          <input
+            aria-labelledby=":r5:"
+            role="switch"
+            type="checkbox"
+            value=""
+          />
+        </div>
+        <span
+          aria-hidden="true"
+          class="px-1 relative inline-flex items-center justify-start flex-shrink-0 overflow-hidden bg-default-200 rounded-full outline-none group-data-[focus-visible=true]:z-10 group-data-[focus-visible=true]:ring-2 group-data-[focus-visible=true]:ring-focus group-data-[focus-visible=true]:ring-offset-2 group-data-[focus-visible=true]:ring-offset-background group-data-[selected=true]:bg-primary group-data-[selected=true]:text-primary-foreground w-10 h-6 mr-2 rtl:ml-2 rtl:mr-[unset] transition-background"
+        >
+          <span
+            class="z-10 flex items-center justify-center bg-white shadow-small rounded-full origin-right w-4 h-4 text-tiny group-data-[selected=true]:ml-4 rtl:group-data-[selected=true]:ml-0 rtl:group-data-[selected=true]:mr-4 transition-all group-data-[pressed=true]:w-5 group-data-[selected]:group-data-[pressed]:ml-3"
+          />
+        </span>
+        <span
+          class="relative text-foreground select-none text-small"
+          id=":r5:"
+        >
+          <h6
+            class="text-neutral-400"
+          >
+            Anonymous reply
+          </h6>
+           
+        </span>
+      </label>
+      <div
+        class="grow"
+      />
+      <button
+        class="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground data-[hover=true]:opacity-hover"
+        data-testid="submit-discussion"
+        type="submit"
+      >
+        Post your answer
+      </button>
+    </div>
+  </form>
+</div>
+`;

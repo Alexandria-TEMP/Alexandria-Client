@@ -42,8 +42,6 @@ export async function rootDiscussionSubmitHandler(
     router.refresh();
     router.refresh();
   } catch (error) {
-    alert("calling set error");
-
     if (error instanceof Error) {
       setErrorMsg(error.message);
     }

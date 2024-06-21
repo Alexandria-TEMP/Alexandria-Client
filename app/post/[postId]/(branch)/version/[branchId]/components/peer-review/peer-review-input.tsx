@@ -76,7 +76,7 @@ export default function PeerReviewInput({
             rules={{
               required: {
                 value: true,
-                message: "You cannot submit an empty review",
+                message: "You cannot submit an empty review.",
               },
             }}
             render={({ field }) => (
@@ -95,6 +95,7 @@ export default function PeerReviewInput({
                 classNames={{
                   label: "text-lg font-semibold",
                 }}
+                data-testid="review-input-textarea"
               />
             )}
           />
@@ -113,6 +114,7 @@ export default function PeerReviewInput({
                 isInvalid={
                   !!formState.errors.branchReviewDecision?.message || !!errorMsg
                 }
+                data-testid="review-input-decision"
               >
                 <Radio color="success" value="approved">
                   Accept
@@ -128,6 +130,7 @@ export default function PeerReviewInput({
             // isDisabled={!approval || !feedback || feedback === ""}
             type="submit"
             color="primary"
+            data-testid="review-submit"
           >
             Submit review
           </Button>

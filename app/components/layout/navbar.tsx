@@ -96,7 +96,7 @@ export default function AlexandriaNavbar() {
           <>
             <NavbarItem>
               <Link href="/todo">
-                <h3>Welcome, {uname}!</h3>
+                <h3>{uname}</h3>
               </Link>
             </NavbarItem>
             <NavbarItem>
