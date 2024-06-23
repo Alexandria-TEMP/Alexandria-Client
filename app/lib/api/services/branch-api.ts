@@ -50,10 +50,6 @@ export async function fetchBranchData(
 
   const fallback = await fetchBranchFallback(branch, projectPostID);
 
-  console.log(
-    `fetching data for ${id.isClosed ? "closed" : ""} branch ${id.id} -> post IDs are ${JSON.stringify(fallback.postIDs)}`,
-  );
-
   return {
     branch,
     closedBranch,
