@@ -48,40 +48,35 @@ export async function fetchBranchData(
     );
   }
 
-  const updated = await fetchBranchUpdatedFieldsFallback(branch, projectPostID);
+  const fallback = await fetchBranchFallback(branch, projectPostID);
 
-  return { branch, closedBranch, updated, projectPostID, id };
+  console.log(
+    `fetching data for ${id.isClosed ? "closed" : ""} branch ${id.id} -> post IDs are ${JSON.stringify(fallback.postIDs)}`,
+  );
+
+  return {
+    branch,
+    closedBranch,
+    updated: { ...fallback },
+    postIDs: fallback.postIDs,
+    id,
+  };
 }
 
 /**
- * For each of the possible post fields that a branch updates, returns
- * either the updated data or the current data if updated is null
+ * For each of the possible post fields that a branch updates, returns either the updated
+ * data or the current data if updated is null. Additionally returns the branch's post's ID
  * @param branch branch whose update we're interested in
  * @param projectPostID ID of project post that branch is updating
  */
-export async function fetchBranchUpdatedFieldsFallback(
-  branch: BranchT,
-  projectPostID: idT,
-) {
-  if (
-    branch.updatedPostTitle &&
-    branch.updatedCompletionStatus &&
-    branch.updatedScientificFieldTagContainerID
-  ) {
-    return {
-      postTitle: branch.updatedPostTitle,
-      completionStatus: branch.updatedCompletionStatus,
-      scientificFieldTagContainerID:
-        branch.updatedScientificFieldTagContainerID,
-    };
-  }
-
+export async function fetchBranchFallback(branch: BranchT, projectPostID: idT) {
   const postData = await fetchPostData({
     id: projectPostID,
     isProject: true,
   });
 
   return {
+    postIDs: { projectPostID, postID: postData.post.id },
     postTitle: branch.updatedPostTitle ?? postData.post.title,
     completionStatus:
       branch.updatedCompletionStatus ??
