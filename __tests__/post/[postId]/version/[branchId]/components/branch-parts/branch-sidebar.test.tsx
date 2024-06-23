@@ -28,7 +28,7 @@ jest.mock("@/post/[postId]/components/cards/author-card-list");
 jest.mock("@/post/[postId]/components/cards/post-card-mini");
 jest.mock("@/lib/api/services/post-api");
 
-describe("BranchSidebarTest", () => {
+describe("BranchSidebar", () => {
   (fetchBranchFallback as jest.Mock).mockResolvedValue(
     dummyBranches["accepted"].updated,
   );
