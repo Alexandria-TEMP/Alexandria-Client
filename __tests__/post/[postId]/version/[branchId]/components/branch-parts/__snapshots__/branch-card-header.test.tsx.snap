@@ -213,39 +213,14 @@ exports[`BranchCardHeader matches snapshot when status is open 1`] = `
           />
         </svg>
       </button>
-      <div
-        class="inline-flex items-center justify-center h-auto"
-        role="group"
+      <button
+        class="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium opacity-disabled pointer-events-none [&>svg]:max-w-[theme(spacing.8)] data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground data-[hover=true]:opacity-hover"
+        data-disabled="true"
+        disabled=""
+        type="button"
       >
-        <button
-          class="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 [&:not(:first-child):not(:last-child)]:rounded-none [&>svg]:max-w-[theme(spacing.8)] data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground rounded-none first:rounded-s-medium last:rounded-e-medium data-[hover=true]:opacity-hover"
-          type="button"
-        >
-          Review
-        </button>
-        <button
-          aria-expanded="false"
-          aria-haspopup="true"
-          class="group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-small gap-2 [&:not(:first-child):not(:last-child)]:rounded-none px-0 !gap-0 data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground rounded-none first:rounded-s-medium last:rounded-e-medium min-w-10 w-10 h-10 data-[hover=true]:opacity-hover z-10 aria-expanded:scale-[0.97] aria-expanded:opacity-70 subpixel-antialiased"
-          data-slot="trigger"
-          id="react-aria-:rg:"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            data-slot="icon"
-            fill="currentColor"
-            viewBox="0 0 16 16"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              clip-rule="evenodd"
-              d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z"
-              fill-rule="evenodd"
-            />
-          </svg>
-        </button>
-      </div>
+        Fork
+      </button>
       <div
         class="grow"
       />

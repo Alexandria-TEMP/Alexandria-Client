@@ -195,3 +195,26 @@ export async function postBranchesReviews(
   await validateResponse(res);
   return (await res.json()) as BranchReviewT;
 }
+
+/**
+ * Fetcher for whether a branch can be reviewed
+ * @param branchID of the branch we want to check
+ * @param accessToken of the currently logged in user, or none if no user
+ * @returns true/false whether the user can review or not
+ */
+export async function fetchBranchesCanReview(
+  branchID: idT,
+  accessToken: string | undefined,
+): Promise<boolean> {
+  if (accessToken === undefined) {
+    return false; // TODO in the future maybe special message for when a user is not logged in
+  }
+  const res = await fetch(`${baseUrl}/branches/${branchID}/can-review`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
+  });
+  await validateResponse(res);
+  return (await res.json()) as boolean;
+}

@@ -15,10 +15,11 @@ import { useMemo } from "react";
 import ActionGroup from "@/post/[postId]/components/buttons/action-group";
 import DownloadButton from "@/post/[postId]/components/buttons/download-button";
 import { idBranchUnionT } from "@/lib/types/branch-union";
-import { useBranchData } from "@/lib/api/hooks/branch-hooks";
+import { useBranchData, useCanReview } from "@/lib/api/hooks/branch-hooks";
 import { branchUnionIDToPathID } from "@/lib/id-parser";
 import DefaultError from "@/error";
 import useTriggerRerender from "@/lib/hooks/use-trigger-rerender";
+import { useCookieWithRefresh } from "@/lib/cookies/cookie-hooks";
 
 /**
  * Header for branch contents card. Uses CardHeader, so it must be child of a Card.
@@ -47,6 +48,8 @@ export default function BranchCardHeader({
 >) {
   const { data, isLoading, error } = useBranchData({ id: id as idT, isClosed });
   const { triggerRerender } = useTriggerRerender();
+  const accessToken = useCookieWithRefresh("access-token");
+  const canReview = useCanReview(id as idT, accessToken);
 
   const status = useMemo(
     () =>
@@ -67,7 +70,7 @@ export default function BranchCardHeader({
         ? `/propose-changes/${postPathID}`
         : undefined,
     review:
-      status?.short == "open"
+      status?.short == "open" && canReview.data === true
         ? `/post/${postPathID}/version/${branchUnionIDToPathID({ id: id as idT, isClosed })}/review`
         : undefined,
   };

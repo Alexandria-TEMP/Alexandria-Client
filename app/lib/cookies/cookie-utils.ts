@@ -31,7 +31,7 @@ export function setSessionCookies(
     path: "/",
   });
   setCookie("access-token", accessToken, {
-    expires: new Date(accessExp * 1000),
+    // expires: new Date(accessExp * 1000),
     path: "/",
   });
   setCookie("refresh-token", refreshToken, {
@@ -51,7 +51,13 @@ export function destroySessionCookies() {
   deleteCookie("refresh-token");
 }
 
-/** TODO */
+// TODO apparently i have been lied to by the internet and "getCookie" only works in client components
+// thus the get cookie with refresh method only works inside client components
+/**
+ * Get a cookie and check if access token needs the be refreshed, and if there is a refresh token to do so
+ * @param name of the cookie
+ * @returns the cookie
+ */
 export async function getCookieWithRefresh(name: string) {
   /* first check if there is a refresh token, if there isnt all data must be collected again */
   if (!getCookie("refresh-token"))
@@ -59,7 +65,6 @@ export async function getCookieWithRefresh(name: string) {
 
   /* if there is a refresh token, but the access token has expired, we can refresh (reset) the access token */
   if (!getCookie("access-token")) {
-    console.log("CALLING REFRESH " + getCookie("refresh-token"));
     // trust me bro i know the token is there, i check for it earlier
     // ... ignore potential concurrency issues
     const tokens = await postMembersToken(getCookie("refresh-token") as string);
