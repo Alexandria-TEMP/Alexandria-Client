@@ -16,7 +16,8 @@ import { baseUrl, validateResponse } from "../api-common";
 export async function fetchMemberData(id: idT): Promise<MemberT> {
   const res = await fetch(`${baseUrl}/members/${id}`);
   await validateResponse(res);
-  return (await res.json()) as MemberT;
+  const member: MemberT = (await res.json()) as MemberT;
+  return member;
 }
 
 /**
