@@ -138,7 +138,7 @@ export const dummyBranches: {
       id: 1,
       isClosed: true,
     },
-    projectPostID: 1,
+    postIDs: { projectPostID: 1, postID: 1 },
   },
   accepted: {
     branch: {
@@ -172,7 +172,7 @@ export const dummyBranches: {
       id: 2,
       isClosed: true,
     },
-    projectPostID: 1,
+    postIDs: { projectPostID: 1, postID: 1 },
   },
   open: {
     branch: {
@@ -200,7 +200,7 @@ export const dummyBranches: {
       id: 4,
       isClosed: false,
     },
-    projectPostID: 1,
+    postIDs: { projectPostID: 1, postID: 1 },
   },
 };
 

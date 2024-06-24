@@ -6,7 +6,7 @@ import { expect, describe, it } from "@jest/globals";
 import { render } from "@testing-library/react";
 import {
   fetchBranchData,
-  fetchBranchUpdatedFieldsFallback,
+  fetchBranchFallback,
 } from "@/lib/api/services/branch-api";
 import {
   dummyBranches,
@@ -28,8 +28,8 @@ jest.mock("@/post/[postId]/components/cards/author-card-list");
 jest.mock("@/post/[postId]/components/cards/post-card-mini");
 jest.mock("@/lib/api/services/post-api");
 
-describe("BranchSidebarTest", () => {
-  (fetchBranchUpdatedFieldsFallback as jest.Mock).mockResolvedValue(
+describe("BranchSidebar", () => {
+  (fetchBranchFallback as jest.Mock).mockResolvedValue(
     dummyBranches["accepted"].updated,
   );
   (fetchBranchCollaboratorsMemberIDs as jest.Mock).mockResolvedValue([1]);

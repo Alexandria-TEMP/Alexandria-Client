@@ -51,8 +51,10 @@ export default function BranchCard({
       return undefined;
 
     return data.closedBranch
-      ? { id: data.closedBranch.supercededBranchID as idT, type: "branch" }
-      : { id: data.projectPostID as idT, type: "post" };
+      ? // Closed branches compare against what they replaced when they were closed
+        { id: data.closedBranch.supercededBranchID as idT, type: "branch" }
+      : // Open branches compare against what they are replacing
+        { id: data.postIDs.postID as idT, type: "post" };
   }, [data]);
 
   const [compare, setCompare] = useState(false);

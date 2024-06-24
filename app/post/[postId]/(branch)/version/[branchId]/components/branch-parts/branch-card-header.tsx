@@ -78,7 +78,7 @@ export default function BranchCardHeader({
 
   return (
     <>
-      {/* (Updated) post title */}
+      {/* Branch title (description of changes) */}
       <CardHeader>
         <h1 className="text-foreground-500 mr-2">Version:</h1>
         <h1 className="font-semibold">{data.branch.branchTitle}</h1>
@@ -133,7 +133,7 @@ export default function BranchCardHeader({
         </div>
       </CardHeader>
 
-      {/* Branch title (description of changes) */}
+      {/* (Updated) post title */}
       <CardHeader>
         <div className="w-full">
           {data.branch.updatedPostTitle &&
