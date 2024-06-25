@@ -6,15 +6,23 @@ import { dummyPost, dummyPostUnion } from "~/__tests__/__utils__/dummys";
 import { Card } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import createMockRouter from "~/__tests__/__utils__/create-mock-router";
+import { cookies } from "next/headers";
+import { fetchBranchesCanReview } from "@/lib/api/services/branch-api";
 
 // Mock getPostData()
 jest.mock("@/lib/api/services/post-api");
 // Mock useRouter so it's mounted
 jest.mock("next/navigation");
+// Mock cookies so the user appears logged in
+jest.mock("next/headers");
+// Mock fetcher so it returns dummy value
+jest.mock("@/lib/api/services/branch-api");
 
 describe("PostCardHeader", () => {
   (useRouter as jest.Mock).mockReturnValue(createMockRouter());
   (fetchPostData as jest.Mock).mockResolvedValue(dummyPostUnion.withProject);
+  (cookies as jest.Mock).mockReturnValue({ get: (name: string) => "token" });
+  (fetchBranchesCanReview as jest.Mock).mockResolvedValue(true);
 
   it("renders title", async () => {
     render(

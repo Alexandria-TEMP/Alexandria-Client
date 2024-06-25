@@ -34,7 +34,8 @@ export default function PostPreviewCard({ postID }: { postID: idT }) {
   const { data, isLoading, error } = usePostPreviewData(postID);
   const router = useRouter();
 
-  if (isLoading) return <PostPreviewCardSkeleton />;
+  if (isLoading || !data || !data.scientificFields)
+    return <PostPreviewCardSkeleton />;
 
   if (!data || error) {
     console.warn(

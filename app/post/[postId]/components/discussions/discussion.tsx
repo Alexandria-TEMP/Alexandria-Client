@@ -23,7 +23,7 @@ export default function Discussion({
   const { data, isLoading, error } = useDiscussionAndAuthorData(id as idT);
   const [replyOpen, setReplyOpen] = useState(false);
 
-  if (isLoading) {
+  if (isLoading || !data || !data.discussion) {
     // TODO discussion skeleton
     return <GenericLoadingPage />;
   }

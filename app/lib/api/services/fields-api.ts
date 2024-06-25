@@ -81,5 +81,6 @@ export async function fetchScientificFieldsFromContainer(
   id: idT,
 ): Promise<ScientificFieldTagT[]> {
   const container = await fetchScientificFieldContainer(id);
-  return await fetchScientificFields(container.scientificFieldTagIDs);
+  const fields = await fetchScientificFields(container.scientificFieldTagIDs);
+  return fields;
 }

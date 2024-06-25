@@ -13,6 +13,8 @@ import {
   formatDateString,
 } from "@/lib/string-utils";
 import { getStandardReviewStatus } from "@/lib/get-format";
+import { fetchBranchesCanReview } from "@/lib/api/services/branch-api";
+import { cookies } from "next/headers";
 
 /**
  * Header for post contents card. Uses CardHeader, so it must be child of a Card.
@@ -47,6 +49,20 @@ export default async function PostCardHeader({
         })
       : undefined;
 
+  // TODO apparently i have been lied to by the internet and "getCookie" only works in client components
+  // thus the get cookie with refresh method only works inside client components
+  // aka every component that i need it in except this one
+  // const accessToken = await getCookieWithRefresh("access-token");
+  const accessToken = cookies().get("access-token")?.value;
+
+  const canReview =
+    data.projectPost && data.projectPost.openBranchIDs.length > 0 && accessToken
+      ? await fetchBranchesCanReview(
+          data.projectPost.openBranchIDs[0],
+          accessToken,
+        )
+      : undefined;
+
   // Set up which routes will be in contribute button (if present)
   const contributeRoutes =
     !data.projectPost || hideContribute
@@ -64,7 +80,9 @@ export default async function PostCardHeader({
           review:
             openBranchPathID === undefined ||
             reviewStatus!.short === "rejected" ||
-            reviewStatus!.short === "accepted"
+            reviewStatus!.short === "accepted" ||
+            canReview === undefined ||
+            canReview === false
               ? undefined
               : `/post/${pathID}/version/${openBranchPathID}/review`,
         };

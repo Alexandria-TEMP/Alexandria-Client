@@ -1,4 +1,4 @@
-import { useBranchData } from "@/lib/api/hooks/branch-hooks";
+import { useBranchData, useCanReview } from "@/lib/api/hooks/branch-hooks";
 import BranchCardHeader from "@/post/[postId]/(branch)/version/[branchId]/components/branch-parts/branch-card-header";
 import { expect, describe, it } from "@jest/globals";
 import { Card } from "@nextui-org/react";
@@ -7,7 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import createMockRouter from "~/__tests__/__utils__/create-mock-router";
 import { dummyBranches } from "~/__tests__/__utils__/dummys";
 
-// Mock useBranchData()
+// Mock useBranchData() and useCanReview()
 jest.mock("@/lib/api/hooks/branch-hooks");
 // Mock useRouter so it's mounted
 jest.mock("next/navigation");
@@ -15,6 +15,7 @@ jest.mock("next/navigation");
 describe("BranchCardHeader", () => {
   (usePathname as jest.Mock).mockReturnValue("");
   (useRouter as jest.Mock).mockReturnValue(createMockRouter());
+  (useCanReview as jest.Mock).mockResolvedValue({ data: true });
 
   const generateSnapshotTestForStatus = (
     status: "accepted" | "rejected" | "open",

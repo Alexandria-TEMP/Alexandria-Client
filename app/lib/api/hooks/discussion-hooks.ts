@@ -14,11 +14,17 @@ import { fetchMemberData } from "../services/member-api";
 export function useDiscussionAndAuthorData(
   id: idT,
 ): SWRResponse<{ discussion: DiscussionT; author: MemberT | null }, Error> {
-  return useSWR({ id }, async ({ id }) => {
-    const discussion = await fetchDiscussionData(id);
-    if (discussion.memberID == null)
-      return { discussion: discussion, author: null };
-    const author = await fetchMemberData(discussion.memberID);
-    return { discussion, author };
-  });
+  return useSWR(
+    { id },
+    async ({ id }) => {
+      const discussion = await fetchDiscussionData(id);
+      if (discussion.memberID == null)
+        return { discussion: discussion, author: null };
+      const author = await fetchMemberData(discussion.memberID);
+      return { discussion, author };
+    },
+    {
+      refreshInterval: 1000, // refresh every second otherwise SWR does some weird fuckery and says that the data is done loading even tho disucssion obj is still empty, it seems to not await stuff properly
+    },
+  );
 }

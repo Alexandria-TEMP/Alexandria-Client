@@ -68,16 +68,22 @@ export function usePostPreviewData(id: idT): SWRResponse<
   },
   Error
 > {
-  return useSWR({ id }, async ({ id }) => {
-    const postUnion = await fetchDataForPostOfUnkownType(id);
-    const scientificFields = await fetchScientificFieldsFromContainer(
-      postUnion.post.scientificFieldTagContainerID,
-    );
-    const numDiscussions = (
-      await fetchDiscussionContainer(postUnion.post.discussionContainerID)
-    ).discussionIDs.length;
-    const authors = await fetchPostAuthorsMemberData(postUnion.post.id);
+  return useSWR(
+    { id },
+    async ({ id }) => {
+      const postUnion = await fetchDataForPostOfUnkownType(id);
+      const scientificFields = await fetchScientificFieldsFromContainer(
+        postUnion.post.scientificFieldTagContainerID,
+      );
+      const numDiscussions = (
+        await fetchDiscussionContainer(postUnion.post.discussionContainerID)
+      ).discussionIDs.length;
+      const authors = await fetchPostAuthorsMemberData(postUnion.post.id);
 
-    return { ...postUnion, scientificFields, numDiscussions, authors };
-  });
+      return { ...postUnion, scientificFields, numDiscussions, authors };
+    },
+    {
+      refreshInterval: 1000, // refresh every second otherwise SWR does some weird fuckery and says that the data is done loading even tho disucssion obj is still empty, it seems to not await stuff properly
+    },
+  );
 }

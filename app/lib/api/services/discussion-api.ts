@@ -28,7 +28,8 @@ export async function fetchDiscussionData(id: idT): Promise<DiscussionT> {
     next: { revalidate: 5 },
   });
   await validateResponse(res);
-  return (await res.json()) as DiscussionT;
+  const disc: DiscussionT = (await res.json()) as DiscussionT;
+  return disc;
 }
 
 /**

@@ -35,6 +35,7 @@ export default function InputDiscussion({
 
   /* get the currently logged in user's access token, and make sure its refreshed if it expires */
   const accessToken = useCookieWithRefresh("access-token");
+  // const accessToken = undefined;
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | undefined>(undefined);
