@@ -14,10 +14,8 @@ export default function About() {
         <div className="text-center">
           <h1>Welcome to Alexandria!</h1>
           <p className="mt-2 text-justify">
-            <span className="font-bold">Alexandria</span> is a collaborative
-            <Link href="https://github.com/Alexandria-TEMP">
-              open-source
-            </Link>{" "}
+            <span className="font-bold">Alexandria</span> is a collaborative{" "}
+            <Link href="https://github.com/Alexandria-TEMP">open-source</Link>{" "}
             platform dedicated to publishing, discussing and developing
             scientific research. It is designed to be community-oriented and
             intersectional, merging the functionality of version control with an
@@ -36,9 +34,7 @@ export default function About() {
             form of Markdown, and allows for the incorporation of complex
             figures using the four most common scientific programming languages:
             Python, R, Julia, and Observable.{" "}
-            <Link href="https://quarto.org/">
-              Learn more about Quarto here.
-            </Link>
+            <Link href="https://quarto.org/">Learn more about Quarto.</Link>
           </p>
         </div>
         {/* Section about timeline/contributors */}
@@ -57,7 +53,7 @@ export default function About() {
                 CSE2000 Software Project course for the bachelor of Computer
                 Science and Engineering at TU Delft. You can read more about
                 this stage of the development in{" "}
-                <Link isDisabled>their report</Link>.
+                <Link isDisabled>their report.</Link>
               </p>
             </div>
             <div className="flex flex-row flex-wrap justify-evenly w-1/2 gap-y-3">
@@ -99,15 +95,14 @@ export default function About() {
               />
             </div>
             <div className="w-1/2 text-justify">
-              <h2>User experience design (202?)</h2>
+              <h2>User experience design (2023)</h2>
               <p className="mt-2">
-                Placeholder text, in here we should explain what Zhuoting did,
-                and why/how Andrew hired her. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                commodo consequat. Duis aute irure dolor in reprehenderit in
-                voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                With the initial funding gathered from the developed prototype,
+                Andrew Demetriou hired a UX desiner, Zhuoting Wang, to help
+                understand how to make Alexandria a platform that fullfils the
+                needs of scientists. After conducting user research, she
+                designed user flows for the platform and the interface for
+                several of Alexandria's pages.
               </p>
             </div>
           </div>
@@ -115,13 +110,18 @@ export default function About() {
           {/* Development: Prototype */}
           <div className="flex flex-row gap-3">
             <div className="w-1/2 text-justify">
-              <h2>Development: Prototype (202?)</h2>
+              <h2>Development: Prototype (2022)</h2>
               <p className="mt-2">
-                Placeholder text, in here we should explain what was developed
-                as part of the first teams SP. Mention that they did not much
-                guidance, and figured out how a lot of this stuff could look
-                like. Their version was used to get funding for further
-                development. Include link to their GitHub.
+                During 10 weeks from April to June of 2022 as part of the
+                CSE2000 Software Project course for the bachelor of Computer
+                Science and Engineering at TU Delft a team of five students
+                built a prototype for Alexandria. This prototype explored the
+                capabilities of the platform which did not exist at this point.
+                It was used to showcase its potential and gather funding for
+                further development. The prototype's source can be found in its{" "}
+                <Link href="https://github.com/prjct-alexandria/Alexandria">
+                  GitHub repository.
+                </Link>
               </p>
             </div>
             <div className="flex flex-row flex-wrap justify-evenly w-1/2 gap-y-3">
@@ -162,13 +162,7 @@ export default function About() {
             <div className="w-1/2 text-justify">
               <h2>Ideation</h2>
               <p className="mt-2">
-                Placeholder text, maybe we should let Andrew write this one.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur.
+                Placeholder text: Waiting for Andrew to write.
               </p>
             </div>
           </div>
