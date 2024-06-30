@@ -1,5 +1,5 @@
 import Logo from "@/components/theme/logo";
-import { User } from "@nextui-org/react";
+import { Link, User } from "@nextui-org/react";
 
 /**
  * About page
@@ -14,15 +14,28 @@ export default function About() {
         <div className="text-center">
           <h1>Welcome to Alexandria!</h1>
           <p className="mt-2 text-justify">
-            <span className="font-bold">Alexandria</span> is an open-source
-            platform for scientific collaboration. Its aim is to make science
-            available for everyone and to promote spontaneous, international
-            collaboration. Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu
-            fugiat nulla pariatur.
+            <span className="font-bold">Alexandria</span> is a collaborative
+            open-source platform dedicated to publishing, discussing and
+            developing scientific research. It is designed to be
+            community-oriented and intersectional, merging the functionality of
+            version control with an intuitive interface. Any user can post their
+            reflections, ask questions or publish research. Any work published
+            on the platform becomes property of the community - anyone can make
+            additions to it. Community members with the relevant expertise are
+            able to peer review the proposed additions, approving or rejecting
+            the changes. In this way, the community controls how a post evolves.
+          </p>
+          <p className="mt-2 text-justify">
+            Posts are repositories of Quarto files, rendered by the platform
+            into a human-readable format. This allows users to share the code
+            behind their work, merging the gap between the process and the final
+            result of research. Quarto is easier to use than LaTex, as it is a
+            form of Markdown, and allows for the incorporation of complex
+            figures using the four most common scientific programming languages:
+            Python, R, Julia, and Observable.{" "}
+            <Link href="https://quarto.org/">
+              Learn more about Quarto here.
+            </Link>
           </p>
         </div>
         {/* Section about timeline/contributors */}
