@@ -1,7 +1,8 @@
 import Logo from "@/components/theme/logo";
 import { User } from "@nextui-org/react";
+
 /**
- * Placeholder 'About' page.
+ * About page
  */
 export default function About() {
   return (
@@ -25,8 +26,8 @@ export default function About() {
           </p>
         </div>
         {/* Section about timeline/contributors */}
-        <div className="flex flex-col gap-8">
-          <h1 className="text-center">Contributors</h1>
+        <div className="flex flex-col gap-32">
+          <h1 className="text-center -mb-16">Contributors</h1>
 
           {/* Development: First version */}
           <div className="flex flex-row gap-3">
@@ -42,7 +43,7 @@ export default function About() {
                 velit esse cillum dolore eu fugiat nulla pariatur.
               </p>
             </div>
-            <div className="flex flex-row flex-wrap justify-evenly w-2/5">
+            <div className="flex flex-row flex-wrap justify-evenly w-2/5 gap-y-3">
               <User
                 name="Jannes Kelso"
                 description="Back end developer"
@@ -73,7 +74,7 @@ export default function About() {
 
           {/* UX Design */}
           <div className="flex flex-row gap-3">
-            <div className="flex flex-row flex-wrap justify-evenly w-2/5">
+            <div className="flex flex-row flex-wrap justify-evenly w-2/5 gap-y-3">
               <User
                 name="Zhuoting Wang"
                 description="UX designer"
@@ -106,7 +107,7 @@ export default function About() {
                 development. Include link to their GitHub.
               </p>
             </div>
-            <div className="flex flex-row flex-wrap justify-evenly w-2/5">
+            <div className="flex flex-row flex-wrap justify-evenly w-2/5 gap-y-3">
               <User
                 name="Amy van der Meijden"
                 description="Developer"
@@ -137,7 +138,7 @@ export default function About() {
 
           {/* Ideation */}
           <div className="flex flex-row gap-3">
-            <div className="flex flex-row flex-wrap justify-evenly w-2/5">
+            <div className="flex flex-row flex-wrap justify-evenly w-2/5 gap-y-3">
               <User name="Andrew Demetriou" avatarProps={{ size: "lg" }} />
               <User name="Cynthia Liem" avatarProps={{ size: "lg" }} />
             </div>
