@@ -102,7 +102,7 @@ export default function About() {
                 understand how to make Alexandria a platform that fullfils the
                 needs of scientists. After conducting user research, she
                 designed user flows for the platform and the interface for
-                several of Alexandria's pages.
+                several of Alexandria&apos;s pages.
               </p>
             </div>
           </div>
@@ -118,7 +118,8 @@ export default function About() {
                 built a prototype for Alexandria. This prototype explored the
                 capabilities of the platform which did not exist at this point.
                 It was used to showcase its potential and gather funding for
-                further development. The prototype's source can be found in its{" "}
+                further development. The prototype&apos;s source can be found in
+                its{" "}
                 <Link href="https://github.com/prjct-alexandria/Alexandria">
                   GitHub repository.
                 </Link>
