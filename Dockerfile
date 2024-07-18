@@ -1,6 +1,6 @@
 ARG node_version=20-alpine
-#or 20.12
-FROM node:${node_version} as base
+
+FROM node:${node_version} AS builder
 
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
@@ -8,8 +8,8 @@ RUN apk add --no-cache libc6-compat
 # Create directory in container
 WORKDIR /app
 
-COPY package.json .
-COPY package-lock.json .
+# Copy the lock file only if it exists
+COPY package.json package-lock.jso[n] ./
 
 # Get dependencies
 RUN \
@@ -23,13 +23,17 @@ RUN \
 COPY . .
 
 # Disable NextJS telemetry
-ENV NEXT_TELEMETRY_DISABLED 1 
+ENV NEXT_TELEMETRY_DISABLED 1
 
-# Expose port
-EXPOSE 3000
+# Build the app
+RUN npm run build
 
-# Development stage
-FROM base AS dev
-CMD npm run dev
 
-# TODO production
+# Production runner stage
+FROM node:${node_version} AS runner
+USER node
+WORKDIR /app
+
+COPY --from=builder --chown=node:node /app/.next/standalone /app
+
+ENTRYPOINT [ "node", "server.js" ]
