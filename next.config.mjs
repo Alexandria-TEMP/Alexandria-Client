@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: 'standalone',
 
     // DOCKER: If you're developing using a Docker container, uncomment the following 
     // lines to enable hot-reloading. Hot-reloading also works with this configueration
