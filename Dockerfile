@@ -27,13 +27,4 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 # Build the app
 RUN npm run build
-
-
-# Production runner stage
-FROM node:${node_version} AS runner
-USER node
-WORKDIR /app
-
-COPY --from=builder --chown=node:node /app/.next/standalone /app
-
-ENTRYPOINT [ "node", "server.js" ]
+ENTRYPOINT [ "npm", "run", "start" ]
