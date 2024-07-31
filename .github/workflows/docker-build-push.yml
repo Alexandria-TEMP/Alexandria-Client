@@ -9,6 +9,9 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Set lowercase repository owner environment variable (funky workaround because Docker is dumb)
         run: |
           echo "OWNER_LOWERCASE=${OWNER,,}" >>${GITHUB_ENV}
@@ -28,5 +31,6 @@ jobs:
       - name: Build and push (client)
         uses: docker/build-push-action@v6
         with:
+          context: .
           push: true
           tags: ghcr.io/${{ env.OWNER_LOWERCASE }}/alexandria-client:latest
