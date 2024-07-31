@@ -25,6 +25,10 @@ COPY . .
 # Disable NextJS telemetry
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Set the API base URL, hardcoded for now
+ENV NEXT_PUBLIC_API_BASE_URL=https://api.alexandria01.ewi.tudelft.nl/api/v2
+
+
 # Build the app
 RUN npm run build
 ENTRYPOINT [ "npm", "run", "start" ]
